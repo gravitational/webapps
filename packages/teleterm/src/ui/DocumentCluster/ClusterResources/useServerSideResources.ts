@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { SortType } from 'design/DataTable/types';
 import { useAsync } from 'shared/hooks/useAsync';
 import { ServerSideParams } from 'teleterm/services/tshd/types';
@@ -6,15 +6,31 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { useClusterContext } from '../clusterContext';
 import { AgentFilter, AgentLabel } from 'teleport/services/agents';
-import { addAgentLabelToQuery } from 'shared/utils/addAgentLabelToQuery';
-import { ResourceKind } from 'teleport/Discover/Shared';
+
+export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
+  const queryParts = [];
+
+  // Add existing query
+  if (filter.query) {
+    queryParts.push(filter.query);
+  }
+
+  // If there is an existing simple search,
+  // convert it to predicate language and add it
+  if (filter.search) {
+    queryParts.push(`search("${filter.search}")`);
+  }
+
+  // Create the label query.
+  queryParts.push(`labels["${label.name}"] == "${label.value}"`);
+
+  return queryParts.join(' && ');
+}
+
+const limit = 5;
 
 export function useServerSideResources<Agent>(
-  fetchFunction: (params: ServerSideParams) => Promise<{
-    agentsList: Array<Agent>;
-    totalCount: number;
-    startKey: string;
-  }>
+  fetchFunction: (params: ServerSideParams) => Promise<FetchResponse<Agent>>
 ) {
   const ctx = useAppContext();
   const { clusterUri, documentUri } = useClusterContext();
@@ -23,13 +39,6 @@ export function useServerSideResources<Agent>(
   const [agentFilter, setAgentFilter] = useState<AgentFilter>({
     sort: getDefaultSort(),
   });
-  const [pageCount, setPageCount] = useState({
-    to: 0,
-    from: 0,
-    total: 0,
-  });
-
-  const limit = 15;
 
   // startKey is used here as a way to paginate through agents returned from
   // their respective rpcs.
@@ -49,7 +58,6 @@ export function useServerSideResources<Agent>(
     const proposedKey = keys[pageIndex];
     if (proposedKey) {
       return () => {
-        fetch(proposedKey);
         setPageIndex(pageIndex + 1);
       };
     }
@@ -61,16 +69,6 @@ export function useServerSideResources<Agent>(
     const newPageIndex = pageIndex - 1;
     if (newPageIndex > -1) {
       return () => {
-        // if we got pageIndex - 1, we'd get the same data as the previous "next" we just called.
-        // we have to go back 2. which is why we use newPageIndex instead
-
-        // example after going from pageIndex = 0 to pageIndex = 1:
-        // ['startKeyFromInitialFetch', 'goEvenFurtherStartKey']
-        //     ^- just came from here          ^- we are here
-        //
-        // so in order to get the start key for the page BEFORE this one, we go back twice.
-        // this could also be written/read as keys[pageIndex - 2]
-        fetch(keys[newPageIndex - 1]);
         setPageIndex(newPageIndex);
       };
     }
@@ -78,11 +76,8 @@ export function useServerSideResources<Agent>(
   }
 
   useEffect(() => {
-    // when agent filter changes we consider it a 'new' search so we should pass an empty
-    // startKey to get the beginning of the list with new filters, and set pageIndex back to zero
-    fetch('');
-    setPageIndex(0);
-  }, [agentFilter]);
+    fetch(keys[pageIndex - 1]);
+  }, [agentFilter, pageIndex]);
 
   // when we receive data from fetch, we store the startKey (or lack of) according to the current
   // page index. think of this as "this page's nextKey".
@@ -93,42 +88,45 @@ export function useServerSideResources<Agent>(
     const newKeys = [...keys];
     newKeys[pageIndex] = fetchAttempt.data?.startKey;
     setKeys(newKeys);
-
-    setPageCount(getPageCount());
   }, [fetchAttempt.data]);
 
+  function updateAgentFilter(filter: AgentFilter) {
+    setPageIndex(0);
+    setAgentFilter(filter);
+  }
+
   function updateSort(sort: SortType) {
-    setAgentFilter({ ...agentFilter, sort });
+    updateAgentFilter({ ...agentFilter, sort });
   }
 
   function updateSearch(search: string) {
-    setAgentFilter({ ...agentFilter, query: '', search });
+    updateAgentFilter({ ...agentFilter, query: '', search });
   }
 
   function updateQuery(query: string) {
-    setAgentFilter({ ...agentFilter, search: '', query });
+    updateAgentFilter({ ...agentFilter, search: '', query });
   }
 
   function onAgentLabelClick(label: AgentLabel) {
     const query = addAgentLabelToQuery(agentFilter, label);
-    setAgentFilter({ ...agentFilter, search: '', query });
+    updateAgentFilter({ ...agentFilter, search: '', query });
   }
 
-  function getPageCount() {
-    let from = 0;
-    let to = 0;
-
-    let total = fetchAttempt?.data?.totalCount || 0;
-    if (fetchAttempt.status === 'success') {
-      from = pageIndex * limit + 1;
-      to = from + fetchAttempt.data?.agentsList.length - 1;
+  const pageCount = useMemo(() => {
+    if (fetchAttempt.status !== 'success') {
+      return {
+        from: 0,
+        to: 0,
+        total: 0,
+      };
     }
+    const from = pageIndex * limit + 1;
     return {
-      to,
-      total,
       from,
+      to: from + fetchAttempt.data.agentsList.length - 1,
+      total: fetchAttempt.data.totalCount,
     };
-  }
+  }, [fetchAttempt.status]);
 
   return {
     fetchAttempt,
@@ -147,3 +145,9 @@ export function useServerSideResources<Agent>(
 function getDefaultSort(): SortType {
   return { fieldName: 'hostname', dir: 'ASC' };
 }
+
+type FetchResponse<T> = {
+  agentsList: Array<T>;
+  totalCount: number;
+  startKey: string;
+};
