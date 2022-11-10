@@ -102,6 +102,21 @@ export enum Severity {
   Error = 2,
 }
 
+/**
+ * @throws {Error} if an invalid severity is passed
+ */
+export function toSeverity(severity: number): Severity {
+  if (severity === Severity.Info) {
+    return Severity.Info;
+  } else if (severity === Severity.Warning) {
+    return Severity.Warning;
+  } else if (severity === Severity.Error) {
+    return Severity.Error;
+  }
+
+  throw new Error(`received invalid severity level: ${severity}`);
+}
+
 // | message type (28) | message_length uint32 | message []byte | severity byte
 export type Notification = {
   message: string;
@@ -487,7 +502,7 @@ export default class Codec {
   // encodeKeyboardInput encodes a keyboard action.
   // Returns null if an unsupported code is passed.
   // | message type (5) | key_code uint32 | state byte |
-  encodeKeyboardInput(code: string, state: ButtonState): Message {
+  encodeKeyboardInput(code: string, state: ButtonState): Message | null {
     const scanCode = this._keyScancodes[code];
     if (!scanCode) {
       return null;
@@ -787,9 +802,11 @@ export default class Codec {
     };
   }
 
-  // decodeMessageType decodes the MessageType from a raw tdp message
-  // passed in as an ArrayBuffer (this typically would come from a websocket).
-  // Throws an error on an invalid or unexpected MessageType value.
+  /**
+   * decodeMessageType decodes the MessageType from a raw tdp message
+   * passed in as an ArrayBuffer (this typically would come from a websocket).
+   * @throws {Error} on an invalid or unexpected MessageType value
+   */
   decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
     if (!(messageType in MessageType) || messageType === MessageType.__LAST) {
@@ -804,8 +821,11 @@ export default class Codec {
     return this.decodeStringMessage(buffer);
   }
 
-  // decodeNotification decodes a raw tdp Notification message
-  // | message type (28) | message_length uint32 | message []byte | severity byte
+  /**
+   * decodeNotification decodes a raw tdp Notification message
+   * | message type (28) | message_length uint32 | message []byte | severity byte
+   * @throws {Error} if an invalid severity is passed
+   */
   decodeNotification(buffer: ArrayBuffer): Notification {
     const dv = new DataView(buffer);
     let offset = 0;
@@ -817,7 +837,7 @@ export default class Codec {
     const severity = dv.getUint8(offset);
     return {
       message,
-      severity: severity === 0 ? Severity.Error : Severity.Warning,
+      severity: toSeverity(severity),
     };
   }
 

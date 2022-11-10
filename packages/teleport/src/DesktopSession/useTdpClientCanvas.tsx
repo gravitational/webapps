@@ -115,7 +115,9 @@ export default function useTdpClientCanvas(props: Props) {
         id: crypto.randomUUID(),
       });
 
-      return prevState;
+      // return a *copy* of the prevState so that React knows to re-render
+      // https://akashmittal.com/code-example-component-not-re-rendering-on-array-state-change/
+      return [...prevState];
     });
   };
 

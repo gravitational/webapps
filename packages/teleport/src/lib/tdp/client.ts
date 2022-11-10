@@ -215,11 +215,14 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   handleTdpNotification(buffer: ArrayBuffer) {
     const notification = this.codec.decodeNotification(buffer);
-    this.handleError(
-      new Error(notification.message),
-      TdpClientEvent.TDP_ERROR,
-      notification.severity === Severity.Error
-    );
+    if (notification.severity === Severity.Error) {
+      this.handleError(
+        new Error(notification.message),
+        TdpClientEvent.TDP_ERROR
+      );
+    } else if (notification.severity === Severity.Warning) {
+      this.handleWarning(notification.message, TdpClientEvent.TDP_WARNING);
+    }
   }
 
   // Assuming we have a message of type PNG_FRAME, extract its

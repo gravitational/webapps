@@ -65,7 +65,7 @@ export default function useDesktopSession() {
 
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,
-    [hostname]
+    [clusterId, hostname, username]
   );
 
   useEffect(() => {
@@ -90,6 +90,7 @@ export default function useDesktopSession() {
           }),
       ])
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterId, desktopName]);
 
   const [warnings, setWarnings] = useState<NotificationItem[]>([]);
@@ -105,8 +106,35 @@ export default function useDesktopSession() {
     clipboardSharingEnabled,
     setWarnings,
   });
+  const tdpClient = clientCanvasProps.tdpClient;
 
-  const webauthn = useWebAuthn(clientCanvasProps.tdpClient);
+  const webauthn = useWebAuthn(tdpClient);
+
+  const onShareDirectory = () => {
+    try {
+      window
+        .showDirectoryPicker()
+        .then(sharedDirHandle => {
+          setDirectorySharingState(prevState => ({
+            ...prevState,
+            isSharing: true,
+          }));
+          tdpClient.addSharedDirectory(sharedDirHandle);
+          tdpClient.sendSharedDirectoryAnnounce();
+        })
+        .catch(() => {
+          setDirectorySharingState(prevState => ({
+            ...prevState,
+            isSharing: false,
+          }));
+        });
+    } catch (e) {
+      setDirectorySharingState(prevState => ({
+        ...prevState,
+        browserError: true,
+      }));
+    }
+  };
 
   return {
     hostname,
@@ -125,6 +153,7 @@ export default function useDesktopSession() {
     setTdpConnection,
     showAnotherSessionActiveDialog,
     setShowAnotherSessionActiveDialog,
+    onShareDirectory,
     warnings,
     ...clientCanvasProps,
   };

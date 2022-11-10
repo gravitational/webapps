@@ -59,7 +59,6 @@ export function DesktopSession(props: State) {
     setTdpConnection,
     showAnotherSessionActiveDialog,
     setShowAnotherSessionActiveDialog,
-    warnings,
   } = props;
 
   const processing =
@@ -87,9 +86,6 @@ export function DesktopSession(props: State) {
       browserError: false,
     }));
   };
-
-  console.log('warnings = ');
-  console.log(warnings);
 
   const computeErrorDialog = () => {
     // Websocket is closed but we haven't
@@ -266,7 +262,6 @@ function Session(props: PropsWithChildren<Props>) {
     tdpClient,
     username,
     hostname,
-    clipboardSharingEnabled,
     setClipboardSharingEnabled,
     directorySharingState,
     setDirectorySharingState,
@@ -287,34 +282,6 @@ function Session(props: PropsWithChildren<Props>) {
     displayCanvas,
   } = props;
 
-  const clipboardSharingActive = clipboardSharingEnabled;
-
-  const onShareDirectory = () => {
-    try {
-      window
-        .showDirectoryPicker()
-        .then(sharedDirHandle => {
-          setDirectorySharingState(prevState => ({
-            ...prevState,
-            isSharing: true,
-          }));
-          tdpClient.addSharedDirectory(sharedDirHandle);
-          tdpClient.sendSharedDirectoryAnnounce();
-        })
-        .catch(() => {
-          setDirectorySharingState(prevState => ({
-            ...prevState,
-            isSharing: false,
-          }));
-        });
-    } catch (e) {
-      setDirectorySharingState(prevState => ({
-        ...prevState,
-        browserError: true,
-      }));
-    }
-  };
-
   return (
     <Flex flexDirection="column">
       <TopBar
@@ -328,10 +295,9 @@ function Session(props: PropsWithChildren<Props>) {
           tdpClient.nuke();
         }}
         userHost={`${username}@${hostname}`}
-        clipboardSharingEnabled={clipboardSharingActive}
         canShareDirectory={directorySharingState.canShare}
         isSharingDirectory={directorySharingState.isSharing}
-        onShareDirectory={onShareDirectory}
+        {...props}
       />
 
       {props.children}

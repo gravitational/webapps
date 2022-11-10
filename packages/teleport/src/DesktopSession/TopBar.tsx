@@ -18,6 +18,8 @@ import styled, { useTheme } from 'styled-components';
 import { Text, TopNav, Flex, Button } from 'design';
 import { Clipboard, FolderShared } from 'design/Icon';
 
+import { NotificationItem } from 'shared/components/Notification';
+
 import { colors } from 'teleport/Console/colors';
 
 import ActionMenu from './ActionMenu';
@@ -30,6 +32,7 @@ export default function TopBar(props: Props) {
     canShareDirectory,
     isSharingDirectory,
     onShareDirectory,
+    warnings,
   } = props;
   const theme = useTheme();
 
@@ -71,7 +74,7 @@ export default function TopBar(props: Props) {
                 : 'Clipboard Sharing Disabled'
             }
           />
-          <StyledButton>ok?</StyledButton>
+          <StyledButton>{warnings.length}</StyledButton>
         </Flex>
         <ActionMenu
           onDisconnect={onDisconnect}
@@ -109,4 +112,5 @@ type Props = {
   isSharingDirectory: boolean;
   onDisconnect: VoidFunction;
   onShareDirectory: VoidFunction;
+  warnings: NotificationItem[];
 };
