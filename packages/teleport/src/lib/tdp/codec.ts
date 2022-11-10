@@ -97,8 +97,9 @@ export type ClipboardData = {
 };
 
 export enum Severity {
-  Error = 0,
+  Info = 0,
   Warning = 1,
+  Error = 2,
 }
 
 // | message type (28) | message_length uint32 | message []byte | severity byte
