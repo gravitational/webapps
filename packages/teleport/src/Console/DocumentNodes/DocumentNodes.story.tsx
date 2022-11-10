@@ -35,7 +35,7 @@ export const Document = ({ value }: { value: ConsoleCtx }) => {
 };
 
 export const PaginationUnsupported = ({ value }: { value: ConsoleCtx }) => {
-  const ctx = value || createContext(true /* paginationUnsupported */);
+  const ctx = value || createContext({ paginationUnsupported: true });
   return (
     <TestLayout ctx={ctx}>
       <DocumentNodes doc={doc} visible={true} />
@@ -63,14 +63,14 @@ export const Failed = () => {
   );
 };
 
-export function createContext(paginationUnsupported = false) {
+export function createContext(opts?: { paginationUnsupported: boolean }) {
   const ctx = new ConsoleCtx();
 
   ctx.fetchClusters = () => {
     return Promise.resolve<any>(clusters);
   };
   ctx.fetchNodes = () => {
-    if (paginationUnsupported) {
+    if (opts?.paginationUnsupported) {
       return Promise.resolve({
         nodesRes: { nodes, paginationUnsupported: true },
       });

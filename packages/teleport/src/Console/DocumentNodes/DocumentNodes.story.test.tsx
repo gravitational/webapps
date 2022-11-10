@@ -34,7 +34,7 @@ test('render DocumentNodes', async () => {
 });
 
 test('render DocumentNodes pagination unsupported', async () => {
-  const ctx = createContext(true /* paginationUnsupported */);
+  const ctx = createContext({ paginationUnsupported: true });
   jest.spyOn(ctx, 'fetchClusters');
   jest.spyOn(ctx, 'fetchNodes');
 
