@@ -15,7 +15,14 @@ limitations under the License.
 */
 
 import React, { PropsWithChildren } from 'react';
-import { Indicator, Box, Text, Flex, ButtonSecondary } from 'design';
+import {
+  Indicator,
+  Box,
+  Text,
+  Flex,
+  ButtonSecondary,
+  ButtonPrimary,
+} from 'design';
 import { Danger, Warning } from 'design/Alert';
 import Dialog, {
   DialogHeader,
@@ -45,21 +52,18 @@ export function DesktopSession(props: State) {
   const {
     directorySharingState,
     setDirectorySharingState,
-    clipboardState,
     fetchAttempt,
     tdpConnection,
     disconnected,
     wsConnection,
     setTdpConnection,
+    showAnotherSessionActiveDialog,
+    setShowAnotherSessionActiveDialog,
   } = props;
-
-  const clipboardProcessing =
-    clipboardState.enabled && clipboardState.permission.state === 'prompt';
 
   const processing =
     fetchAttempt.status === 'processing' ||
-    tdpConnection.status === 'processing' ||
-    clipboardProcessing;
+    tdpConnection.status === 'processing';
 
   // onDialogClose is called when a user
   // dismisses a non-fatal error dialog.
@@ -84,8 +88,6 @@ export function DesktopSession(props: State) {
   };
 
   const computeErrorDialog = () => {
-    const clipboardError = clipboardState.enabled && clipboardState.errorText;
-
     // Websocket is closed but we haven't
     // closed it on purpose or registered a fatal tdp error.
     const unknownConnectionError =
@@ -100,8 +102,6 @@ export function DesktopSession(props: State) {
       errorText = tdpConnection.statusText || 'tdp connection failed';
     } else if (tdpConnection.status === '') {
       errorText = tdpConnection.statusText || 'encountered a non-fatal error';
-    } else if (clipboardError) {
-      errorText = clipboardState.errorText || 'clipboard sharing failed';
     } else if (unknownConnectionError) {
       errorText = 'Session disconnected for an unknown reason.';
     } else if (directorySharingState.browserError) {
@@ -111,6 +111,14 @@ export function DesktopSession(props: State) {
       based browsers like Google Chrome or Microsoft Edge. Brave users can \
       use the feature by navigating to brave://flags/#file-system-access-api \
       and selecting "Enable". Please switch to a supported browser.';
+    } else if (
+      fetchAttempt.status === 'processing' &&
+      tdpConnection.status === 'success'
+    ) {
+      errorText =
+        'The application has detected an invalid internal application state. \
+        Please file a bug report for this issue at \
+        https://github.com/gravitational/teleport/issues/new?assignees=&labels=bug&template=bug_report.md';
     }
     const open = errorText !== '';
     const fatal = !(
@@ -123,8 +131,17 @@ export function DesktopSession(props: State) {
   const errorDialog = computeErrorDialog();
 
   if (errorDialog.open) {
+    // A non-fatal error should only occur when a session is active, so we set initTdpCli and displayCanvas
+    // to true in so that the TdpClientCanvas state doesn't change, and the user can continue the session
+    // after dismissing the dialog.
+    const initAndDisplay = !errorDialog.fatal;
+
     return (
-      <Session {...props}>
+      <Session
+        {...props}
+        initTdpCli={initAndDisplay}
+        displayCanvas={initAndDisplay}
+      >
         <Dialog
           dialogCss={() => ({ width: '484px' })}
           onClose={onDialogClose}
@@ -171,9 +188,50 @@ export function DesktopSession(props: State) {
     );
   }
 
+  if (showAnotherSessionActiveDialog) {
+    // Don't start the TDP connection until the user confirms they're ok
+    // with potentially killing another user's connection.
+    const initTdpCli = false;
+
+    return (
+      <Session {...props} initTdpCli={initTdpCli} displayCanvas={false}>
+        <Dialog
+          dialogCss={() => ({ width: '484px' })}
+          onClose={() => {}}
+          open={true}
+        >
+          <DialogHeader style={{ flexDirection: 'column' }}>
+            <DialogTitle>Another Session Is Active</DialogTitle>
+          </DialogHeader>
+          <DialogContent>
+            This desktop has an active session, connecting to it may close the
+            other session. Do you wish to continue?
+          </DialogContent>
+          <DialogFooter>
+            <ButtonPrimary
+              mr={3}
+              onClick={() => {
+                window.close();
+              }}
+            >
+              Abort
+            </ButtonPrimary>
+            <ButtonSecondary
+              onClick={() => {
+                setShowAnotherSessionActiveDialog(false);
+              }}
+            >
+              Continue
+            </ButtonSecondary>
+          </DialogFooter>
+        </Dialog>
+      </Session>
+    );
+  }
+
   if (disconnected) {
     return (
-      <Session {...props}>
+      <Session {...props} initTdpCli={false} displayCanvas={false}>
         <Box textAlign="center" m={10}>
           <Text>Session successfully disconnected</Text>
         </Box>
@@ -182,8 +240,13 @@ export function DesktopSession(props: State) {
   }
 
   if (processing) {
+    // We don't know whether another session for this desktop is active while the
+    // fetchAttempt is still processing, so hold off on starting a TDP connection
+    // until that information is available.
+    const initTdpCli = fetchAttempt.status !== 'processing';
+
     return (
-      <Session {...props}>
+      <Session {...props} initTdpCli={initTdpCli} displayCanvas={false}>
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
@@ -191,22 +254,18 @@ export function DesktopSession(props: State) {
     );
   }
 
-  return <Session {...props}></Session>;
+  return <Session {...props} initTdpCli={true} displayCanvas={true} />;
 }
 
-function Session(props: PropsWithChildren<State>) {
+function Session(props: PropsWithChildren<Props>) {
   const {
-    fetchAttempt,
-    tdpConnection,
-    wsConnection,
-    disconnected,
     setDisconnected,
     webauthn,
     tdpClient,
     username,
     hostname,
-    clipboardState,
-    setClipboardState,
+    clipboardSharingEnabled,
+    setClipboardSharingEnabled,
     directorySharingState,
     setDirectorySharingState,
     onPngFrame,
@@ -221,24 +280,11 @@ function Session(props: PropsWithChildren<State>) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    onMouseEnter,
-    windowOnFocus,
+    initTdpCli,
+    displayCanvas,
   } = props;
 
-  const clipboardSharingActive =
-    clipboardState.enabled && clipboardState.permission.state === 'granted';
-  const clipboardSuccess =
-    !clipboardState.enabled ||
-    (clipboardState.enabled &&
-      clipboardState.permission.state === 'granted' &&
-      clipboardState.errorText === '');
-
-  const showCanvas =
-    fetchAttempt.status === 'success' &&
-    (tdpConnection.status === 'success' || tdpConnection.status === '') &&
-    wsConnection === 'open' &&
-    !disconnected &&
-    clipboardSuccess;
+  const clipboardSharingActive = clipboardSharingEnabled;
 
   const onShareDirectory = () => {
     try {
@@ -271,10 +317,7 @@ function Session(props: PropsWithChildren<State>) {
       <TopBar
         onDisconnect={() => {
           setDisconnected(true);
-          setClipboardState(prevState => ({
-            ...prevState,
-            enabled: false,
-          }));
+          setClipboardSharingEnabled(false);
           setDirectorySharingState(prevState => ({
             ...prevState,
             isSharing: false,
@@ -306,16 +349,13 @@ function Session(props: PropsWithChildren<State>) {
         />
       )}
 
-      {/* TdpClientCanvas should always be present in the DOM so that it calls
-          tdpClient.init() and initializes the required tdpClient event listeners,
-          both of which are needed for this component's state to properly respond to
-          initialization events. */}
       <TdpClientCanvas
         style={{
-          display: showCanvas ? 'flex' : 'none',
+          display: displayCanvas ? 'flex' : 'none',
           flex: 1, // ensures the canvas fills available screen space
         }}
         tdpCli={tdpClient}
+        tdpCliInit={initTdpCli}
         tdpCliOnPngFrame={onPngFrame}
         tdpCliOnClipboardData={onClipboardData}
         tdpCliOnTdpError={onTdpError}
@@ -328,9 +368,14 @@ function Session(props: PropsWithChildren<State>) {
         onMouseUp={onMouseUp}
         onMouseWheelScroll={onMouseWheelScroll}
         onContextMenu={onContextMenu}
-        onMouseEnter={onMouseEnter}
-        windowOnFocus={windowOnFocus}
       />
     </Flex>
   );
 }
+
+type Props = State & {
+  // Determines whether the tdp client that's passed to the TdpClientCanvas
+  // should be initialized.
+  initTdpCli: boolean;
+  displayCanvas: boolean;
+};

@@ -9,7 +9,9 @@ import { TerminalLine } from 'shared/components/AnimatedTerminal/content';
 
 import { KeywordHighlight } from 'shared/components/AnimatedTerminal/TerminalContent';
 
-import { usePingTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
+import { usePingTeleport } from 'teleport/Discover/Shared/PingTeleportContext';
+
+import type { WindowsDesktopService } from 'teleport/services/desktops';
 
 const startLines = [
   {
@@ -71,7 +73,8 @@ export function StartTeleportTerminalAnimation() {
   const [animationFinished, setAnimationFinished] = useState(false);
   const [lines, setLines] = useState<TerminalLine[]>([...startLines]);
 
-  const { active, result, timedOut, timeout } = usePingTeleport();
+  const { active, result, timedOut, timeout } =
+    usePingTeleport<WindowsDesktopService>();
 
   const savedTimeout = useRef(0);
   useEffect(() => {

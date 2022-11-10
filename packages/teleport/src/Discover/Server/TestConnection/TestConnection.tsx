@@ -21,16 +21,15 @@ import * as Icons from 'design/Icon';
 import Select from 'shared/components/Select';
 
 import useTeleport from 'teleport/useTeleport';
+import { YamlReader } from 'teleport/Discover/Shared/SetupAccess/AccessInfo';
 
 import {
-  Header,
+  HeaderWithBackBtn,
   ActionButtons,
   TextIcon,
   HeaderSubtitle,
   Mark,
-  ReadOnlyYamlEditor,
 } from '../../Shared';
-import { ruleConnectionDiagnostic } from '../../templates';
 
 import { useTestConnection, State } from './useTestConnection';
 
@@ -51,6 +50,7 @@ export function TestConnection({
   runConnectionDiagnostic,
   diagnosis,
   nextStep,
+  prevStep,
   canTestConnection,
 }: State) {
   const [usernameOpts] = useState(() =>
@@ -88,7 +88,7 @@ export function TestConnection({
 
   return (
     <Box>
-      <Header>Test Connection</Header>
+      <HeaderWithBackBtn onPrev={prevStep}>Test Connection</HeaderWithBackBtn>
       <HeaderSubtitle>
         Optionally verify that you can successfully connect to the server you
         just added.
@@ -133,9 +133,7 @@ export function TestConnection({
                 Please ask your Teleport administrator to update your role and
                 add the <Mark>connection_diagnostic</Mark> rule:
               </Text>
-              <Flex minHeight="155px" mt={3}>
-                <ReadOnlyYamlEditor content={ruleConnectionDiagnostic} />
-              </Flex>
+              <YamlReader traitKind="ConnDiag" />
             </Box>
           )}
         </Flex>
@@ -148,14 +146,12 @@ export function TestConnection({
                 {diagnosis.traces.map((trace, index) => {
                   if (trace.status === 'failed') {
                     return (
-                      <>
-                        <TextIcon alignItems="baseline">
-                          <Icons.CircleCross mr={1} color="danger" />
-                          {trace.details}
-                          <br />
-                          {trace.error}
-                        </TextIcon>
-                      </>
+                      <TextIcon alignItems="baseline">
+                        <Icons.CircleCross mr={1} color="danger" />
+                        {trace.details}
+                        <br />
+                        {trace.error}
+                      </TextIcon>
                     );
                   }
                   if (trace.status === 'success') {

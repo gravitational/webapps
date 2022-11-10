@@ -25,6 +25,7 @@ import {
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpCli,
+    tdpCliInit = false,
     tdpCliOnPngFrame,
     tdpCliOnClipboardData,
     tdpCliOnTdpError,
@@ -38,8 +39,6 @@ export default function TdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    onMouseEnter,
-    windowOnFocus,
     style,
   } = props;
 
@@ -53,15 +52,6 @@ export default function TdpClientCanvas(props: Props) {
     canvasRef.current.style.outline = 'none';
     canvasRef.current.focus();
   }
-
-  useEffect(() => {
-    if (tdpCli) {
-      tdpCli.init();
-      return () => {
-        tdpCli.nuke();
-      };
-    }
-  }, [tdpCli]);
 
   useEffect(() => {
     if (tdpCli && tdpCliOnPngFrame) {
@@ -255,40 +245,22 @@ export default function TdpClientCanvas(props: Props) {
     };
   }, [onKeyUp]);
 
+  // Call init after all listeners have been registered
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const _onmouseenter = (e: MouseEvent) => {
-      onMouseEnter(tdpCli, e);
-    };
-    if (onMouseEnter) {
-      canvas.onmouseenter = _onmouseenter;
+    if (tdpCli && tdpCliInit) {
+      tdpCli.init();
+      return () => {
+        tdpCli.nuke();
+      };
     }
-
-    return () => {
-      if (onMouseEnter) canvas.removeEventListener('mouseenter', _onmouseenter);
-    };
-  }, [onMouseEnter]);
-
-  useEffect(() => {
-    const _windowonfocus = (e: FocusEvent) => {
-      // Checking for (canvasRef.current.style.display !== 'none') ensures windowOnFocus behaves
-      // like the other passed event listeners, namely it isn't called if the TdpClientCanvas isn't displayed.
-      if (canvasRef.current.style.display !== 'none') windowOnFocus(tdpCli, e);
-    };
-    if (windowOnFocus) {
-      window.onfocus = _windowonfocus;
-    }
-
-    return () => {
-      if (windowOnFocus) window.removeEventListener('focus', _windowonfocus);
-    };
-  }, [windowOnFocus]);
+  }, [tdpCli, tdpCliInit]);
 
   return <canvas style={{ ...style }} ref={canvasRef} />;
 }
 
 export type Props = {
   tdpCli?: TdpClient;
+  tdpCliInit?: boolean;
   tdpCliOnPngFrame?: (
     ctx: CanvasRenderingContext2D,
     pngFrame: PngFrame
@@ -312,7 +284,5 @@ export type Props = {
   onMouseUp?: (cli: TdpClient, e: MouseEvent) => void;
   onMouseWheelScroll?: (cli: TdpClient, e: WheelEvent) => void;
   onContextMenu?: () => boolean;
-  onMouseEnter?: (cli: TdpClient, e: MouseEvent) => void;
-  windowOnFocus?: (cli: TdpClient, e: FocusEvent) => void;
   style?: CSSProperties;
 };

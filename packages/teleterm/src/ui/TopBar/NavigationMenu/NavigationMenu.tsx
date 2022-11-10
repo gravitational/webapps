@@ -59,8 +59,9 @@ export function NavigationMenu() {
   const [isPopoverOpened, setIsPopoverOpened] = useState(false);
   const selectorRef = useRef<HTMLButtonElement>();
 
-  if (!activeRootCluster) {
-    return <></>;
+  const shouldShowMenu = !!activeRootCluster?.features?.advancedAccessWorkflows;
+  if (!shouldShowMenu) {
+    return null;
   }
 
   return (
@@ -68,6 +69,7 @@ export function NavigationMenu() {
       <TopBarButton
         ref={selectorRef}
         isOpened={isPopoverOpened}
+        title="Go To Access Requests"
         onClick={() => setIsPopoverOpened(true)}
       >
         <MoreVert fontSize={6} />

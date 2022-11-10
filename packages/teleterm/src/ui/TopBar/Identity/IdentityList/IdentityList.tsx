@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Box, Flex, Text } from 'design';
+import { Box, Flex, Text, Label } from 'design';
 
 import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 
@@ -32,9 +32,13 @@ export function IdentityList(props: IdentityListProps) {
           <Flex px={3} pt={2} pb={2} justifyContent="space-between">
             <Box>
               <Text bold>{props.loggedInUser.name}</Text>
-              <Text typography="body2" color="text.secondary">
-                {props.loggedInUser.rolesList.join(', ')}
-              </Text>
+              <Flex flexWrap="wrap" gap={1}>
+                {props.loggedInUser.rolesList.map(role => (
+                  <Label key={role} kind="secondary">
+                    {role}
+                  </Label>
+                ))}
+              </Flex>
             </Box>
           </Flex>
           <Separator />

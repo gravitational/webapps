@@ -34,6 +34,33 @@ describe('services/history', () => {
     jest.clearAllMocks();
   });
 
+  describe('ensureBaseUrl', () => {
+    it('should always ensure the base url matched cfg.baseUrl', () => {
+      expect(history.ensureBaseUrl('')).toBe('http://localhost/');
+      expect(history.ensureBaseUrl('/')).toBe('http://localhost/');
+      expect(history.ensureBaseUrl('/web')).toBe('http://localhost/web');
+      expect(history.ensureBaseUrl('somepath')).toBe(
+        'http://localhost/somepath'
+      );
+      expect(history.ensureBaseUrl('http://badurl')).toBe('http://localhost/');
+      // app access path redirects
+      expect(
+        history.ensureBaseUrl(
+          '/web/launch%3Fpath%3D%252Fteleport%252Fconfig%252F'
+        )
+      ).toBe(
+        'http://localhost/web/launch%3Fpath%3D%252Fteleport%252Fconfig%252F'
+      );
+      expect(
+        history.ensureBaseUrl(
+          'http://badurl/web/launch%3Fpath%3D%252Fteleport%252Fconfig%252F'
+        )
+      ).toBe(
+        'http://localhost/web/launch%3Fpath%3D%252Fteleport%252Fconfig%252F'
+      );
+    });
+  });
+
   describe('canPush', () => {
     const push = actual => ({
       andExpect(expected) {

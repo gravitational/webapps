@@ -5,6 +5,7 @@ import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
 import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
 import { DbProtocol, DbType } from 'teleport/services/databases';
+import { pipe } from 'shared/utils/pipe';
 
 import { routing } from 'teleterm/ui/uri';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
@@ -72,7 +73,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async logout(clusterUri: string) {
     // TODO(gzdunek): logout and removeCluster should be combined into a single acton in tshd
     await this.client.logout(clusterUri);
-    await this.syncClusterInfo(clusterUri);
     this.removeResources(clusterUri);
     await this.removeCluster(clusterUri);
     await this.removeClusterKubeConfigs(clusterUri);
@@ -395,67 +395,81 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
   }
 
-  async getRequestableRoles(clusterUri: string) {
-    const cluster = this.state.clusters.get(clusterUri);
+  async getRequestableRoles(rootClusterUri: string) {
+    const cluster = this.state.clusters.get(rootClusterUri);
     if (!cluster.connected) {
       return;
     }
 
-    return this.client.getRequestableRoles(clusterUri);
+    return this.client.getRequestableRoles(rootClusterUri);
   }
 
-  async getAccessRequests(clusterUri: string) {
-    const cluster = this.state.clusters.get(clusterUri);
-    if (!cluster.connected) {
-      return;
+  getAssumedRequests(rootClusterUri: string) {
+    const cluster = this.state.clusters.get(rootClusterUri);
+    if (!cluster?.connected) {
+      return {};
     }
 
-    return this.client.getAccessRequests(clusterUri);
+    return cluster.loggedInUser?.assumedRequests || {};
   }
 
-  async deleteAccessRequest(clusterUri: string, requestId: string) {
-    const cluster = this.state.clusters.get(clusterUri);
+  getAssumedRequest(rootClusterUri: string, requestId: string) {
+    return this.getAssumedRequests(rootClusterUri)[requestId];
+  }
+
+  async getAccessRequests(rootClusterUri: string) {
+    const cluster = this.state.clusters.get(rootClusterUri);
     if (!cluster.connected) {
       return;
     }
-    return this.client.deleteAccessRequest(clusterUri, requestId);
+
+    return this.client.getAccessRequests(rootClusterUri);
+  }
+
+  async deleteAccessRequest(rootClusterUri: string, requestId: string) {
+    const cluster = this.state.clusters.get(rootClusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+    return this.client.deleteAccessRequest(rootClusterUri, requestId);
   }
 
   async assumeRole(
-    clusterUri: string,
+    rootClusterUri: string,
     requestIds: string[],
     dropIds: string[]
   ) {
-    const cluster = this.state.clusters.get(clusterUri);
+    const cluster = this.state.clusters.get(rootClusterUri);
     if (!cluster.connected) {
       return;
     }
-    return this.client.assumeRole(clusterUri, requestIds, dropIds);
+    await this.client.assumeRole(rootClusterUri, requestIds, dropIds);
+    return this.syncCluster(rootClusterUri);
   }
 
-  async getAccessRequest(clusterUri: string, requestId: string) {
-    const cluster = this.state.clusters.get(clusterUri);
+  async getAccessRequest(rootClusterUri: string, requestId: string) {
+    const cluster = this.state.clusters.get(rootClusterUri);
     if (!cluster.connected) {
       return;
     }
 
-    return this.client.getAccessRequest(clusterUri, requestId);
+    return this.client.getAccessRequest(rootClusterUri, requestId);
   }
 
   async reviewAccessRequest(
-    clusterUri: string,
+    rootClusterUri: string,
     params: ReviewAccessRequestParams
   ) {
-    const cluster = this.state.clusters.get(clusterUri);
+    const cluster = this.state.clusters.get(rootClusterUri);
     if (!cluster.connected) {
       return;
     }
 
-    return this.client.reviewAccessRequest(clusterUri, params);
+    return this.client.reviewAccessRequest(rootClusterUri, params);
   }
 
   async createAccessRequest(params: CreateAccessRequestParams) {
-    const cluster = this.state.clusters.get(params.clusterUri);
+    const cluster = this.state.clusters.get(params.rootClusterUri);
     if (!cluster.connected) {
       return;
     }
@@ -696,16 +710,49 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return useStore(this).state;
   }
 
-  // Note: client.getCluster ultimately reads data from the disk, so syncClusterInfo will not fail
-  // with a retryable error in case the certs have expired.
   private async syncClusterInfo(clusterUri: string) {
     const cluster = await this.client.getCluster(clusterUri);
-    this.setState(draft => {
-      draft.clusters.set(
-        clusterUri,
-        this.removeInternalLoginsFromCluster(cluster)
-      );
+    const assumedRequests = cluster.loggedInUser
+      ? await this.fetchClusterAssumedRequests(
+          cluster.loggedInUser.activeRequestsList,
+          clusterUri
+        )
+      : undefined;
+    const mergeAssumedRequests = (cluster: Cluster) => ({
+      ...cluster,
+      loggedInUser: cluster.loggedInUser && {
+        ...cluster.loggedInUser,
+        assumedRequests,
+      },
     });
+    const processCluster = pipe(
+      this.removeInternalLoginsFromCluster,
+      mergeAssumedRequests
+    );
+
+    this.setState(draft => {
+      draft.clusters.set(clusterUri, processCluster(cluster));
+    });
+  }
+
+  private async fetchClusterAssumedRequests(
+    activeRequestsList: string[],
+    clusterUri: string
+  ) {
+    return (
+      await Promise.all(
+        activeRequestsList.map(requestId =>
+          this.getAccessRequest(clusterUri, requestId)
+        )
+      )
+    ).reduce((requestsMap, request) => {
+      requestsMap[request.id] = {
+        id: request.id,
+        expires: new Date(request.expires.seconds * 1000),
+        roles: request.rolesList,
+      };
+      return requestsMap;
+    }, {});
   }
 
   private removeResources(clusterUri: string) {
