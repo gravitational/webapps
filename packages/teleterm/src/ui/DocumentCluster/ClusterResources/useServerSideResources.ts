@@ -42,15 +42,16 @@ export function useServerSideResources<Agent>(
 
   // startKey is used here as a way to paginate through agents returned from
   // their respective rpcs.
-  const [fetchAttempt, fetch] = useAsync(async (startKey: string) =>
-    retryWithRelogin(ctx, documentUri, clusterUri, () =>
-      fetchFunction({
-        ...agentFilter,
-        limit,
-        clusterUri,
-        startKey,
-      })
-    )
+  const [fetchAttempt, fetch] = useAsync(
+    (startKey: string, filter: AgentFilter) =>
+      retryWithRelogin(ctx, documentUri, clusterUri, () =>
+        fetchFunction({
+          ...filter,
+          limit,
+          clusterUri,
+          startKey,
+        })
+      )
   );
 
   // If there is no startKey at the current page's index, there is no more data to get
@@ -77,9 +78,9 @@ export function useServerSideResources<Agent>(
 
   useEffect(() => {
     const fetchAndUpdateKeys = async () => {
-      const [response, err] = await fetch(keys[pageIndex - 1]);
-      // the error will be handled via the fetchAttempt outside
-      // return early here as there are no keys to update
+      const [response, err] = await fetch(keys[pageIndex - 1], agentFilter);
+      // The error will be handled via the fetchAttempt outside.
+      // Return early here as there are no keys to update.
       if (err) {
         return;
       }

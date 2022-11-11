@@ -18,6 +18,19 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 import { useServerSideResources } from '../useServerSideResources';
 
+function getEmptyTableText(status: '' | 'error' | 'processing' | 'success') {
+  switch (status) {
+    case 'error':
+      return 'Failed to fetch servers.';
+    case '':
+      return 'Searching…';
+    case 'processing':
+      return 'Searching…';
+    case 'success':
+      return 'No servers found.';
+  }
+}
+
 export function useServers() {
   const appContext = useAppContext();
 
@@ -67,6 +80,7 @@ export function useServers() {
     disabledRows: fetchAttempt.status === 'processing',
     nextPage,
     prevPage,
+    emptyTableText: getEmptyTableText(fetchAttempt.status),
     customSort: {
       dir: agentFilter.sort?.dir,
       fieldName: agentFilter.sort?.fieldName,

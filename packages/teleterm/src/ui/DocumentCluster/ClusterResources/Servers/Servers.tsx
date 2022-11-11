@@ -55,6 +55,7 @@ function ServerList(props: State) {
     onAgentLabelClick,
     disabledRows,
     updateSearch,
+    emptyTableText,
   } = props;
   return (
     <>
@@ -80,7 +81,7 @@ function ServerList(props: State) {
             {
               key: 'addr',
               headerText: 'Address',
-              isSortable: true,
+              isSortable: false,
               render: renderAddressCell,
             },
             {
@@ -103,11 +104,7 @@ function ServerList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={
-            fetchAttempt.status === 'success'
-              ? 'No servers found'
-              : 'Searching…'
-          }
+          emptyText={emptyTableText}
           data={servers}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
