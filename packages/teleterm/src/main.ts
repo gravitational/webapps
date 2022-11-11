@@ -84,6 +84,7 @@ app.on('web-contents-created', (_, contents) => {
     // Open links to documentation in the external browser.
     // They need to have `target` set to `_blank`.
     if (url.host === 'goteleport.com') {
+    if (url.protocol === 'https:' && url.host === 'goteleport.com') {
       shell.openExternal(url.toString());
     } else {
       logger.warn(
