@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-import { AgentLabel, AgentQueryMeta } from 'teleport/services/resources';
+import React from 'react';
+import { render } from 'design/utils/testing';
+import { Loaded, PaginationUnsupported } from './Desktops.story';
 
-export interface App {
-  id: string;
-  name: string;
-  description: string;
-  uri: string;
-  publicAddr: string;
-  labels: AgentLabel[];
-  clusterId: string;
-  launchUrl: string;
-  fqdn: string;
-  awsRoles: AwsRole[];
-  awsConsole: boolean;
-}
+test('loaded', () => {
+  const { container } = render(<Loaded />);
+  expect(container.firstChild).toMatchSnapshot();
+});
 
-export type AppsResponse = AgentQueryMeta & {
-  apps: App[];
-};
-
-export type AwsRole = {
-  arn: string;
-  display: string;
-};
+test('pagination unsupported', () => {
+  const { container } = render(<PaginationUnsupported />);
+  expect(container.firstChild).toMatchSnapshot();
+});

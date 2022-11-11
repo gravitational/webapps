@@ -37,10 +37,11 @@ test('correct processed fetch response formatting', async () => {
     ],
     startKey: mockApiResponse.startKey,
     totalCount: mockApiResponse.totalCount,
+    paginationUnsupported: false,
   });
 });
 
-test('handling of null fetch response', async () => {
+test('handling of null (empty) fetch response', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(null);
 
   const kubeService = new KubeService();
@@ -52,6 +53,25 @@ test('handling of null fetch response', async () => {
     kubes: [],
     startKey: undefined,
     totalCount: undefined,
+    paginationUnsupported: false,
+  });
+});
+
+test('handling of null fields response', async () => {
+  jest
+    .spyOn(api, 'get')
+    .mockResolvedValue({ startKey: null, totalCount: null });
+
+  const kubeService = new KubeService();
+  const response = await kubeService.fetchKubernetes('clusterId', {
+    search: 'does-not-matter',
+  });
+
+  expect(response).toEqual({
+    kubes: [],
+    startKey: null,
+    totalCount: null,
+    paginationUnsupported: true,
   });
 });
 

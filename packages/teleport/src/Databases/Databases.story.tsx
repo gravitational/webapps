@@ -26,6 +26,13 @@ export default {
 
 export const Loaded = () => <Databases {...props} />;
 
+export const PaginationUnsupported = () => (
+  <Databases
+    {...props}
+    results={{ ...props.results, paginationUnsupported: true }}
+  />
+);
+
 export const Empty = () => (
   <Databases {...props} results={{ databases: [] }} isSearchEmpty={true} />
 );

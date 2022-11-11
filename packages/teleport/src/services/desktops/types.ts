@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AgentLabel } from 'teleport/services/resources';
+import { AgentLabel, AgentQueryMeta } from 'teleport/services/resources';
 
 // Desktop is a remote desktop.
 export type Desktop = {
@@ -28,8 +28,6 @@ export type Desktop = {
   labels: AgentLabel[];
 };
 
-export type DesktopsResponse = {
+export type DesktopsResponse = AgentQueryMeta & {
   desktops: Desktop[];
-  startKey?: string;
-  totalCount?: number;
 };

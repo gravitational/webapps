@@ -113,6 +113,7 @@ export function Databases(props: State) {
             replaceHistory={replaceHistory}
             onLabelClick={onLabelClick}
             accessRequestId={accessRequestId}
+            paginationUnsupported={results.paginationUnsupported}
           />
         </>
       )}

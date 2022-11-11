@@ -103,6 +103,7 @@ export default function DocumentNodes(props: Props) {
           )}
           {attempt.status !== 'processing' && (
             <NodeList
+              paginationUnsupported={results.paginationUnsupported}
               nodes={results.nodes}
               totalCount={results.totalCount}
               onLoginMenuOpen={onLoginMenuOpen}
