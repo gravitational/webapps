@@ -21,6 +21,10 @@ import history from 'teleport/services/history';
 import LogoHero from 'teleport/components/LogoHero';
 import cfg from 'teleport/config';
 
+import { userEventService } from 'teleport/services/userEvent';
+
+import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+
 import { NewCredentials } from './NewCredentials';
 import { CardWelcome } from './CardWelcome';
 
@@ -28,6 +32,7 @@ export default function Welcome() {
   const { tokenId } = useParams<{ tokenId: string }>();
 
   const handleOnInviteContinue = () => {
+    userEventService.captureUserEvent({ event: userEvents.onboard.getStartedClickEvent });
     history.push(cfg.getUserInviteTokenContinueRoute(tokenId));
   };
 

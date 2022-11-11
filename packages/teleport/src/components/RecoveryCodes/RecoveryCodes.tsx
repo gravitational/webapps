@@ -21,6 +21,8 @@ import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 
 import { RecoveryCodes } from 'teleport/services/auth';
+import { userEventService } from 'teleport/services/userEvent';
+import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
 
 export default function RecoveryCodesDialog({
   recoveryCodes,
@@ -39,6 +41,11 @@ export default function RecoveryCodesDialog({
       selectElementContent(codesRef.current);
     });
   };
+
+  const proceed = () => {
+    userEventService.captureUserEvent({ event: userEvents.onboard.recoveryCodesContinueClickEvent });
+    onContinue()
+  }
 
   let title = 'Backup & Recovery Codes';
   let btnText = `I have saved my Recovery Codes - ${continueText}`;
@@ -114,7 +121,7 @@ export default function RecoveryCodesDialog({
               size="large"
               width="100%"
               className="no-print"
-              onClick={onContinue}
+              onClick={proceed}
             >
               {btnText}
             </ButtonPrimary>

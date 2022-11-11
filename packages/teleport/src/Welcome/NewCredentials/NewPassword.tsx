@@ -25,6 +25,9 @@ import {
 } from 'shared/components/Validation/rules';
 import { useRefAutoFocus } from 'shared/hooks';
 
+import { userEventService } from 'teleport/services/userEvent';
+import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+
 import { Props as CredentialsProps, SliderProps } from './NewCredentials';
 
 export function NewPassword(props: Props) {
@@ -50,6 +53,8 @@ export function NewPassword(props: Props) {
     validator: Validator
   ) {
     e.preventDefault(); // prevent form submit default
+
+    userEventService.captureUserEvent({ event: userEvents.onboard.setPasswordSubmitEvent });
 
     if (!validator.validate()) {
       return;

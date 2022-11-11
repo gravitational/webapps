@@ -30,6 +30,10 @@ import createMfaOptions from 'shared/utils/createMfaOptions';
 import { useRefAutoFocus } from 'shared/hooks';
 import { Auth2faType } from 'shared/services';
 
+import { userEventService } from 'teleport/services/userEvent';
+
+import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+
 import { Props as CredentialsProps, SliderProps } from './NewCredentials';
 import secKeyGraphic from './sec-key-with-bg.png';
 
@@ -65,6 +69,8 @@ export function NewMfaDevice(props: Props) {
     validator: Validator
   ) {
     e.preventDefault(); // prevent form submit default
+
+    userEventService.captureUserEvent({ event: userEvents.onboard.registerChallengeSubmitEvent });
 
     if (!validator.validate()) {
       return;
