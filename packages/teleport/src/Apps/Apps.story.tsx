@@ -32,6 +32,13 @@ export const Loaded = () => (
   </MemoryRouter>
 );
 
+export const PaginationUnsupported = () => (
+  <Apps
+    {...props}
+    results={{ ...props.results, paginationUnsupported: true }}
+  />
+);
+
 export const Empty = () => (
   <MemoryRouter>
     <Apps {...props} results={{ apps: [] }} isSearchEmpty={true} />

@@ -34,6 +34,13 @@ export const Loaded = () => (
   </MemoryRouter>
 );
 
+export const PaginationUnsupported = () => (
+  <Kubes
+    {...props}
+    results={{ ...props.results, paginationUnsupported: true }}
+  />
+);
+
 export const Empty = () => (
   <MemoryRouter>
     <Kubes {...props} results={{ kubes: [] }} isSearchEmpty={true} />

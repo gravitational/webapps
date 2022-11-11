@@ -29,6 +29,13 @@ export const Loading = () => (
   <Desktops {...props} attempt={{ status: 'processing' }} />
 );
 
+export const PaginationUnsupported = () => (
+  <Desktops
+    {...props}
+    results={{ ...props.results, paginationUnsupported: true }}
+  />
+);
+
 export const Loaded = () => <Desktops {...props} />;
 
 export const Empty = () => (
