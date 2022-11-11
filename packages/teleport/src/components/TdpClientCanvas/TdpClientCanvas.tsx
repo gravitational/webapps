@@ -189,7 +189,7 @@ export default function TdpClientCanvas(props: Props) {
     return () => {
       if (onMouseMove) canvas.removeEventListener('mousemove', _onmousemove);
     };
-  }, [onMouseMove]);
+  }, [tdpCli, onMouseMove]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -203,7 +203,7 @@ export default function TdpClientCanvas(props: Props) {
     return () => {
       if (onMouseDown) canvas.removeEventListener('mousedown', _onmousedown);
     };
-  }, [onMouseDown]);
+  }, [tdpCli, onMouseDown]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -217,7 +217,7 @@ export default function TdpClientCanvas(props: Props) {
     return () => {
       if (onMouseUp) canvas.removeEventListener('mouseup', _onmouseup);
     };
-  }, [onMouseUp]);
+  }, [tdpCli, onMouseUp]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -231,7 +231,7 @@ export default function TdpClientCanvas(props: Props) {
     return () => {
       if (onMouseWheelScroll) canvas.removeEventListener('wheel', _onwheel);
     };
-  }, [onMouseWheelScroll]);
+  }, [tdpCli, onMouseWheelScroll]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -245,7 +245,7 @@ export default function TdpClientCanvas(props: Props) {
     return () => {
       if (onKeyDown) canvas.removeEventListener('keydown', _onkeydown);
     };
-  }, [onKeyDown]);
+  }, [tdpCli, onKeyDown]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -259,7 +259,7 @@ export default function TdpClientCanvas(props: Props) {
     return () => {
       if (onKeyUp) canvas.removeEventListener('keyup', _onkeyup);
     };
-  }, [onKeyUp]);
+  }, [tdpCli, onKeyUp]);
 
   // Call init after all listeners have been registered
   useEffect(() => {

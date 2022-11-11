@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Text, TopNav, Flex, Button } from 'design';
+import { Text, TopNav, Flex } from 'design';
 import { Clipboard, FolderShared } from 'design/Icon';
 
 import { NotificationItem } from 'shared/components/Notification';
@@ -23,6 +23,7 @@ import { NotificationItem } from 'shared/components/Notification';
 import { colors } from 'teleport/Console/colors';
 
 import ActionMenu from './ActionMenu';
+import { WarningDropdown } from './WarningDropdown';
 
 export default function TopBar(props: Props) {
   const {
@@ -33,6 +34,7 @@ export default function TopBar(props: Props) {
     isSharingDirectory,
     onShareDirectory,
     warnings,
+    onRemoveWarning,
   } = props;
   const theme = useTheme();
 
@@ -74,7 +76,10 @@ export default function TopBar(props: Props) {
                 : 'Clipboard Sharing Disabled'
             }
           />
-          <StyledButton>{warnings.length}</StyledButton>
+          <WarningDropdown
+            warnings={warnings}
+            onRemoveWarning={onRemoveWarning}
+          />
         </Flex>
         <ActionMenu
           onDisconnect={onDisconnect}
@@ -100,11 +105,6 @@ const StyledFolderShared = styled(FolderShared)`
   align-self: 'center';
 `;
 
-const StyledButton = styled(Button)`
-  min-height: 0;
-  height: ${({ theme }) => theme.fontSizes[7] + 'px'};
-`;
-
 type Props = {
   userHost: string;
   clipboardSharingEnabled: boolean;
@@ -113,4 +113,5 @@ type Props = {
   onDisconnect: VoidFunction;
   onShareDirectory: VoidFunction;
   warnings: NotificationItem[];
+  onRemoveWarning(id: string): void;
 };

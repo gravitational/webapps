@@ -56,8 +56,10 @@ const props: State = {
     browserError: false,
   },
   setDirectorySharingState: () => {},
+  onShareDirectory: () => {},
   onPngFrame: () => {},
   onTdpError: () => {},
+  onTdpWarning: () => {},
   onKeyDown: () => {},
   onKeyUp: () => {},
   onMouseMove: () => {},
@@ -76,6 +78,50 @@ const props: State = {
   isUsingChrome: true,
   showAnotherSessionActiveDialog: false,
   setShowAnotherSessionActiveDialog: () => {},
+  warnings: [
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '6042e748-b756-4cb0-8c20-9f42d4d9beff',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e2',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e3',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e4',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e5',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e6',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e7',
+    },
+  ],
 };
 
 export const Processing = () => (

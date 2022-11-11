@@ -93,7 +93,53 @@ export default function useDesktopSession() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterId, desktopName]);
 
-  const [warnings, setWarnings] = useState<NotificationItem[]>([]);
+  const [warnings, setWarnings] = useState<NotificationItem[]>([
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '6042e748-b756-4cb0-8c20-9f42d4d9beff',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e2',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e3',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e4',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e5',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e6',
+    },
+    {
+      content:
+        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
+      severity: 'warn',
+      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e7',
+    },
+  ]);
+  const onRemoveWarning = (id: string) => {
+    setWarnings(prevState => prevState.filter(warning => warning.id !== id));
+  };
 
   const clientCanvasProps = useTdpClientCanvas({
     username,
@@ -155,6 +201,7 @@ export default function useDesktopSession() {
     setShowAnotherSessionActiveDialog,
     onShareDirectory,
     warnings,
+    onRemoveWarning,
     ...clientCanvasProps,
   };
 }
