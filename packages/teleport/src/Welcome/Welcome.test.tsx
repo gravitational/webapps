@@ -24,6 +24,8 @@ import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 import auth from 'teleport/services/auth';
 
+import { userEventService } from 'teleport/services/userEvent';
+
 import Welcome from './Welcome';
 
 const invitePath = '/web/invite/5182';
@@ -39,6 +41,9 @@ describe('teleport/components/Welcome', () => {
       tokenId: 'test123',
       qrCode: 'test12345',
     }));
+    jest
+      .spyOn(userEventService, 'captureUserEvent')
+      .mockImplementation(() => new Promise(() => null));
   });
 
   afterEach(() => {

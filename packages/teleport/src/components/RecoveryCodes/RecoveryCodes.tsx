@@ -43,9 +43,11 @@ export default function RecoveryCodesDialog({
   };
 
   const proceed = () => {
-    userEventService.captureUserEvent({ event: userEvents.onboard.recoveryCodesContinueClickEvent });
-    onContinue()
-  }
+    userEventService.captureUserEvent({
+      event: userEvents.onboard.recoveryCodesContinueClickEvent,
+    });
+    onContinue();
+  };
 
   let title = 'Backup & Recovery Codes';
   let btnText = `I have saved my Recovery Codes - ${continueText}`;

@@ -1,13 +1,9 @@
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 
-export type CaptureEventProperties = {
-  [key: string]: boolean | string;
-};
-
 export type UserEvent = {
   event: string;
-  properties?: CaptureEventProperties;
+  alert?: string;
 };
 
 export const service = {

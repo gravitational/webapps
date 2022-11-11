@@ -32,7 +32,9 @@ export default function Welcome() {
   const { tokenId } = useParams<{ tokenId: string }>();
 
   const handleOnInviteContinue = () => {
-    userEventService.captureUserEvent({ event: userEvents.onboard.getStartedClickEvent });
+    userEventService.captureUserEvent({
+      event: userEvents.onboard.getStartedClickEvent,
+    });
     history.push(cfg.getUserInviteTokenContinueRoute(tokenId));
   };
 
