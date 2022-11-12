@@ -33,5 +33,4 @@ const props: AgentStepProps = {
   updateAgentMeta: () => null,
   nextStep: () => null,
   selectedResourceKind: ResourceKind.Server,
-  onSelectResource: () => null,
 };

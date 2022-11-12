@@ -254,7 +254,7 @@ export default function createClient(
 
     async createAccessRequest(params: types.CreateAccessRequestParams) {
       const req = new api.CreateAccessRequestRequest()
-        .setRootClusterUri(params.clusterUri)
+        .setRootClusterUri(params.rootClusterUri)
         .setSuggestedReviewersList(params.suggestedReviewers)
         .setRolesList(params.roles)
         .setResourceIdsList(
@@ -638,6 +638,21 @@ export default function createClient(
         .setDirection(options.direction);
 
       return createFileTransferStream(tshd.transferFile(req), abortSignal);
+    },
+
+    updateTshdEventsServerAddress(address: string) {
+      const req = new api.UpdateTshdEventsServerAddressRequest().setAddress(
+        address
+      );
+      return new Promise<void>((resolve, reject) => {
+        tshd.updateTshdEventsServerAddress(req, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
     },
   };
   return client;
