@@ -19,6 +19,7 @@ import { Text, Flex, Button, Card, ButtonIcon } from 'design';
 import styled from 'styled-components';
 import { Notification, NotificationItem } from 'shared/components/Notification';
 import { Warning, Close } from 'design/Icon';
+import { orange } from 'design/theme/palette';
 
 export function WarningDropdown(props: Props) {
   const { warnings, onRemoveWarning } = props;
@@ -59,12 +60,13 @@ export function WarningDropdown(props: Props) {
   return (
     <StyledRelative ref={ref}>
       <StyledButton
+        kind={'warning'}
         hasWarnings={warnings.length > 0}
         px={2}
         onClick={toggleDropdown}
       >
         <Flex alignItems="center" justifyContent="space-between">
-          <StyledWarning mr={2} /> {warnings.length}
+          <StyledWarningIcon mr={2} /> {warnings.length}
         </Flex>
       </StyledButton>
       {showDropdown && (
@@ -102,7 +104,7 @@ export function WarningDropdown(props: Props) {
   );
 }
 
-const StyledWarning = styled(Warning)`
+const StyledWarningIcon = styled(Warning)`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   font-size: ${({ theme }) => theme.fontSizes[2] + 'px'};
   align-self: 'center';
@@ -116,12 +118,9 @@ const StyledButton = styled(Button)`
       ? props.theme.colors.warning
       : props.theme.colors.action.disabled};
   &:hover,
-  &:focus,
-  &:active {
+  &:focus {
     background-color: ${props =>
-      props.hasWarnings
-        ? props.theme.colors.warning
-        : props.theme.colors.action.disabled};
+      props.hasWarnings ? orange.A700 : props.theme.colors.action.disabled};
   }
 `;
 
@@ -139,7 +138,8 @@ const StyledRelative = styled.div`
 `;
 
 const StyledOverflow = styled.div`
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 type Props = {
