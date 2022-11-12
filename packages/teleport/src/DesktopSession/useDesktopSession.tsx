@@ -48,7 +48,6 @@ export default function useDesktopSession() {
   const [directorySharingState, setDirectorySharingState] = useState({
     canShare: false,
     isSharing: false,
-    browserError: false,
   });
 
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
@@ -93,50 +92,7 @@ export default function useDesktopSession() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterId, desktopName]);
 
-  const [warnings, setWarnings] = useState<NotificationItem[]>([
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '6042e748-b756-4cb0-8c20-9f42d4d9beff',
-    },
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e2',
-    },
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e3',
-    },
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e4',
-    },
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e5',
-    },
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e6',
-    },
-    {
-      content:
-        'clipboard sync failed: clipboard data exceeded maximum length\u0001',
-      severity: 'warn',
-      id: '65f5faf5-8f01-47bc-8761-8cc654d7e1e7',
-    },
-  ]);
+  const [warnings, setWarnings] = useState<NotificationItem[]>([]);
   const onRemoveWarning = (id: string) => {
     setWarnings(prevState => prevState.filter(warning => warning.id !== id));
   };
@@ -175,10 +131,25 @@ export default function useDesktopSession() {
           }));
         });
     } catch (e) {
-      setDirectorySharingState(prevState => ({
+      setWarnings(prevState => [
         ...prevState,
-        browserError: true,
-      }));
+        {
+          id: crypto.randomUUID(),
+          severity: 'warn',
+          // This is a gross error message, but should be infrequent enough that its worth just telling
+          // the user the likely problem, while also displaying the error message just in case that's not it.
+          // In a perfect world, we could check for which error message this is and display
+          // context appropriate directions.
+          content:
+            'Encountered an error while attempting to share a directory: ' +
+            e.message +
+            '. \n\nYour user role supports directory sharing over desktop access, \
+          however this feature is only available by default on some Chromium \
+          based browsers like Google Chrome or Microsoft Edge. Brave users can \
+          use the feature by navigating to brave://flags/#file-system-access-api \
+          and selecting "Enable". If you\'re not already, please switch to a supported browser.',
+        },
+      ]);
     }
   };
 

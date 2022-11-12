@@ -23,7 +23,7 @@ import {
   ButtonSecondary,
   ButtonPrimary,
 } from 'design';
-import { Danger, Warning } from 'design/Alert';
+import { Danger } from 'design/Alert';
 import Dialog, {
   DialogHeader,
   DialogTitle,
@@ -50,8 +50,6 @@ declare global {
 
 export function DesktopSession(props: State) {
   const {
-    directorySharingState,
-    setDirectorySharingState,
     fetchAttempt,
     tdpConnection,
     disconnected,
@@ -80,11 +78,6 @@ export function DesktopSession(props: State) {
       }
       return prevState;
     });
-
-    setDirectorySharingState(prevState => ({
-      ...prevState,
-      browserError: false,
-    }));
   };
 
   const computeErrorDialog = () => {
@@ -104,13 +97,6 @@ export function DesktopSession(props: State) {
       errorText = tdpConnection.statusText || 'encountered a non-fatal error';
     } else if (unknownConnectionError) {
       errorText = 'Session disconnected for an unknown reason.';
-    } else if (directorySharingState.browserError) {
-      errorText =
-        'Your user role supports directory sharing over desktop access, \
-      however this feature is only available by default on some Chromium \
-      based browsers like Google Chrome or Microsoft Edge. Brave users can \
-      use the feature by navigating to brave://flags/#file-system-access-api \
-      and selecting "Enable". Please switch to a supported browser.';
     } else if (
       fetchAttempt.status === 'processing' &&
       tdpConnection.status === 'success'
@@ -121,65 +107,39 @@ export function DesktopSession(props: State) {
         https://github.com/gravitational/teleport/issues/new?assignees=&labels=bug&template=bug_report.md';
     }
     const open = errorText !== '';
-    const fatal = !(
-      tdpConnection.status === '' || directorySharingState.browserError
-    );
 
-    return { open, text: errorText, fatal };
+    return { open, text: errorText };
   };
 
   const errorDialog = computeErrorDialog();
 
   if (errorDialog.open) {
-    // A non-fatal error should only occur when a session is active, so we set initTdpCli and displayCanvas
-    // to true in so that the TdpClientCanvas state doesn't change, and the user can continue the session
-    // after dismissing the dialog.
-    const initAndDisplay = !errorDialog.fatal;
-
     return (
-      <Session
-        {...props}
-        initTdpCli={initAndDisplay}
-        displayCanvas={initAndDisplay}
-      >
+      <Session {...props} initTdpCli={false} displayCanvas={false}>
         <Dialog
           dialogCss={() => ({ width: '484px' })}
           onClose={onDialogClose}
           open={errorDialog.open}
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
-            {errorDialog.fatal && <DialogTitle>Fatal Error</DialogTitle>}
-            {!errorDialog.fatal && <DialogTitle>Warning</DialogTitle>}
+            <DialogTitle>Error</DialogTitle>
           </DialogHeader>
           <DialogContent>
-            {errorDialog.fatal && (
-              <>
-                <Danger children={<>{errorDialog.text}</>} />
-                Refresh the page to try again.
-              </>
-            )}
-
-            {!errorDialog.fatal && (
-              <Warning my={2} children={errorDialog.text} />
-            )}
+            <>
+              <Danger children={<>{errorDialog.text}</>} />
+              Refresh the page to try again.
+            </>
           </DialogContent>
           <DialogFooter>
-            {!errorDialog.fatal && (
-              <ButtonSecondary size="large" width="30%" onClick={onDialogClose}>
-                Dismiss
-              </ButtonSecondary>
-            )}
-            {errorDialog.fatal && (
-              <ButtonSecondary
-                size="large"
-                width="30%"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                Refresh
-              </ButtonSecondary>
-            )}
+            <ButtonSecondary
+              size="large"
+              width="30%"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              Refresh
+            </ButtonSecondary>
           </DialogFooter>
         </Dialog>
       </Session>

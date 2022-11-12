@@ -109,15 +109,14 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_WARNING and TdpClientEvent.CLIENT_WARNING handler
   const onTdpWarning = (warning: string) => {
     setWarnings(prevState => {
-      prevState.push({
-        content: warning,
-        severity: 'warn',
-        id: crypto.randomUUID(),
-      });
-
-      // return a *copy* of the prevState so that React knows to re-render
-      // https://akashmittal.com/code-example-component-not-re-rendering-on-array-state-change/
-      return [...prevState];
+      return [
+        ...prevState,
+        {
+          content: warning,
+          severity: 'warn',
+          id: crypto.randomUUID(),
+        },
+      ];
     });
   };
 
@@ -280,7 +279,6 @@ type Props = {
     SetStateAction<{
       canShare: boolean;
       isSharing: boolean;
-      browserError: boolean;
     }>
   >;
   clipboardSharingEnabled: boolean;
