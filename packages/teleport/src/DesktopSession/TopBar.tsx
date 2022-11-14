@@ -18,12 +18,12 @@ import styled, { useTheme } from 'styled-components';
 import { Text, TopNav, Flex } from 'design';
 import { Clipboard, FolderShared } from 'design/Icon';
 
-import { NotificationItem } from 'shared/components/Notification';
-
 import { colors } from 'teleport/Console/colors';
 
 import ActionMenu from './ActionMenu';
 import { WarningDropdown } from './WarningDropdown';
+
+import type { NotificationItem } from 'shared/components/Notification';
 
 export default function TopBar(props: Props) {
   const {

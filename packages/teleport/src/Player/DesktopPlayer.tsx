@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-
 import styled from 'styled-components';
-
 import { Indicator, Box, Alert } from 'design';
-
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 import cfg from 'teleport/config';
 import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp';
-import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 
 import { ProgressBarDesktop } from './ProgressBar';
+
+import type { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
 
 export const DesktopPlayer = ({
   sid,

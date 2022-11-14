@@ -17,9 +17,11 @@ limitations under the License.
 import React, { useRef, useState, useEffect } from 'react';
 import { Text, Flex, Button, Card, ButtonIcon } from 'design';
 import styled from 'styled-components';
-import { Notification, NotificationItem } from 'shared/components/Notification';
+import { Notification } from 'shared/components/Notification';
 import { Warning, Close } from 'design/Icon';
 import { orange } from 'design/theme/palette';
+
+import type { NotificationItem } from 'shared/components/Notification';
 
 export function WarningDropdown(props: Props) {
   const { warnings, onRemoveWarning } = props;

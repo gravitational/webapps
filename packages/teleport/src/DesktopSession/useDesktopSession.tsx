@@ -18,14 +18,15 @@ import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
 
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { NotificationItem } from 'shared/components/Notification';
 
 import useWebAuthn from 'teleport/lib/useWebAuthn';
-import { UrlDesktopParams } from 'teleport/config';
 import desktopService from 'teleport/services/desktops';
 import userService from 'teleport/services/user';
 
 import useTdpClientCanvas from './useTdpClientCanvas';
+
+import type { UrlDesktopParams } from 'teleport/config';
+import type { NotificationItem } from 'shared/components/Notification';
 
 export default function useDesktopSession() {
   const { attempt: fetchAttempt, run } = useAttempt('processing');

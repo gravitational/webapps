@@ -15,18 +15,26 @@ import Logger from 'shared/libs/logger';
 
 import { TermEventEnum } from 'teleport/lib/term/enums.js';
 import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
-import { WebauthnAssertionResponse } from 'teleport/services/auth';
 
 import Codec, {
   MessageType,
+  FileType,
+  SharedDirectoryErrCode,
+  Severity,
+} from './codec';
+import {
+  PathDoesNotExistError,
+  SharedDirectoryManager,
+} from './sharedDirectoryManager';
+
+import type { FileOrDirInfo } from './sharedDirectoryManager';
+import type {
   MouseButton,
   ButtonState,
   ScrollAxis,
   ClientScreenSpec,
   PngFrame,
   ClipboardData,
-  FileType,
-  SharedDirectoryErrCode,
   SharedDirectoryInfoResponse,
   SharedDirectoryListResponse,
   SharedDirectoryMoveResponse,
@@ -35,13 +43,8 @@ import Codec, {
   SharedDirectoryCreateResponse,
   SharedDirectoryDeleteResponse,
   FileSystemObject,
-  Severity,
 } from './codec';
-import {
-  PathDoesNotExistError,
-  SharedDirectoryManager,
-  FileOrDirInfo,
-} from './sharedDirectoryManager';
+import type { WebauthnAssertionResponse } from 'teleport/services/auth';
 
 export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',

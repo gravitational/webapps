@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import {
   Indicator,
   Box,
@@ -34,8 +34,12 @@ import Dialog, {
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 import AuthnDialog from 'teleport/components/AuthnDialog';
 
-import useDesktopSession, { State } from './useDesktopSession';
+import useDesktopSession from './useDesktopSession';
 import TopBar from './TopBar';
+
+import type { PropsWithChildren } from 'react';
+
+import type { State } from './useDesktopSession';
 
 export default function Container() {
   const state = useDesktopSession();

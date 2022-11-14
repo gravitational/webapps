@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './Notification';
-export * from './types';
+export { Notification } from './Notification';
+export { NotificationItem, NotificationItemContent } from './types';

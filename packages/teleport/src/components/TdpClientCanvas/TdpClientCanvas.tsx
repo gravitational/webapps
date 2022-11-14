@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, { useEffect, useRef, CSSProperties } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import { TdpClient, TdpClientEvent } from 'teleport/lib/tdp';
-import {
+import { TdpClientEvent } from 'teleport/lib/tdp';
+
+import type { CSSProperties } from 'react';
+import type {
   PngFrame,
   ClientScreenSpec,
   ClipboardData,
 } from 'teleport/lib/tdp/codec';
+import type { TdpClient } from 'teleport/lib/tdp';
 
 export default function TdpClientCanvas(props: Props) {
   const {
