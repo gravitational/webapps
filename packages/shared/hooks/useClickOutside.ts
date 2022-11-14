@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 
-function useClickOutside(ref, handler) {
+function useClickOutside(
+  ref: MutableRefObject<any>,
+  handler: (e: MouseEvent) => void
+) {
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       if (!ref.current || ref.current.contains(e.target)) {

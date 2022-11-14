@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, Flex, Button, Card, ButtonIcon } from 'design';
 import styled from 'styled-components';
 import { Notification } from 'shared/components/Notification';
 import { Warning, Close } from 'design/Icon';
 import { orange } from 'design/theme/palette';
+import { useClickOutside } from 'shared/hooks/useClickOutside';
 
 import type { NotificationItem } from 'shared/components/Notification';
 
@@ -37,23 +38,16 @@ export function WarningDropdown({ warnings, onRemoveWarning }: Props) {
   if (warnings.length === 0 && showDropdown) setShowDropdown(false);
 
   // Close the dropdown if it's open and the user clicks outside of it
-  useEffect(() => {
-    const handleClickOutside = e => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setShowDropdown(prevState => {
-          if (prevState) {
-            return false;
-          }
-        });
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside, true);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, []);
+  const handleClickOutside = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      setShowDropdown(prevState => {
+        if (prevState) {
+          return false;
+        }
+      });
+    }
+  };
+  useClickOutside(ref, handleClickOutside);
 
   return (
     <StyledRelative ref={ref}>
