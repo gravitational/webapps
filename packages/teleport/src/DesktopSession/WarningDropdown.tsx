@@ -34,9 +34,7 @@ export function WarningDropdown(props: Props) {
   };
 
   // Dropdown is always closed if there are no errors to show
-  useEffect(() => {
-    if (warnings.length === 0) setShowDropdown(false);
-  }, [warnings]);
+  if (warnings.length === 0 && showDropdown) setShowDropdown(false);
 
   // Close the dropdown if it's open and the user clicks outside of it
   useEffect(() => {

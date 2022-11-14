@@ -2,10 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import {
-  Notification,
-  NotificationItem,
-} from '@gravitational/shared/components/Notification';
+import { Notification, NotificationItem } from 'shared/components/Notification';
 
 import { Info, Warning } from 'design/Icon';
 
