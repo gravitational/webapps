@@ -1,5 +1,7 @@
 const { env, platform } = require('process');
 
+const notarize = require('./notarize.js');
+
 const isMac = platform === 'darwin';
 
 // The following checks make no sense when cross-building because they check the platform of the
@@ -35,7 +37,7 @@ module.exports = {
   appId: 'gravitational.teleport.connect',
   asar: true,
   asarUnpack: '**\\*.{node,dll}',
-  afterSign: 'notarize.js',
+  afterSign: notarize,
   files: ['build/app/dist'],
   mac: {
     target: 'dmg',
