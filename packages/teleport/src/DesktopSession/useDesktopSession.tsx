@@ -124,13 +124,25 @@ export default function useDesktopSession() {
           tdpClient.addSharedDirectory(sharedDirHandle);
           tdpClient.sendSharedDirectoryAnnounce();
         })
-        .catch(() => {
+        .catch(e => {
           setDirectorySharingState(prevState => ({
             ...prevState,
             isSharing: false,
           }));
+          setWarnings(prevState => [
+            ...prevState,
+            {
+              id: crypto.randomUUID(),
+              severity: 'warn',
+              content: 'Failed to open the directory picker: ' + e.message,
+            },
+          ]);
         });
     } catch (e) {
+      setDirectorySharingState(prevState => ({
+        ...prevState,
+        isSharing: false,
+      }));
       setWarnings(prevState => [
         ...prevState,
         {
