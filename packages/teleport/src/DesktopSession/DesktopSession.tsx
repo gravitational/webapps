@@ -219,33 +219,36 @@ export function DesktopSession(props: State) {
   return <Session {...props} initTdpCli={true} displayCanvas={true} />;
 }
 
-function Session(props: PropsWithChildren<Props>) {
-  const {
-    setDisconnected,
-    webauthn,
-    tdpClient,
-    username,
-    hostname,
-    setClipboardSharingEnabled,
-    directorySharingState,
-    setDirectorySharingState,
-    onPngFrame,
-    onClipboardData,
-    onTdpError,
-    onTdpWarning,
-    onWsClose,
-    onWsOpen,
-    onKeyDown,
-    onKeyUp,
-    onMouseMove,
-    onMouseDown,
-    onMouseUp,
-    onMouseWheelScroll,
-    onContextMenu,
-    initTdpCli,
-    displayCanvas,
-  } = props;
-
+function Session({
+  setDisconnected,
+  webauthn,
+  tdpClient,
+  username,
+  hostname,
+  setClipboardSharingEnabled,
+  directorySharingState,
+  setDirectorySharingState,
+  onPngFrame,
+  onClipboardData,
+  onTdpError,
+  onTdpWarning,
+  onWsClose,
+  onWsOpen,
+  onKeyDown,
+  onKeyUp,
+  onMouseMove,
+  onMouseDown,
+  onMouseUp,
+  onMouseWheelScroll,
+  onContextMenu,
+  initTdpCli,
+  displayCanvas,
+  clipboardSharingEnabled,
+  onShareDirectory,
+  warnings,
+  onRemoveWarning,
+  children,
+}: PropsWithChildren<Props>) {
   return (
     <Flex flexDirection="column">
       <TopBar
@@ -261,10 +264,13 @@ function Session(props: PropsWithChildren<Props>) {
         userHost={`${username}@${hostname}`}
         canShareDirectory={directorySharingState.canShare}
         isSharingDirectory={directorySharingState.isSharing}
-        {...props}
+        clipboardSharingEnabled={clipboardSharingEnabled}
+        onShareDirectory={onShareDirectory}
+        warnings={warnings}
+        onRemoveWarning={onRemoveWarning}
       />
 
-      {props.children}
+      {children}
 
       {webauthn.requested && (
         <AuthnDialog
