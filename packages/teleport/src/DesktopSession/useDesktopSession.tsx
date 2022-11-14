@@ -90,8 +90,7 @@ export default function useDesktopSession() {
           }),
       ])
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clusterId, desktopName]);
+  }, [clusterId, desktopName, isUsingChrome, run]);
 
   const [warnings, setWarnings] = useState<NotificationItem[]>([]);
   const onRemoveWarning = (id: string) => {

@@ -23,9 +23,7 @@ import { orange } from 'design/theme/palette';
 
 import type { NotificationItem } from 'shared/components/Notification';
 
-export function WarningDropdown(props: Props) {
-  const { warnings, onRemoveWarning } = props;
-
+export function WarningDropdown({ warnings, onRemoveWarning }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
   const ref = useRef(null);
 

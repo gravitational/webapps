@@ -15,4 +15,4 @@ limitations under the License.
 */
 
 export { Notification } from './Notification';
-export { NotificationItem, NotificationItemContent } from './types';
+export type { NotificationItem, NotificationItemContent } from './types';
