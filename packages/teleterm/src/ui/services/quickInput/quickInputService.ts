@@ -102,9 +102,9 @@ export class QuickInputService extends Store<State> {
   //
   // TODO(ravicious): This function needs to take cursor index into account instead of assuming that
   // you want to complete only what's at the end of the input string.
-  getAutocompleteResult(input: string): AutocompleteResult {
+  async getAutocompleteResult(input: string): Promise<AutocompleteResult> {
     const autocompleteResult =
-      this.quickCommandPicker.getAutocompleteResult(input);
+      await this.quickCommandPicker.getAutocompleteResult(input);
 
     // Automatically handle some universal edge cases so that each individual picker doesn't have to
     // care about them.

@@ -43,7 +43,7 @@ export class QuickCommandPicker implements QuickInputPicker {
   }
 
   // TODO(ravicious): Handle env vars.
-  getAutocompleteResult(rawInput: string): AutocompleteResult {
+  async getAutocompleteResult(rawInput: string): Promise<AutocompleteResult> {
     const autocompleteCommands = this.launcher.getAutocompleteCommands();
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
     // any removed whitespace.
@@ -163,10 +163,10 @@ export class QuickTshSshPicker implements QuickInputPicker {
   ) {}
 
   // TODO: Support cluster arg.
-  getAutocompleteResult(
+  async getAutocompleteResult(
     rawInput: string,
     startIndex: number
-  ): AutocompleteResult {
+  ): Promise<AutocompleteResult> {
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
     // any removed whitespace.
     const input = rawInput.trimStart();
@@ -185,7 +185,7 @@ export class QuickTshSshPicker implements QuickInputPicker {
         kind: 'command.unknown' as const,
       };
       return {
-        ...this.sshLoginPicker.getAutocompleteResult('', startIndex),
+        ...(await this.sshLoginPicker.getAutocompleteResult('', startIndex)),
         command,
       };
     }
@@ -200,10 +200,10 @@ export class QuickTshSshPicker implements QuickInputPicker {
       const hostStartIndex = startIndex + hostMatch.groups.loginPart.length;
 
       return {
-        ...this.serverPicker.getAutocompleteResult(
+        ...(await this.serverPicker.getAutocompleteResult(
           hostMatch.groups.hostPart,
           hostStartIndex
-        ),
+        )),
         command,
       };
     }
@@ -216,7 +216,10 @@ export class QuickTshSshPicker implements QuickInputPicker {
         loginHost: loginMatch[0],
       };
       return {
-        ...this.sshLoginPicker.getAutocompleteResult(loginMatch[0], startIndex),
+        ...(await this.sshLoginPicker.getAutocompleteResult(
+          loginMatch[0],
+          startIndex
+        )),
         command,
       };
     }
@@ -245,10 +248,10 @@ export class QuickTshProxyDbPicker implements QuickInputPicker {
 
   constructor(private databasePicker: QuickDatabasePicker) {}
 
-  getAutocompleteResult(
+  async getAutocompleteResult(
     rawInput: string,
     startIndex: number
-  ): AutocompleteResult {
+  ): Promise<AutocompleteResult> {
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
     // any removed whitespace.
     const input = rawInput.trimStart();
@@ -263,7 +266,7 @@ export class QuickTshProxyDbPicker implements QuickInputPicker {
     // Show autocomplete only after at least one space after `tsh proxy db`.
     if (rawInput !== '' && input === '') {
       return {
-        ...this.databasePicker.getAutocompleteResult('', startIndex),
+        ...(await this.databasePicker.getAutocompleteResult('', startIndex)),
         command: { kind: 'command.unknown' },
       };
     }
@@ -272,10 +275,10 @@ export class QuickTshProxyDbPicker implements QuickInputPicker {
 
     if (dbNameMatch) {
       return {
-        ...this.databasePicker.getAutocompleteResult(
+        ...(await this.databasePicker.getAutocompleteResult(
           dbNameMatch[0],
           startIndex
-        ),
+        )),
         command: { kind: 'command.unknown' },
       };
     }
@@ -321,7 +324,10 @@ export class QuickSshLoginPicker implements QuickInputPicker {
     }));
   }
 
-  getAutocompleteResult(input: string, startIndex: number): AutocompleteResult {
+  async getAutocompleteResult(
+    input: string,
+    startIndex: number
+  ): Promise<AutocompleteResult> {
     const suggestions = this.filterSshLogins(input);
     return {
       kind: 'autocomplete.partial-match',
@@ -359,7 +365,10 @@ export class QuickServerPicker implements QuickInputPicker {
     }));
   }
 
-  getAutocompleteResult(input: string, startIndex: number): AutocompleteResult {
+  async getAutocompleteResult(
+    input: string,
+    startIndex: number
+  ): Promise<AutocompleteResult> {
     const suggestions = this.filterServers(input);
     return {
       kind: 'autocomplete.partial-match',
@@ -396,7 +405,10 @@ export class QuickDatabasePicker implements QuickInputPicker {
     }));
   }
 
-  getAutocompleteResult(input: string, startIndex: number): AutocompleteResult {
+  async getAutocompleteResult(
+    input: string,
+    startIndex: number
+  ): Promise<AutocompleteResult> {
     const suggestions = this.filterDatabases(input);
     return {
       kind: 'autocomplete.partial-match',

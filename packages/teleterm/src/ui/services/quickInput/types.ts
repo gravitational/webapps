@@ -31,7 +31,10 @@ export type Suggestion =
   | SuggestionDatabase;
 
 export type QuickInputPicker = {
-  getAutocompleteResult(input: string, startIndex: number): AutocompleteResult;
+  getAutocompleteResult(
+    input: string,
+    startIndex: number
+  ): Promise<AutocompleteResult>;
 };
 
 export type AutocompleteToken = {

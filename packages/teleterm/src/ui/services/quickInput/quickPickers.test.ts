@@ -10,7 +10,7 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-test("tsh ssh picker returns unknown command if it's missing the first positional arg", () => {
+test("tsh ssh picker returns unknown command if it's missing the first positional arg", async () => {
   const QuickSshLoginPickerMock = QuickSshLoginPicker as jest.MockedClass<
     typeof QuickSshLoginPicker
   >;
@@ -25,14 +25,14 @@ test("tsh ssh picker returns unknown command if it's missing the first positiona
     new QuickServerPickerMock(undefined, undefined)
   );
 
-  const emptyInput = picker.getAutocompleteResult('', 0);
+  const emptyInput = await picker.getAutocompleteResult('', 0);
   expect(emptyInput.command).toEqual({ kind: 'command.unknown' });
 
-  const whitespace = picker.getAutocompleteResult(' ', 0);
+  const whitespace = await picker.getAutocompleteResult(' ', 0);
   expect(whitespace.command).toEqual({ kind: 'command.unknown' });
 });
 
-test('tsh ssh picker returns unknown command if the input includes any additional flags', () => {
+test('tsh ssh picker returns unknown command if the input includes any additional flags', async () => {
   const QuickSshLoginPickerMock = QuickSshLoginPicker as jest.MockedClass<
     typeof QuickSshLoginPicker
   >;
@@ -47,12 +47,18 @@ test('tsh ssh picker returns unknown command if the input includes any additiona
     new QuickServerPickerMock(undefined, undefined)
   );
 
-  const fullFlagBefore = picker.getAutocompleteResult('--foo user@node', 0);
+  const fullFlagBefore = await picker.getAutocompleteResult(
+    '--foo user@node',
+    0
+  );
   expect(fullFlagBefore.command).toEqual({ kind: 'command.unknown' });
 
-  const shortFlagBefore = picker.getAutocompleteResult('-p 22 user@node', 0);
+  const shortFlagBefore = await picker.getAutocompleteResult(
+    '-p 22 user@node',
+    0
+  );
   expect(shortFlagBefore.command).toEqual({ kind: 'command.unknown' });
 
-  const commandAfter = picker.getAutocompleteResult('user@node ls', 0);
+  const commandAfter = await picker.getAutocompleteResult('user@node ls', 0);
   expect(commandAfter.command).toEqual({ kind: 'command.unknown' });
 });
