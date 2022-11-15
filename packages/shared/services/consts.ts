@@ -14,5 +14,7 @@
  * limitations under the License.
  */
 
-import LoginTrait from './LoginTrait';
-export { LoginTrait };
+export const privateKeyEnablingPolicies = [
+  'hardware_key',
+  'hardware_key_touch',
+] as const;
