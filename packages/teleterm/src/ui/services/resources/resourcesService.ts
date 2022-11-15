@@ -10,4 +10,8 @@ export class ResourcesService {
   fetchDatabases(params: ServerSideParams) {
     return this.tshClient.getDatabases(params);
   }
+
+  fetchKubes(params: ServerSideParams) {
+    return this.tshClient.getKubes(params);
+  }
 }
