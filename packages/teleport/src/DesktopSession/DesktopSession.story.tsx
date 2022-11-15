@@ -243,7 +243,7 @@ export const Warnings = () => {
         id: crypto.randomUUID(),
         severity: 'warn',
         content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500.",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
       },
     ]);
   };

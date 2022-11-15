@@ -17,12 +17,12 @@ limitations under the License.
 import { MutableRefObject, useEffect } from 'react';
 
 function useClickOutside(
-  ref: MutableRefObject<any>,
+  ref: MutableRefObject<Node>,
   handler: (e: MouseEvent) => void
 ) {
   useEffect(() => {
     const listener = (e: MouseEvent) => {
-      if (!ref.current || ref.current.contains(e.target)) {
+      if (!ref.current || ref.current.contains(e.target as Node)) {
         return;
       }
       handler(e);

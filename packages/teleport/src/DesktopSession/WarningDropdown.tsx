@@ -38,21 +38,18 @@ export function WarningDropdown({ warnings, onRemoveWarning }: Props) {
   if (warnings.length === 0 && showDropdown) setShowDropdown(false);
 
   // Close the dropdown if it's open and the user clicks outside of it
-  const handleClickOutside = (e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target)) {
-      setShowDropdown(prevState => {
-        if (prevState) {
-          return false;
-        }
-      });
-    }
-  };
-  useClickOutside(ref, handleClickOutside);
+  useClickOutside(ref, () => {
+    setShowDropdown(prevState => {
+      if (prevState) {
+        return false;
+      }
+    });
+  });
 
   return (
     <StyledRelative ref={ref}>
       <StyledButton
-        kind={'warning'}
+        title={'Warnings'}
         hasWarnings={warnings.length > 0}
         px={2}
         onClick={toggleDropdown}
@@ -70,17 +67,16 @@ export function WarningDropdown({ warnings, onRemoveWarning }: Props) {
           }}
         >
           <Flex alignItems="center" justifyContent="space-between">
-            <Text typography="h4" px={3} style={{ overflow: 'visible' }}>
+            <Text typography="h6" px={3} style={{ overflow: 'visible' }}>
               {warnings.length} {warnings.length > 1 ? 'Warnings' : 'Warning'}
             </Text>
             <ButtonIcon size={1} ml={1} mr={2} onClick={toggleDropdown}>
               <Close />
             </ButtonIcon>
           </Flex>
-          <StyledOverflow>
+          <StyledOverflow flexWrap="wrap" gap={2}>
             {warnings.map(warning => (
               <Notification
-                my={2}
                 key={warning.id}
                 item={warning}
                 onRemove={() => onRemoveWarning(warning.id)}
@@ -129,7 +125,7 @@ const StyledRelative = styled.div`
   position: relative;
 `;
 
-const StyledOverflow = styled.div`
+const StyledOverflow = styled(Flex)`
   overflow-y: auto;
   overflow-x: hidden;
 `;

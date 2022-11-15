@@ -36,7 +36,7 @@ export const AutoRemovable = () => {
             id: crypto.randomUUID(),
             severity: 'info',
             content:
-              "This will be automatically removed after 5 seconds. Click to expand it. Mouseover it to restart the timer. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500.",
+              "This will be automatically removed after 5 seconds. Click to expand it. Mouseover it to restart the timer. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           }}
           onRemove={() => setShowInfo(false)}
           Icon={Info}
@@ -54,7 +54,7 @@ export const AutoRemovable = () => {
             id: crypto.randomUUID(),
             severity: 'warn',
             content:
-              "This will be automatically removed after 5 seconds. Click to expand it. Mouseover it to restart the timer. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500.",
+              "This will be automatically removed after 5 seconds. Click to expand it. Mouseover it to restart the timer. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           }}
           onRemove={() => setShowWarning(false)}
           Icon={Warning}
@@ -72,7 +72,7 @@ export const AutoRemovable = () => {
             id: crypto.randomUUID(),
             severity: 'error',
             content:
-              "This can only be removed by clicking on the X. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500.",
+              "This can only be removed by clicking on the X. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           }}
           onRemove={() => setShowError(false)}
           Icon={Warning}
