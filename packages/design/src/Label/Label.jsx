@@ -59,7 +59,7 @@ const kind = ({ kind, theme }) => {
 
 const Label = styled.div`
   box-sizing: border-box;
-  border-radius: 100px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,8 @@ const Label = styled.div`
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 0 8px;
+  padding: 6px 16px;
+  margin: 1px 0;
 
   ${kind}
   ${space}
