@@ -16,7 +16,10 @@ limitations under the License.
 
 import React from 'react';
 
-import Table, { Cell } from 'design/DataTable';
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import styled from 'styled-components';
+
+import { Box } from 'design';
 
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
@@ -30,6 +33,9 @@ import { MenuLoginTheme } from '../MenuLoginTheme';
 import { renderLabelCell } from '../renderLabelCell';
 
 import { useDatabases, State } from './useDatabases';
+import { SearchPanel } from 'shared/components/Search';
+import { Database } from 'teleterm/services/tshd/types';
+import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
 export default function Container() {
   const state = useDatabases();
@@ -37,51 +43,84 @@ export default function Container() {
 }
 
 function DatabaseList(props: State) {
+  const {
+    dbs = [],
+    connect,
+    fetchAttempt,
+    agentFilter,
+    pageCount,
+    documentUri,
+    customSort,
+    prevPage,
+    nextPage,
+    updateQuery,
+    onAgentLabelClick,
+    disabledRows,
+    updateSearch,
+    emptyTableText,
+  } = props;
+
   return (
     <>
-      {props.syncStatus.status === 'failed' && (
-        <Danger>{props.syncStatus.statusText}</Danger>
+      {fetchAttempt.status === 'error' && (
+        <Danger>{fetchAttempt.statusText}</Danger>
       )}
-      <Table
-        data={props.dbs}
-        columns={[
-          {
-            key: 'name',
-            headerText: 'Name',
-            isSortable: true,
-          },
-          {
-            key: 'labelsList',
-            headerText: 'Labels',
-            render: renderLabelCell,
-          },
-          {
-            altKey: 'connect-btn',
-            render: db => (
-              <ConnectButton
-                documentUri={props.documentUri}
-                dbUri={db.uri}
-                protocol={db.protocol as GatewayProtocol}
-                onConnect={dbUser => props.connect(db.uri, dbUser)}
-              />
-            ),
-          },
-        ]}
-        pagination={{ pageSize: 15, pagerPosition: 'bottom' }}
-        emptyText="No Databases Found"
+      <SearchPanel
+        updateQuery={updateQuery}
+        updateSearch={updateSearch}
+        pageCount={pageCount}
+        filter={agentFilter}
+        showSearchBar={true}
+        disableSearch={disabledRows}
       />
+      <DarkenWhileDisabled className={disabledRows ? 'disabled' : ''}>
+        <Table
+          data={dbs}
+          columns={[
+            {
+              key: 'name',
+              headerText: 'Name',
+              isSortable: true,
+            },
+            {
+              key: 'labelsList',
+              headerText: 'Labels',
+              render: ({ labelsList }) => (
+                <ClickableLabelCell
+                  labels={labelsList}
+                  onClick={onAgentLabelClick}
+                />
+              ),
+            },
+            {
+              altKey: 'connect-btn',
+              render: db => (
+                <ConnectButton
+                  documentUri={documentUri}
+                  db={db}
+                  protocol={db.protocol as GatewayProtocol}
+                  onConnect={dbUser => connect(db, dbUser)}
+                />
+              ),
+            },
+          ]}
+          customSort={customSort}
+          emptyText={emptyTableText}
+        />
+        <SearchPagination prevPage={prevPage} nextPage={nextPage} />
+      </DarkenWhileDisabled>
     </>
   );
 }
 
 function ConnectButton({
   documentUri,
-  dbUri,
+  db,
   protocol,
   onConnect,
 }: {
   documentUri: string;
-  dbUri: string;
+  db: Database;
   protocol: GatewayProtocol;
   onConnect: (dbUser: string) => void;
 }) {
@@ -93,7 +132,9 @@ function ConnectButton({
         <MenuLogin
           {...getMenuLoginOptions(protocol)}
           width="195px"
-          getLoginItems={() => getDatabaseUsers(appContext, documentUri, dbUri)}
+          getLoginItems={() =>
+            getDatabaseUsers(appContext, documentUri, db.uri)
+          }
           onSelect={(_, user) => {
             onConnect(user);
           }}
@@ -148,3 +189,14 @@ async function getDatabaseUsers(
     throw e;
   }
 }
+
+const DarkenWhileDisabled = styled(Box)`
+  // The timing functions of transitions have been chosen so that the element loses opacity slowly
+  // when entering the disabled state but gains it quickly when going out of the disabled state.
+  transition: opacity 150ms ease-out;
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+    transition: opacity 150ms ease-in;
+  }
+`;
