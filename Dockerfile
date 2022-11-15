@@ -1,4 +1,4 @@
-FROM node:16.18.1-slim
+FROM node:16.18-slim
 RUN apt-get update && apt-get install git g++ make python3 tree -y
 
 RUN mkdir -p web-apps
