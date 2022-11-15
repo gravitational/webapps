@@ -66,13 +66,15 @@ test('getAutocompleteResult returns correct result for a command suggestion with
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult('');
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { getSuggestions, targetToken, command } = quickInputService.parse('');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: '',
     startIndex: 0,
   });
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test('getAutocompleteResult returns correct result for a command suggestion', async () => {
@@ -86,15 +88,16 @@ test('getAutocompleteResult returns correct result for a command suggestion', as
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'ts'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { getSuggestions, targetToken, command } =
+    quickInputService.parse('ts');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: 'ts',
     startIndex: 0,
   });
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test('getAutocompleteResult returns correct result for an SSH login suggestion', async () => {

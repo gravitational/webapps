@@ -39,23 +39,25 @@ export default function useQuickInput() {
   const { visible, inputValue } = quickInputService.useState();
   const [activeSuggestion, setActiveSuggestion] = React.useState(0);
 
-  const [autocompleteAttempt, getAutocompleteResult] = useAsync(
-    // TODO: Add retryWithRelogin.
-    (inputValue: string) => quickInputService.getAutocompleteResult(inputValue)
-  );
-
-  React.useEffect(
-    () => {
-      getAutocompleteResult(inputValue);
-    },
+  const parseResult = React.useMemo(
+    () => quickInputService.parse(inputValue),
     // `localClusterUri` has been added to refresh suggestions from
     // `QuickSshLoginPicker` and `QuickServerPicker` when it changes
     [inputValue, workspacesService.getActiveWorkspace()?.localClusterUri]
   );
 
+  const [suggestionsAttempt, getSuggestions] = useAsync(
+    // TODO: Add retryWithRelogin.
+    parseResult.getSuggestions
+  );
+
+  React.useEffect(() => {
+    getSuggestions();
+  }, [getSuggestions]);
+
   const hasSuggestions =
-    autocompleteAttempt.status === 'success' &&
-    autocompleteAttempt.data.kind === 'autocomplete.partial-match';
+    suggestionsAttempt.status === 'success' &&
+    suggestionsAttempt.data.kind === 'autocomplete.partial-match';
   const openQuickInputShortcutKey: KeyboardShortcutType = 'open-quick-input';
   const { getShortcut } = useKeyboardShortcutFormatters();
 
@@ -158,14 +160,14 @@ export default function useQuickInput() {
     // We want to reset the active suggestion only between successful attempts and only if the
     // suggestions didn't change.
     // TODO: Verify if the below line is correct.
-    autocompleteAttempt.data?.suggestions
+    suggestionsAttempt.data?.suggestions
       .map(suggestion => suggestion.token)
       .join(','),
   ]);
 
   return {
     visible,
-    autocompleteAttempt,
+    autocompleteAttempt: suggestionsAttempt,
     activeSuggestion,
     inputValue,
     onFocus,

@@ -21,7 +21,12 @@ import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 
 import * as pickers from './quickPickers';
-import { AutocompleteResult, AutocompleteToken, Suggestion } from './types';
+import {
+  AutocompleteResult,
+  AutocompleteToken,
+  ParseResult,
+  Suggestion,
+} from './types';
 
 type State = {
   inputValue: string;
@@ -102,9 +107,8 @@ export class QuickInputService extends Store<State> {
   //
   // TODO(ravicious): This function needs to take cursor index into account instead of assuming that
   // you want to complete only what's at the end of the input string.
-  async getAutocompleteResult(input: string): Promise<AutocompleteResult> {
-    const autocompleteResult =
-      await this.quickCommandPicker.getAutocompleteResult(input);
+  parse(input: string): ParseResult {
+    const autocompleteResult = this.quickCommandPicker.parse(input);
 
     // Automatically handle some universal edge cases so that each individual picker doesn't have to
     // care about them.

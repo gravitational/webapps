@@ -20,16 +20,16 @@ import { QuickInputService } from 'teleterm/ui/services/quickInput';
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 
 import {
-  QuickInputPicker,
   SuggestionCmd,
   SuggestionServer,
   SuggestionSshLogin,
   SuggestionDatabase,
-  AutocompleteResult,
+  QuickInputParser,
+  QuickInputSuggester,
 } from './types';
 
-export class QuickCommandPicker implements QuickInputPicker {
-  private pickerRegistry: Map<string, QuickInputPicker>;
+export class QuickCommandPicker implements QuickInputParser {
+  private pickerRegistry: Map<string, QuickInputParser>;
 
   constructor(
     private quickInputService: QuickInputService,
@@ -38,7 +38,7 @@ export class QuickCommandPicker implements QuickInputPicker {
     this.pickerRegistry = new Map();
   }
 
-  registerPickerForCommand(command: string, picker: QuickInputPicker) {
+  registerPickerForCommand(command: string, parser: QuickInputParser) {
     this.pickerRegistry.set(command, picker);
   }
 
@@ -142,7 +142,7 @@ export class QuickCommandPicker implements QuickInputPicker {
   }
 }
 
-export class QuickTshSshPicker implements QuickInputPicker {
+export class QuickTshSshPicker implements QuickInputParser {
   // An SSH login doesn't start with `-`, hence the special group for the first character.
   private sshLoginRegex = /[a-z0-9_][a-z0-9_-]*/i;
   private totalSshLoginRegex = new RegExp(
@@ -243,7 +243,7 @@ export class QuickTshSshPicker implements QuickInputPicker {
   }
 }
 
-export class QuickTshProxyDbPicker implements QuickInputPicker {
+export class QuickTshProxyDbPicker implements QuickInputParser {
   private totalDbNameRegex = /^\S+$/i;
 
   constructor(private databasePicker: QuickDatabasePicker) {}
@@ -290,7 +290,9 @@ export class QuickTshProxyDbPicker implements QuickInputPicker {
   }
 }
 
-export class QuickSshLoginPicker implements QuickInputPicker {
+export class QuickSshLoginPicker
+  implements QuickInputSuggester<SuggestionSshLogin>
+{
   constructor(
     private workspacesService: WorkspacesService,
     private clustersService: ClustersService
@@ -341,7 +343,9 @@ export class QuickSshLoginPicker implements QuickInputPicker {
   }
 }
 
-export class QuickServerPicker implements QuickInputPicker {
+export class QuickServerPicker
+  implements QuickInputSuggester<SuggestionServer>
+{
   constructor(
     private workspacesService: WorkspacesService,
     private clustersService: ClustersService
@@ -382,7 +386,9 @@ export class QuickServerPicker implements QuickInputPicker {
   }
 }
 
-export class QuickDatabasePicker implements QuickInputPicker {
+export class QuickDatabasePicker
+  implements QuickInputSuggester<SuggestionDatabase>
+{
   constructor(
     private workspacesService: WorkspacesService,
     private clustersService: ClustersService
