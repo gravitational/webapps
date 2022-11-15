@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { AttemptStatus } from 'shared/hooks/useAsync';
+import { ResourceKind } from 'teleport/Discover/Shared';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { Database, ServerSideParams } from 'teleterm/services/tshd/types';
-import { useServerSideResources } from '../useServerSideResources';
 import { routing } from 'teleterm/ui/uri';
 import { GatewayProtocol } from 'teleterm/ui/services/clusters';
-import { AttemptStatus } from 'shared/hooks/useAsync';
+
+import { useServerSideResources } from '../useServerSideResources';
 import { useClusterContext } from '../../clusterContext';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 function getEmptyTableText(status: AttemptStatus) {
   switch (status) {

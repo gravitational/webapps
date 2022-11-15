@@ -23,6 +23,8 @@ import { Box } from 'design';
 
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
+import { SearchPanel } from 'shared/components/Search';
+import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
@@ -32,8 +34,6 @@ import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 
 import { useDatabases, State } from './useDatabases';
-import { SearchPanel } from 'shared/components/Search';
-import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
 export default function Container() {
   const state = useDatabases();

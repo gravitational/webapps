@@ -15,6 +15,7 @@ limitations under the License.
 */
 import { AttemptStatus } from 'shared/hooks/useAsync';
 import { ResourceKind } from 'teleport/Discover/Shared';
+
 import { Server, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 

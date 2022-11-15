@@ -16,9 +16,11 @@ limitations under the License.
 
 import { AttemptStatus } from 'shared/hooks/useAsync';
 import { ResourceKind } from 'teleport/Discover/Shared';
+
 import { Kube, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
+
 import { useServerSideResources } from '../useServerSideResources';
 
 function getEmptyTableText(status: AttemptStatus) {

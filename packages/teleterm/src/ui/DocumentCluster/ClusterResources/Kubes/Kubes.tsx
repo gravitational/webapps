@@ -23,9 +23,10 @@ import { ButtonBorder, Box } from 'design';
 
 import { Danger } from 'design/Alert';
 
-import { useKubes, State } from './useKubes';
 import { SearchPanel } from 'shared/components/Search';
 import { SearchPagination } from 'shared/components/Search/SearchPagination';
+
+import { useKubes, State } from './useKubes';
 
 export default function Container() {
   const state = useKubes();

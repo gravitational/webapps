@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import { SortType } from 'design/DataTable/types';
 import { useAsync } from 'shared/hooks/useAsync';
+import { AgentFilter, AgentLabel } from 'teleport/services/agents';
+import { ResourceKind } from 'teleport/Discover/Shared';
+
 import { ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
+
 import { useClusterContext } from '../clusterContext';
-import { AgentFilter, AgentLabel } from 'teleport/services/agents';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
   const queryParts = [];
