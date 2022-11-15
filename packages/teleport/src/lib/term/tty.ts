@@ -162,8 +162,8 @@ class Tty extends EventEmitterWebAuthnSender {
       try {
         // The first message we recieve may be JSON session data.
         const data = JSON.parse(ev.data);
-        data.kind = 'ssh';
-        data.resourceName = data.server_hostname;
+        data.session.kind = 'ssh';
+        data.session.resourceName = data.session.server_hostname;
         this.emit('new-session', data.session);
       } catch (err) {
         logger.error('failed to parse incoming message.', err);
