@@ -30,11 +30,9 @@ import { IAppContext } from 'teleterm/ui/types';
 import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
-import { renderLabelCell } from '../renderLabelCell';
 
 import { useDatabases, State } from './useDatabases';
 import { SearchPanel } from 'shared/components/Search';
-import { Database } from 'teleterm/services/tshd/types';
 import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
 export default function Container() {
@@ -49,7 +47,6 @@ function DatabaseList(props: State) {
     fetchAttempt,
     agentFilter,
     pageCount,
-    documentUri,
     customSort,
     prevPage,
     nextPage,
@@ -96,8 +93,7 @@ function DatabaseList(props: State) {
               altKey: 'connect-btn',
               render: db => (
                 <ConnectButton
-                  documentUri={documentUri}
-                  db={db}
+                  dbUri={db.uri}
                   protocol={db.protocol as GatewayProtocol}
                   onConnect={dbUser => connect(db, dbUser)}
                 />

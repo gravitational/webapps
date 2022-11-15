@@ -46,7 +46,7 @@ export function useServerSideResources<Agent>(
   // their respective rpcs.
   const [fetchAttempt, fetch] = useAsync(
     (startKey: string, filter: AgentFilter) =>
-      retryWithRelogin(ctx, documentUri, clusterUri, () =>
+      retryWithRelogin(ctx, documentUri, () =>
         fetchFunction({
           ...filter,
           limit,
