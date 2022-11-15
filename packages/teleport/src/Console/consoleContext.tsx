@@ -166,30 +166,6 @@ export default class ConsoleContext {
     return serviceClusters.fetchClusters();
   }
 
-  fetchSshSession(clusterId: string, sid: string) {
-    return serviceSession.fetchSession({ clusterId, sid });
-  }
-
-  createSshSession(clusterId: string, serverId: string, login: string) {
-    return tracer.startActiveSpan(
-      'createSshSession',
-      undefined,
-      context.active(),
-      span => {
-        return serviceSession
-          .createSession({
-            serverId,
-            clusterId,
-            login,
-          })
-          .then(resp => {
-            span.end();
-            return resp;
-          });
-      }
-    );
-  }
-
   logout() {
     webSession.logout();
   }

@@ -35,7 +35,7 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
   return await window['electron'];
 }
 
-function renderApp(content: any): void {
+function renderApp(content: React.ReactElement): void {
   ReactDOM.render(content, document.getElementById('app'));
 }
 

@@ -34,7 +34,6 @@ export default function useSshSession(doc: DocumentSsh) {
   const ttyRef = React.useRef<Tty>(null);
   const tty = ttyRef.current as ReturnType<typeof ctx.createTty>;
   const [session, setSession] = React.useState<Session>(null);
-  const [statusText, setStatusText] = React.useState('');
   const [status, setStatus] = React.useState<Status>('loading');
 
   function closeDocument() {
@@ -53,8 +52,6 @@ export default function useSshSession(doc: DocumentSsh) {
         tty.on(TermEventEnum.CONN_CLOSE, () =>
           ctx.updateSshDocument(doc.id, { status: 'disconnected' })
         );
-
-        // tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
 
         tty.on('new-session', data => handleTtyConnect(ctx, data, doc.id));
 
@@ -84,7 +81,6 @@ export default function useSshSession(doc: DocumentSsh) {
   return {
     tty,
     status,
-    statusText,
     session,
     closeDocument,
   };
@@ -114,4 +110,4 @@ function handleTtyConnect(ctx: ConsoleContext, session: any, docId: number) {
   ctx.gotoTab({ url });
 }
 
-type Status = 'initialized' | 'loading' | 'notfound' | 'error';
+type Status = 'initialized' | 'loading';
