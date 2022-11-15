@@ -6,6 +6,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { useClusterContext } from '../clusterContext';
 import { AgentFilter, AgentLabel } from 'teleport/services/agents';
+import { ResourceKind } from 'teleport/Discover/Shared';
 
 export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
   const queryParts = [];
@@ -30,6 +31,7 @@ export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
 const limit = 15;
 
 export function useServerSideResources<Agent>(
+  resourceKind: ResourceKind,
   fetchFunction: (params: ServerSideParams) => Promise<FetchResponse<Agent>>
 ) {
   const ctx = useAppContext();
@@ -37,7 +39,7 @@ export function useServerSideResources<Agent>(
   const [pageIndex, setPageIndex] = useState(0);
   const [keys, setKeys] = useState<string[]>([]);
   const [agentFilter, setAgentFilter] = useState<AgentFilter>({
-    sort: getDefaultSort(),
+    sort: getDefaultSort(resourceKind),
   });
 
   // startKey is used here as a way to paginate through agents returned from
@@ -149,8 +151,11 @@ export function useServerSideResources<Agent>(
   };
 }
 
-function getDefaultSort(): SortType {
-  return { fieldName: 'hostname', dir: 'ASC' };
+function getDefaultSort(kind: ResourceKind): SortType {
+  if (kind === ResourceKind.Server) {
+    return { fieldName: 'hostname', dir: 'ASC' };
+  }
+  return { fieldName: 'name', dir: 'ASC' };
 }
 
 type FetchResponse<T> = {

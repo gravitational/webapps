@@ -13,12 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { AttemptStatus } from 'shared/hooks/useAsync';
+import { ResourceKind } from 'teleport/Discover/Shared';
 import { Server, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 import { useServerSideResources } from '../useServerSideResources';
 
-function getEmptyTableText(status: '' | 'error' | 'processing' | 'success') {
+function getEmptyTableText(status: AttemptStatus) {
   switch (status) {
     case 'error':
       return 'Failed to fetch servers.';
@@ -44,8 +46,10 @@ export function useServers() {
     onAgentLabelClick,
     updateSort,
     pageCount,
-  } = useServerSideResources<Server>((params: ServerSideParams) =>
-    appContext.resourcesService.fetchServers(params)
+  } = useServerSideResources<Server>(
+    ResourceKind.Server,
+    (params: ServerSideParams) =>
+      appContext.resourcesService.fetchServers(params)
   );
 
   function getSshLogins(serverUri: string): string[] {
