@@ -1,7 +1,9 @@
-const { env, platform } = require('process');
+import { env, platform } from 'process';
+import { Configuration } from 'electron-builder';
+
+import { notarizeMacBuild } from './notarize';
 
 const isMac = platform === 'darwin';
-
 // The following checks make no sense when cross-building because they check the platform of the
 // host and not the platform we're building for.
 //
@@ -28,14 +30,11 @@ if (!isMac && env.CONNECT_TSH_BIN_PATH === undefined) {
   throw new Error('You must provide CONNECT_TSH_BIN_PATH');
 }
 
-/**
- * @type { import('electron-builder').Configuration }
- */
-module.exports = {
+export default {
   appId: 'gravitational.teleport.connect',
   asar: true,
   asarUnpack: '**\\*.{node,dll}',
-  afterSign: 'notarize.js',
+  afterSign: notarizeMacBuild,
   files: ['build/app/dist'],
   mac: {
     target: 'dmg',
@@ -114,4 +113,4 @@ module.exports = {
     output: 'build/release',
   },
   extraResources: ['./assets/**'],
-};
+} as Configuration;
