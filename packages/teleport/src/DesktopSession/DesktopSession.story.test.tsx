@@ -3,6 +3,9 @@ import 'jest-canvas-mock';
 import { render, screen } from 'design/utils/testing';
 
 import {
+  Processing,
+  TdpProcessing,
+  InvalidProcessingState,
   ConnectedSettingsFalse,
   ConnectedSettingsTrue,
   Disconnected,
@@ -10,8 +13,23 @@ import {
   ConnectionError,
   UnintendedDisconnect,
   WebAuthnPrompt,
-  DismissibleError,
+  AnotherSessionActive,
 } from './DesktopSession.story';
+
+test('processing', () => {
+  const { container } = render(<Processing />);
+  expect(container).toMatchSnapshot();
+});
+
+test('tdp processing', () => {
+  const { container } = render(<TdpProcessing />);
+  expect(container).toMatchSnapshot();
+});
+
+test('invalid processing', () => {
+  render(<InvalidProcessingState />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
 
 test('connected settings false', () => {
   const { container } = render(<ConnectedSettingsFalse />);
@@ -43,12 +61,12 @@ test('unintended disconnect', () => {
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('dismissible error', () => {
-  render(<DismissibleError />);
+test('webauthn prompt', () => {
+  render(<WebAuthnPrompt />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('webauthn prompt', () => {
-  render(<WebAuthnPrompt />);
+test('another session active', () => {
+  render(<AnotherSessionActive />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });

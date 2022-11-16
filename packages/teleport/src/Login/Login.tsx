@@ -40,12 +40,13 @@ export function Login({
   clearAttempt,
   isPasswordlessEnabled,
   primaryAuthType,
+  privateKeyPolicyEnabled,
 }: State) {
   return (
     <>
       <Logo src={logoSrc} />
       <FormLogin
-        title={'Sign into Teleport'}
+        title={'Sign in to Teleport'}
         authProviders={authProviders}
         auth2faType={auth2faType}
         preferredMfaType={preferredMfaType}
@@ -57,6 +58,7 @@ export function Login({
         clearAttempt={clearAttempt}
         isPasswordlessEnabled={isPasswordlessEnabled}
         primaryAuthType={primaryAuthType}
+        privateKeyPolicyEnabled={privateKeyPolicyEnabled}
       />
     </>
   );

@@ -17,18 +17,18 @@ limitations under the License.
 import { generatePath } from 'react-router';
 import { merge } from 'lodash';
 
-import {
+import generateResourcePath from './generateResourcePath';
+
+import type {
   AuthProvider,
   Auth2faType,
   AuthType,
   PrimaryAuthType,
   PreferredMfaType,
+  PrivateKeyPolicy,
 } from 'shared/services';
-
-import { SortType } from 'teleport/services/agents';
-import { RecordingType } from 'teleport/services/recordings';
-
-import generateResourcePath from './generateResourcePath';
+import type { SortType } from 'teleport/services/agents';
+import type { RecordingType } from 'teleport/services/recordings';
 
 const cfg = {
   isEnterprise: false,
@@ -51,6 +51,7 @@ const cfg = {
     second_factor: 'off' as Auth2faType,
     authType: 'local' as AuthType,
     preferredLocalMfa: '' as PreferredMfaType,
+    privateKeyPolicy: 'none' as PrivateKeyPolicy,
   },
 
   proxyCluster: 'localhost',
@@ -136,6 +137,7 @@ const cfg = {
       'wss://:fqdn/v1/webapi/sites/:clusterId/desktops/:desktopName/connect?access_token=:token&username=:username&width=:width&height=:height',
     desktopPlaybackWsAddr:
       'wss://:fqdn/v1/webapi/sites/:clusterId/desktopplayback/:sid?access_token=:token',
+    desktopIsActive: '/v1/webapi/sites/:clusterId/desktops/:desktopName/active',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
       'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params&traceparent=:traceparent',
@@ -218,6 +220,10 @@ const cfg = {
 
   getLocalAuthFlag() {
     return cfg.auth.localAuthEnabled;
+  },
+
+  getPrivateKeyPolicy() {
+    return cfg.auth.privateKeyPolicy;
   },
 
   isPasswordlessEnabled() {
@@ -435,6 +441,10 @@ const cfg = {
 
   getDesktopUrl(clusterId: string, desktopName: string) {
     return generatePath(cfg.api.desktopPath, { clusterId, desktopName });
+  },
+
+  getDesktopIsActiveUrl(clusterId: string, desktopName: string) {
+    return generatePath(cfg.api.desktopIsActive, { clusterId, desktopName });
   },
 
   getApplicationsUrl(clusterId: string, params: UrlResourcesParams) {
