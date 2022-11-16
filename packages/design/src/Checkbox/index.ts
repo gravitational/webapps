@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-import { CheckboxInput, CheckboxWrapper } from './Checkbox';
-
-export { CheckboxInput, CheckboxWrapper };
+export { CheckboxInput, CheckboxWrapper } from './Checkbox';
