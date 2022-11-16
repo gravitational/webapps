@@ -27,8 +27,6 @@ import { getOSSFeatures } from 'teleport/features';
 
 import { Feature } from 'teleport/types';
 
-import { Main } from './Main';
-
 import TeleportContextProvider from './TeleportContextProvider';
 import TeleportContext from './teleportContext';
 import cfg from './config';
@@ -129,6 +127,8 @@ const DesktopSession = React.lazy(
 const Discover = React.lazy(
   () => import(/* webpackChunkName: "discover" */ './Discover')
 );
+
+const Main = React.lazy(() => import(/* webpackChunkName: "main" */ './Main'));
 
 // TODO: make it lazy loadable
 export function renderPrivateRoutes(
