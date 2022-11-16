@@ -1792,14 +1792,14 @@ exports[`pagination unsupported 1`] = `
 
 .c14 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
 .c16 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
@@ -2044,7 +2044,6 @@ exports[`pagination unsupported 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -2066,15 +2065,20 @@ exports[`pagination unsupported 1`] = `
     >
       Kubernetes
     </div>
-    <button
-      class="c3"
-      kind="primary"
-      title=""
-      width="240px"
+    <a
+      href="/web/discover"
+      style="text-decoration: none;"
     >
-      Add 
-      kubernetes
-    </button>
+      <button
+        class="c3"
+        kind="primary"
+        title=""
+        width="240px"
+      >
+        Add 
+        kubernetes
+      </button>
+    </a>
   </div>
   <nav
     class="c4"

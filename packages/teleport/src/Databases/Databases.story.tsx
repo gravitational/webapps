@@ -33,10 +33,12 @@ export const Loaded = () => (
 );
 
 export const PaginationUnsupported = () => (
-  <Databases
-    {...props}
-    results={{ ...props.results, paginationUnsupported: true }}
-  />
+  <MemoryRouter>
+    <Databases
+      {...props}
+      results={{ ...props.results, paginationUnsupported: true }}
+    />
+  </MemoryRouter>
 );
 
 export const Empty = () => (

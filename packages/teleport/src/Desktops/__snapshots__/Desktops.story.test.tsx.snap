@@ -103,13 +103,13 @@ exports[`loaded 1`] = `
 
 .c18 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
 .c24 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   margin-left: 8px;
   margin-right: -8px;
   color: rgba(255,255,255,0.56);
@@ -118,7 +118,7 @@ exports[`loaded 1`] = `
 
 .c29 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
   font-size: 16px;
 }
@@ -206,7 +206,6 @@ exports[`loaded 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -414,12 +413,17 @@ exports[`loaded 1`] = `
   cursor: pointer;
 }
 
+.c12[disabled] {
+  cursor: default;
+}
+
 .c15 {
   width: 32px;
   height: 12px;
   border-radius: 12px;
   background: #222C59;
-  cursor: pointer;
+  cursor: inherit;
+  flex-shrink: 0;
 }
 
 .c15:before {
@@ -436,7 +440,7 @@ exports[`loaded 1`] = `
 .c13 {
   opacity: 0;
   position: absolute;
-  cursor: pointer;
+  cursor: inherit;
 }
 
 .c13:checked + .c14 {
@@ -445,6 +449,14 @@ exports[`loaded 1`] = `
 
 .c13:checked + .c14:before {
   transform: translate(16px,-50%);
+}
+
+.c13:disabled + .c14 {
+  background: #222C59;
+}
+
+.c13:disabled + .c14:before {
+  background: #455a64;
 }
 
 .c11 {
@@ -468,14 +480,18 @@ exports[`loaded 1`] = `
       Desktops
     </div>
     <a
-      class="c3"
-      href="https://goteleport.com/docs/desktop-access/getting-started/"
-      kind="primary"
-      rel="noreferrer"
-      target="_blank"
-      width="240px"
+      href="/web/discover"
+      style="text-decoration: none;"
     >
-      View documentation
+      <button
+        class="c3"
+        kind="primary"
+        title=""
+        width="240px"
+      >
+        Add 
+        desktop
+      </button>
     </a>
   </div>
   <form
@@ -826,20 +842,20 @@ exports[`pagination unsupported 1`] = `
 
 .c14 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
 .c16 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
 .c19 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   margin-left: 8px;
   margin-right: -8px;
   color: rgba(255,255,255,0.56);
@@ -923,7 +939,6 @@ exports[`pagination unsupported 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -1110,14 +1125,18 @@ exports[`pagination unsupported 1`] = `
       Desktops
     </div>
     <a
-      class="c3"
-      href="https://goteleport.com/docs/desktop-access/getting-started/"
-      kind="primary"
-      rel="noreferrer"
-      target="_blank"
-      width="240px"
+      href="/web/discover"
+      style="text-decoration: none;"
     >
-      View documentation
+      <button
+        class="c3"
+        kind="primary"
+        title=""
+        width="240px"
+      >
+        Add 
+        desktop
+      </button>
     </a>
   </div>
   <nav

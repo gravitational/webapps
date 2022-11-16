@@ -33,10 +33,12 @@ export const Loaded = () => (
 );
 
 export const PaginationUnsupported = () => (
-  <Apps
-    {...props}
-    results={{ ...props.results, paginationUnsupported: true }}
-  />
+  <MemoryRouter>
+    <Apps
+      {...props}
+      results={{ ...props.results, paginationUnsupported: true }}
+    />
+  </MemoryRouter>
 );
 
 export const Empty = () => (

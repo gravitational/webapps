@@ -71,7 +71,7 @@ test('null fields from apps fetch', async () => {
   });
 
   expect(response).toEqual({
-    apps: [],
+    agents: [],
     startKey: null,
     totalCount: null,
     paginationUnsupported: true,

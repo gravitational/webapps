@@ -75,7 +75,7 @@ test('null fields from database fetch', async () => {
   });
 
   expect(response).toEqual({
-    databases: [],
+    agents: [],
     startKey: null,
     totalCount: null,
     paginationUnsupported: true,

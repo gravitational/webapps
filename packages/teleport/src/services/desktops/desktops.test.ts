@@ -63,7 +63,7 @@ test('null fields from desktops fetch', async () => {
   });
 
   expect(response).toEqual({
-    desktops: [],
+    agents: [],
     startKey: null,
     totalCount: null,
     paginationUnsupported: true,

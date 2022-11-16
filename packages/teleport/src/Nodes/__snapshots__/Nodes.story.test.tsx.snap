@@ -2288,20 +2288,20 @@ exports[`pagination unsupported 1`] = `
 
 .c18 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
 .c20 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
 .c23 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   margin-left: 8px;
   margin-right: -8px;
   color: rgba(255,255,255,0.56);
@@ -2391,7 +2391,6 @@ exports[`pagination unsupported 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -2653,15 +2652,20 @@ exports[`pagination unsupported 1`] = `
           placeholder="login@host:port"
         />
       </div>
-      <button
-        class="c7"
-        kind="primary"
-        title=""
-        width="240px"
+      <a
+        href="/web/discover"
+        style="text-decoration: none;"
       >
-        Add 
-        server
-      </button>
+        <button
+          class="c7"
+          kind="primary"
+          title=""
+          width="240px"
+        >
+          Add 
+          server
+        </button>
+      </a>
     </div>
   </div>
   <nav

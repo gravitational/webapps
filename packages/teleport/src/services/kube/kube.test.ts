@@ -71,7 +71,7 @@ test('handling of null fields response', async () => {
   });
 
   expect(response).toEqual({
-    kubes: [],
+    agents: [],
     startKey: null,
     totalCount: null,
     paginationUnsupported: true,

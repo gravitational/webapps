@@ -63,7 +63,7 @@ test('null fields from nodes fetch', async () => {
   const response = await nodesService.fetchNodes('does-not-matter');
 
   expect(response).toEqual({
-    nodes: [],
+    agents: [],
     startKey: null,
     totalCount: null,
     paginationUnsupported: true,

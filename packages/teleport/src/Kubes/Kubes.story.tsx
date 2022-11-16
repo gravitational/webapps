@@ -35,10 +35,12 @@ export const Loaded = () => (
 );
 
 export const PaginationUnsupported = () => (
-  <Kubes
-    {...props}
-    results={{ ...props.results, paginationUnsupported: true }}
-  />
+  <MemoryRouter>
+    <Kubes
+      {...props}
+      results={{ ...props.results, paginationUnsupported: true }}
+    />
+  </MemoryRouter>
 );
 
 export const Empty = () => (
