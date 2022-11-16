@@ -39,8 +39,8 @@ const AppLauncher = React.lazy(
 
 const Teleport: React.FC<Props> = props => {
   const { ctx, history } = props;
-  const publicRoutes = props.renderPublicRoutes || renderPublicRoutes;
-  const privateRoutes = props.renderPrivateRoutes || renderPrivateRoutes;
+  const createPublicRoutes = props.renderPublicRoutes || publicOSSRoutes;
+  const createPrivateRoutes = props.renderPrivateRoutes || privateOSSRoutes;
 
   const features = props.features || getOSSFeatures();
 
@@ -48,24 +48,28 @@ const Teleport: React.FC<Props> = props => {
     <CatchError>
       <ThemeProvider>
         <Router history={history}>
-          <Switch>
-            {publicRoutes()}
-            <Route path={cfg.routes.root}>
-              <Authenticated>
-                <TeleportContextProvider ctx={ctx}>
-                  <FeaturesContextProvider value={features}>
-                    <Switch>
-                      <Route
-                        path={cfg.routes.appLauncher}
-                        component={AppLauncher}
-                      />
-                      <Route>{privateRoutes()}</Route>
-                    </Switch>
-                  </FeaturesContextProvider>
-                </TeleportContextProvider>
-              </Authenticated>
-            </Route>
-          </Switch>
+          <Suspense fallback={null}>
+            <Switch>
+              {createPublicRoutes()}
+              <Route path={cfg.routes.root}>
+                <Authenticated>
+                  <TeleportContextProvider ctx={ctx}>
+                    <FeaturesContextProvider value={features}>
+                      <Switch>
+                        <Route
+                          path={cfg.routes.appLauncher}
+                          component={AppLauncher}
+                        />
+                        <Route>
+                          <Switch>{createPrivateRoutes()}</Switch>
+                        </Route>
+                      </Switch>
+                    </FeaturesContextProvider>
+                  </TeleportContextProvider>
+                </Authenticated>
+              </Route>
+            </Switch>
+          </Suspense>
         </Router>
       </ThemeProvider>
     </CatchError>
@@ -85,34 +89,51 @@ const Welcome = React.lazy(
   () => import(/* webpackChunkName: "welcome" */ './Welcome')
 );
 
-export function renderPublicRoutes(...childrenRoutes: React.ReactNode[]) {
-  return (
-    <Suspense fallback={null}>
-      {childrenRoutes}
-      <Route
-        title="Login Failed"
-        path={cfg.routes.loginError}
-        component={LoginFailed}
-      />
-      <Route
-        title="Login Failed"
-        path={cfg.routes.loginErrorLegacy}
-        component={LoginFailed}
-      />
-      <Route title="Login" path={cfg.routes.login} component={Login} />
-      <Route
-        title="Success"
-        path={cfg.routes.loginSuccess}
-        component={LoginSuccess}
-      />
-      <Route title="Invite" path={cfg.routes.userInvite} component={Welcome} />
-      <Route
-        title="Password Reset"
-        path={cfg.routes.userReset}
-        component={Welcome}
-      />
-    </Suspense>
+function publicOSSRoutes() {
+  return renderPublicRoutes(
+    <Route
+      title="Login"
+      path={cfg.routes.login}
+      component={Login}
+      key="login"
+    />
   );
+}
+
+export function renderPublicRoutes(...childrenRoutes: React.ReactNode[]) {
+  return [
+    ...childrenRoutes,
+    <Route
+      key="login-failed"
+      title="Login Failed"
+      path={cfg.routes.loginError}
+      component={LoginFailed}
+    />,
+    <Route
+      key="login-failed-legacy"
+      title="Login Failed"
+      path={cfg.routes.loginErrorLegacy}
+      component={LoginFailed}
+    />,
+    <Route
+      key="success"
+      title="Success"
+      path={cfg.routes.loginSuccess}
+      component={LoginSuccess}
+    />,
+    <Route
+      key="invite"
+      title="Invite"
+      path={cfg.routes.userInvite}
+      component={Welcome}
+    />,
+    <Route
+      key="password-reset"
+      title="Password Reset"
+      path={cfg.routes.userReset}
+      component={Welcome}
+    />,
+  ];
 }
 
 const Console = React.lazy(
@@ -130,22 +151,24 @@ const Discover = React.lazy(
 
 const Main = React.lazy(() => import(/* webpackChunkName: "main" */ './Main'));
 
-// TODO: make it lazy loadable
-export function renderPrivateRoutes(
-  CustomMain = Main,
-  CustomDiscover = Discover
-) {
-  return (
-    <Suspense fallback={null}>
-      <Switch>
-        <Route path={cfg.routes.discover} component={CustomDiscover} />
-        <Route path={cfg.routes.desktop} component={DesktopSession} />
-        <Route path={cfg.routes.console} component={Console} />
-        <Route path={cfg.routes.player} component={Player} />
-        <Route path={cfg.routes.root} component={CustomMain} />
-      </Switch>
-    </Suspense>
+function privateOSSRoutes() {
+  return renderPrivateRoutes(
+    <Route key="discover" path={cfg.routes.discover} component={Discover} />,
+    <Route key="root" path={cfg.routes.root} component={Main} />
   );
+}
+
+export function renderPrivateRoutes(...childrenRoutes: React.ReactNode[]) {
+  return [
+    ...childrenRoutes,
+    <Route
+      key="desktop"
+      path={cfg.routes.desktop}
+      component={DesktopSession}
+    />,
+    <Route key="console" path={cfg.routes.console} component={Console} />,
+    <Route key="player" path={cfg.routes.player} component={Player} />,
+  ];
 }
 
 export default Teleport;
@@ -154,6 +177,10 @@ export type Props = {
   features?: Feature[];
   ctx: TeleportContext;
   history: History;
-  renderPublicRoutes?: (...childrenRoutes: React.ReactNode[]) => JSX.Element;
-  renderPrivateRoutes?(CustomMain?: JSX.Element): JSX.Element;
+  renderPublicRoutes?: (
+    ...childrenRoutes: React.ReactNode[]
+  ) => React.ReactNode[];
+  renderPrivateRoutes?: (
+    ...childrenRoutes: React.ReactNode[]
+  ) => React.ReactNode[];
 };
