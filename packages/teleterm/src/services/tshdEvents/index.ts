@@ -110,11 +110,15 @@ function createService(logger: Logger): {
   const service: apiService.ITshdEventsServiceServer = {
     // TODO(ravicious): Remove this once we add an actual RPC to tshd events service.
     test: (call, callback) => {
-      const payload = call.request.toObject();
+      const request = call.request.toObject();
 
-      logger.info('Emitting test', payload);
+      logger.info('Emitting test', request);
 
-      emitter.emit('test', payload).then(
+      const onCancelled = (callback: () => void) => {
+        call.on('cancelled', callback);
+      };
+
+      emitter.emit('test', { request, onCancelled }).then(
         () => {
           callback(null, new api.TestResponse());
         },
