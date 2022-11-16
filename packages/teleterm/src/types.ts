@@ -42,7 +42,7 @@ export type SubscribeToTshdEvent = <
   >
 >(
   eventName: RpcName,
-  listener: (request: RpcHandlerRequestObject) => void
+  listener: (request: RpcHandlerRequestObject) => void | Promise<void>
 ) => void;
 
 export type ElectronGlobals = {
