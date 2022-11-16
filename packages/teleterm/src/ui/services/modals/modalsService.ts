@@ -23,8 +23,17 @@ export class ModalsService extends ImmutableStore<Dialog> {
     kind: 'none',
   };
 
-  openDialog(dialog: Dialog) {
+  /*
+   * openDialog opens the given dialog. It returns a function which can be used to close the dialog
+   * and automatically call the dialog's onCancel callback (if present).
+   */
+  openDialog(dialog: Dialog): () => void {
     this.setState(() => dialog);
+
+    return () => {
+      this.closeDialog();
+      dialog['onCancel']?.();
+    };
   }
 
   openClusterConnectDialog(options: {
@@ -32,20 +41,20 @@ export class ModalsService extends ImmutableStore<Dialog> {
     onSuccess?(clusterUri: string): void;
     onCancel?(): void;
   }) {
-    this.setState(() => ({
+    return this.openDialog({
       kind: 'cluster-connect',
       ...options,
-    }));
+    });
   }
 
   openDocumentsReopenDialog(options: {
     onConfirm?(): void;
     onCancel?(): void;
   }) {
-    this.setState(() => ({
+    return this.openDialog({
       kind: 'documents-reopen',
       ...options,
-    }));
+    });
   }
 
   closeDialog() {
