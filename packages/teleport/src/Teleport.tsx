@@ -87,41 +87,34 @@ const Welcome = React.lazy(
   () => import(/* webpackChunkName: "welcome" */ './Welcome')
 );
 
-export function renderPublicRoutes(children = []) {
-  return [
-    ...children,
-    <Route
-      key={1}
-      title="Login Failed"
-      path={cfg.routes.loginError}
-      component={LoginFailed}
-    />,
-    <Route
-      key={2}
-      title="Login Failed"
-      path={cfg.routes.loginErrorLegacy}
-      component={LoginFailed}
-    />,
-    <Route key={3} title="Login" path={cfg.routes.login} component={Login} />,
-    <Route
-      key={4}
-      title="Success"
-      path={cfg.routes.loginSuccess}
-      component={LoginSuccess}
-    />,
-    <Route
-      key={5}
-      title="Invite"
-      path={cfg.routes.userInvite}
-      component={Welcome}
-    />,
-    <Route
-      key={6}
-      title="Password Reset"
-      path={cfg.routes.userReset}
-      component={Welcome}
-    />,
-  ];
+export function renderPublicRoutes(...childrenRoutes: React.ReactNode[]) {
+  return (
+    <Suspense fallback={null}>
+      {childrenRoutes}
+      <Route
+        title="Login Failed"
+        path={cfg.routes.loginError}
+        component={LoginFailed}
+      />
+      <Route
+        title="Login Failed"
+        path={cfg.routes.loginErrorLegacy}
+        component={LoginFailed}
+      />
+      <Route title="Login" path={cfg.routes.login} component={Login} />
+      <Route
+        title="Success"
+        path={cfg.routes.loginSuccess}
+        component={LoginSuccess}
+      />
+      <Route title="Invite" path={cfg.routes.userInvite} component={Welcome} />
+      <Route
+        title="Password Reset"
+        path={cfg.routes.userReset}
+        component={Welcome}
+      />
+    </Suspense>
+  );
 }
 
 const Console = React.lazy(
@@ -161,6 +154,6 @@ export type Props = {
   features?: Feature[];
   ctx: TeleportContext;
   history: History;
-  renderPublicRoutes?(children?: JSX.Element[]): JSX.Element[];
+  renderPublicRoutes?: (...childrenRoutes: React.ReactNode[]) => JSX.Element;
   renderPrivateRoutes?(CustomMain?: JSX.Element): JSX.Element;
 };
