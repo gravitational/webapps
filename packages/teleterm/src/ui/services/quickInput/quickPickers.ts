@@ -265,15 +265,12 @@ export class QuickTshSshParser implements QuickInputParser {
   }
 }
 
-export class QuickTshProxyDbPicker implements QuickInputParser {
+export class QuickTshProxyDbParser implements QuickInputParser {
   private totalDbNameRegex = /^\S+$/i;
 
-  constructor(private databasePicker: QuickDatabasePicker) {}
+  constructor(private databasePicker: QuickDatabaseSuggester) {}
 
-  async getAutocompleteResult(
-    rawInput: string,
-    startIndex: number
-  ): Promise<AutocompleteResult> {
+  parse(rawInput: string, startIndex: number): ParseResult {
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
     // any removed whitespace.
     const input = rawInput.trimStart();
@@ -287,27 +284,41 @@ export class QuickTshProxyDbPicker implements QuickInputParser {
 
     // Show autocomplete only after at least one space after `tsh proxy db`.
     if (rawInput !== '' && input === '') {
+      const targetToken = {
+        value: '',
+        startIndex,
+      };
       return {
-        ...(await this.databasePicker.getAutocompleteResult('', startIndex)),
+        targetToken,
         command: { kind: 'command.unknown' },
+        getSuggestions: () =>
+          Promise.resolve(
+            this.databasePicker.getSuggestions(targetToken.value)
+          ),
       };
     }
 
     const dbNameMatch = input.match(this.totalDbNameRegex);
 
     if (dbNameMatch) {
+      const targetToken = {
+        value: dbNameMatch[0],
+        startIndex,
+      };
       return {
-        ...(await this.databasePicker.getAutocompleteResult(
-          dbNameMatch[0],
-          startIndex
-        )),
+        targetToken,
         command: { kind: 'command.unknown' },
+        getSuggestions: () =>
+          Promise.resolve(
+            this.databasePicker.getSuggestions(targetToken.value)
+          ),
       };
     }
 
     return {
-      kind: 'autocomplete.no-match',
+      targetToken: emptyTargetToken,
       command: { kind: 'command.unknown' },
+      getSuggestions: noSuggestions,
     };
   }
 }
@@ -320,7 +331,7 @@ export class QuickSshLoginSuggester
     private clustersService: ClustersService
   ) {}
 
-  private filterSshLogins(input: string): SuggestionSshLogin[] {
+  async getSuggestions(input: string): Promise<SuggestionSshLogin[]> {
     // TODO(ravicious): Handle the `--cluster` tsh ssh flag.
     const localClusterUri =
       this.workspacesService.getActiveWorkspace()?.localClusterUri;
@@ -347,22 +358,6 @@ export class QuickSshLoginSuggester
       data: login,
     }));
   }
-
-  async getAutocompleteResult(
-    input: string,
-    startIndex: number
-  ): Promise<AutocompleteResult> {
-    const suggestions = this.filterSshLogins(input);
-    return {
-      kind: 'autocomplete.partial-match',
-      suggestions,
-      command: { kind: 'command.unknown' },
-      targetToken: {
-        startIndex,
-        value: input,
-      },
-    };
-  }
 }
 
 export class QuickServerSuggester
@@ -373,7 +368,7 @@ export class QuickServerSuggester
     private clustersService: ClustersService
   ) {}
 
-  private filterServers(input: string): SuggestionServer[] {
+  async getSuggestions(input: string): Promise<SuggestionServer[]> {
     // TODO(ravicious): Handle the `--cluster` tsh ssh flag.
     const localClusterUri =
       this.workspacesService.getActiveWorkspace()?.localClusterUri;
@@ -390,25 +385,9 @@ export class QuickServerSuggester
       data: server,
     }));
   }
-
-  async getAutocompleteResult(
-    input: string,
-    startIndex: number
-  ): Promise<AutocompleteResult> {
-    const suggestions = this.filterServers(input);
-    return {
-      kind: 'autocomplete.partial-match',
-      suggestions,
-      command: { kind: 'command.unknown' },
-      targetToken: {
-        startIndex,
-        value: input,
-      },
-    };
-  }
 }
 
-export class QuickDatabasePicker
+export class QuickDatabaseSuggester
   implements QuickInputSuggester<SuggestionDatabase>
 {
   constructor(
@@ -416,7 +395,7 @@ export class QuickDatabasePicker
     private clustersService: ClustersService
   ) {}
 
-  private filterDatabases(input: string): SuggestionDatabase[] {
+  async getSuggestions(input: string): Promise<SuggestionDatabase[]> {
     const localClusterUri =
       this.workspacesService.getActiveWorkspace()?.localClusterUri;
     if (!localClusterUri) {
@@ -431,21 +410,5 @@ export class QuickDatabasePicker
       token: database.name,
       data: database,
     }));
-  }
-
-  async getAutocompleteResult(
-    input: string,
-    startIndex: number
-  ): Promise<AutocompleteResult> {
-    const suggestions = this.filterDatabases(input);
-    return {
-      kind: 'autocomplete.partial-match',
-      suggestions,
-      command: { kind: 'command.unknown' },
-      targetToken: {
-        startIndex,
-        value: input,
-      },
-    };
   }
 }

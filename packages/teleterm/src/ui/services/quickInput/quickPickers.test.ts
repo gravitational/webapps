@@ -11,54 +11,48 @@ afterEach(() => {
 });
 
 test("tsh ssh picker returns unknown command if it's missing the first positional arg", async () => {
-  const QuickSshLoginPickerMock = QuickSshLoginSuggester as jest.MockedClass<
+  const QuickSshLoginSuggesterMock = QuickSshLoginSuggester as jest.MockedClass<
     typeof QuickSshLoginSuggester
   >;
-  const QuickServerPickerMock = QuickServerSuggester as jest.MockedClass<
+  const QuickServerSuggesterMock = QuickServerSuggester as jest.MockedClass<
     typeof QuickServerSuggester
   >;
-  const ActualQuickTshSshPicker =
-    jest.requireActual('./quickPickers').QuickTshSshPicker;
+  const ActualQuickTshSshParser =
+    jest.requireActual('./quickPickers').QuickTshSshParser;
 
-  const picker = new ActualQuickTshSshPicker(
-    new QuickSshLoginPickerMock(undefined, undefined),
-    new QuickServerPickerMock(undefined, undefined)
+  const parser = new ActualQuickTshSshParser(
+    new QuickSshLoginSuggesterMock(undefined, undefined),
+    new QuickServerSuggesterMock(undefined, undefined)
   );
 
-  const emptyInput = await picker.getAutocompleteResult('', 0);
+  const emptyInput = await parser.parse('', 0);
   expect(emptyInput.command).toEqual({ kind: 'command.unknown' });
 
-  const whitespace = await picker.getAutocompleteResult(' ', 0);
+  const whitespace = await parser.parse(' ', 0);
   expect(whitespace.command).toEqual({ kind: 'command.unknown' });
 });
 
 test('tsh ssh picker returns unknown command if the input includes any additional flags', async () => {
-  const QuickSshLoginPickerMock = QuickSshLoginSuggester as jest.MockedClass<
+  const QuickSshLoginSuggesterMock = QuickSshLoginSuggester as jest.MockedClass<
     typeof QuickSshLoginSuggester
   >;
-  const QuickServerPickerMock = QuickServerSuggester as jest.MockedClass<
+  const QuickServerSuggesterMock = QuickServerSuggester as jest.MockedClass<
     typeof QuickServerSuggester
   >;
-  const ActualQuickTshSshPicker =
-    jest.requireActual('./quickPickers').QuickTshSshPicker;
+  const ActualQuickTshSshParser =
+    jest.requireActual('./quickPickers').QuickTshSshParser;
 
-  const picker = new ActualQuickTshSshPicker(
-    new QuickSshLoginPickerMock(undefined, undefined),
-    new QuickServerPickerMock(undefined, undefined)
+  const parser = new ActualQuickTshSshParser(
+    new QuickSshLoginSuggesterMock(undefined, undefined),
+    new QuickServerSuggesterMock(undefined, undefined)
   );
 
-  const fullFlagBefore = await picker.getAutocompleteResult(
-    '--foo user@node',
-    0
-  );
+  const fullFlagBefore = await parser.parse('--foo user@node', 0);
   expect(fullFlagBefore.command).toEqual({ kind: 'command.unknown' });
 
-  const shortFlagBefore = await picker.getAutocompleteResult(
-    '-p 22 user@node',
-    0
-  );
+  const shortFlagBefore = await parser.parse('-p 22 user@node', 0);
   expect(shortFlagBefore.command).toEqual({ kind: 'command.unknown' });
 
-  const commandAfter = await picker.getAutocompleteResult('user@node ls', 0);
+  const commandAfter = await parser.parse('user@node ls', 0);
   expect(commandAfter.command).toEqual({ kind: 'command.unknown' });
 });

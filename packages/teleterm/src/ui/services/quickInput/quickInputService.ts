@@ -29,7 +29,7 @@ type State = {
 };
 
 export class QuickInputService extends Store<State> {
-  private quickCommandPicker: pickers.QuickCommandPicker;
+  private quickCommandParser: pickers.QuickCommandParser;
   lastFocused: WeakRef<HTMLElement>;
 
   constructor(
@@ -39,7 +39,7 @@ export class QuickInputService extends Store<State> {
   ) {
     super();
     this.lastFocused = new WeakRef(document.createElement('div'));
-    this.quickCommandPicker = new pickers.QuickCommandPicker(launcher);
+    this.quickCommandParser = new pickers.QuickCommandParser(launcher);
     this.setState({
       inputValue: '',
     });
@@ -52,18 +52,18 @@ export class QuickInputService extends Store<State> {
       workspacesService,
       clustersService
     );
-    const databasePicker = new pickers.QuickDatabasePicker(
+    const databasePicker = new pickers.QuickDatabaseSuggester(
       workspacesService,
       clustersService
     );
 
-    this.quickCommandPicker.registerParserForCommand(
+    this.quickCommandParser.registerParserForCommand(
       'tsh ssh',
-      new pickers.QuickTshSshPicker(sshLoginPicker, serverPicker)
+      new pickers.QuickTshSshParser(sshLoginPicker, serverPicker)
     );
-    this.quickCommandPicker.registerParserForCommand(
+    this.quickCommandParser.registerParserForCommand(
       'tsh proxy db',
-      new pickers.QuickTshProxyDbPicker(databasePicker)
+      new pickers.QuickTshProxyDbParser(databasePicker)
     );
   }
 
@@ -103,7 +103,7 @@ export class QuickInputService extends Store<State> {
   // TODO(ravicious): This function needs to take cursor index into account instead of assuming that
   // you want to complete only what's at the end of the input string.
   parse(input: string): ParseResult {
-    const parseResult = this.quickCommandPicker.parse(input);
+    const parseResult = this.quickCommandParser.parse(input);
 
     // Automatically handle a universal edge case so that each individual suggester doesn't have to
     // care about it.
