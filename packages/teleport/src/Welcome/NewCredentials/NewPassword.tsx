@@ -55,7 +55,7 @@ export function NewPassword(props: Props) {
     e.preventDefault(); // prevent form submit default
 
     userEventService.captureUserEvent({
-      event: userEvents.onboard.setPasswordSubmitEvent,
+      event: userEvents.onboard.setCredentialSubmitEvent,
     });
 
     if (!validator.validate()) {
