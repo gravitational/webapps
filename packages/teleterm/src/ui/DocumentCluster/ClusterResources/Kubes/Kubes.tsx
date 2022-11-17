@@ -15,19 +15,15 @@ limitations under the License.
 */
 
 import React from 'react';
-
-import styled from 'styled-components';
-
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
-import { ButtonBorder, Box } from 'design';
-
+import { ButtonBorder } from 'design';
 import { Danger } from 'design/Alert';
-
 import { SearchPanel } from 'shared/components/Search';
 import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
-import { useKubes, State } from './useKubes';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
+
+import { useKubes, State } from './useKubes';
 
 export default function Container() {
   const state = useKubes();

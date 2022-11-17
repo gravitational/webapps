@@ -13,14 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import React from 'react';
-
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
-import styled from 'styled-components';
-
-import { Box } from 'design';
-
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
 import { SearchPanel } from 'shared/components/Search';
@@ -32,9 +26,9 @@ import { IAppContext } from 'teleterm/ui/types';
 import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useDatabases, State } from './useDatabases';
-import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 export default function Container() {
   const state = useDatabases();

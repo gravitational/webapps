@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { AttemptStatus } from 'shared/hooks/useAsync';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 import { Server, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -48,7 +47,7 @@ export function useServers() {
     updateSort,
     pageCount,
   } = useServerSideResources<Server>(
-    ResourceKind.Server,
+    { fieldName: 'hostname', dir: 'ASC' }, // default sort
     (params: ServerSideParams) =>
       appContext.resourcesService.fetchServers(params)
   );

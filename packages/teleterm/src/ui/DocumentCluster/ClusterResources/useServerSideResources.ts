@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { SortType } from 'design/DataTable/types';
 import { useAsync } from 'shared/hooks/useAsync';
 import { AgentFilter, AgentLabel } from 'teleport/services/agents';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 import { ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -10,7 +9,7 @@ import { retryWithRelogin } from 'teleterm/ui/utils';
 
 import { useClusterContext } from '../clusterContext';
 
-export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
+function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
   const queryParts = [];
 
   // Add existing query
@@ -33,7 +32,7 @@ export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
 const limit = 15;
 
 export function useServerSideResources<Agent>(
-  resourceKind: ResourceKind,
+  defaultSort: SortType,
   fetchFunction: (params: ServerSideParams) => Promise<FetchResponse<Agent>>
 ) {
   const ctx = useAppContext();
@@ -41,7 +40,7 @@ export function useServerSideResources<Agent>(
   const [pageIndex, setPageIndex] = useState(0);
   const [keys, setKeys] = useState<string[]>([]);
   const [agentFilter, setAgentFilter] = useState<AgentFilter>({
-    sort: getDefaultSort(resourceKind),
+    sort: defaultSort,
   });
 
   // startKey is used here as a way to paginate through agents returned from
@@ -124,20 +123,25 @@ export function useServerSideResources<Agent>(
   }
 
   const pageCount = useMemo(() => {
-    if (fetchAttempt.status !== 'success') {
-      return {
-        from: 0,
-        to: 0,
-        total: 0,
-      };
+    const emptyPageCount = {
+      from: 0,
+      to: 0,
+      total: 0,
+    };
+    if (!(fetchAttempt.data && fetchAttempt.data.totalCount)) {
+      return emptyPageCount;
     }
-    const from = pageIndex * limit + 1;
+    const startKeyIndex = keys.indexOf(fetchAttempt.data.startKey);
+    if (startKeyIndex < 0) {
+      return emptyPageCount;
+    }
+    const from = startKeyIndex * limit + 1;
     return {
       from,
       to: from + fetchAttempt.data.agentsList.length - 1,
       total: fetchAttempt.data.totalCount,
     };
-  }, [fetchAttempt.status]);
+  }, [fetchAttempt, keys]);
 
   return {
     fetchAttempt,
@@ -151,13 +155,6 @@ export function useServerSideResources<Agent>(
     onAgentLabelClick,
     pageCount,
   };
-}
-
-function getDefaultSort(kind: ResourceKind): SortType {
-  if (kind === ResourceKind.Server) {
-    return { fieldName: 'hostname', dir: 'ASC' };
-  }
-  return { fieldName: 'name', dir: 'ASC' };
 }
 
 type FetchResponse<T> = {

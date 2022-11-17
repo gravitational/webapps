@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { AttemptStatus } from 'shared/hooks/useAsync';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 import { Kube, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -50,7 +49,7 @@ export function useKubes() {
     updateSort,
     pageCount,
   } = useServerSideResources<Kube>(
-    ResourceKind.Kubernetes,
+    { fieldName: 'name', dir: 'ASC' }, // default sort
     (params: ServerSideParams) => appContext.resourcesService.fetchKubes(params)
   );
 

@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { AttemptStatus } from 'shared/hooks/useAsync';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { Database, ServerSideParams } from 'teleterm/services/tshd/types';
@@ -54,7 +53,7 @@ export function useDatabases() {
     updateSort,
     pageCount,
   } = useServerSideResources<Database>(
-    ResourceKind.Database,
+    { fieldName: 'name', dir: 'ASC' }, // default sort
     (params: ServerSideParams) =>
       appContext.resourcesService.fetchDatabases(params)
   );
