@@ -160,7 +160,6 @@ function privateOSSRoutes() {
 
 export function renderPrivateRoutes(...childrenRoutes: React.ReactNode[]) {
   return [
-    ...childrenRoutes,
     <Route
       key="desktop"
       path={cfg.routes.desktop}
@@ -168,6 +167,7 @@ export function renderPrivateRoutes(...childrenRoutes: React.ReactNode[]) {
     />,
     <Route key="console" path={cfg.routes.console} component={Console} />,
     <Route key="player" path={cfg.routes.player} component={Player} />,
+    ...childrenRoutes,
   ];
 }
 
