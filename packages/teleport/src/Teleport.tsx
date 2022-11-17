@@ -177,10 +177,6 @@ export type Props = {
   features?: Feature[];
   ctx: TeleportContext;
   history: History;
-  renderPublicRoutes?: (
-    ...childrenRoutes: React.ReactNode[]
-  ) => React.ReactNode[];
-  renderPrivateRoutes?: (
-    ...childrenRoutes: React.ReactNode[]
-  ) => React.ReactNode[];
+  renderPublicRoutes?: () => React.ReactNode[];
+  renderPrivateRoutes?: () => React.ReactNode[];
 };
