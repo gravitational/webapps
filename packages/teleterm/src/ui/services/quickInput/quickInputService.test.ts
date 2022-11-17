@@ -265,7 +265,7 @@ test("parse doesn't return any suggestions if the only suggestion completely mat
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
-test('parse returns no match if any of the pickers returns partial match with empty array', async () => {
+test('parse returns no suggestions if any of the parsers returns empty suggestions array', async () => {
   jest.mock('./quickPickers');
   const QuickCommandParserMock = pickers.QuickCommandParser as jest.MockedClass<
     typeof pickers.QuickCommandParser

@@ -44,26 +44,26 @@ export class QuickInputService extends Store<State> {
       inputValue: '',
     });
 
-    const sshLoginPicker = new pickers.QuickSshLoginSuggester(
+    const sshLoginSuggester = new pickers.QuickSshLoginSuggester(
       workspacesService,
       clustersService
     );
-    const serverPicker = new pickers.QuickServerSuggester(
+    const serverSuggester = new pickers.QuickServerSuggester(
       workspacesService,
       clustersService
     );
-    const databasePicker = new pickers.QuickDatabaseSuggester(
+    const databaseSuggester = new pickers.QuickDatabaseSuggester(
       workspacesService,
       clustersService
     );
 
     this.quickCommandParser.registerParserForCommand(
       'tsh ssh',
-      new pickers.QuickTshSshParser(sshLoginPicker, serverPicker)
+      new pickers.QuickTshSshParser(sshLoginSuggester, serverSuggester)
     );
     this.quickCommandParser.registerParserForCommand(
       'tsh proxy db',
-      new pickers.QuickTshProxyDbParser(databasePicker)
+      new pickers.QuickTshProxyDbParser(databaseSuggester)
     );
   }
 
