@@ -51,7 +51,7 @@ function mockCommandLauncherAutocompleteCommands(
     });
 }
 
-test('getAutocompleteResult returns correct result for a command suggestion with empty input', async () => {
+test('parse returns correct result for a command suggestion with empty input', async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
@@ -73,7 +73,7 @@ test('getAutocompleteResult returns correct result for a command suggestion with
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
-test('getAutocompleteResult returns correct result for a command suggestion', async () => {
+test('parse returns correct result for a command suggestion', async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
@@ -96,7 +96,7 @@ test('getAutocompleteResult returns correct result for a command suggestion', as
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
-test('getAutocompleteResult returns correct result for an SSH login suggestion', async () => {
+test('parse returns correct result for an SSH login suggestion', async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
@@ -134,7 +134,7 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion',
   });
 });
 
-test('getAutocompleteResult returns correct result for an SSH login suggestion with spaces between arguments', async () => {
+test('parse returns correct result for an SSH login suggestion with spaces between arguments', async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
@@ -172,7 +172,7 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion w
   });
 });
 
-test('getAutocompleteResult returns correct result for a database name suggestion', async () => {
+test('parse returns correct result for a database name suggestion', async () => {
   mockCommandLauncherAutocompleteCommands(CommandLauncherMock, [
     {
       name: 'autocomplete.tsh-proxy-db',
@@ -227,7 +227,7 @@ test('getAutocompleteResult returns correct result for a database name suggestio
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
-test("getAutocompleteResult doesn't return any suggestions if the only suggestion completely matches the target token", async () => {
+test("parse doesn't return any suggestions if the only suggestion completely matches the target token", async () => {
   jest.mock('./quickPickers');
   const QuickCommandParserMock = pickers.QuickCommandParser as jest.MockedClass<
     typeof pickers.QuickCommandParser
@@ -265,7 +265,7 @@ test("getAutocompleteResult doesn't return any suggestions if the only suggestio
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
-test('getAutocompleteResult returns no match if any of the pickers returns partial match with empty array', async () => {
+test('parse returns no match if any of the pickers returns partial match with empty array', async () => {
   jest.mock('./quickPickers');
   const QuickCommandParserMock = pickers.QuickCommandParser as jest.MockedClass<
     typeof pickers.QuickCommandParser
@@ -346,7 +346,7 @@ test("the SSH login autocomplete is shown only if there's at least one space aft
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
-test('getAutocompleteResult returns correct result for an SSH host suggestion right after user@', async () => {
+test('parse returns correct result for an SSH host suggestion right after user@', async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
@@ -398,7 +398,7 @@ test('getAutocompleteResult returns correct result for an SSH host suggestion ri
   });
 });
 
-test('getAutocompleteResult returns correct result for a partial match on an SSH host suggestion', async () => {
+test('parse returns correct result for a partial match on an SSH host suggestion', async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
@@ -451,7 +451,7 @@ test('getAutocompleteResult returns correct result for a partial match on an SSH
   });
 });
 
-test("getAutocompleteResult returns the first argument as loginHost when there's no @ sign", async () => {
+test("parse returns the first argument as loginHost when there's no @ sign", async () => {
   mockCommandLauncherAutocompleteCommands(
     CommandLauncherMock,
     onlyTshSshCommand
