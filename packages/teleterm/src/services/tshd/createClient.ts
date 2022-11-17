@@ -13,9 +13,12 @@ export default function createClient(
   credentials: ChannelCredentials
 ) {
   const logger = new Logger('tshd');
-  const tshd = middleware(new TerminalServiceClient(addr, credentials), [
-    withLogging(logger),
-  ]);
+  const tshd = middleware(
+    new TerminalServiceClient(addr, credentials, {
+      'grpc.max_receive_message_length': 10 * 1024 * 1024, // 10 MB
+    }),
+    [withLogging(logger)]
+  );
 
   // Create a client instance that could be shared with the  renderer (UI) via Electron contextBridge
   const client = {
