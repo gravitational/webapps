@@ -161,7 +161,7 @@ test('parse returns correct result for an SSH login suggestion with spaces betwe
     quickInputService.parse('   tsh ssh    bar');
   const suggestions = await getSuggestions();
 
-  /* expect(suggestions).toHaveLength(1); */
+  expect(suggestions).toHaveLength(1);
   expect(targetToken).toEqual({
     value: 'bar',
     startIndex: 14,
