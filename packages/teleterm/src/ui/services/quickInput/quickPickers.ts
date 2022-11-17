@@ -114,7 +114,7 @@ export class QuickCommandParser implements QuickInputParser {
     if (isCompleteMatch) {
       const inputWithoutCommandPrefix = input.replace(completeMatchRegex, '');
       // Add length of the command we just replaced with an empty string to startIndex,
-      // so that the next picker has the correct index for the target token.
+      // so that the next parser has the correct index for the target token.
       const commandStartIndex = targetToken.startIndex + commandToken.length;
       const nextQuickInputParser = this.parserRegistry.get(commandToken);
 
@@ -195,9 +195,7 @@ export class QuickTshSshParser implements QuickInputParser {
         targetToken,
         command,
         getSuggestions: () =>
-          Promise.resolve(
-            this.sshLoginSuggester.getSuggestions(targetToken.value)
-          ),
+          this.sshLoginSuggester.getSuggestions(targetToken.value),
       };
     }
 
@@ -218,9 +216,7 @@ export class QuickTshSshParser implements QuickInputParser {
         targetToken,
         command,
         getSuggestions: () =>
-          Promise.resolve(
-            this.serverSuggester.getSuggestions(targetToken.value)
-          ),
+          this.serverSuggester.getSuggestions(targetToken.value),
       };
     }
 
@@ -239,9 +235,7 @@ export class QuickTshSshParser implements QuickInputParser {
         targetToken,
         command,
         getSuggestions: () =>
-          Promise.resolve(
-            this.sshLoginSuggester.getSuggestions(targetToken.value)
-          ),
+          this.sshLoginSuggester.getSuggestions(targetToken.value),
       };
     }
 
@@ -268,7 +262,7 @@ export class QuickTshSshParser implements QuickInputParser {
 export class QuickTshProxyDbParser implements QuickInputParser {
   private totalDbNameRegex = /^\S+$/i;
 
-  constructor(private databasePicker: QuickDatabaseSuggester) {}
+  constructor(private databaseSuggester: QuickDatabaseSuggester) {}
 
   parse(rawInput: string, startIndex: number): ParseResult {
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
@@ -292,9 +286,7 @@ export class QuickTshProxyDbParser implements QuickInputParser {
         targetToken,
         command: { kind: 'command.unknown' },
         getSuggestions: () =>
-          Promise.resolve(
-            this.databasePicker.getSuggestions(targetToken.value)
-          ),
+          this.databaseSuggester.getSuggestions(targetToken.value),
       };
     }
 
@@ -309,9 +301,7 @@ export class QuickTshProxyDbParser implements QuickInputParser {
         targetToken,
         command: { kind: 'command.unknown' },
         getSuggestions: () =>
-          Promise.resolve(
-            this.databasePicker.getSuggestions(targetToken.value)
-          ),
+          this.databaseSuggester.getSuggestions(targetToken.value),
       };
     }
 
