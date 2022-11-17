@@ -29,12 +29,14 @@ import { userContext } from 'teleport/mocks/contexts';
 
 import DownloadScript from './DownloadScript';
 
+const { worker, rest } = window.msw;
+
 export default {
   title: 'Teleport/Discover/Database/DownloadScript',
   decorators: [
     Story => {
       // Reset request handlers added in individual stories.
-      window.msw.worker.resetHandlers();
+      worker.resetHandlers();
       clearCachedJoinTokenResult();
       return <Story />;
     },
@@ -50,7 +52,6 @@ export const Init = () => {
 };
 
 export const Polling = () => {
-  const { worker, rest } = window.msw;
   // Use default fetch token handler defined in mocks/handlers
 
   worker.use(
@@ -66,7 +67,6 @@ export const Polling = () => {
 };
 
 export const PollingSuccess = () => {
-  const { worker, rest } = window.msw;
   // Use default fetch token handler defined in mocks/handlers
 
   worker.use(
@@ -82,7 +82,6 @@ export const PollingSuccess = () => {
 };
 
 export const PollingError = () => {
-  const { worker, rest } = window.msw;
   // Use default fetch token handler defined in mocks/handlers
 
   worker.use(
@@ -97,7 +96,6 @@ export const PollingError = () => {
   );
 };
 export const Processing = () => {
-  const { worker, rest } = window.msw;
   worker.use(
     rest.post(cfg.api.joinTokenPath, (req, res, ctx) => {
       return res(ctx.delay('infinite'));
@@ -111,7 +109,6 @@ export const Processing = () => {
 };
 
 export const Failed = () => {
-  const { worker, rest } = window.msw;
   worker.use(
     rest.post(cfg.api.joinTokenPath, (req, res, ctx) => {
       return res.once(ctx.status(500));

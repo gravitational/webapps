@@ -257,8 +257,7 @@ export const Labels = ({
       // instead of removing the row, clear
       // the input and turn on error.
       const newList = [...labels];
-      newList[index].name = '';
-      newList[index].value = '';
+      newList[index] = { name: '', value: '' };
       setLabels(newList);
 
       validator.validate();
@@ -272,15 +271,11 @@ export const Labels = ({
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     index: number,
-    labelField: 'key' | 'value'
+    labelField: keyof AgentLabel
   ) => {
     const { value } = event.target;
     const newList = [...labels];
-    if (labelField === 'key') {
-      newList[index].name = value;
-    } else {
-      newList[index].value = value;
-    }
+    newList[index] = { ...newList[index], [labelField]: value };
     setLabels(newList);
   };
 
@@ -319,7 +314,7 @@ export const Labels = ({
                   width="170px"
                   mr={3}
                   mb={0}
-                  onChange={e => handleChange(e, index, 'key')}
+                  onChange={e => handleChange(e, index, 'name')}
                 />
                 <FieldInput
                   rule={requiredField('required')}
