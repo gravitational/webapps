@@ -34,6 +34,7 @@ import * as types from 'teleterm/ui/services/clusters/types';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 
 import { useServers, State } from './useServers';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 export default function Container() {
   const state = useServers();
@@ -70,7 +71,7 @@ function ServerList(props: State) {
         showSearchBar={true}
         disableSearch={disabledRows}
       />
-      <DarkenWhileDisabled className={disabledRows ? 'disabled' : ''}>
+      <DarkenWhileDisabled disabled={disabledRows}>
         <Table
           columns={[
             {
@@ -150,14 +151,3 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
     {!tunnel && addr}
   </Cell>
 );
-
-const DarkenWhileDisabled = styled(Box)`
-  // The timing functions of transitions have been chosen so that the element loses opacity slowly
-  // when entering the disabled state but gains it quickly when going out of the disabled state.
-  transition: opacity 150ms ease-out;
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.7;
-    transition: opacity 150ms ease-in;
-  }
-`;

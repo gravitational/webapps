@@ -34,6 +34,7 @@ import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 
 import { useDatabases, State } from './useDatabases';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 export default function Container() {
   const state = useDatabases();
@@ -70,7 +71,7 @@ function DatabaseList(props: State) {
         showSearchBar={true}
         disableSearch={disabledRows}
       />
-      <DarkenWhileDisabled className={disabledRows ? 'disabled' : ''}>
+      <DarkenWhileDisabled disabled={disabledRows}>
         <Table
           data={dbs}
           columns={[
@@ -177,14 +178,3 @@ async function getDatabaseUsers(appContext: IAppContext, dbUri: string) {
     throw e;
   }
 }
-
-const DarkenWhileDisabled = styled(Box)`
-  // The timing functions of transitions have been chosen so that the element loses opacity slowly
-  // when entering the disabled state but gains it quickly when going out of the disabled state.
-  transition: opacity 150ms ease-out;
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.7;
-    transition: opacity 150ms ease-in;
-  }
-`;

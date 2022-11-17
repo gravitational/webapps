@@ -27,6 +27,7 @@ import { SearchPanel } from 'shared/components/Search';
 import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
 import { useKubes, State } from './useKubes';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 export default function Container() {
   const state = useKubes();
@@ -63,7 +64,7 @@ function KubeList(props: State) {
         showSearchBar={true}
         disableSearch={disabledRows}
       />
-      <DarkenWhileDisabled className={disabledRows ? 'disabled' : ''}>
+      <DarkenWhileDisabled disabled={disabledRows}>
         <Table
           data={kubes}
           columns={[
@@ -113,14 +114,3 @@ export const renderConnectButtonCell = (
     </Cell>
   );
 };
-
-const DarkenWhileDisabled = styled(Box)`
-      // The timing functions of transitions have been chosen so that the element loses opacity slowly
-      // when entering the disabled state but gains it quickly when going out of the disabled state.
-      transition: opacity 150ms ease-out;
-      &.disabled {
-        pointer - events: none;
-      opacity: 0.7;
-      transition: opacity 150ms ease-in;
-  }
-      `;
