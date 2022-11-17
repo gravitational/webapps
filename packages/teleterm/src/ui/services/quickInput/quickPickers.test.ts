@@ -1,4 +1,4 @@
-import { QuickSshLoginPicker, QuickServerPicker } from './quickPickers';
+import { QuickSshLoginSuggester, QuickServerSuggester } from './quickPickers';
 
 // Jest doesn't let us selectively automock classes. See https://github.com/facebook/jest/issues/11995
 //
@@ -11,11 +11,11 @@ afterEach(() => {
 });
 
 test("tsh ssh picker returns unknown command if it's missing the first positional arg", async () => {
-  const QuickSshLoginPickerMock = QuickSshLoginPicker as jest.MockedClass<
-    typeof QuickSshLoginPicker
+  const QuickSshLoginPickerMock = QuickSshLoginSuggester as jest.MockedClass<
+    typeof QuickSshLoginSuggester
   >;
-  const QuickServerPickerMock = QuickServerPicker as jest.MockedClass<
-    typeof QuickServerPicker
+  const QuickServerPickerMock = QuickServerSuggester as jest.MockedClass<
+    typeof QuickServerSuggester
   >;
   const ActualQuickTshSshPicker =
     jest.requireActual('./quickPickers').QuickTshSshPicker;
@@ -33,11 +33,11 @@ test("tsh ssh picker returns unknown command if it's missing the first positiona
 });
 
 test('tsh ssh picker returns unknown command if the input includes any additional flags', async () => {
-  const QuickSshLoginPickerMock = QuickSshLoginPicker as jest.MockedClass<
-    typeof QuickSshLoginPicker
+  const QuickSshLoginPickerMock = QuickSshLoginSuggester as jest.MockedClass<
+    typeof QuickSshLoginSuggester
   >;
-  const QuickServerPickerMock = QuickServerPicker as jest.MockedClass<
-    typeof QuickServerPicker
+  const QuickServerPickerMock = QuickServerSuggester as jest.MockedClass<
+    typeof QuickServerSuggester
   >;
   const ActualQuickTshSshPicker =
     jest.requireActual('./quickPickers').QuickTshSshPicker;

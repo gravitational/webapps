@@ -21,12 +21,7 @@ import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 
 import * as pickers from './quickPickers';
-import {
-  AutocompleteResult,
-  AutocompleteToken,
-  ParseResult,
-  Suggestion,
-} from './types';
+import { AutocompleteToken, ParseResult, Suggestion } from './types';
 
 type State = {
   inputValue: string;
@@ -44,16 +39,16 @@ export class QuickInputService extends Store<State> {
   ) {
     super();
     this.lastFocused = new WeakRef(document.createElement('div'));
-    this.quickCommandPicker = new pickers.QuickCommandPicker(this, launcher);
+    this.quickCommandPicker = new pickers.QuickCommandPicker(launcher);
     this.setState({
       inputValue: '',
     });
 
-    const sshLoginPicker = new pickers.QuickSshLoginPicker(
+    const sshLoginPicker = new pickers.QuickSshLoginSuggester(
       workspacesService,
       clustersService
     );
-    const serverPicker = new pickers.QuickServerPicker(
+    const serverPicker = new pickers.QuickServerSuggester(
       workspacesService,
       clustersService
     );
@@ -62,11 +57,11 @@ export class QuickInputService extends Store<State> {
       clustersService
     );
 
-    this.quickCommandPicker.registerPickerForCommand(
+    this.quickCommandPicker.registerParserForCommand(
       'tsh ssh',
       new pickers.QuickTshSshPicker(sshLoginPicker, serverPicker)
     );
-    this.quickCommandPicker.registerPickerForCommand(
+    this.quickCommandPicker.registerParserForCommand(
       'tsh proxy db',
       new pickers.QuickTshProxyDbPicker(databasePicker)
     );
@@ -108,26 +103,24 @@ export class QuickInputService extends Store<State> {
   // TODO(ravicious): This function needs to take cursor index into account instead of assuming that
   // you want to complete only what's at the end of the input string.
   parse(input: string): ParseResult {
-    const autocompleteResult = this.quickCommandPicker.parse(input);
+    const parseResult = this.quickCommandPicker.parse(input);
 
-    // Automatically handle some universal edge cases so that each individual picker doesn't have to
-    // care about them.
-    if (autocompleteResult.kind === 'autocomplete.partial-match') {
-      const { targetToken, suggestions } = autocompleteResult;
-      const isEmpty = suggestions.length === 0;
-      // Don't show suggestions if the only suggestion completely matches the target token.
-      const hasSingleCompleteMatch =
-        suggestions.length === 1 && suggestions[0].token === targetToken.value;
+    // Automatically handle a universal edge case so that each individual suggester doesn't have to
+    // care about it.
+    const getSuggestionsThenHandleEdgeCase = () =>
+      parseResult.getSuggestions().then(suggestions => {
+        // Don't show suggestions if the only suggestion completely matches the target token.
+        const hasSingleCompleteMatch =
+          suggestions.length === 1 &&
+          suggestions[0].token === parseResult.targetToken.value;
 
-      if (isEmpty || hasSingleCompleteMatch) {
-        return {
-          kind: 'autocomplete.no-match',
-          command: autocompleteResult.command,
-        };
-      }
-    }
+        return hasSingleCompleteMatch ? [] : suggestions;
+      });
 
-    return autocompleteResult;
+    return {
+      ...parseResult,
+      getSuggestions: getSuggestionsThenHandleEdgeCase,
+    };
   }
 
   // Replaces the token that is being autocompleted with the token from the suggestion.

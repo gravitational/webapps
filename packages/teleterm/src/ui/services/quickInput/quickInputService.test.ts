@@ -6,11 +6,7 @@ import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequest
 
 import { QuickInputService } from './quickInputService';
 import * as pickers from './quickPickers';
-import {
-  AutocompletePartialMatch,
-  SuggestionCmd,
-  SuggestionSshLogin,
-} from './types';
+import { SuggestionCmd, SuggestionSshLogin } from './types';
 
 afterEach(() => {
   jest.restoreAllMocks();
@@ -106,7 +102,7 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion',
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginPicker.prototype, 'getAutocompleteResult')
+    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getAutocompleteResult')
     .mockImplementation(async (input: string, startIndex: number) => {
       return {
         kind: 'autocomplete.partial-match',
@@ -128,15 +124,16 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion',
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'tsh ssh roo'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { getSuggestions, targetToken, command } =
+    quickInputService.parse('tsh ssh roo');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: 'roo',
     startIndex: 8,
   });
-  expect(autocompleteResult.command).toEqual({
+  expect(command).toEqual({
     kind: 'command.tsh-ssh',
     loginHost: 'roo',
   });
@@ -148,7 +145,7 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion w
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginPicker.prototype, 'getAutocompleteResult')
+    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getAutocompleteResult')
     .mockImplementation(async (input: string, startIndex: number) => {
       return {
         kind: 'autocomplete.partial-match',
@@ -170,15 +167,17 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion w
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    '   tsh ssh    bar'
+  const { getSuggestions, targetToken, command } = quickInputService.parse(
+    '     tsh ssh       bar    '
   );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: 'bar',
     startIndex: 14,
   });
-  expect(autocompleteResult.command).toEqual({
+  expect(command).toEqual({
     kind: 'command.tsh-ssh',
     loginHost: 'bar',
   });
@@ -227,15 +226,16 @@ test('getAutocompleteResult returns correct result for a database name suggestio
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'tsh proxy db foo'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { getSuggestions, targetToken, command } =
+    quickInputService.parse('tsh proxy db foo');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: 'foo',
     startIndex: 13,
   });
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test("getAutocompleteResult doesn't return any suggestions if the only suggestion completely matches the target token", async () => {
@@ -269,11 +269,11 @@ test("getAutocompleteResult doesn't return any suggestions if the only suggestio
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'foobar'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.no-match');
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  const { getSuggestions, command } = quickInputService.parse('foobar');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(0);
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test('getAutocompleteResult returns no match if any of the pickers returns partial match with empty array', async () => {
@@ -300,9 +300,11 @@ test('getAutocompleteResult returns no match if any of the pickers returns parti
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult('');
-  expect(autocompleteResult.kind).toBe('autocomplete.no-match');
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  const { command, getSuggestions } = quickInputService.parse('');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(0);
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test("the SSH login autocomplete isn't shown if there's no space after `tsh ssh`", async () => {
@@ -316,11 +318,9 @@ test("the SSH login autocomplete isn't shown if there's no space after `tsh ssh`
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'tsh ssh'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.no-match');
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  const { command } = quickInputService.parse('tsh ssh');
+
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test("the SSH login autocomplete is shown only if there's at least one space after `tsh ssh`", async () => {
@@ -329,7 +329,7 @@ test("the SSH login autocomplete is shown only if there's at least one space aft
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginPicker.prototype, 'getAutocompleteResult')
+    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getAutocompleteResult')
     .mockImplementation(async (input: string, startIndex: number) => {
       return {
         kind: 'autocomplete.partial-match',
@@ -351,15 +351,16 @@ test("the SSH login autocomplete is shown only if there's at least one space aft
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'tsh ssh '
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { command, targetToken, getSuggestions } =
+    quickInputService.parse('tsh ssh ');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: '',
     startIndex: 8,
   });
-  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+  expect(command).toEqual({ kind: 'command.unknown' });
 });
 
 test('getAutocompleteResult returns correct result for an SSH host suggestion right after user@', async () => {
@@ -399,15 +400,16 @@ test('getAutocompleteResult returns correct result for an SSH host suggestion ri
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'tsh ssh user@'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { getSuggestions, targetToken, command } =
+    quickInputService.parse('tsh ssh user@');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: '',
     startIndex: 13,
   });
-  expect(autocompleteResult.command).toEqual({
+  expect(command).toEqual({
     kind: 'command.tsh-ssh',
     loginHost: 'user@',
   });
@@ -450,15 +452,17 @@ test('getAutocompleteResult returns correct result for a partial match on an SSH
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
+  const { getSuggestions, targetToken, command } = quickInputService.parse(
     '   tsh ssh    foo@baz'
   );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: 'baz',
     startIndex: 18,
   });
-  expect(autocompleteResult.command).toEqual({
+  expect(command).toEqual({
     kind: 'command.tsh-ssh',
     loginHost: 'foo@baz',
   });
@@ -470,7 +474,7 @@ test("getAutocompleteResult returns the first argument as loginHost when there's
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginPicker.prototype, 'getAutocompleteResult')
+    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getAutocompleteResult')
     .mockImplementation(async (input: string, startIndex: number) => {
       return {
         kind: 'autocomplete.partial-match',
@@ -492,15 +496,16 @@ test("getAutocompleteResult returns the first argument as loginHost when there's
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const autocompleteResult = await quickInputService.getAutocompleteResult(
-    'tsh ssh bar'
-  );
-  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
-  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+  const { getSuggestions, targetToken, command } =
+    quickInputService.parse('tsh ssh bar');
+  const suggestions = await getSuggestions();
+
+  expect(suggestions).toHaveLength(1);
+  expect(targetToken).toEqual({
     value: 'bar',
     startIndex: 8,
   });
-  expect(autocompleteResult.command).toEqual({
+  expect(command).toEqual({
     kind: 'command.tsh-ssh',
     loginHost: 'bar',
   });

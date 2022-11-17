@@ -31,7 +31,7 @@ export type Suggestion =
   | SuggestionDatabase;
 
 export type QuickInputParser = {
-  parse(input: string): ParseResult;
+  parse(input: string, startIndex: number): ParseResult;
 };
 
 export type ParseResult = {
@@ -39,7 +39,7 @@ export type ParseResult = {
   // This means that in case of `tsh ssh roo`, the command will say that we want to launch `tsh ssh`
   // with `roo` as `loginHost`.
   command: AutocompleteCommand;
-  targetToken: AutocompleteToken;
+  readonly targetToken: AutocompleteToken;
   getSuggestions(): Promise<Suggestion[]>;
 };
 
