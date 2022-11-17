@@ -17,8 +17,7 @@ import React from 'react';
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin } from 'shared/components/MenuLogin';
-import { SearchPanel } from 'shared/components/Search';
-import { SearchPagination } from 'shared/components/Search/SearchPagination';
+import { SearchPanel, SearchPagination } from 'shared/components/Search';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 
