@@ -24,8 +24,9 @@ import {
   useKeyboardShortcutFormatters,
 } from 'teleterm/ui/services/keyboardShortcuts';
 import {
-  AutocompleteResult,
-  AutocompletePartialMatch,
+  AutocompleteCommand,
+  AutocompleteToken,
+  Suggestion,
 } from 'teleterm/ui/services/quickInput/types';
 import { routing } from 'teleterm/ui/uri';
 import { KeyboardShortcutType } from 'teleterm/services/config';
@@ -48,6 +49,10 @@ export default function useQuickInput() {
 
   const [suggestionsAttempt, getSuggestions] = useAsync(
     // TODO: Add retryWithRelogin.
+    // TODO: Account for race condition, that is: someone keeps typing when there's already a
+    // request in progress.
+    // https://beta.reactjs.org/learn/you-might-not-need-an-effect#fetching-data
+    // TODO: Send error notifications on error.
     parseResult.getSuggestions
   );
 
@@ -57,7 +62,7 @@ export default function useQuickInput() {
 
   const hasSuggestions =
     suggestionsAttempt.status === 'success' &&
-    suggestionsAttempt.data.kind === 'autocomplete.partial-match';
+    suggestionsAttempt.data.length > 0;
   const openQuickInputShortcutKey: KeyboardShortcutType = 'open-quick-input';
   const { getShortcut } = useKeyboardShortcutFormatters();
 
@@ -75,20 +80,15 @@ export default function useQuickInput() {
   };
 
   const onEnter = (index?: number) => {
-    // TODO: Do we need to account for other autocompleteAttempt states?
     if (!hasSuggestions || !visible) {
-      executeCommand(autocompleteResult);
+      executeCommand(parseResult.command);
       return;
     }
 
-    // Passing `autocompleteResult` directly to narrow down AutocompleteResult type to
-    // AutocompletePartialMatch.
-    pickSuggestion(autocompleteResult, index);
+    pickSuggestion(parseResult.targetToken, suggestionsAttempt.data, index);
   };
 
-  const executeCommand = (autocompleteResult: AutocompleteResult) => {
-    const { command } = autocompleteResult;
-
+  const executeCommand = (command: AutocompleteCommand) => {
     switch (command.kind) {
       case 'command.unknown': {
         const params = routing.parseClusterUri(
@@ -118,16 +118,14 @@ export default function useQuickInput() {
   };
 
   const pickSuggestion = (
-    autocompleteResult: AutocompletePartialMatch,
+    targetToken: AutocompleteToken,
+    suggestions: Suggestion[],
     index?: number
   ) => {
-    const suggestion = autocompleteResult.suggestions[index];
+    const suggestion = suggestions[index];
 
     setActiveSuggestion(index);
-    quickInputService.pickSuggestion(
-      autocompleteResult.targetToken,
-      suggestion
-    );
+    quickInputService.pickSuggestion(targetToken, suggestion);
   };
 
   // TODO: Find a better name for this function.
@@ -136,7 +134,7 @@ export default function useQuickInput() {
 
     // If there are suggestions to show, the first onBack call should always just close the
     // suggestions and the second call should actually go back.
-    // TODO: Do we need to account for other autocompleteAttempt states?
+    // TODO: Do we need to account for other suggestionsAttempt statuses?
     if (visible && hasSuggestions) {
       quickInputService.hide();
     } else {
@@ -160,9 +158,7 @@ export default function useQuickInput() {
     // We want to reset the active suggestion only between successful attempts and only if the
     // suggestions didn't change.
     // TODO: Verify if the below line is correct.
-    suggestionsAttempt.data?.suggestions
-      .map(suggestion => suggestion.token)
-      .join(','),
+    suggestionsAttempt.data?.map(suggestion => suggestion.token).join(','),
   ]);
 
   return {
