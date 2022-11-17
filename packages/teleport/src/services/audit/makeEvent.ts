@@ -592,7 +592,7 @@ export const formatters: Formatters = {
     format: ({ user, app_name, target }) => {
       let message = `User [${user}] has made a request to application [${app_name}]`;
       if (target) {
-        message += `, target: [${target}]`
+        message += `, target: [${target}]`;
       }
       return message;
     },

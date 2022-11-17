@@ -1231,7 +1231,7 @@ export const events = [
     aws_role_arn: 'arn:aws:iam::123456789012:role/GavinDynamoDBRole',
     aws_service: 'dynamodb',
     body: {
-      TableName: 'test-table'
+      TableName: 'test-table',
     },
     cluster_name: 'root.com',
     method: 'POST',
@@ -1242,7 +1242,7 @@ export const events = [
     target: 'DynamoDB_20120810.Scan',
     time: '2022-10-19T19:04:07.763Z',
     uid: 'f6f38f69-46e9-4110-a773-2c88278d08ca',
-    user: 'alice'
+    user: 'alice',
   },
   {
     code: 'T2013I',
@@ -1256,7 +1256,7 @@ export const events = [
     aws_role_arn: 'arn:aws:iam::123456789012:role/GavinDynamoDBRole',
     aws_service: 'dynamodb',
     body: {
-      TableName: 'test-table'
+      TableName: 'test-table',
     },
     cluster_name: 'root.com',
     method: 'POST',
@@ -1266,7 +1266,7 @@ export const events = [
     status_code: 200,
     time: '2022-10-19T19:04:07.763Z',
     uid: 'f6f38f69-46e9-4110-a773-2c88278d08ca',
-    user: 'alice'
+    user: 'alice',
   },
   {
     code: 'TAP03I',
