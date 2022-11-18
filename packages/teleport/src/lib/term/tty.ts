@@ -145,6 +145,9 @@ class Tty extends EventEmitterWebAuthnSender {
         case MessageTypeEnum.AUDIT:
           this._processAuditPayload(msg.payload);
           break;
+        case MessageTypeEnum.SESSION_DATA:
+          this.emit(TermEventEnum.SESSION, msg.payload);
+          break;
         case MessageTypeEnum.SESSION_END:
           this.emit(TermEventEnum.CLOSE, msg.payload);
           break;
@@ -159,15 +162,7 @@ class Tty extends EventEmitterWebAuthnSender {
           throw Error(`unknown message type: ${msg.type}`);
       }
     } catch (err) {
-      try {
-        // The first message we recieve may be JSON session data.
-        const data = JSON.parse(ev.data);
-        data.session.kind = 'ssh';
-        data.session.resourceName = data.session.server_hostname;
-        this.emit('new-session', data.session);
-      } catch (err) {
-        logger.error('failed to parse incoming message.', err);
-      }
+      logger.error('failed to parse incoming message.', err);
     }
   }
 

@@ -53,7 +53,12 @@ export default function useSshSession(doc: DocumentSsh) {
           ctx.updateSshDocument(doc.id, { status: 'disconnected' })
         );
 
-        tty.on('new-session', data => handleTtyConnect(ctx, data, doc.id));
+        tty.on(TermEventEnum.SESSION, payload => {
+          const data = JSON.parse(payload);
+          data.session.kind = 'ssh';
+          data.session.resourceName = data.session.server_hostname;
+          handleTtyConnect(ctx, data.session, doc.id);
+        });
 
         // assign tty reference so it can be passed down to xterm
         ttyRef.current = tty;
@@ -76,6 +81,9 @@ export default function useSshSession(doc: DocumentSsh) {
     });
 
     return cleanup;
+
+    // Only run this once on the initial render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
