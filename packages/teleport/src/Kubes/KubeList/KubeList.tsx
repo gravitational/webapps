@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useState } from 'react';
 import { ButtonBorder } from 'design';
-import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import Table, { Cell } from 'design/DataTable';
 import { SortType } from 'design/DataTable/types';
 
 import { Kube } from 'teleport/services/kube';
@@ -26,6 +26,7 @@ import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
 import ConnectDialog from '../ConnectDialog';
+import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 function KubeList(props: Props) {
   const {
@@ -66,7 +67,7 @@ function KubeList(props: Props) {
             key: 'labels',
             headerText: 'Labels',
             render: ({ labels }) => (
-              <ClickableLabelCell labels={labels} onClick={onLabelClick} />
+              <TeleportLabelCell labels={labels} onClick={onLabelClick} />
             ),
           },
           {

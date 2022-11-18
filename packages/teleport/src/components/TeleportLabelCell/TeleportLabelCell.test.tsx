@@ -18,9 +18,9 @@ import React from 'react';
 
 import { render, screen } from 'design/utils/testing';
 
-import { ClickableLabelCell } from './Cells';
+import { TeleportLabelCell } from './TeleportLabelCell';
 
-describe('design/Table/Cells ClickableLabelCell', () => {
+describe('teleport/components/TeleportLabelCell', () => {
   it('should not render teleport.internal labels', () => {
     const labels = [
       {
@@ -37,7 +37,7 @@ describe('design/Table/Cells ClickableLabelCell', () => {
       },
     ];
 
-    render(<ClickableLabelCell labels={labels} onClick={jest.fn()} />);
+    render(<TeleportLabelCell labels={labels} onClick={jest.fn()} />);
 
     expect(screen.getByText('test: value1')).toBeInTheDocument();
     expect(screen).not.toContain('teleport.internal');

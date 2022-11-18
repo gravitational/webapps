@@ -24,6 +24,7 @@ import { Desktop } from 'teleport/services/desktops';
 import { AgentLabel } from 'teleport/services/agents';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
+import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 function DesktopList(props: Props) {
   const {
@@ -72,7 +73,7 @@ function DesktopList(props: Props) {
           key: 'labels',
           headerText: 'Labels',
           render: ({ labels }) => (
-            <ClickableLabelCell labels={labels} onClick={onLabelClick} />
+            <TeleportLabelCell labels={labels} onClick={onLabelClick} />
           ),
         },
         {

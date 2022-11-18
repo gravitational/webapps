@@ -10,6 +10,7 @@ import {
   SortDir,
   TableColumn,
   LabelDescription,
+  ClickableLabelCellProps,
 } from './types';
 
 export const Cell = props => <td children={props.children} {...props} />;
@@ -81,13 +82,11 @@ export const DateCell = ({ data }: { data: Date }) => (
 );
 
 const renderLabelCell = (labels: string[] = []) => {
-  const $labels = labels
-    .filter(label => !label.startsWith('teleport.internal'))
-    .map(label => (
-      <Label mb="1" mr="1" key={label} kind="secondary">
-        {label}
-      </Label>
-    ));
+  const $labels = labels.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {label}
+    </Label>
+  ));
 
   return <Cell>{$labels}</Cell>;
 };
@@ -95,26 +94,21 @@ const renderLabelCell = (labels: string[] = []) => {
 export const ClickableLabelCell = ({
   labels,
   onClick,
-}: {
-  labels: LabelDescription[];
-  onClick: (label: LabelDescription) => void;
-}) => {
-  const $labels = labels
-    .filter(label => !label.name.startsWith('teleport.internal'))
-    .map(label => (
-      <Label
-        onClick={() => onClick(label)}
-        key={`${label.name}:${label.value}`}
-        mr="1"
-        mb="1"
-        kind="secondary"
-        css={`
-          cursor: pointer;
-        `}
-      >
-        {`${label.name}: ${label.value}`}
-      </Label>
-    ));
+}: ClickableLabelCellProps) => {
+  const $labels = labels.map(label => (
+    <Label
+      onClick={() => onClick(label)}
+      key={`${label.name}:${label.value}`}
+      mr="1"
+      mb="1"
+      kind="secondary"
+      css={`
+        cursor: pointer;
+      `}
+    >
+      {`${label.name}: ${label.value}`}
+    </Label>
+  ));
 
   return <Cell>{$labels}</Cell>;
 };

@@ -106,3 +106,8 @@ export type LabelDescription = {
 export type CustomSort = SortType & {
   onSort(s: SortType): void;
 };
+
+export type ClickableLabelCellProps = {
+  labels: LabelDescription[];
+  onClick: (label: LabelDescription) => void;
+};

@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Flex, Text, ButtonBorder } from 'design';
-import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import Table, { Cell } from 'design/DataTable';
 import { SortType } from 'design/DataTable/types';
 import {
   pink,
@@ -39,6 +39,7 @@ import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
 import AwsLaunchButton from './AwsLaunchButton';
+import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 export default function AppList(props: Props) {
   const {
@@ -86,7 +87,7 @@ export default function AppList(props: Props) {
           key: 'labels',
           headerText: 'Labels',
           render: ({ labels }) => (
-            <ClickableLabelCell labels={labels} onClick={onLabelClick} />
+            <TeleportLabelCell labels={labels} onClick={onLabelClick} />
           ),
         },
         {
