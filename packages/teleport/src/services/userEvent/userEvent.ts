@@ -8,6 +8,11 @@ export type UserEvent = {
 
 export const service = {
   captureUserEvent(userEvent: UserEvent) {
-    void api.post(cfg.api.captureUserEventPath, { userEvent });
+    // using api.fetch instead of api.fetchJSON
+    // because we are not expecting a JSON response
+    void api.fetch(cfg.api.captureUserEventPath, {
+      method: 'POST',
+      body: JSON.stringify({ ...userEvent }),
+    });
   },
 };
