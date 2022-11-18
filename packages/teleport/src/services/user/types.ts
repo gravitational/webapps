@@ -68,6 +68,8 @@ export interface Acl {
   desktops: Access;
   nodes: Access;
   connectionDiagnostic: Access;
+  download: Access;
+  license: Access;
 }
 
 export interface User {

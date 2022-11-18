@@ -48,6 +48,8 @@ export default function makeAcl(json): Acl {
   // https://github.com/gravitational/teleport/pull/12684#issue-1237830087
   const directorySharingEnabled =
     json.directorySharing !== undefined ? json.directorySharing : true;
+  const download = json.download || [];
+  const license = json.license || [];
 
   const nodes = json.nodes || defaultAccess;
 
@@ -72,6 +74,8 @@ export default function makeAcl(json): Acl {
     nodes,
     directorySharingEnabled,
     connectionDiagnostic,
+    license,
+    download,
   };
 }
 

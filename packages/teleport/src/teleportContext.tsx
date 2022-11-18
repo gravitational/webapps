@@ -100,6 +100,9 @@ class TeleportContext implements types.Context {
       desktops: userContext.getDesktopAccess().list,
       nodes: userContext.getNodeAccess().list,
       activeSessions: userContext.getActiveSessionsAccess().list,
+      downloads: userContext.getDownloadAccess().list,
+      license: userContext.getLicenseAccess().list,
+      accessRequests: userContext.getAccessRequestAccess().list,
     };
   }
 }
