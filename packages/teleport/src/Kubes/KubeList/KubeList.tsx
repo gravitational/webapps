@@ -24,9 +24,9 @@ import { AuthType } from 'teleport/services/user';
 import { AgentLabel } from 'teleport/services/agents';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
+import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 import ConnectDialog from '../ConnectDialog';
-import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 function KubeList(props: Props) {
   const {

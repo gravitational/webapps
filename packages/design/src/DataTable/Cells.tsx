@@ -9,7 +9,6 @@ import {
   ServersideProps,
   SortDir,
   TableColumn,
-  LabelDescription,
   ClickableLabelCellProps,
 } from './types';
 

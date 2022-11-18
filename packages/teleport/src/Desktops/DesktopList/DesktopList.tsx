@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import Table, { Cell } from 'design/DataTable';
 import { SortType } from 'design/DataTable/types';
 
 import { LoginItem, MenuLogin } from 'shared/components/MenuLogin';

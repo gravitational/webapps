@@ -37,9 +37,9 @@ import { App } from 'teleport/services/apps';
 import { AgentLabel } from 'teleport/services/agents';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
+import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 import AwsLaunchButton from './AwsLaunchButton';
-import TeleportLabelCell from 'teleport/components/TeleportLabelCell';
 
 export default function AppList(props: Props) {
   const {
