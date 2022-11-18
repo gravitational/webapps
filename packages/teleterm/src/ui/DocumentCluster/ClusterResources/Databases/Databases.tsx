@@ -74,6 +74,16 @@ function DatabaseList(props: State) {
               isSortable: true,
             },
             {
+              key: 'desc',
+              headerText: 'Description',
+              isSortable: true,
+            },
+            {
+              key: 'type',
+              headerText: 'Type',
+              isSortable: true,
+            },
+            {
               key: 'labelsList',
               headerText: 'Labels',
               render: ({ labelsList }) => (
