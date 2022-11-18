@@ -345,10 +345,10 @@ export class GetRequestableRolesResponse extends jspb.Message {
     setRolesList(value: Array<string>): GetRequestableRolesResponse;
     addRoles(value: string, index?: number): string;
 
-    clearNecessaryRolesList(): void;
-    getNecessaryRolesList(): Array<string>;
-    setNecessaryRolesList(value: Array<string>): GetRequestableRolesResponse;
-    addNecessaryRoles(value: string, index?: number): string;
+    clearApplicableRolesList(): void;
+    getApplicableRolesList(): Array<string>;
+    setApplicableRolesList(value: Array<string>): GetRequestableRolesResponse;
+    addApplicableRoles(value: string, index?: number): string;
 
 
     serializeBinary(): Uint8Array;
@@ -364,7 +364,7 @@ export class GetRequestableRolesResponse extends jspb.Message {
 export namespace GetRequestableRolesResponse {
     export type AsObject = {
         rolesList: Array<string>,
-        necessaryRolesList: Array<string>,
+        applicableRolesList: Array<string>,
     }
 }
 
