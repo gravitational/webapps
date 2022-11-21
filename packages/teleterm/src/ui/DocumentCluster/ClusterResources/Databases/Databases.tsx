@@ -78,7 +78,7 @@ function DatabaseList(props: State) {
             {
               key: 'desc',
               headerText: 'Description',
-              isSortable: true,
+              isSortable: false,
             },
             {
               key: 'type',
