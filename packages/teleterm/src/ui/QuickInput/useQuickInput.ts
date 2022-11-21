@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 
 import { useAsync } from 'shared/hooks/useAsync';
 
@@ -30,6 +30,7 @@ import {
 } from 'teleterm/ui/services/quickInput/types';
 import { routing } from 'teleterm/ui/uri';
 import { KeyboardShortcutType } from 'teleterm/services/config';
+
 import { retryWithRelogin } from '../utils';
 
 export default function useQuickInput() {
@@ -39,33 +40,40 @@ export default function useQuickInput() {
   const documentsService =
     workspacesService.getActiveWorkspaceDocumentService();
   const { visible, inputValue } = quickInputService.useState();
-  const [activeSuggestion, setActiveSuggestion] = React.useState(0);
+  const [activeSuggestion, setActiveSuggestion] = useState(0);
+  const localClusterUri =
+    workspacesService.getActiveWorkspace()?.localClusterUri;
 
-  const parseResult = React.useMemo(
+  const parseResult = useMemo(
     () => quickInputService.parse(inputValue),
     // `localClusterUri` has been added to refresh suggestions from
     // `QuickSshLoginPicker` and `QuickServerPicker` when it changes
-    [inputValue, workspacesService.getActiveWorkspace()?.localClusterUri]
+    [quickInputService, inputValue, localClusterUri]
   );
 
-  const [suggestionsAttempt, getSuggestions] = useAsync(() =>
-    // TODO: Add retryWithRelogin.
-    // TODO: Account for race condition, that is: someone keeps typing when there's already a
-    // request in progress.
-    // https://beta.reactjs.org/learn/you-might-not-need-an-effect#fetching-data
-    // TODO: Send error notifications on error.
-    retryWithRelogin(
-      appContext,
-      workspacesService.getActiveWorkspace()?.localClusterUri,
-      () => parseResult.getSuggestions()
-    )
+  // TODO: Add retryWithRelogin.
+  // TODO: Account for race condition, that is: someone keeps typing when there's already a
+  // request in progress.
+  // https://beta.reactjs.org/learn/you-might-not-need-an-effect#fetching-data
+  // TODO: Send error notifications on error.
+  const getSuggestionsCallback = useCallback(
+    () =>
+      retryWithRelogin(appContext, localClusterUri, () =>
+        parseResult.getSuggestions()
+      ).then(result => {
+        console.log('got response', parseResult.targetToken);
+        return result;
+      }),
+    [parseResult, localClusterUri, appContext]
   );
 
-  React.useEffect(() => {
+  console.log('rendering', parseResult.targetToken);
+
+  const [suggestionsAttempt, getSuggestions] = useAsync(getSuggestionsCallback);
+
+  useEffect(() => {
     getSuggestions();
-  }, [parseResult]);
-
-  console.log('suggestionAttempt', suggestionsAttempt);
+  }, [getSuggestions]);
 
   const hasSuggestions =
     suggestionsAttempt.status === 'success' &&
