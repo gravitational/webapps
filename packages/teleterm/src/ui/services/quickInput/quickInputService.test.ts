@@ -1,6 +1,7 @@
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
+import { ResourcesService } from 'teleterm/ui/services/resources';
 
 import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequestsService';
 
@@ -21,6 +22,9 @@ const CommandLauncherMock = CommandLauncher as jest.MockedClass<
 >;
 const ClustersServiceMock = ClustersService as jest.MockedClass<
   typeof ClustersService
+>;
+const ResourcesServiceMock = ResourcesService as jest.MockedClass<
+  typeof ResourcesService
 >;
 const WorkspacesServiceMock = WorkspacesService as jest.MockedClass<
   typeof WorkspacesService
@@ -59,6 +63,7 @@ test('parse returns correct result for a command suggestion with empty input', a
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -81,6 +86,7 @@ test('parse returns correct result for a command suggestion', async () => {
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -116,6 +122,7 @@ test('parse returns correct result for an SSH login suggestion', async () => {
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -154,6 +161,7 @@ test('parse returns correct result for an SSH login suggestion with spaces betwe
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -194,24 +202,29 @@ test('parse returns correct result for a database name suggestion', async () => 
       location: '',
     }));
   jest
-    .spyOn(ClustersServiceMock.prototype, 'searchDbs')
+    .spyOn(ResourcesServiceMock.prototype, 'fetchDatabases')
     .mockImplementation(() => {
-      return [
-        {
-          hostname: 'foobar',
-          uri: '',
-          name: '',
-          desc: '',
-          protocol: '',
-          type: '',
-          addr: '',
-          labelsList: null,
-        },
-      ];
+      return Promise.resolve({
+        agentsList: [
+          {
+            hostname: 'foobar',
+            uri: '',
+            name: '',
+            desc: '',
+            protocol: '',
+            type: '',
+            addr: '',
+            labelsList: null,
+          },
+        ],
+        startKey: '',
+        totalCount: 1,
+      });
     });
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -255,6 +268,7 @@ test("parse doesn't return any suggestions if the only suggestion completely mat
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -285,6 +299,7 @@ test('parse returns no suggestions if any of the parsers returns empty suggestio
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -303,6 +318,7 @@ test("the SSH login autocomplete isn't shown if there's no space after `tsh ssh`
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -331,6 +347,7 @@ test("the SSH login autocomplete is shown only if there's at least one space aft
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -352,17 +369,23 @@ test('parse returns correct result for an SSH host suggestion right after user@'
     onlyTshSshCommand
   );
   jest
-    .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
-    .mockImplementation(() => ({
-      accessRequests: {
-        assumed: {},
-        isBarCollapsed: false,
-        pending: getEmptyPendingAccessRequest(),
-      },
-      localClusterUri: 'test_uri',
-      documents: [],
-      location: '',
-    }));
+    .spyOn(ResourcesServiceMock.prototype, 'fetchServers')
+    .mockImplementation(() => {
+      return Promise.resolve({
+        agentsList: [
+          {
+            hostname: 'bazbar',
+            name: '',
+            addr: '',
+            uri: '',
+            tunnel: false,
+            labelsList: null,
+          },
+        ],
+        startKey: '',
+        totalCount: 1,
+      });
+    });
   jest
     .spyOn(ClustersServiceMock.prototype, 'searchServers')
     .mockImplementation(() => {
@@ -380,6 +403,7 @@ test('parse returns correct result for an SSH host suggestion right after user@'
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -404,18 +428,22 @@ test('parse returns correct result for a partial match on an SSH host suggestion
     onlyTshSshCommand
   );
   jest
-    .spyOn(ClustersServiceMock.prototype, 'searchServers')
+    .spyOn(ResourcesServiceMock.prototype, 'fetchServers')
     .mockImplementation(() => {
-      return [
-        {
-          hostname: 'bazbar',
-          name: '',
-          addr: '',
-          uri: '',
-          tunnel: false,
-          labelsList: null,
-        },
-      ];
+      return Promise.resolve({
+        agentsList: [
+          {
+            hostname: 'bazbar',
+            name: '',
+            addr: '',
+            uri: '',
+            tunnel: false,
+            labelsList: null,
+          },
+        ],
+        startKey: '',
+        totalCount: 1,
+      });
     });
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
@@ -432,6 +460,7 @@ test('parse returns correct result for a partial match on an SSH host suggestion
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -471,6 +500,7 @@ test("parse returns the first argument as loginHost when there's no @ sign", asy
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
@@ -493,6 +523,7 @@ test('picking a command suggestion in an empty input autocompletes the command',
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
   quickInputService.setState({ inputValue: '' });
@@ -519,6 +550,7 @@ test('picking a command suggestion in an input with a single space preserves the
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
   quickInputService.setState({ inputValue: ' ' });
@@ -545,6 +577,7 @@ test('picking an SSH login suggestion replaces target token in input value', () 
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
   quickInputService.setState({ inputValue: 'tsh ssh roo --foo' });
@@ -568,6 +601,7 @@ test('pickSuggestion appends the appendToToken field to the token', () => {
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined, undefined, undefined),
+    new ResourcesServiceMock(undefined),
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
   quickInputService.setState({ inputValue: 'tsh ssh foo' });
