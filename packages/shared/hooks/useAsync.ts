@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable @typescript-eslint/ban-types */
-
 import { useCallback, useState } from 'react';
 
 /**
@@ -59,11 +57,14 @@ import { useCallback, useState } from 'react';
  *    }
  * }
  */
-export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
-  const [state, setState] = useState<Attempt<R>>(makeEmptyAttempt);
+export function useAsync<Callback extends (...args: unknown[]) => unknown>(
+  cb?: Callback
+) {
+  const [state, setState] =
+    useState<Attempt<Awaited<ReturnType<Callback>>>>(makeEmptyAttempt);
 
   const run = useCallback(
-    (...p: Parameters<AsyncCb<R, T>>) =>
+    (...p: Parameters<Callback>) =>
       Promise.resolve()
         .then(() => {
           setState(prevState => ({
@@ -71,7 +72,7 @@ export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
             status: 'processing',
           }));
 
-          return cb.call(null, ...p) as R;
+          return cb.call(null, ...p) as Awaited<ReturnType<Callback>>;
         })
         .then(
           data => {
@@ -81,7 +82,7 @@ export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
               data,
             }));
 
-            return [data, null] as [R, Error];
+            return [data, null] as [Awaited<ReturnType<Callback>>, Error];
           },
           err => {
             setState(prevState => ({
@@ -91,14 +92,14 @@ export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
               data: null,
             }));
 
-            return [null, err] as [R, Error];
+            return [null, err] as [Awaited<ReturnType<Callback>>, Error];
           }
         ),
     [setState, cb]
   );
 
   const setAttempt = useCallback(
-    (attempt: Attempt<R>) => {
+    (attempt: Attempt<Awaited<ReturnType<Callback>>>) => {
       setState(attempt);
     },
     [setState]
@@ -144,46 +145,3 @@ export function makeErrorAttempt<T>(statusText: string): Attempt<T> {
     statusText,
   };
 }
-
-type IsValidArg<T> = T extends object
-  ? keyof T extends never
-    ? false
-    : true
-  : true;
-
-type AsyncCb<R, T extends Function> = T extends (...args: any[]) => Promise<any>
-  ? T
-  : T extends (
-      a: infer A,
-      b: infer B,
-      c: infer C,
-      d: infer D,
-      e: infer E,
-      f: infer F,
-      g: infer G,
-      h: infer H,
-      i: infer I,
-      j: infer J
-    ) => Promise<R>
-  ? IsValidArg<J> extends true
-    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H, i: I, j: J) => Promise<R>
-    : IsValidArg<I> extends true
-    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H, i: I) => Promise<R>
-    : IsValidArg<H> extends true
-    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H) => Promise<R>
-    : IsValidArg<G> extends true
-    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => Promise<R>
-    : IsValidArg<F> extends true
-    ? (a: A, b: B, c: C, d: D, e: E, f: F) => Promise<R>
-    : IsValidArg<E> extends true
-    ? (a: A, b: B, c: C, d: D, e: E) => Promise<R>
-    : IsValidArg<D> extends true
-    ? (a: A, b: B, c: C, d: D) => Promise<R>
-    : IsValidArg<C> extends true
-    ? (a: A, b: B, c: C) => Promise<R>
-    : IsValidArg<B> extends true
-    ? (a: A, b: B) => Promise<R>
-    : IsValidArg<A> extends true
-    ? (a: A) => Promise<R>
-    : () => Promise<R>
-  : never;
