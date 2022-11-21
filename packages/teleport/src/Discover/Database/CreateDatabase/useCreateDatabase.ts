@@ -23,7 +23,7 @@ import type { CreateDatabaseRequest } from 'teleport/services/databases';
 
 export function useCreateDatabase(props: AgentStepProps) {
   const ctx = useTeleport();
-  const { attempt, setAttempt } = useAttempt('processing');
+  const { attempt, setAttempt } = useAttempt('');
 
   async function createDbAndQueryDb(db: CreateDatabaseRequest) {
     setAttempt({ status: 'processing' });
@@ -67,9 +67,11 @@ export function useCreateDatabase(props: AgentStepProps) {
     }
   }
 
+  const access = ctx.storeUser.getDatabaseAccess();
   return {
     attempt,
     createDbAndQueryDb,
+    canCreateDatabase: access.create,
   };
 }
 
