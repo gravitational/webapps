@@ -7,6 +7,7 @@ import InputSearch from 'design/DataTable/InputSearch';
 import { AgentFilter } from 'teleport/services/agents';
 import Toggle from 'teleport/components/Toggle';
 import Tooltip from 'teleport/components/ServersideSearchPanel/Tooltip';
+
 import { PredicateDoc } from './PredicateDoc';
 
 export function SearchPanel({

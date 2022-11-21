@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import React from 'react';
-
-import Table, { Cell } from 'design/DataTable';
-
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
+import { SearchPanel, SearchPagination } from 'shared/components/Search';
+import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
+import { DbProtocol, DbType } from 'teleport/services/databases';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
@@ -27,7 +27,7 @@ import { IAppContext } from 'teleterm/ui/types';
 import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
-import { renderLabelCell } from '../renderLabelCell';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useDatabases, State } from './useDatabases';
 
@@ -37,50 +37,97 @@ export default function Container() {
 }
 
 function DatabaseList(props: State) {
+  const {
+    dbs = [],
+    connect,
+    fetchAttempt,
+    agentFilter,
+    pageCount,
+    customSort,
+    prevPage,
+    nextPage,
+    updateQuery,
+    onAgentLabelClick,
+    disabledRows,
+    updateSearch,
+    emptyTableText,
+  } = props;
+
   return (
     <>
-      {props.syncStatus.status === 'failed' && (
-        <Danger>{props.syncStatus.statusText}</Danger>
+      {fetchAttempt.status === 'error' && (
+        <Danger>{fetchAttempt.statusText}</Danger>
       )}
-      <Table
-        data={props.dbs}
-        columns={[
-          {
-            key: 'name',
-            headerText: 'Name',
-            isSortable: true,
-          },
-          {
-            key: 'labelsList',
-            headerText: 'Labels',
-            render: renderLabelCell,
-          },
-          {
-            altKey: 'connect-btn',
-            render: db => (
-              <ConnectButton
-                documentUri={props.documentUri}
-                dbUri={db.uri}
-                protocol={db.protocol as GatewayProtocol}
-                onConnect={dbUser => props.connect(db.uri, dbUser)}
-              />
-            ),
-          },
-        ]}
-        pagination={{ pageSize: 15, pagerPosition: 'bottom' }}
-        emptyText="No Databases Found"
+      <SearchPanel
+        updateQuery={updateQuery}
+        updateSearch={updateSearch}
+        pageCount={pageCount}
+        filter={agentFilter}
+        showSearchBar={true}
+        disableSearch={disabledRows}
       />
+      <DarkenWhileDisabled disabled={disabledRows}>
+        <Table
+          data={dbs}
+          columns={[
+            {
+              key: 'name',
+              headerText: 'Name',
+              isSortable: true,
+            },
+            {
+              key: 'desc',
+              headerText: 'Description',
+              isSortable: true,
+            },
+            {
+              key: 'type',
+              headerText: 'Type',
+              isSortable: true,
+              render: ({ protocol, type }) => (
+                <div>
+                  {
+                    formatDatabaseInfo(type as DbType, protocol as DbProtocol)
+                      .title
+                  }
+                </div>
+              ),
+            },
+            {
+              key: 'labelsList',
+              headerText: 'Labels',
+              render: ({ labelsList }) => (
+                <ClickableLabelCell
+                  labels={labelsList}
+                  onClick={onAgentLabelClick}
+                />
+              ),
+            },
+            {
+              altKey: 'connect-btn',
+              render: db => (
+                <ConnectButton
+                  dbUri={db.uri}
+                  protocol={db.protocol as GatewayProtocol}
+                  onConnect={dbUser => connect(db, dbUser)}
+                />
+              ),
+            },
+          ]}
+          customSort={customSort}
+          emptyText={emptyTableText}
+        />
+        <SearchPagination prevPage={prevPage} nextPage={nextPage} />
+      </DarkenWhileDisabled>
     </>
   );
 }
 
 function ConnectButton({
-  documentUri,
   dbUri,
   protocol,
   onConnect,
 }: {
-  documentUri: string;
   dbUri: string;
   protocol: GatewayProtocol;
   onConnect: (dbUser: string) => void;
@@ -93,7 +140,7 @@ function ConnectButton({
         <MenuLogin
           {...getMenuLoginOptions(protocol)}
           width="195px"
-          getLoginItems={() => getDatabaseUsers(appContext, documentUri, dbUri)}
+          getLoginItems={() => getDatabaseUsers(appContext, dbUri)}
           onSelect={(_, user) => {
             onConnect(user);
           }}
@@ -127,13 +174,9 @@ function getMenuLoginOptions(
   };
 }
 
-async function getDatabaseUsers(
-  appContext: IAppContext,
-  documentUri: string,
-  dbUri: string
-) {
+async function getDatabaseUsers(appContext: IAppContext, dbUri: string) {
   try {
-    const dbUsers = await retryWithRelogin(appContext, documentUri, dbUri, () =>
+    const dbUsers = await retryWithRelogin(appContext, dbUri, () =>
       appContext.clustersService.getDbUsers(dbUri)
     );
     return dbUsers.map(user => ({ login: user, url: '' }));

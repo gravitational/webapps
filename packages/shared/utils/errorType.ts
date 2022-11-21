@@ -14,16 +14,8 @@
  * limitations under the License.
  */
 
-import logins from './logins.yaml?raw';
-import loginsAndRuleUsers from './loginsAndRuleUsers.yaml?raw';
-import ruleConnectionDiagnostic from './ruleConnectionDiagnostic.yaml?raw';
-import kubeAccessRW from './kubeAccessRW.yaml?raw';
-import kubeAccessRO from './kubeAccessRO.yaml?raw';
+import { privateKeyEnablingPolicies } from 'shared/services';
 
-export {
-  logins,
-  loginsAndRuleUsers,
-  ruleConnectionDiagnostic,
-  kubeAccessRW,
-  kubeAccessRO,
-};
+export function isPrivateKeyRequiredError(err: Error) {
+  return privateKeyEnablingPolicies.some(p => err.message.includes(p));
+}

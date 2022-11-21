@@ -90,11 +90,6 @@ export function Cluster() {
             {`${clusterCtx.state.clusterName}`}
           </Text>
         </Text>
-        <Flex alignItems="center">
-          <ButtonPrimary ml={2} size="small" onClick={clusterCtx.sync}>
-            Sync
-          </ButtonPrimary>
-        </Flex>
       </Flex>
       <ClusterResources />
     </Layout>

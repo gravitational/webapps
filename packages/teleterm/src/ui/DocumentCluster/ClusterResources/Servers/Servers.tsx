@@ -13,25 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import React from 'react';
-
-import styled from 'styled-components';
-
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
-
-import { Box } from 'design';
-
-import { MenuLogin } from 'shared/components/MenuLogin';
-
 import { Danger } from 'design/Alert';
-
-import { SearchPanel } from 'shared/components/Search';
-import { SearchPagination } from 'shared/components/Search/SearchPagination';
+import { MenuLogin } from 'shared/components/MenuLogin';
+import { SearchPanel, SearchPagination } from 'shared/components/Search';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useServers, State } from './useServers';
 
@@ -55,6 +46,7 @@ function ServerList(props: State) {
     onAgentLabelClick,
     disabledRows,
     updateSearch,
+    emptyTableText,
   } = props;
   return (
     <>
@@ -69,7 +61,7 @@ function ServerList(props: State) {
         showSearchBar={true}
         disableSearch={disabledRows}
       />
-      <Wrapper className={disabledRows ? 'disabled' : ''}>
+      <DarkenWhileDisabled disabled={disabledRows}>
         <Table
           columns={[
             {
@@ -80,7 +72,7 @@ function ServerList(props: State) {
             {
               key: 'addr',
               headerText: 'Address',
-              isSortable: true,
+              isSortable: false,
               render: renderAddressCell,
             },
             {
@@ -103,15 +95,11 @@ function ServerList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={
-            fetchAttempt.status === 'success'
-              ? 'No servers found'
-              : 'Searching…'
-          }
+          emptyText={emptyTableText}
           data={servers}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
-      </Wrapper>
+      </DarkenWhileDisabled>
     </>
   );
 }
@@ -153,14 +141,3 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
     {!tunnel && addr}
   </Cell>
 );
-
-const Wrapper = styled(Box)`
-  // The timing functions of transitions have been chosen so that the element loses opacity slowly
-  // when entering the disabled state but gains it quickly when going out of the disabled state.
-  transition: opacity 150ms ease-out;
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.7;
-    transition: opacity 150ms ease-in;
-  }
-`;

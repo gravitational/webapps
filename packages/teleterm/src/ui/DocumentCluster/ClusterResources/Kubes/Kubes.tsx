@@ -15,13 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-
-import Table, { Cell } from 'design/DataTable';
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { ButtonBorder } from 'design';
-
 import { Danger } from 'design/Alert';
+import { SearchPanel, SearchPagination } from 'shared/components/Search';
 
-import { renderLabelCell } from '../renderLabelCell';
+import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useKubes, State } from './useKubes';
 
@@ -31,34 +30,64 @@ export default function Container() {
 }
 
 function KubeList(props: State) {
-  const { kubes = [], pageSize = 15, connect, syncStatus } = props;
+  const {
+    kubes = [],
+    connect,
+    fetchAttempt,
+    agentFilter,
+    pageCount,
+    customSort,
+    prevPage,
+    nextPage,
+    updateQuery,
+    onAgentLabelClick,
+    disabledRows,
+    updateSearch,
+    emptyTableText,
+  } = props;
 
   return (
     <>
-      {syncStatus.status === 'failed' && (
-        <Danger>{syncStatus.statusText}</Danger>
+      {fetchAttempt.status === 'error' && (
+        <Danger>{fetchAttempt.statusText}</Danger>
       )}
-      <Table
-        data={kubes}
-        columns={[
-          {
-            key: 'name',
-            headerText: 'Name',
-            isSortable: true,
-          },
-          {
-            key: 'labelsList',
-            headerText: 'Labels',
-            render: renderLabelCell,
-          },
-          {
-            altKey: 'connect-btn',
-            render: kube => renderConnectButtonCell(kube.uri, connect),
-          },
-        ]}
-        emptyText="No Kubernetes Clusters Found"
-        pagination={{ pageSize, pagerPosition: 'bottom' }}
+      <SearchPanel
+        updateQuery={updateQuery}
+        updateSearch={updateSearch}
+        pageCount={pageCount}
+        filter={agentFilter}
+        showSearchBar={true}
+        disableSearch={disabledRows}
       />
+      <DarkenWhileDisabled disabled={disabledRows}>
+        <Table
+          data={kubes}
+          columns={[
+            {
+              key: 'name',
+              headerText: 'Name',
+              isSortable: true,
+            },
+            {
+              key: 'labelsList',
+              headerText: 'Labels',
+              render: ({ labelsList }) => (
+                <ClickableLabelCell
+                  labels={labelsList}
+                  onClick={onAgentLabelClick}
+                />
+              ),
+            },
+            {
+              altKey: 'connect-btn',
+              render: kube => renderConnectButtonCell(kube.uri, connect),
+            },
+          ]}
+          customSort={customSort}
+          emptyText={emptyTableText}
+        />
+        <SearchPagination prevPage={prevPage} nextPage={nextPage} />
+      </DarkenWhileDisabled>
     </>
   );
 }

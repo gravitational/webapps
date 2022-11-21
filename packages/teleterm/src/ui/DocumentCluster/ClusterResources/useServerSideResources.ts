@@ -1,13 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import { SortType } from 'design/DataTable/types';
 import { useAsync } from 'shared/hooks/useAsync';
+import { AgentFilter, AgentLabel } from 'teleport/services/agents';
+
 import { ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
-import { useClusterContext } from '../clusterContext';
-import { AgentFilter, AgentLabel } from 'teleport/services/agents';
 
-export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
+import { useClusterContext } from '../clusterContext';
+
+function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
   const queryParts = [];
 
   // Add existing query
@@ -30,6 +32,7 @@ export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
 const limit = 15;
 
 export function useServerSideResources<Agent>(
+  defaultSort: SortType,
   fetchFunction: (params: ServerSideParams) => Promise<FetchResponse<Agent>>
 ) {
   const ctx = useAppContext();
@@ -37,20 +40,21 @@ export function useServerSideResources<Agent>(
   const [pageIndex, setPageIndex] = useState(0);
   const [keys, setKeys] = useState<string[]>([]);
   const [agentFilter, setAgentFilter] = useState<AgentFilter>({
-    sort: getDefaultSort(),
+    sort: defaultSort,
   });
 
   // startKey is used here as a way to paginate through agents returned from
   // their respective rpcs.
-  const [fetchAttempt, fetch] = useAsync(async (startKey: string) =>
-    retryWithRelogin(ctx, documentUri, clusterUri, () =>
-      fetchFunction({
-        ...agentFilter,
-        limit,
-        clusterUri,
-        startKey,
-      })
-    )
+  const [fetchAttempt, fetch] = useAsync(
+    (startKey: string, filter: AgentFilter) =>
+      retryWithRelogin(ctx, documentUri, () =>
+        fetchFunction({
+          ...filter,
+          limit,
+          clusterUri,
+          startKey,
+        })
+      )
   );
 
   // If there is no startKey at the current page's index, there is no more data to get
@@ -76,19 +80,25 @@ export function useServerSideResources<Agent>(
   }
 
   useEffect(() => {
-    fetch(keys[pageIndex - 1]);
-  }, [agentFilter, pageIndex]);
+    const fetchAndUpdateKeys = async () => {
+      const [response, err] = await fetch(keys[pageIndex - 1], agentFilter);
+      // The error will be handled via the fetchAttempt outside.
+      // Return early here as there are no keys to update.
+      if (err) {
+        return;
+      }
 
-  // when we receive data from fetch, we store the startKey (or lack of) according to the current
-  // page index. think of this as "this page's nextKey".
-  // "why don't we just name it nextKey then?"
-  // Mostly because it's called startKey almost everywhere else in the UI, and also because we'd have the same issue
-  // for prevPage if we swapped named, and this comment would be explaining "this page's startKey".
-  useEffect(() => {
-    const newKeys = [...keys];
-    newKeys[pageIndex] = fetchAttempt.data?.startKey;
-    setKeys(newKeys);
-  }, [fetchAttempt.data]);
+      // when we receive data from fetch, we store the startKey (or lack of) according to the current
+      // page index. think of this as "this page's nextKey".
+      // "why don't we just name it nextKey then?"
+      // Mostly because it's called startKey almost everywhere else in the UI, and also because we'd have the same issue
+      // for prevPage if we swapped named, and this comment would be explaining "this page's startKey".
+      const newKeys = [...keys];
+      newKeys[pageIndex] = response.startKey;
+      setKeys(newKeys);
+    };
+    fetchAndUpdateKeys();
+  }, [agentFilter, pageIndex]);
 
   function updateAgentFilter(filter: AgentFilter) {
     setPageIndex(0);
@@ -113,20 +123,25 @@ export function useServerSideResources<Agent>(
   }
 
   const pageCount = useMemo(() => {
-    if (fetchAttempt.status !== 'success') {
-      return {
-        from: 0,
-        to: 0,
-        total: 0,
-      };
+    const emptyPageCount = {
+      from: 0,
+      to: 0,
+      total: 0,
+    };
+    if (!(fetchAttempt.data && fetchAttempt.data.totalCount)) {
+      return emptyPageCount;
     }
-    const from = pageIndex * limit + 1;
+    const startKeyIndex = keys.indexOf(fetchAttempt.data.startKey);
+    if (startKeyIndex < 0) {
+      return emptyPageCount;
+    }
+    const from = startKeyIndex * limit + 1;
     return {
       from,
       to: from + fetchAttempt.data.agentsList.length - 1,
       total: fetchAttempt.data.totalCount,
     };
-  }, [fetchAttempt.status]);
+  }, [fetchAttempt, keys]);
 
   return {
     fetchAttempt,
@@ -140,10 +155,6 @@ export function useServerSideResources<Agent>(
     onAgentLabelClick,
     pageCount,
   };
-}
-
-function getDefaultSort(): SortType {
-  return { fieldName: 'hostname', dir: 'ASC' };
 }
 
 type FetchResponse<T> = {

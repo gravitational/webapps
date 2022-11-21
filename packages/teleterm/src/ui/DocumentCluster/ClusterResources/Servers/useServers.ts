@@ -13,10 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { AttemptStatus } from 'shared/hooks/useAsync';
+
 import { Server, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 import { useServerSideResources } from '../useServerSideResources';
+
+function getEmptyTableText(status: AttemptStatus) {
+  switch (status) {
+    case 'error':
+      return 'Failed to fetch servers.';
+    case '':
+      return 'Searching…';
+    case 'processing':
+      return 'Searching…';
+    case 'success':
+      return 'No servers found.';
+  }
+}
 
 export function useServers() {
   const appContext = useAppContext();
@@ -31,8 +46,10 @@ export function useServers() {
     onAgentLabelClick,
     updateSort,
     pageCount,
-  } = useServerSideResources<Server>((params: ServerSideParams) =>
-    appContext.resourcesService.fetchServers(params)
+  } = useServerSideResources<Server>(
+    { fieldName: 'hostname', dir: 'ASC' }, // default sort
+    (params: ServerSideParams) =>
+      appContext.resourcesService.fetchServers(params)
   );
 
   function getSshLogins(serverUri: string): string[] {
@@ -67,6 +84,7 @@ export function useServers() {
     disabledRows: fetchAttempt.status === 'processing',
     nextPage,
     prevPage,
+    emptyTableText: getEmptyTableText(fetchAttempt.status),
     customSort: {
       dir: agentFilter.sort?.dir,
       fieldName: agentFilter.sort?.fieldName,

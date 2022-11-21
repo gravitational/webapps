@@ -78,11 +78,8 @@ class ClusterContext extends Store<State> {
 
   sync = async () => {
     try {
-      await retryWithRelogin(
-        this.appCtx,
-        this.documentUri,
-        this.clusterUri,
-        () => this.appCtx.clustersService.syncCluster(this.clusterUri)
+      await retryWithRelogin(this.appCtx, this.clusterUri, () =>
+        this.appCtx.clustersService.syncCluster(this.clusterUri)
       );
     } catch (e) {
       this.appCtx.notificationsService.notifyError({
@@ -146,24 +143,6 @@ class ClusterContext extends Store<State> {
   changeSearchValue = (searchValue: string) => {
     this.setState({ searchValue });
   };
-
-  getServers() {
-    return this.appCtx.clustersService.searchServers(this.clusterUri, {
-      search: this.state.searchValue,
-    });
-  }
-
-  getDbs() {
-    return this.appCtx.clustersService.searchDbs(this.clusterUri, {
-      search: this.state.searchValue,
-    });
-  }
-
-  getKubes() {
-    return this.appCtx.clustersService.searchKubes(this.clusterUri, {
-      search: this.state.searchValue,
-    });
-  }
 
   getApps() {
     return this.appCtx.clustersService.searchApps(this.clusterUri, {
