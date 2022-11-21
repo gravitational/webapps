@@ -17,8 +17,9 @@ limitations under the License.
 import { Store, useStore } from 'shared/libs/stores';
 
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
-import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
+import { ResourcesService } from 'teleterm/ui/services/resources';
+import { ClustersService } from 'teleterm/ui/services/clusters';
 
 import * as pickers from './quickPickers';
 import { AutocompleteToken, ParseResult, Suggestion } from './types';
@@ -35,6 +36,7 @@ export class QuickInputService extends Store<State> {
   constructor(
     launcher: CommandLauncher,
     clustersService: ClustersService,
+    resourcesService: ResourcesService,
     workspacesService: WorkspacesService
   ) {
     super();
@@ -50,11 +52,11 @@ export class QuickInputService extends Store<State> {
     );
     const serverSuggester = new pickers.QuickServerSuggester(
       workspacesService,
-      clustersService
+      resourcesService
     );
     const databaseSuggester = new pickers.QuickDatabaseSuggester(
       workspacesService,
-      clustersService
+      resourcesService
     );
 
     this.quickCommandParser.registerParserForCommand(
