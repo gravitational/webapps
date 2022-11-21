@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
+import { ResourcesService } from 'teleterm/ui/services/resources';
+import { ClustersService } from 'teleterm/ui/services/clusters';
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 
 import {
@@ -355,7 +356,7 @@ export class QuickServerSuggester
 {
   constructor(
     private workspacesService: WorkspacesService,
-    private clustersService: ClustersService
+    private resourcesService: ResourcesService
   ) {}
 
   async getSuggestions(input: string): Promise<SuggestionServer[]> {
@@ -365,11 +366,13 @@ export class QuickServerSuggester
     if (!localClusterUri) {
       return [];
     }
-    const servers = this.clustersService.searchServers(localClusterUri, {
+    const servers = await this.resourcesService.fetchServers({
+      clusterUri: localClusterUri,
       search: input,
+      limit: 5,
     });
 
-    return servers.map(server => ({
+    return servers.agentsList.map(server => ({
       kind: 'suggestion.server' as const,
       token: server.hostname,
       data: server,
@@ -382,7 +385,7 @@ export class QuickDatabaseSuggester
 {
   constructor(
     private workspacesService: WorkspacesService,
-    private clustersService: ClustersService
+    private resourcesService: ResourcesService
   ) {}
 
   async getSuggestions(input: string): Promise<SuggestionDatabase[]> {
@@ -391,11 +394,13 @@ export class QuickDatabaseSuggester
     if (!localClusterUri) {
       return [];
     }
-    const databases = this.clustersService.searchDbs(localClusterUri, {
+    const databases = await this.resourcesService.fetchDatabases({
+      clusterUri: localClusterUri,
       search: input,
+      limit: 5,
     });
 
-    return databases.map(database => ({
+    return databases.agentsList.map(database => ({
       kind: 'suggestion.database' as const,
       token: database.name,
       data: database,

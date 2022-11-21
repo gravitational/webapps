@@ -30,10 +30,11 @@ import {
 } from 'teleterm/ui/services/quickInput/types';
 import { routing } from 'teleterm/ui/uri';
 import { KeyboardShortcutType } from 'teleterm/services/config';
+import { retryWithRelogin } from '../utils';
 
 export default function useQuickInput() {
-  const { quickInputService, workspacesService, commandLauncher } =
-    useAppContext();
+  const appContext = useAppContext();
+  const { quickInputService, workspacesService, commandLauncher } = appContext;
   workspacesService.useState();
   const documentsService =
     workspacesService.getActiveWorkspaceDocumentService();
@@ -47,18 +48,24 @@ export default function useQuickInput() {
     [inputValue, workspacesService.getActiveWorkspace()?.localClusterUri]
   );
 
-  const [suggestionsAttempt, getSuggestions] = useAsync(
+  const [suggestionsAttempt, getSuggestions] = useAsync(() =>
     // TODO: Add retryWithRelogin.
     // TODO: Account for race condition, that is: someone keeps typing when there's already a
     // request in progress.
     // https://beta.reactjs.org/learn/you-might-not-need-an-effect#fetching-data
     // TODO: Send error notifications on error.
-    parseResult.getSuggestions
+    retryWithRelogin(
+      appContext,
+      workspacesService.getActiveWorkspace()?.localClusterUri,
+      () => parseResult.getSuggestions()
+    )
   );
 
   React.useEffect(() => {
     getSuggestions();
-  }, [getSuggestions]);
+  }, [parseResult]);
+
+  console.log('suggestionAttempt', suggestionsAttempt);
 
   const hasSuggestions =
     suggestionsAttempt.status === 'success' &&

@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import { debounce } from 'lodash';
 import { Box, Flex } from 'design';
 import { color, height, space, width } from 'styled-system';
+import { Spinner } from 'design/Icon';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
@@ -38,9 +39,10 @@ export default function Container() {
 
 function QuickInput() {
   const props = useQuickInput();
-  const { visible, activeSuggestion, autocompleteResult, inputValue } = props;
+  const { visible, activeSuggestion, autocompleteAttempt, inputValue } = props;
   const hasSuggestions =
-    autocompleteResult.kind === 'autocomplete.partial-match';
+    autocompleteAttempt.data?.length > 0 &&
+    autocompleteAttempt.status === 'success';
   const refInput = useRef<HTMLInputElement>();
   const measuringInputRef = useRef<HTMLSpanElement>();
   const refList = useRef<HTMLElement>();
@@ -52,7 +54,7 @@ function QuickInput() {
     return debounce(() => {
       props.onInputChange(refInput.current.value);
       measureInputTextWidth();
-    }, 100);
+    }, 200);
   }, []);
 
   // Update input value if it changed outside of this component. This happens when the user pick an
@@ -96,7 +98,7 @@ function QuickInput() {
     }
     const next = getNext(
       activeSuggestion + nudge,
-      autocompleteResult.suggestions.length
+      autocompleteAttempt.data?.length
     );
     props.onActiveSuggestion(next);
   };
@@ -162,12 +164,17 @@ function QuickInput() {
         onKeyDown={handleKeyDown}
         isOpened={visible}
       />
+      {autocompleteAttempt.status === 'processing' && (
+        <Animate>
+          <Spinner />
+        </Animate>
+      )}
       {!visible && <Shortcut>{props.keyboardShortcut}</Shortcut>}
       {visible && hasSuggestions && (
         <QuickInputList
           ref={refList}
           position={measuredInputTextWidth}
-          items={autocompleteResult.suggestions}
+          items={autocompleteAttempt.data}
           activeItem={activeSuggestion}
           onPick={props.onEnter}
         />
@@ -222,6 +229,17 @@ const Input = styled.input(props => {
   };
 });
 
+const WarningIconWrapper = styled(Box)`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 2px 3px;
+  color: ${({ theme }) => theme.colors.danger};
+  line-height: 12px;
+  font-size: 12px;
+  border-radius: 2px;
+`;
+
 const Shortcut = styled(Box)`
   position: absolute;
   right: 12px;
@@ -232,6 +250,24 @@ const Shortcut = styled(Box)`
   line-height: 12px;
   font-size: 12px;
   border-radius: 2px;
+`;
+
+const Animate = styled(Box)`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 2px 2px;
+  line-height: 12px;
+  font-size: 12px;
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const KeyEnum = {
