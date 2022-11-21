@@ -18,7 +18,7 @@ import { formatDatabaseInfo } from 'shared/services/databases';
 
 import { Database } from './types';
 
-export default function makeDatabase(json): Database {
+export default function makeDatabase(json: any): Database {
   const { name, desc, protocol, type } = json;
 
   const labels = json.labels || [];
