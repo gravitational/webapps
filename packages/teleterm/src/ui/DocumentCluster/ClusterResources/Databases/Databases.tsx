@@ -18,6 +18,8 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
+import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
+import { DbProtocol, DbType } from 'teleport/services/databases';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
@@ -82,6 +84,14 @@ function DatabaseList(props: State) {
               key: 'type',
               headerText: 'Type',
               isSortable: true,
+              render: ({ protocol, type }) => (
+                <div>
+                  {
+                    formatDatabaseInfo(type as DbType, protocol as DbProtocol)
+                      .title
+                  }
+                </div>
+              ),
             },
             {
               key: 'labelsList',
