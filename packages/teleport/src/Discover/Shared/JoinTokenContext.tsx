@@ -80,7 +80,7 @@ export function useJoinTokenValue() {
 
 export function useJoinToken(
   resourceKind: ResourceKind,
-  agentMatcherLabel: AgentLabel[] = [],
+  agentMatcherLabels: AgentLabel[] = [],
   joinMethod: JoinMethod = 'token'
 ): {
   joinToken: JoinToken;
@@ -100,7 +100,7 @@ export function useJoinToken(
           {
             roles: [resourceKindToJoinRole(resourceKind)],
             method: joinMethod,
-            agentMatcherLabel,
+            agentMatcherLabels,
           },
           abortController.signal
         )

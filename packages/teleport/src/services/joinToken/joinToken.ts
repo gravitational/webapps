@@ -34,7 +34,7 @@ class JoinTokenService {
           roles: req.roles,
           join_method: req.method || 'token',
           allow: makeAllowField(req.rules || []),
-          agent_matcher_labels: makeLabelMapOfStrArrs(req.agentMatcherLabel),
+          agent_matcher_labels: makeLabelMapOfStrArrs(req.agentMatcherLabels),
         },
         signal
       )
