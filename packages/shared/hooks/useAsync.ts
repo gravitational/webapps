@@ -56,6 +56,23 @@ import { useCallback, useState } from 'react';
  *       return <UserAvatar url={fetchUserProfileAttempt.data.avatarUrl} />;
  *    }
  * }
+ *
+ * @example Aborting and useEffect cleanup function.
+ * If the first argument passed to the run function is an abort signal and the signal gets aborted,
+ * useAsync will ignore the return value of the promise from the callback.
+ *
+ * This lets you write a cleanup function for useEffect:
+ *
+ * const [attempt, run] = useAsync((message: string) => doAsyncStuff(message));
+ *
+ * useEffect(() => {
+ *   const abortController = new AbortController();
+ *   run(abortController.signal, 'hello');
+ *
+ *   return () => {
+ *     abortController.abort();
+ *   };
+ * });
  */
 export function useAsync<Callback extends (...args: unknown[]) => unknown>(
   cb?: Callback
@@ -64,18 +81,49 @@ export function useAsync<Callback extends (...args: unknown[]) => unknown>(
     useState<Attempt<Awaited<ReturnType<Callback>>>>(makeEmptyAttempt);
 
   const run = useCallback(
-    (...p: Parameters<Callback>) =>
-      Promise.resolve()
+    (
+      ...args: Parameters<Callback> | [AbortSignal, ...Parameters<Callback>]
+    ) => {
+      const [firstArg, ...restOfArgs] = args;
+      let abort = false;
+      let abortSignal: AbortSignal;
+
+      if (firstArg instanceof AbortSignal) {
+        abortSignal = firstArg;
+      }
+
+      if (abortSignal) {
+        abortSignal.addEventListener('abort', () => {
+          abort = true;
+        });
+      }
+
+      return Promise.resolve()
         .then(() => {
           setState(prevState => ({
             ...prevState,
             status: 'processing',
           }));
 
-          return cb.call(null, ...p) as Awaited<ReturnType<Callback>>;
+          if (abortSignal) {
+            return cb.call(null, ...restOfArgs) as Awaited<
+              ReturnType<Callback>
+            >;
+          } else {
+            return cb.call(null, firstArg, ...restOfArgs) as Awaited<
+              ReturnType<Callback>
+            >;
+          }
         })
         .then(
           data => {
+            if (abort) {
+              return [null, new AbortedSignalError()] as [
+                Awaited<ReturnType<Callback>>,
+                Error
+              ];
+            }
+
             setState(prevState => ({
               ...prevState,
               status: 'success',
@@ -85,6 +133,13 @@ export function useAsync<Callback extends (...args: unknown[]) => unknown>(
             return [data, null] as [Awaited<ReturnType<Callback>>, Error];
           },
           err => {
+            if (abort) {
+              return [null, new AbortedSignalError()] as [
+                Awaited<ReturnType<Callback>>,
+                Error
+              ];
+            }
+
             setState(prevState => ({
               ...prevState,
               status: 'error',
@@ -94,7 +149,8 @@ export function useAsync<Callback extends (...args: unknown[]) => unknown>(
 
             return [null, err] as [Awaited<ReturnType<Callback>>, Error];
           }
-        ),
+        );
+    },
     [setState, cb]
   );
 
@@ -108,9 +164,18 @@ export function useAsync<Callback extends (...args: unknown[]) => unknown>(
   return [state, run, setAttempt] as const;
 }
 
+export class AbortedSignalError extends Error {
+  constructor() {
+    super('Ignored response from useAsync because the signal got aborted');
+    this.name = 'AbortedSignalError';
+  }
+}
+
+export type AttemptStatus = 'processing' | 'success' | 'error' | '';
+
 export type Attempt<T> = {
   data?: T;
-  status: 'processing' | 'success' | 'error' | '';
+  status: AttemptStatus;
   statusText: string;
 };
 
