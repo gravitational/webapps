@@ -48,3 +48,11 @@ export type AuthProvider = {
 export type PrivateKeyPolicy =
   | 'none'
   | typeof privateKeyEnablingPolicies[number];
+
+export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
+export type DbProtocol =
+  | 'postgres'
+  | 'mysql'
+  | 'mongodb'
+  | 'sqlserver'
+  | 'redis';

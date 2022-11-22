@@ -143,16 +143,24 @@ export function useServerSideResources<Agent>(
     };
   }, [fetchAttempt, keys]);
 
+  const customSort = {
+    dir: agentFilter.sort?.dir,
+    fieldName: agentFilter.sort?.fieldName,
+    onSort: updateSort,
+  };
+
   return {
     fetchAttempt,
     fetch,
     updateSearch,
+    documentUri,
     updateSort,
     updateQuery,
     agentFilter,
     prevPage: prevPage(),
     nextPage: nextPage(),
     onAgentLabelClick,
+    customSort,
     pageCount,
   };
 }

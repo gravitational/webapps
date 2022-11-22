@@ -18,8 +18,7 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
-import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
-import { DbProtocol, DbType } from 'teleport/services/databases';
+import { AttemptStatus } from 'shared/hooks/useAsync';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
@@ -36,9 +35,22 @@ export default function Container() {
   return <DatabaseList {...state} />;
 }
 
+function getEmptyTableText(status: AttemptStatus) {
+  switch (status) {
+    case 'error':
+      return 'Failed to fetch databases.';
+    case '':
+      return 'Searching…';
+    case 'processing':
+      return 'Searching…';
+    case 'success':
+      return 'No databases found.';
+  }
+}
+
 function DatabaseList(props: State) {
   const {
-    dbs = [],
+    dbs,
     connect,
     fetchAttempt,
     agentFilter,
@@ -48,10 +60,9 @@ function DatabaseList(props: State) {
     nextPage,
     updateQuery,
     onAgentLabelClick,
-    disabledRows,
     updateSearch,
-    emptyTableText,
   } = props;
+  const disabled = fetchAttempt.status === 'processing';
 
   return (
     <>
@@ -64,9 +75,9 @@ function DatabaseList(props: State) {
         pageCount={pageCount}
         filter={agentFilter}
         showSearchBar={true}
-        disableSearch={disabledRows}
+        disableSearch={disabled}
       />
-      <DarkenWhileDisabled disabled={disabledRows}>
+      <DarkenWhileDisabled disabled={disabled}>
         <Table
           data={dbs}
           columns={[
@@ -76,29 +87,21 @@ function DatabaseList(props: State) {
               isSortable: true,
             },
             {
-              key: 'desc',
+              key: 'description',
               headerText: 'Description',
-              isSortable: false,
+              isSortable: true,
             },
             {
               key: 'type',
               headerText: 'Type',
               isSortable: true,
-              render: ({ protocol, type }) => (
-                <div>
-                  {
-                    formatDatabaseInfo(type as DbType, protocol as DbProtocol)
-                      .title
-                  }
-                </div>
-              ),
             },
             {
-              key: 'labelsList',
+              key: 'labels',
               headerText: 'Labels',
-              render: ({ labelsList }) => (
+              render: ({ labels }) => (
                 <ClickableLabelCell
-                  labels={labelsList}
+                  labels={labels}
                   onClick={onAgentLabelClick}
                 />
               ),
@@ -115,7 +118,7 @@ function DatabaseList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={emptyTableText}
+          emptyText={getEmptyTableText(fetchAttempt.status)}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
       </DarkenWhileDisabled>

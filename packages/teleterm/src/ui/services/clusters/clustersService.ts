@@ -917,6 +917,7 @@ export function makeServer(source: Server) {
 
 export function makeDatabase(source: Database) {
   return {
+    uri: source.uri,
     name: source.name,
     description: source.desc,
     type: formatDatabaseInfo(
