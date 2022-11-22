@@ -70,7 +70,6 @@ export function useDatabases() {
   }
 
   return {
-    dbs: fetchAttempt.data?.agentsList.map(makeDatabase) || [],
     fetchAttempt,
     connect,
     documentUri,

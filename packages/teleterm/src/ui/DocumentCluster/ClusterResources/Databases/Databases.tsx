@@ -23,7 +23,7 @@ import { AttemptStatus } from 'shared/hooks/useAsync';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
-import { GatewayProtocol } from 'teleterm/ui/services/clusters';
+import { GatewayProtocol, makeDatabase } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
@@ -50,7 +50,6 @@ function getEmptyTableText(status: AttemptStatus) {
 
 function DatabaseList(props: State) {
   const {
-    dbs,
     connect,
     fetchAttempt,
     agentFilter,
@@ -62,6 +61,7 @@ function DatabaseList(props: State) {
     onAgentLabelClick,
     updateSearch,
   } = props;
+  const dbs = fetchAttempt.data?.agentsList.map(makeDatabase) || [];
   const disabled = fetchAttempt.status === 'processing';
 
   return (

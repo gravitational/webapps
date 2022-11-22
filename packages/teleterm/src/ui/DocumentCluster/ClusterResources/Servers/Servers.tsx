@@ -47,7 +47,6 @@ function getEmptyTableText(status: AttemptStatus) {
 
 function ServerList(props: State) {
   const {
-    servers,
     getSshLogins,
     connect,
     fetchAttempt,
@@ -60,6 +59,7 @@ function ServerList(props: State) {
     onAgentLabelClick,
     updateSearch,
   } = props;
+  const servers = fetchAttempt.data?.agentsList.map(makeServer) || [];
   const disabled = fetchAttempt.status === 'processing';
   const emptyTableText = getEmptyTableText(fetchAttempt.status);
 

@@ -21,6 +21,8 @@ import { Danger } from 'design/Alert';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
 import { AttemptStatus } from 'shared/hooks/useAsync';
 
+import { makeKube } from 'teleterm/ui/services/clusters';
+
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useKubes, State } from './useKubes';
@@ -45,7 +47,6 @@ function getEmptyTableText(status: AttemptStatus) {
 
 function KubeList(props: State) {
   const {
-    kubes = [],
     connect,
     fetchAttempt,
     agentFilter,
@@ -57,6 +58,7 @@ function KubeList(props: State) {
     onAgentLabelClick,
     updateSearch,
   } = props;
+  const kubes = fetchAttempt.data?.agentsList.map(makeKube) || [];
   const disabled = fetchAttempt.status === 'processing';
   const emptyTableText = getEmptyTableText(fetchAttempt.status);
 

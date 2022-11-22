@@ -50,7 +50,6 @@ export function useServers() {
 
   return {
     fetchAttempt,
-    servers: fetchAttempt.data?.agentsList.map(makeServer) || [],
     getSshLogins,
     connect,
     ...serversideResources,
