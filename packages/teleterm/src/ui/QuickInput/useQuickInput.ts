@@ -72,7 +72,12 @@ export default function useQuickInput() {
   const [suggestionsAttempt, getSuggestions] = useAsync(getSuggestionsCallback);
 
   useEffect(() => {
-    getSuggestions();
+    const abortController = new AbortController();
+    getSuggestions(abortController.signal);
+
+    return () => {
+      abortController.abort();
+    };
   }, [getSuggestions]);
 
   const hasSuggestions =
