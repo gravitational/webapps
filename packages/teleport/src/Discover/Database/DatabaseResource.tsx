@@ -31,8 +31,6 @@ interface DatabaseResourceProps {
 export function DatabaseResource(props: DatabaseResourceProps) {
   const { resourceState } = useDiscover<Database>();
 
-  // As we're focusing on the server flow uncomment this when we start
-  // implementing the database support.
   let content = <SelectDatabaseType />;
 
   if (props.disabled) {
