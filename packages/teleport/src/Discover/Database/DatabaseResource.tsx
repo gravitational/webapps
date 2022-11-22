@@ -16,17 +16,29 @@
 
 import React from 'react';
 
-import { ActionButtons } from 'teleport/Discover/Shared';
+import { useDiscover } from 'teleport/Discover/useDiscover';
+import { DatabaseLocation } from 'teleport/Discover/Database/resources';
+import { SelectDatabaseType } from 'teleport/Discover/Database/SelectDatabaseType';
 
-import { PermissionsErrorMessage } from './PermissionsErrorMessage';
+import { ActionButtons, PermissionsErrorMessage } from '../Shared';
 
-export function KubernetesResource(props: KubernetesResourceProps) {
-  let content;
+interface DatabaseResourceProps {
+  disabled: boolean;
+  onProceed: () => void;
+}
+
+export function DatabaseResource(props: DatabaseResourceProps) {
+  const { resourceState } = useDiscover<DatabaseLocation>();
+
+  // As we're focusing on the server flow uncomment this when we start
+  // implementing the database support.
+  let content = <SelectDatabaseType />;
+
   if (props.disabled) {
     content = (
       <PermissionsErrorMessage
-        action="add new Kubernetes resources"
-        productName="Kubernetes Access"
+        action="add new Databases"
+        productName="Database Access"
       />
     );
   }
@@ -37,13 +49,8 @@ export function KubernetesResource(props: KubernetesResourceProps) {
 
       <ActionButtons
         onProceed={() => props.onProceed()}
-        disableProceed={props.disabled}
+        disableProceed={!resourceState || props.disabled}
       />
     </>
   );
-}
-
-interface KubernetesResourceProps {
-  disabled: boolean;
-  onProceed: () => void;
 }
