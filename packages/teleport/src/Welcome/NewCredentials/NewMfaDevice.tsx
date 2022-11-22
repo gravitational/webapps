@@ -70,8 +70,9 @@ export function NewMfaDevice(props: Props) {
   ) {
     e.preventDefault(); // prevent form submit default
 
-    userEventService.captureUserEvent({
-      event: userEvents.onboard.registerChallengeSubmitEvent,
+    userEventService.capturePreUserEvent({
+      event: userEvents.preUser.onboard.registerChallengeSubmitEvent,
+      username: resetToken.user, // todo mberg
     });
 
     if (!validator.validate()) {

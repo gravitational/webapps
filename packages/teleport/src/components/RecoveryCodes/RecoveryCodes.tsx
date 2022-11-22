@@ -29,6 +29,7 @@ export default function RecoveryCodesDialog({
   onContinue,
   isNewCodes,
   continueText = 'Continue',
+  username = '',
 }: Props) {
   const codesRef = useRef();
 
@@ -43,8 +44,9 @@ export default function RecoveryCodesDialog({
   };
 
   const proceed = () => {
-    userEventService.captureUserEvent({
-      event: userEvents.onboard.recoveryCodesContinueClickEvent,
+    userEventService.capturePreUserEvent({
+      event: userEvents.preUser.onboard.recoveryCodesContinueClickEvent,
+      username: username, // todo mberg
     });
     onContinue();
   };
@@ -204,4 +206,5 @@ export type Props = {
   onContinue: () => void;
   isNewCodes: boolean;
   continueText?: string;
+  username?: string;
 };

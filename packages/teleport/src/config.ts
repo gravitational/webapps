@@ -181,6 +181,7 @@ const cfg = {
       '/v1/webapi/scripts/desktop-access/configure/:token/configure-ad.ps1',
 
     captureUserEventPath: '/v1/webapi/capture',
+    capturePreUserEventPath: '/v1/webapi/precapture',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {

@@ -25,15 +25,19 @@ import { userEventService } from 'teleport/services/userEvent';
 
 import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
 
+import useToken from 'teleport/Welcome/useToken';
+
 import { NewCredentials } from './NewCredentials';
 import { CardWelcome } from './CardWelcome';
 
 export default function Welcome() {
   const { tokenId } = useParams<{ tokenId: string }>();
+  const { resetToken } = useToken(tokenId);
 
   const handleOnInviteContinue = () => {
-    userEventService.captureUserEvent({
-      event: userEvents.onboard.getStartedClickEvent,
+    userEventService.capturePreUserEvent({
+      event: userEvents.preUser.onboard.getStartedClickEvent,
+      username:resetToken && resetToken.user || "", //todo mberg
     });
     history.push(cfg.getUserInviteTokenContinueRoute(tokenId));
   };

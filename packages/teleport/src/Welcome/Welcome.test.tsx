@@ -42,7 +42,7 @@ describe('teleport/components/Welcome', () => {
       qrCode: 'test12345',
     }));
     jest
-      .spyOn(userEventService, 'captureUserEvent')
+      .spyOn(userEventService, 'capturePreUserEvent')
       .mockImplementation(() => new Promise(() => null));
   });
 
@@ -69,14 +69,14 @@ describe('teleport/components/Welcome', () => {
       screen.getByText(/Please click the button below to create an account/i)
     ).toBeInTheDocument();
 
-    expect(auth.fetchPasswordToken).not.toHaveBeenCalled();
+    expect(auth.fetchPasswordToken).toHaveBeenCalledTimes(1);
 
     fireEvent.click(screen.getByText(/get started/i));
     mockHistory.push(inviteContinuePath);
 
     expect(history.push).toHaveBeenCalledWith(inviteContinuePath);
     await waitFor(() => {
-      expect(auth.fetchPasswordToken).toHaveBeenCalled();
+      expect(auth.fetchPasswordToken).toHaveBeenCalledTimes(2);
     });
 
     expect(screen.getByText(/confirm password/i)).toBeInTheDocument();
@@ -102,8 +102,6 @@ describe('teleport/components/Welcome', () => {
         /Please click the button below to begin recovery of your account/i
       )
     ).toBeInTheDocument();
-
-    expect(auth.fetchPasswordToken).not.toHaveBeenCalled();
 
     fireEvent.click(screen.getByText(/Continue/i));
     mockHistory.push(resetContinuePath);

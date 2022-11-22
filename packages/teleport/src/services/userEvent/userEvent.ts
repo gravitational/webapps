@@ -6,6 +6,10 @@ export type UserEvent = {
   alert?: string;
 };
 
+export type PreUserEvent = UserEvent & {
+  username: string;
+};
+
 export const service = {
   captureUserEvent(userEvent: UserEvent) {
     // using api.fetch instead of api.fetchJSON
@@ -13,6 +17,15 @@ export const service = {
     void api.fetch(cfg.api.captureUserEventPath, {
       method: 'POST',
       body: JSON.stringify({ ...userEvent }),
+    });
+  },
+
+  capturePreUserEvent(preUserEvent: PreUserEvent) {
+    // using api.fetch instead of api.fetchJSON
+    // because we are not expecting a JSON response
+    void api.fetch(cfg.api.capturePreUserEventPath, {
+      method: 'POST',
+      body: JSON.stringify({ ...preUserEvent }),
     });
   },
 };
