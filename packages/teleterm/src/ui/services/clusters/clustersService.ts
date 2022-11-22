@@ -931,6 +931,7 @@ export function makeDatabase(source: Database) {
 
 export function makeKube(source: Kube) {
   return {
+    uri: source.uri,
     name: source.name,
     labels: source.labelsList,
   };

@@ -19,6 +19,7 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { ButtonBorder } from 'design';
 import { Danger } from 'design/Alert';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
+import { AttemptStatus } from 'shared/hooks/useAsync';
 
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
@@ -27,6 +28,19 @@ import { useKubes, State } from './useKubes';
 export default function Container() {
   const state = useKubes();
   return <KubeList {...state} />;
+}
+
+function getEmptyTableText(status: AttemptStatus) {
+  switch (status) {
+    case 'error':
+      return 'Failed to fetch kubernetes clusters.';
+    case '':
+      return 'Searching…';
+    case 'processing':
+      return 'Searching…';
+    case 'success':
+      return 'No kubernetes clusters found.';
+  }
 }
 
 function KubeList(props: State) {
@@ -41,10 +55,10 @@ function KubeList(props: State) {
     nextPage,
     updateQuery,
     onAgentLabelClick,
-    disabledRows,
     updateSearch,
-    emptyTableText,
   } = props;
+  const disabled = fetchAttempt.status === 'processing';
+  const emptyTableText = getEmptyTableText(fetchAttempt.status);
 
   return (
     <>
@@ -57,9 +71,9 @@ function KubeList(props: State) {
         pageCount={pageCount}
         filter={agentFilter}
         showSearchBar={true}
-        disableSearch={disabledRows}
+        disableSearch={disabled}
       />
-      <DarkenWhileDisabled disabled={disabledRows}>
+      <DarkenWhileDisabled disabled={disabled}>
         <Table
           data={kubes}
           columns={[
@@ -69,11 +83,11 @@ function KubeList(props: State) {
               isSortable: true,
             },
             {
-              key: 'labelsList',
+              key: 'labels',
               headerText: 'Labels',
-              render: ({ labelsList }) => (
+              render: ({ labels }) => (
                 <ClickableLabelCell
-                  labels={labelsList}
+                  labels={labels}
                   onClick={onAgentLabelClick}
                 />
               ),
