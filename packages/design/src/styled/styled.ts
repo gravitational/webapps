@@ -34,16 +34,28 @@ import type {
 
 import type { SystemRenderFunction, UnionToIntersection } from './enhancers';
 
+/*
+  This file is mostly copied from `@types/styled-components` but modified to allow for the composition of
+  enhancers from `styled-system`.
+
+  There are comments as to what bits are ours, and what they're doing, as well as comments about what has
+  directly come from `@types/styled-components`.
+ */
+
+// This is ours, for our custom `SystemRenderFunction` type. This extracts the props from the generic
+// SystemRenderFunction<P> (we get `P`)
 type UnwrapSystemRenderFunction<T> = T extends SystemRenderFunction<infer U>
   ? U
   : T;
 
+// This is based off of styled-components `ThemedStyledFunctionBase`, to allow us to add a different constructor signature.
 interface CustomThemedStyledFunctionBase<
   C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
   T extends object,
   O extends object = {},
   A extends keyof any = never
 > {
+  // We've added this to the type, to allow for the construction of `styled([enhancer1, enhancer2])`
   <
     SystemFunction extends SystemRenderFunction<any> = SystemRenderFunction<any>
   >(
@@ -55,6 +67,7 @@ interface CustomThemedStyledFunctionBase<
     A
   >;
 
+  // We've added this to the type, to allow for the construction of `styled([enhancer1, enhancer2])<CustomTypes>`
   <
     U extends object,
     SystemFunction extends SystemRenderFunction<any> = SystemRenderFunction<any>
@@ -67,6 +80,7 @@ interface CustomThemedStyledFunctionBase<
     A
   >;
 
+  // We've added this to the type, to allow for the construction of `styled([enhancer1, enhancer2])`
   <
     SystemFunction extends SystemRenderFunction<any> = SystemRenderFunction<any>
   >(
@@ -81,6 +95,7 @@ interface CustomThemedStyledFunctionBase<
     A
   >;
 
+  // We've added this to the type, to allow for the construction of `styled([enhancer1, enhancer2])<CustomTypes>`
   <
     U extends object,
     SystemFunction extends SystemRenderFunction<any> = SystemRenderFunction<any>
@@ -96,8 +111,10 @@ interface CustomThemedStyledFunctionBase<
     A
   >;
 
+  // This is from styled-components
   (first: TemplateStringsArray): StyledComponent<C, T, O, A>;
 
+  // This is from styled-components
   (
     first:
       | TemplateStringsArray
@@ -110,6 +127,7 @@ interface CustomThemedStyledFunctionBase<
     >
   ): StyledComponent<C, T, O, A>;
 
+  // This is from styled-components
   <U extends object>(
     first:
       | TemplateStringsArray
@@ -124,8 +142,10 @@ interface CustomThemedStyledFunctionBase<
     >
   ): StyledComponent<C, T, O & U, A>;
 
+  // This is from styled-components
   (first: TemplateStringsArray): StyledComponent<C, T, O, A>;
 
+  // This is from styled-components
   (
     first:
       | TemplateStringsArray
@@ -138,6 +158,7 @@ interface CustomThemedStyledFunctionBase<
     >
   ): StyledComponent<C, T, O, A>;
 
+  // This is from styled-components
   <U extends object>(
     first:
       | TemplateStringsArray
@@ -153,10 +174,15 @@ interface CustomThemedStyledFunctionBase<
   ): StyledComponent<C, T, O & U, A>;
 }
 
+// This is copied from styled-components, but adapted to return our `CustomThemedStyledFunction` above
+// instead of the usual `ThemedStyledFunction`.
+// This is for typing `styled.div`, `styled.h1`, etc.
 type ThemedStyledComponentFactories<T extends object> = {
   [TTag in keyof JSX.IntrinsicElements]: CustomThemedStyledFunction<TTag, T>;
 };
 
+// This is copied from styled-components, but we've changed the return type to `CustomThemedStyledFunction` above,
+// instead of `ThemedStyledFunction`.
 export interface CustomThemedStyledFunction<
   C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
   T extends object,
@@ -179,8 +205,10 @@ export interface CustomThemedStyledFunction<
   ) => CustomThemedStyledFunction<C, T, Props, A>;
 }
 
+// This is copied from styled-components, but adapted to allow us to add enhancers to the constructor signatures.
 interface ThemedBaseStyledInterface<T extends object>
   extends ThemedStyledComponentFactories<T> {
+  // This is copied from styled-components
   <C extends AnyStyledComponent>(component: C): ThemedStyledFunction<
     StyledComponentInnerComponent<C>,
     T,
@@ -188,6 +216,7 @@ interface ThemedBaseStyledInterface<T extends object>
     StyledComponentInnerAttrs<C>
   >;
 
+  // We've added this to allow for styled(StyledComponent, [enhancer1, enhancer2]).
   <
     Props extends object,
     Element extends AnyStyledComponent,
@@ -203,13 +232,14 @@ interface ThemedBaseStyledInterface<T extends object>
       UnionToIntersection<UnwrapSystemRenderFunction<SystemFunction>>
   >;
 
+  // This is copied from styled-components
   <
-    Props extends object,
     Element extends keyof JSX.IntrinsicElements | React.ComponentType<any> = any
   >(
     component: Element
-  ): ThemedStyledFunction<Element, T, Props>;
+  ): ThemedStyledFunction<Element, T>;
 
+  // We've added this to allow for styled('div', [enhancer1, enhancer2]).
   <
     Props extends object,
     Element extends
@@ -226,14 +256,19 @@ interface ThemedBaseStyledInterface<T extends object>
   >;
 }
 
+// This is copied from styled-components as they do not export it.
 type Attrs<P, A extends Partial<P>, T> =
   | ((props: ThemedStyledProps<P, T>) => A)
   | A;
 
+// This is copied from styled-components as we need it to return our custom types above
+// instead of the default styled-components types
 export type ThemedStyledInterface<T extends object> =
   ThemedBaseStyledInterface<T>;
 export type StyledInterface = ThemedStyledInterface<Theme>;
 
+// This is pretty much the same way that styled-components will create `styled` under the hood.
+// We have just modified it to allow for enhancers to be passed in.
 function createStyledFunction<
   Props extends object,
   Element extends keyof JSX.IntrinsicElements | React.ComponentType<any> = any,
@@ -292,6 +327,8 @@ function createStyledFunction<
   return styledFunction;
 }
 
+// This is a wrapper around `createStyledFunction` that allows `styled` to be typed with
+// the ability of adding enhancers.
 function customStyled<
   Props extends object,
   Element extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
@@ -324,6 +361,7 @@ function isEnhancers<
   );
 }
 
+// This follows a similar pattern to styled-components, but adds enhancers before the styles.
 function customStyledElement<
   Props extends object,
   Element extends keyof JSX.IntrinsicElements | React.ComponentType<any>
@@ -350,6 +388,7 @@ function customStyledElement<
       >
     >
   ) {
+    // this allows for enhancers to be passed in
     if (isEnhancers(first)) {
       return createStyledFunction<
         Props & UnionToIntersection<UnwrapSystemRenderFunction<T>>,
@@ -357,10 +396,12 @@ function customStyledElement<
       >(element, first, options);
     }
 
-    return createStyledFunction<
-      Props & UnionToIntersection<UnwrapSystemRenderFunction<T>>,
-      Element
-    >(element, [], options).call(null, first, ...rest);
+    // this will just return as if you're using styled-components without enhancers
+    return createStyledFunction<Props, Element>(element, [], options).call(
+      null,
+      first,
+      ...rest
+    );
   }
 
   styledFunction.attrs = function attrs<
@@ -381,18 +422,21 @@ function customStyledElement<
   return styledFunction;
 }
 
+// This is copied from styled-components but adapted to allow for enhancers to be passed in the constructor
 interface ThemeStyledFunctionWrapper<
   T extends object,
   Props extends object,
   Element extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
   S extends SystemRenderFunction<any> = SystemRenderFunction<any>
 > {
+  // We've added this to allow for styled.element([enhancer1, enhancer2])
   (first: Iterable<S>): ThemedStyledFunction<
     Element,
     T,
     Props & UnionToIntersection<UnwrapSystemRenderFunction<S>>
   >;
 
+  // We've added this to allow for styled.element([enhancer1, enhancer2])
   (
     first:
       | Iterable<S>
@@ -412,6 +456,7 @@ interface ThemeStyledFunctionWrapper<
     Props & UnionToIntersection<UnwrapSystemRenderFunction<S>>
   >;
 
+  // This is from styled-components
   <U extends object>(
     first:
       | TemplateStringsArray
@@ -430,8 +475,10 @@ interface ThemeStyledFunctionWrapper<
     Props & U & UnionToIntersection<UnwrapSystemRenderFunction<S>>
   >;
 
+  // This is from styled-components
   (first: TemplateStringsArray): StyledComponent<Element, T, Props>;
 
+  // This is from styled-components
   (
     first:
       | TemplateStringsArray
@@ -446,6 +493,7 @@ interface ThemeStyledFunctionWrapper<
     >
   ): StyledComponent<Element, T, Props>;
 
+  // This is from styled-components
   <U extends object>(
     first:
       | TemplateStringsArray
@@ -461,6 +509,7 @@ interface ThemeStyledFunctionWrapper<
   ): StyledComponent<Element, T, Props & U>;
 }
 
+// This is copied from styled-components but changed to return our custom types above
 interface CustomThemedBaseStyledInterface<T extends object> {
   <C extends AnyStyledComponent>(component: C): ThemedStyledFunction<
     StyledComponentInnerComponent<C>,
@@ -477,6 +526,9 @@ interface CustomThemedBaseStyledInterface<T extends object> {
   ): ThemeStyledFunctionWrapper<T, Props, Element>;
 }
 
+// This is created to allow us to have styled.element and have them themed and typed correctly.
+// It's based off of `ThemedStyledInterface` from styled-components, just using the types
+// we have in this file instead of the default styled-components types.
 export type CustomThemedStyledInterface<T extends object> =
   CustomThemedBaseStyledInterface<T>;
 export type CustomStyledInterface = CustomThemedStyledInterface<Theme>;
