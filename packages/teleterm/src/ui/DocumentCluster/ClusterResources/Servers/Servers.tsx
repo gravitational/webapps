@@ -18,8 +18,9 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin } from 'shared/components/MenuLogin';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
+import { AttemptStatus } from 'shared/hooks/useAsync';
 
-import * as types from 'teleterm/ui/services/clusters/types';
+import { makeServer } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
@@ -31,9 +32,22 @@ export default function Container() {
   return <ServerList {...state} />;
 }
 
+function getEmptyTableText(status: AttemptStatus) {
+  switch (status) {
+    case 'error':
+      return 'Failed to fetch servers.';
+    case '':
+      return 'Searching…';
+    case 'processing':
+      return 'Searching…';
+    case 'success':
+      return 'No servers found.';
+  }
+}
+
 function ServerList(props: State) {
   const {
-    servers = [],
+    servers,
     getSshLogins,
     connect,
     fetchAttempt,
@@ -44,10 +58,11 @@ function ServerList(props: State) {
     nextPage,
     updateQuery,
     onAgentLabelClick,
-    disabledRows,
     updateSearch,
-    emptyTableText,
   } = props;
+  const disabled = fetchAttempt.status === 'processing';
+  const emptyTableText = getEmptyTableText(fetchAttempt.status);
+
   return (
     <>
       {fetchAttempt.status === 'error' && (
@@ -59,9 +74,9 @@ function ServerList(props: State) {
         pageCount={pageCount}
         filter={agentFilter}
         showSearchBar={true}
-        disableSearch={disabledRows}
+        disableSearch={disabled}
       />
-      <DarkenWhileDisabled disabled={disabledRows}>
+      <DarkenWhileDisabled disabled={disabled}>
         <Table
           columns={[
             {
@@ -76,11 +91,11 @@ function ServerList(props: State) {
               render: renderAddressCell,
             },
             {
-              key: 'labelsList',
+              key: 'labels',
               headerText: 'Labels',
-              render: ({ labelsList }) => (
+              render: ({ labels }) => (
                 <ClickableLabelCell
-                  labels={labelsList}
+                  labels={labels}
                   onClick={onAgentLabelClick}
                 />
               ),
@@ -130,7 +145,7 @@ const renderConnectCell = (
   );
 };
 
-const renderAddressCell = ({ addr, tunnel }: types.Server) => (
+const renderAddressCell = ({ addr, tunnel }: ReturnType<typeof makeServer>) => (
   <Cell>
     {tunnel && (
       <span

@@ -905,6 +905,7 @@ const helpers = {
 
 export function makeServer(source: Server) {
   return {
+    uri: source.uri,
     id: source.name,
     clusterId: source.name,
     hostname: source.hostname,
