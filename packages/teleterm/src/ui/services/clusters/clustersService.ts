@@ -3,8 +3,11 @@ import { useStore } from 'shared/libs/stores';
 import isMatch from 'design/utils/match';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
-import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
-import { DbProtocol, DbType } from 'teleport/services/databases';
+import {
+  DbProtocol,
+  DbType,
+  formatDatabaseInfo,
+} from 'shared/services/databases';
 import { pipe } from 'shared/utils/pipe';
 
 import { routing } from 'teleterm/ui/uri';
