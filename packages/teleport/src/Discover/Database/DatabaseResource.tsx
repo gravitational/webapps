@@ -17,8 +17,9 @@
 import React from 'react';
 
 import { useDiscover } from 'teleport/Discover/useDiscover';
-import { DatabaseLocation } from 'teleport/Discover/Database/resources';
 import { SelectDatabaseType } from 'teleport/Discover/Database/SelectDatabaseType';
+
+import { Database } from 'teleport/Discover/Database/resources';
 
 import { ActionButtons, PermissionsErrorMessage } from '../Shared';
 
@@ -28,7 +29,7 @@ interface DatabaseResourceProps {
 }
 
 export function DatabaseResource(props: DatabaseResourceProps) {
-  const { resourceState } = useDiscover<DatabaseLocation>();
+  const { resourceState } = useDiscover<Database>();
 
   // As we're focusing on the server flow uncomment this when we start
   // implementing the database support.
