@@ -38,7 +38,6 @@ export const DatabaseResource: Resource<Database> = {
     return currentStep !== 0;
   },
   views(database) {
-    console.log(database);
     let configureResourceViews;
     if (database) {
       switch (database.location) {
