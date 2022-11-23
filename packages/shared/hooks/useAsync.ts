@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
  * `useAsync` lets you represent the state of an async operation as data. It accepts an async function
@@ -74,88 +74,64 @@ import { useCallback, useState } from 'react';
  *   };
  * });
  */
-export function useAsync<Callback extends (...args: unknown[]) => unknown>(
-  cb?: Callback
+export function useAsync<Args extends unknown[], AttemptData>(
+  cb: (...args: Args) => Promise<AttemptData>
 ) {
-  const [state, setState] =
-    useState<Attempt<Awaited<ReturnType<Callback>>>>(makeEmptyAttempt);
+  const [state, setState] = useState<Attempt<AttemptData>>(makeEmptyAttempt);
+  const isMounted = useIsMounted();
+  const asyncTask = useRef<Promise<AttemptData>>();
 
   const run = useCallback(
-    (
-      ...args: Parameters<Callback> | [AbortSignal, ...Parameters<Callback>]
-    ) => {
-      const [firstArg, ...restOfArgs] = args;
-      let abort = false;
-      let abortSignal: AbortSignal;
+    (...args: Args) => {
+      setState(prevState => ({
+        ...prevState,
+        status: 'processing',
+      }));
 
-      if (firstArg instanceof AbortSignal) {
-        abortSignal = firstArg;
-      }
+      const promise = cb(...args);
+      asyncTask.current = promise;
 
-      if (abortSignal) {
-        abortSignal.addEventListener('abort', () => {
-          abort = true;
-        });
-      }
+      return promise.then(
+        data => {
+          if (!isMounted()) {
+            return [null, new AbortedSignalError()] as [AttemptData, Error];
+          }
+          if (asyncTask.current != promise) {
+            return [null, new AbortedSignalError()] as [AttemptData, Error];
+          }
 
-      return Promise.resolve()
-        .then(() => {
           setState(prevState => ({
             ...prevState,
-            status: 'processing',
+            status: 'success',
+            data,
           }));
 
-          if (abortSignal) {
-            return cb.call(null, ...restOfArgs) as Awaited<
-              ReturnType<Callback>
-            >;
-          } else {
-            return cb.call(null, firstArg, ...restOfArgs) as Awaited<
-              ReturnType<Callback>
-            >;
+          return [data, null] as [AttemptData, Error];
+        },
+        err => {
+          if (!isMounted()) {
+            return [null, new AbortedSignalError()] as [AttemptData, Error];
           }
-        })
-        .then(
-          data => {
-            if (abort) {
-              return [null, new AbortedSignalError()] as [
-                Awaited<ReturnType<Callback>>,
-                Error
-              ];
-            }
-
-            setState(prevState => ({
-              ...prevState,
-              status: 'success',
-              data,
-            }));
-
-            return [data, null] as [Awaited<ReturnType<Callback>>, Error];
-          },
-          err => {
-            if (abort) {
-              return [null, new AbortedSignalError()] as [
-                Awaited<ReturnType<Callback>>,
-                Error
-              ];
-            }
-
-            setState(prevState => ({
-              ...prevState,
-              status: 'error',
-              statusText: err?.message,
-              data: null,
-            }));
-
-            return [null, err] as [Awaited<ReturnType<Callback>>, Error];
+          if (asyncTask.current != promise) {
+            return [null, new AbortedSignalError()] as [AttemptData, Error];
           }
-        );
+
+          setState(prevState => ({
+            ...prevState,
+            status: 'error',
+            statusText: err?.message,
+            data: null,
+          }));
+
+          return [null, err] as [AttemptData, Error];
+        }
+      );
     },
-    [setState, cb]
+    [setState, cb, isMounted]
   );
 
   const setAttempt = useCallback(
-    (attempt: Attempt<Awaited<ReturnType<Callback>>>) => {
+    (attempt: Attempt<AttemptData>) => {
       setState(attempt);
     },
     [setState]
@@ -164,6 +140,21 @@ export function useAsync<Callback extends (...args: unknown[]) => unknown>(
   return [state, run, setAttempt] as const;
 }
 
+function useIsMounted() {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  return useCallback(() => isMounted.current, []);
+}
+
+// TODO: Rename the error.
 export class AbortedSignalError extends Error {
   constructor() {
     super('Ignored response from useAsync because the signal got aborted');

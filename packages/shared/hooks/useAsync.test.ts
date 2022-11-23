@@ -1,6 +1,8 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 import { useAsync, AbortedSignalError } from './useAsync';
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 test('run returns a promise which resolves with the attempt data', async () => {
   const returnValue = Symbol();
@@ -9,196 +11,127 @@ test('run returns a promise which resolves with the attempt data', async () => {
   );
 
   let [, run] = result.current;
-  const promise = run();
+  let promise: Promise<[symbol, Error]>;
+  act(() => {
+    promise = run();
+  });
   await waitForNextUpdate();
 
   await expect(promise).resolves.toEqual([returnValue, null]);
 });
 
-test('run accepts an abort signal and returns a promise which resolves with the attempt data', async () => {
-  const returnValue = Symbol();
-  const abortController = new AbortController();
-  const signal = abortController.signal;
-  const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync(() => Promise.resolve(returnValue))
+test('run resolves the promise to an error and does not update the state on unmount when the callback returns a resolved promise', async () => {
+  const { result, unmount } = renderHook(() =>
+    useAsync(() => Promise.resolve(Symbol()))
   );
 
   let [, run] = result.current;
-  const promise = run(signal);
-  await waitForNextUpdate();
-
-  await expect(promise).resolves.toEqual([returnValue, null]);
-});
-
-test('run accepts an abort signal and returns a promise which resolves with an error state if the signal gets aborted', async () => {
-  const returnValue = Symbol();
-  const abortController = new AbortController();
-  const signal = abortController.signal;
-  const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync(() => Promise.resolve(returnValue))
-  );
-
-  let [, run] = result.current;
-  const promise = run(signal);
-  abortController.abort();
-  await waitForNextUpdate();
+  let promise: Promise<[symbol, Error]>;
+  act(() => {
+    promise = run();
+  });
+  unmount();
 
   await expect(promise).resolves.toEqual([null, new AbortedSignalError()]);
-});
-
-test('run does not update attempt if the signal gets aborted', async () => {
-  const returnValue = Symbol();
-  const abortController = new AbortController();
-  const signal = abortController.signal;
-  const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync(() => Promise.resolve(returnValue))
-  );
-
-  let [, run] = result.current;
-  run(signal);
-  abortController.abort();
-  await waitForNextUpdate();
-
-  let [attempt] = result.current;
+  const [attempt] = result.current;
   expect(attempt.status).toBe('processing');
 });
 
-test('error path from run does not update attempt if the signal gets aborted', async () => {
-  const abortController = new AbortController();
-  const signal = abortController.signal;
-  const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync(() => Promise.reject())
+test('run resolves the promise to an error and does not update the state on unmount when the callback returns a rejected promise', async () => {
+  const { result, unmount } = renderHook(() =>
+    useAsync(() => Promise.reject(new Error('oops')))
   );
 
   let [, run] = result.current;
-  run(signal);
-  abortController.abort();
-  await waitForNextUpdate();
+  let promise: Promise<[symbol, Error]>;
+  act(() => {
+    promise = run();
+  });
+  unmount();
 
-  let [attempt] = result.current;
+  await expect(promise).resolves.toEqual([null, new AbortedSignalError()]);
+  const [attempt] = result.current;
   expect(attempt.status).toBe('processing');
 });
 
-test('type signature correctly resolves arguments to run when callback accepts no args', async () => {
-  const returnValue = Symbol();
+test('run resolves the promise to an error after being re-run when the callback returns a resolved promise', async () => {
   const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync(() => Promise.resolve(returnValue))
+    useAsync((count: number) => Promise.resolve(count))
   );
-  const abortController = new AbortController();
-  const signal = abortController.signal;
 
   let [, run] = result.current;
-  run();
+  let firstRunPromise: Promise<[number, Error]>;
+  act(() => {
+    firstRunPromise = run(1);
+  });
+
+  act(() => {
+    run(2);
+  });
   await waitForNextUpdate();
-  let [attempt] = result.current;
-  expect(attempt.data).toBe(returnValue);
 
-  [, run] = result.current;
-  run(signal);
-  await waitForNextUpdate();
-  [attempt] = result.current;
-  expect(attempt.data).toBe(returnValue);
-
-  [, run] = result.current;
-  // @ts-expect-error String is not assignable to AbortSignal.
-  run('foo');
-  // @ts-expect-error Expected 0-1 args but got 2.
-  run('foo', 2);
-
-  // @ts-expect-error Expected 0-1 args but got 2.
-  run(signal, 'foo');
-  // @ts-expect-error Expected 0-1 args but got 3.
-  run(signal, 'foo', 2);
-
-  // Need to await for the update, otherwise React will complain about `run` not being wrapped in
-  // `act`.
-  await waitForNextUpdate();
+  await expect(firstRunPromise).resolves.toEqual([
+    null,
+    new AbortedSignalError(),
+  ]);
 });
 
-test('type signature correctly resolves arguments to run when callback accepts one arg', async () => {
+test('run does not update state after being re-run when the callback returns a resolved promise', async () => {
   const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync((message: string) => Promise.resolve(message))
+    useAsync((count: number) => Promise.resolve(count))
   );
-  const abortController = new AbortController();
-  const signal = abortController.signal;
 
   let [, run] = result.current;
-  run('foo');
+  act(() => {
+    run(1);
+  });
+  const attemptAfterFirstRun = result.current[0];
+
+  act(() => {
+    run(2);
+  });
   await waitForNextUpdate();
-  let [attempt] = result.current;
-  expect(attempt.data).toBe('foo');
 
-  [, run] = result.current;
-  run(signal, 'foo');
-  await waitForNextUpdate();
-  [attempt] = result.current;
-  expect(attempt.data).toBe('foo');
-
-  [, run] = result.current;
-  // @ts-expect-error Extra arg specified.
-  run('foo', 2);
-  // @ts-expect-error Wrong first arg.
-  run(2);
-  // @ts-expect-error Requires at least one arg.
-  run();
-
-  // @ts-expect-error Extra arg specified.
-  run(signal, 'foo', 2);
-  // @ts-expect-error Wrong second arg.
-  run(signal, 2);
-  // @ts-expect-error Expected 2 args.
-  run(signal);
-
-  // Need to await for the update, otherwise React will complain about `run` not being wrapped in
-  // `act`.
-  await waitForNextUpdate();
+  expect(attemptAfterFirstRun.status).toBe('processing');
 });
 
-test('type signature correctly resolves arguments to run when callback accepts multiple args', async () => {
+test('run resolves the promise to an error after being re-run when the callback returns a rejected promise', async () => {
   const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync((message: string, count: number) =>
-      Promise.resolve(message.repeat(count))
-    )
+    useAsync((count: number) => Promise.reject(new Error('oops ' + count)))
   );
-  const abortController = new AbortController();
-  const signal = abortController.signal;
 
   let [, run] = result.current;
-  run('foo', 2);
+  let firstRunPromise: Promise<[number, Error]>;
+  act(() => {
+    firstRunPromise = run(1);
+  });
+
+  act(() => {
+    run(2);
+  });
   await waitForNextUpdate();
-  let [attempt] = result.current;
-  expect(attempt.data).toBe('foofoo');
 
-  [, run] = result.current;
-  run(signal, 'foo', 2);
+  await expect(firstRunPromise).resolves.toEqual([
+    null,
+    new AbortedSignalError(),
+  ]);
+});
+
+test('run does not update state after being re-run when the callback returns a rejected promise', async () => {
+  const { result, waitForNextUpdate } = renderHook(() =>
+    useAsync((count: number) => Promise.reject(new Error('oops ' + count)))
+  );
+
+  let [, run] = result.current;
+  act(() => {
+    run(1);
+  });
+  const attemptAfterFirstRun = result.current[0];
+
+  act(() => {
+    run(2);
+  });
   await waitForNextUpdate();
-  [attempt] = result.current;
-  expect(attempt.data).toBe('foofoo');
 
-  [, run] = result.current;
-  // @ts-expect-error Extra arg specified.
-  run('foo', 2, 'bar');
-  // @ts-expect-error Wrong first arg.
-  run(2, 'foo');
-  // @ts-expect-error Wrong second arg.
-  run('foo', 'bar');
-  // @ts-expect-error Expected two args.
-  run('foo');
-  // @ts-expect-error Requires at least one arg.
-  run();
-
-  // @ts-expect-error Expected 3 args but got 4.
-  run(signal, 'foo', 2, 'bar');
-  // @ts-expect-error Wrong second arg.
-  run(signal, 2, 'foo');
-  // @ts-expect-error Wrong third arg.
-  run(signal, 'foo', 'bar');
-  // @ts-expect-error Expected 3 args but got 2.
-  run(signal, 'foo');
-  // @ts-expect-error Expected 3 args but got 1.
-  run(signal);
-
-  // Need to await for the update, otherwise React will complain about `run` not being wrapped in
-  // `act`.
-  await waitForNextUpdate();
+  expect(attemptAfterFirstRun.status).toBe('processing');
 });
