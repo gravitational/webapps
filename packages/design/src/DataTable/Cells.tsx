@@ -11,6 +11,7 @@ import {
   TableColumn,
   LabelDescription,
 } from './types';
+import { LabelContent } from './StyledTable';
 
 export const Cell = props => <td children={props.children} {...props} />;
 
@@ -83,7 +84,7 @@ export const DateCell = ({ data }: { data: Date }) => (
 const renderLabelCell = (labels: string[] = []) => {
   const $labels = labels.map(label => (
     <Label mr="1" key={label} kind="secondary">
-      {label}
+      <LabelContent title={label}>{label}</LabelContent>
     </Label>
   ));
 
@@ -101,19 +102,23 @@ export const ClickableLabelCell = ({
   labels: LabelDescription[];
   onClick: (label: LabelDescription) => void;
 }) => {
-  const $labels = labels.map(label => (
-    <Label
-      onClick={() => onClick(label)}
-      key={`${label.name}:${label.value}`}
-      mr="1"
-      kind="secondary"
-      css={`
-        cursor: pointer;
-      `}
-    >
-      <div css={{ lineHeight: '20px' }}>{`${label.name}: ${label.value}`}</div>
-    </Label>
-  ));
+  const $labels = labels.map(label => {
+    const labelText = `${label.name}: ${label.value}`;
+
+    return (
+      <Label
+        onClick={() => onClick(label)}
+        key={`${label.name}:${label.value}`}
+        mr="1"
+        kind="secondary"
+        css={`
+          cursor: pointer;
+        `}
+      >
+        <LabelContent title={labelText}>{labelText}</LabelContent>
+      </Label>
+    );
+  });
 
   return <Cell>{$labels}</Cell>;
 };

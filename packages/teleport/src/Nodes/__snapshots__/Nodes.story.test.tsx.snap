@@ -582,6 +582,17 @@ exports[`failed 1`] = `
   border-bottom-left-radius: 8px;
 }
 
+.c23 {
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100em;
+  height: 20px;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+}
+
 .c22 {
   box-sizing: border-box;
   border-radius: 10px;
@@ -592,16 +603,12 @@ exports[`failed 1`] = `
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 0 6px;
   margin: 1px 0;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
   cursor: pointer;
-}
-
-.c23 {
-  line-height: 20px;
 }
 
 .c29 {
@@ -888,6 +895,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -898,6 +906,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -934,6 +943,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -944,6 +954,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -980,6 +991,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -990,6 +1002,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -1026,6 +1039,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -1036,6 +1050,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -1072,6 +1087,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -1082,6 +1098,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -1123,6 +1140,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -1133,6 +1151,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -1174,6 +1193,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -1184,6 +1204,7 @@ exports[`failed 1`] = `
           >
             <div
               class="c23"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -1621,6 +1642,17 @@ exports[`loaded 1`] = `
   border-bottom-left-radius: 8px;
 }
 
+.c26 {
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100em;
+  height: 20px;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+}
+
 .c25 {
   box-sizing: border-box;
   border-radius: 10px;
@@ -1631,16 +1663,12 @@ exports[`loaded 1`] = `
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 0 6px;
   margin: 1px 0;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
   cursor: pointer;
-}
-
-.c26 {
-  line-height: 20px;
 }
 
 .c32 {
@@ -1952,6 +1980,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -1962,6 +1991,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -1998,6 +2028,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -2008,6 +2039,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -2044,6 +2076,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -2054,6 +2087,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -2090,6 +2124,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -2100,6 +2135,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -2136,6 +2172,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -2146,6 +2183,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -2187,6 +2225,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -2197,6 +2236,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>
@@ -2238,6 +2278,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="cluster: one"
             >
               cluster: one
             </div>
@@ -2248,6 +2289,7 @@ exports[`loaded 1`] = `
           >
             <div
               class="c26"
+              title="kernel: 4.15.0-51-generic"
             >
               kernel: 4.15.0-51-generic
             </div>

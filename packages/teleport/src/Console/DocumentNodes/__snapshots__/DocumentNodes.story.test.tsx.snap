@@ -268,6 +268,17 @@ exports[`render DocumentNodes 1`] = `
   border-bottom-left-radius: 8px;
 }
 
+.c30 {
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100em;
+  height: 20px;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+}
+
 .c29 {
   box-sizing: border-box;
   border-radius: 10px;
@@ -278,16 +289,12 @@ exports[`render DocumentNodes 1`] = `
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 0 6px;
   margin: 1px 0;
   background-color: #01172C;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
   cursor: pointer;
-}
-
-.c30 {
-  line-height: 20px;
 }
 
 .c36 {
@@ -998,6 +1005,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="cluster: one"
                 >
                   cluster: one
                 </div>
@@ -1008,6 +1016,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="kernel: 4.15.0-51-generic"
                 >
                   kernel: 4.15.0-51-generic
                 </div>
@@ -1044,6 +1053,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="cluster: one"
                 >
                   cluster: one
                 </div>
@@ -1054,6 +1064,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="kernel: 4.15.0-51-generic"
                 >
                   kernel: 4.15.0-51-generic
                 </div>
@@ -1095,6 +1106,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="cluster: one"
                 >
                   cluster: one
                 </div>
@@ -1105,6 +1117,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="kernel: 4.15.0-51-generic"
                 >
                   kernel: 4.15.0-51-generic
                 </div>
@@ -1146,6 +1159,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="cluster: one"
                 >
                   cluster: one
                 </div>
@@ -1156,6 +1170,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="kernel: 4.15.0-51-generic"
                 >
                   kernel: 4.15.0-51-generic
                 </div>
@@ -1192,6 +1207,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="cluster: one"
                 >
                   cluster: one
                 </div>
@@ -1202,6 +1218,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="kernel: 4.15.0-51-generic"
                 >
                   kernel: 4.15.0-51-generic
                 </div>
@@ -1212,6 +1229,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="lortavma: one"
                 >
                   lortavma: one
                 </div>
@@ -1222,6 +1240,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="lenisret: 4.15.0-51-generic"
                 >
                   lenisret: 4.15.0-51-generic
                 </div>
@@ -1232,6 +1251,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="lofdevod: one"
                 >
                   lofdevod: one
                 </div>
@@ -1242,6 +1262,7 @@ exports[`render DocumentNodes 1`] = `
               >
                 <div
                   class="c30"
+                  title="llhurlaz: 4.15.0-51-generic"
                 >
                   llhurlaz: 4.15.0-51-generic
                 </div>

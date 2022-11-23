@@ -115,3 +115,14 @@ export const StyledEmptyIndicator = styled.div(
   }
 `
 );
+
+export const LabelContent = styled.div`
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100em;
+  height: 20px;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+`;

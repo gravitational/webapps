@@ -67,7 +67,7 @@ const Label = styled.div`
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 0 6px;
   margin: 1px 0;
 
   ${kind}

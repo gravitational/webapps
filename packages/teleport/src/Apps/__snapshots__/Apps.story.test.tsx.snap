@@ -641,6 +641,17 @@ exports[`failed state 1`] = `
   border-bottom-left-radius: 8px;
 }
 
+.c26 {
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100em;
+  height: 20px;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+}
+
 .c25 {
   box-sizing: border-box;
   border-radius: 10px;
@@ -651,16 +662,12 @@ exports[`failed state 1`] = `
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 0 6px;
   margin: 1px 0;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
   cursor: pointer;
-}
-
-.c26 {
-  line-height: 20px;
 }
 
 .c36 {
@@ -985,6 +992,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="env: prod"
               >
                 env: prod
               </div>
@@ -995,6 +1003,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: one"
               >
                 cluster: one
               </div>
@@ -1049,6 +1058,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="env: dev"
               >
                 env: dev
               </div>
@@ -1059,6 +1069,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: two"
               >
                 cluster: two
               </div>
@@ -1113,6 +1124,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="env: dev"
               >
                 env: dev
               </div>
@@ -1123,6 +1135,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: one"
               >
                 cluster: one
               </div>
@@ -1176,6 +1189,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="aws_account_id: A1234"
               >
                 aws_account_id: A1234
               </div>
@@ -1186,6 +1200,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="env: dev"
               >
                 env: dev
               </div>
@@ -1196,6 +1211,7 @@ exports[`failed state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: two"
               >
                 cluster: two
               </div>
@@ -1635,6 +1651,17 @@ exports[`loaded state 1`] = `
   border-bottom-left-radius: 8px;
 }
 
+.c26 {
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100em;
+  height: 20px;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+}
+
 .c25 {
   box-sizing: border-box;
   border-radius: 10px;
@@ -1645,16 +1672,12 @@ exports[`loaded state 1`] = `
   line-height: 1.4;
   font-size: 10px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 0 6px;
   margin: 1px 0;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
   cursor: pointer;
-}
-
-.c26 {
-  line-height: 20px;
 }
 
 .c36 {
@@ -1985,6 +2008,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="env: prod"
               >
                 env: prod
               </div>
@@ -1995,6 +2019,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: one"
               >
                 cluster: one
               </div>
@@ -2049,6 +2074,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="env: dev"
               >
                 env: dev
               </div>
@@ -2059,6 +2085,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: two"
               >
                 cluster: two
               </div>
@@ -2113,6 +2140,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="env: dev"
               >
                 env: dev
               </div>
@@ -2123,6 +2151,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: one"
               >
                 cluster: one
               </div>
@@ -2176,6 +2205,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="aws_account_id: A1234"
               >
                 aws_account_id: A1234
               </div>
@@ -2186,6 +2216,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="env: dev"
               >
                 env: dev
               </div>
@@ -2196,6 +2227,7 @@ exports[`loaded state 1`] = `
             >
               <div
                 class="c26"
+                title="cluster: two"
               >
                 cluster: two
               </div>
