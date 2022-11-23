@@ -29,23 +29,11 @@ import { MenuLoginTheme } from '../MenuLoginTheme';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useDatabases, State } from './useDatabases';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 export default function Container() {
   const state = useDatabases();
   return <DatabaseList {...state} />;
-}
-
-function getEmptyTableText(status: AttemptStatus) {
-  switch (status) {
-    case 'error':
-      return 'Failed to fetch databases.';
-    case '':
-      return 'Searching…';
-    case 'processing':
-      return 'Searching…';
-    case 'success':
-      return 'No databases found.';
-  }
 }
 
 function DatabaseList(props: State) {
@@ -63,6 +51,7 @@ function DatabaseList(props: State) {
   } = props;
   const dbs = fetchAttempt.data?.agentsList.map(makeDatabase) || [];
   const disabled = fetchAttempt.status === 'processing';
+  const emptyText = getEmptyTableText(fetchAttempt.status, 'databases');
 
   return (
     <>
@@ -118,7 +107,7 @@ function DatabaseList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={getEmptyTableText(fetchAttempt.status)}
+          emptyText={emptyText}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
       </DarkenWhileDisabled>

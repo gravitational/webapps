@@ -26,23 +26,11 @@ import { makeKube } from 'teleterm/ui/services/clusters';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useKubes, State } from './useKubes';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 export default function Container() {
   const state = useKubes();
   return <KubeList {...state} />;
-}
-
-function getEmptyTableText(status: AttemptStatus) {
-  switch (status) {
-    case 'error':
-      return 'Failed to fetch kubernetes clusters.';
-    case '':
-      return 'Searching…';
-    case 'processing':
-      return 'Searching…';
-    case 'success':
-      return 'No kubernetes clusters found.';
-  }
 }
 
 function KubeList(props: State) {
@@ -60,7 +48,7 @@ function KubeList(props: State) {
   } = props;
   const kubes = fetchAttempt.data?.agentsList.map(makeKube) || [];
   const disabled = fetchAttempt.status === 'processing';
-  const emptyTableText = getEmptyTableText(fetchAttempt.status);
+  const emptyText = getEmptyTableText(fetchAttempt.status, 'kubes');
 
   return (
     <>
@@ -100,7 +88,7 @@ function KubeList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={emptyTableText}
+          emptyText={emptyText}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
       </DarkenWhileDisabled>

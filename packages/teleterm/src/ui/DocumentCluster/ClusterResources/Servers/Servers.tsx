@@ -26,23 +26,11 @@ import { MenuLoginTheme } from '../MenuLoginTheme';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
 
 import { useServers, State } from './useServers';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 export default function Container() {
   const state = useServers();
   return <ServerList {...state} />;
-}
-
-function getEmptyTableText(status: AttemptStatus) {
-  switch (status) {
-    case 'error':
-      return 'Failed to fetch servers.';
-    case '':
-      return 'Searching…';
-    case 'processing':
-      return 'Searching…';
-    case 'success':
-      return 'No servers found.';
-  }
 }
 
 function ServerList(props: State) {
@@ -61,7 +49,7 @@ function ServerList(props: State) {
   } = props;
   const servers = fetchAttempt.data?.agentsList.map(makeServer) || [];
   const disabled = fetchAttempt.status === 'processing';
-  const emptyTableText = getEmptyTableText(fetchAttempt.status);
+  const emptyText = getEmptyTableText(fetchAttempt.status, 'servers');
 
   return (
     <>
@@ -110,7 +98,7 @@ function ServerList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={emptyTableText}
+          emptyText={emptyText}
           data={servers}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
