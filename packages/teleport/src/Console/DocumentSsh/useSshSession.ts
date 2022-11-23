@@ -19,12 +19,13 @@ import React from 'react';
 import { context, trace } from '@opentelemetry/api';
 
 import cfg from 'teleport/config';
-import { Session } from 'teleport/services/session';
 import { TermEventEnum } from 'teleport/lib/term/enums';
 import Tty from 'teleport/lib/term/tty';
 import ConsoleContext from 'teleport/Console/consoleContext';
 import { useConsoleContext } from 'teleport/Console/consoleContextProvider';
 import { DocumentSsh } from 'teleport/Console/stores';
+
+import type { Session, SessionMetadata } from 'teleport/services/session';
 
 const tracer = trace.getTracer('TTY');
 
@@ -94,15 +95,20 @@ export default function useSshSession(doc: DocumentSsh) {
   };
 }
 
-function handleTtyConnect(ctx: ConsoleContext, session: any, docId: number) {
+function handleTtyConnect(
+  ctx: ConsoleContext,
+  session: SessionMetadata,
+  docId: number
+) {
   const {
     resourceName,
     login,
     id: sid,
     cluster_name: clusterId,
-    serverId,
+    server_id: serverId,
     created,
   } = session;
+
   const url = cfg.getSshSessionRoute({ sid, clusterId });
   const createdDate = new Date(created);
   ctx.updateSshDocument(docId, {
