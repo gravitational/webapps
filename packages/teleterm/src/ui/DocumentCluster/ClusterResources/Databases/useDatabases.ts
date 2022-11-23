@@ -24,7 +24,7 @@ import { useServerSideResources } from '../useServerSideResources';
 export function useDatabases() {
   const appContext = useAppContext();
 
-  const { fetchAttempt, documentUri, ...serverSideResources } =
+  const { fetchAttempt, ...serverSideResources } =
     useServerSideResources<Database>(
       { fieldName: 'name', dir: 'ASC' }, // default sort
       (params: ServerSideParams) =>

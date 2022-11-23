@@ -19,14 +19,13 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { ButtonBorder } from 'design';
 import { Danger } from 'design/Alert';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
-import { AttemptStatus } from 'shared/hooks/useAsync';
 
 import { makeKube } from 'teleterm/ui/services/clusters';
 
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 import { useKubes, State } from './useKubes';
-import { getEmptyTableText } from '../getEmptyTableText';
 
 export default function Container() {
   const state = useKubes();

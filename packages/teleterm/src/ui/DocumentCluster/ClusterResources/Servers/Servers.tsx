@@ -18,15 +18,14 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin } from 'shared/components/MenuLogin';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
-import { AttemptStatus } from 'shared/hooks/useAsync';
 
 import { makeServer } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 import { useServers, State } from './useServers';
-import { getEmptyTableText } from '../getEmptyTableText';
 
 export default function Container() {
   const state = useServers();

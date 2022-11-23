@@ -18,7 +18,6 @@ import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
-import { AttemptStatus } from 'shared/hooks/useAsync';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
@@ -27,9 +26,9 @@ import { GatewayProtocol, makeDatabase } from 'teleterm/ui/services/clusters';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 import { useDatabases, State } from './useDatabases';
-import { getEmptyTableText } from '../getEmptyTableText';
 
 export default function Container() {
   const state = useDatabases();
