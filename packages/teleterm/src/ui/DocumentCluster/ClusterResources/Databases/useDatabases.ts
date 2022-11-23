@@ -72,7 +72,6 @@ export function useDatabases() {
   return {
     fetchAttempt,
     connect,
-    documentUri,
     ...serverSideResources,
   };
 }
