@@ -33,6 +33,7 @@ export default function ModalsHost() {
     return (
       <ClusterConnect
         clusterUri={dialog.clusterUri}
+        reason={dialog.reason}
         onCancel={() => {
           handleClose();
           dialog.onCancel?.();

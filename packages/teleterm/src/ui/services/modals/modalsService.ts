@@ -16,7 +16,8 @@ limitations under the License.
 
 import { useStore } from 'shared/libs/stores';
 
-import { ImmutableStore } from '../immutableStore';
+import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
+import * as types from 'teleterm/services/tshd/types';
 
 export class ModalsService extends ImmutableStore<Dialog> {
   state: Dialog = {
@@ -75,11 +76,20 @@ export interface DialogBase {
 export interface DialogClusterConnect {
   kind: 'cluster-connect';
   clusterUri?: string;
-
+  reason?: ClusterConnectReason;
   onSuccess?(clusterUri: string): void;
-
   onCancel?(): void;
 }
+
+export interface ClusterConnectReasonGatewayCertExpired {
+  kind: 'reason.gateway-cert-expired';
+  targetUri: string;
+  // The original RPC message passes gatewayUri but we might not always be able to resolve it to a
+  // gateway, hence the use of undefined.
+  gateway: types.Gateway | undefined;
+}
+
+export type ClusterConnectReason = ClusterConnectReasonGatewayCertExpired;
 
 export interface DialogClusterLogout {
   kind: 'cluster-logout';
