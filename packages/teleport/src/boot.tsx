@@ -30,10 +30,7 @@ cfg.init(window['GRV_CONFIG']);
 // use browser history
 history.init();
 
-const enableTelemetry =
-  localStorage.getItem('enable-telemetry') === 'true' ? true : false;
-
-if (enableTelemetry) {
+if (localStorage.getItem('enable-telemetry') === 'true') {
   instantiateTelemetry();
 }
 

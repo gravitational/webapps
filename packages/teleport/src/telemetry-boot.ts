@@ -19,7 +19,6 @@ import {
 import { ZoneContextManager } from '@opentelemetry/context-zone';
 
 export function instantiateTelemetry() {
-  // Optionally register automatic instrumentation libraries
   registerInstrumentations({
     instrumentations: [
       new DocumentLoadInstrumentation(),
