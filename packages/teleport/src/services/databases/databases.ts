@@ -18,23 +18,51 @@ import api from 'teleport/services/api';
 import cfg, { UrlResourcesParams } from 'teleport/config';
 import { AgentResponse } from 'teleport/services/agents';
 
-import { Database } from './types';
 import makeDatabase from './makeDatabase';
+
+import type {
+  CreateDatabaseRequest,
+  Database,
+  UpdateDatabaseRequest,
+} from './types';
 
 class DatabaseService {
   fetchDatabases(
     clusterId: string,
-    params: UrlResourcesParams
+    params: UrlResourcesParams,
+    signal?: AbortSignal
   ): Promise<AgentResponse<Database>> {
-    return api.get(cfg.getDatabasesUrl(clusterId, params)).then(json => {
-      const items = json?.items || [];
+    return api
+      .get(cfg.getDatabasesUrl(clusterId, params), signal)
+      .then(json => {
+        const items = json?.items || [];
 
-      return {
-        agents: items.map(makeDatabase),
-        startKey: json?.startKey,
-        totalCount: json?.totalCount,
-      };
-    });
+        return {
+          agents: items.map(makeDatabase),
+          startKey: json?.startKey,
+          totalCount: json?.totalCount,
+        };
+      });
+  }
+
+  fetchDatabase(clusterId: string, dbName: string): Promise<Database> {
+    return api.get(cfg.getDatabaseUrl(clusterId, dbName)).then(makeDatabase);
+  }
+
+  updateDatabase(
+    clusterId: string,
+    req: UpdateDatabaseRequest
+  ): Promise<Database> {
+    return api
+      .put(cfg.getDatabaseUrl(clusterId, req.name), { ca_cert: req.caCert })
+      .then(makeDatabase);
+  }
+
+  createDatabase(
+    clusterId: string,
+    req: CreateDatabaseRequest
+  ): Promise<Database> {
+    return api.post(cfg.getDatabasesUrl(clusterId), req).then(makeDatabase);
   }
 }
 

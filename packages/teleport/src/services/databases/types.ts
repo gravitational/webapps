@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { DbProtocol } from 'shared/services/databases';
+
 import { AgentLabel } from 'teleport/services/agents';
 
 export interface Database {
@@ -26,16 +28,22 @@ export interface Database {
   users?: string[];
 }
 
-export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
-export type DbProtocol =
-  | 'postgres'
-  | 'mysql'
-  | 'mongodb'
-  | 'sqlserver'
-  | 'redis';
-
 export type DatabasesResponse = {
   databases: Database[];
   startKey?: string;
   totalCount?: number;
+};
+
+export type UpdateDatabaseRequest = {
+  name: string;
+  caCert: string;
+};
+
+export type CreateDatabaseRequest = {
+  name: string;
+  protocol: DbProtocol;
+  uri: string;
+  labels?: AgentLabel[];
+  // TODO (lisa or ryan): marco will work on including aws object fields
+  // eg: aws account id and resource id
 };
