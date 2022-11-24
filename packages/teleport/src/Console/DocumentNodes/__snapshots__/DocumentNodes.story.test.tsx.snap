@@ -13,7 +13,7 @@ exports[`render DocumentNodes 1`] = `
   width: 100%;
 }
 
-.c31 {
+.c32 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -42,22 +42,22 @@ exports[`render DocumentNodes 1`] = `
   height: 24px;
 }
 
-.c31:active {
+.c32:active {
   opacity: 0.56;
 }
 
-.c31:hover,
-.c31:focus {
+.c32:hover,
+.c32:focus {
   background: #092F52;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c31:active {
+.c32:active {
   opacity: 0.24;
 }
 
-.c31:disabled {
+.c32:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -68,7 +68,7 @@ exports[`render DocumentNodes 1`] = `
   color: #FFFFFF;
 }
 
-.c32 {
+.c33 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -77,7 +77,7 @@ exports[`render DocumentNodes 1`] = `
   font-size: 14px;
 }
 
-.c37 {
+.c38 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -156,14 +156,14 @@ exports[`render DocumentNodes 1`] = `
   display: flex;
 }
 
-.c34 {
+.c35 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c35 {
+.c36 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -256,7 +256,7 @@ exports[`render DocumentNodes 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c33 {
+.c34 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -268,18 +268,21 @@ exports[`render DocumentNodes 1`] = `
   border-bottom-left-radius: 8px;
 }
 
-.c30 {
+.c31 {
   line-height: 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100em;
-  height: 20px;
-  white-space: nowrap;
   position: relative;
   top: 1px;
 }
 
 .c29 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+}
+
+.c30 {
   box-sizing: border-box;
   border-radius: 10px;
   display: inline-flex;
@@ -297,28 +300,28 @@ exports[`render DocumentNodes 1`] = `
   cursor: pointer;
 }
 
-.c36 {
+.c37 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c36 .c24 {
+.c37 .c24 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c36:hover .c24,
-.c36:focus .c24 {
+.c37:hover .c24,
+.c37:focus .c24 {
   opacity: 1;
 }
 
-.c36:disabled {
+.c37:disabled {
   cursor: default;
 }
 
-.c36:disabled .c24 {
+.c37:disabled .c24 {
   opacity: 0.1;
 }
 
@@ -761,6 +764,30 @@ exports[`render DocumentNodes 1`] = `
   padding-bottom: 24px;
 }
 
+@media (max-width:1300px) {
+  .c31 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c31 {
+    max-width: 30em;
+  }
+}
+
+@media (max-width:1300px) {
+  .c29 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c29 {
+    max-width: 30em;
+  }
+}
+
 <div
   class="c0"
   height="100%"
@@ -1001,24 +1028,28 @@ exports[`render DocumentNodes 1`] = `
             <td>
               <div
                 class="c29"
-                kind="secondary"
               >
                 <div
                   class="c30"
-                  title="cluster: one"
+                  kind="secondary"
                 >
-                  cluster: one
+                  <div
+                    class="c31"
+                    title="cluster: one"
+                  >
+                    cluster: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="kernel: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  kernel: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="kernel: 4.15.0-51-generic"
+                  >
+                    kernel: 4.15.0-51-generic
+                  </div>
                 </div>
               </div>
             </td>
@@ -1026,13 +1057,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c31"
+                class="c32"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c32 icon icon-caret-down "
+                  class="c24 c33 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1049,24 +1080,28 @@ exports[`render DocumentNodes 1`] = `
             <td>
               <div
                 class="c29"
-                kind="secondary"
               >
                 <div
                   class="c30"
-                  title="cluster: one"
+                  kind="secondary"
                 >
-                  cluster: one
+                  <div
+                    class="c31"
+                    title="cluster: one"
+                  >
+                    cluster: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="kernel: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  kernel: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="kernel: 4.15.0-51-generic"
+                  >
+                    kernel: 4.15.0-51-generic
+                  </div>
                 </div>
               </div>
             </td>
@@ -1074,13 +1109,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c31"
+                class="c32"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c32 icon icon-caret-down "
+                  class="c24 c33 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1102,24 +1137,28 @@ exports[`render DocumentNodes 1`] = `
             <td>
               <div
                 class="c29"
-                kind="secondary"
               >
                 <div
                   class="c30"
-                  title="cluster: one"
+                  kind="secondary"
                 >
-                  cluster: one
+                  <div
+                    class="c31"
+                    title="cluster: one"
+                  >
+                    cluster: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="kernel: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  kernel: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="kernel: 4.15.0-51-generic"
+                  >
+                    kernel: 4.15.0-51-generic
+                  </div>
                 </div>
               </div>
             </td>
@@ -1127,13 +1166,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c31"
+                class="c32"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c32 icon icon-caret-down "
+                  class="c24 c33 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1155,24 +1194,28 @@ exports[`render DocumentNodes 1`] = `
             <td>
               <div
                 class="c29"
-                kind="secondary"
               >
                 <div
                   class="c30"
-                  title="cluster: one"
+                  kind="secondary"
                 >
-                  cluster: one
+                  <div
+                    class="c31"
+                    title="cluster: one"
+                  >
+                    cluster: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="kernel: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  kernel: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="kernel: 4.15.0-51-generic"
+                  >
+                    kernel: 4.15.0-51-generic
+                  </div>
                 </div>
               </div>
             </td>
@@ -1180,13 +1223,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c31"
+                class="c32"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c32 icon icon-caret-down "
+                  class="c24 c33 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1203,68 +1246,72 @@ exports[`render DocumentNodes 1`] = `
             <td>
               <div
                 class="c29"
-                kind="secondary"
               >
                 <div
                   class="c30"
-                  title="cluster: one"
+                  kind="secondary"
                 >
-                  cluster: one
+                  <div
+                    class="c31"
+                    title="cluster: one"
+                  >
+                    cluster: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="kernel: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  kernel: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="kernel: 4.15.0-51-generic"
+                  >
+                    kernel: 4.15.0-51-generic
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="lortavma: one"
+                  kind="secondary"
                 >
-                  lortavma: one
+                  <div
+                    class="c31"
+                    title="lortavma: one"
+                  >
+                    lortavma: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="lenisret: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  lenisret: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="lenisret: 4.15.0-51-generic"
+                  >
+                    lenisret: 4.15.0-51-generic
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="lofdevod: one"
+                  kind="secondary"
                 >
-                  lofdevod: one
+                  <div
+                    class="c31"
+                    title="lofdevod: one"
+                  >
+                    lofdevod: one
+                  </div>
                 </div>
-              </div>
-              <div
-                class="c29"
-                kind="secondary"
-              >
                 <div
                   class="c30"
-                  title="llhurlaz: 4.15.0-51-generic"
+                  kind="secondary"
                 >
-                  llhurlaz: 4.15.0-51-generic
+                  <div
+                    class="c31"
+                    title="llhurlaz: 4.15.0-51-generic"
+                  >
+                    llhurlaz: 4.15.0-51-generic
+                  </div>
                 </div>
               </div>
             </td>
@@ -1272,13 +1319,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c31"
+                class="c32"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c32 icon icon-caret-down "
+                  class="c24 c33 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1288,35 +1335,35 @@ exports[`render DocumentNodes 1`] = `
         </tbody>
       </table>
       <nav
-        class="c33"
+        class="c34"
       >
         <div
-          class="c34"
+          class="c35"
           width="100%"
         >
           <div
-            class="c35"
+            class="c36"
           />
           <div
             class="c26"
           >
             <button
-              class="c36"
+              class="c37"
               disabled=""
               title="Previous page"
             >
               <span
-                class="c24 c37 icon icon-arrow-left-circle "
+                class="c24 c38 icon icon-arrow-left-circle "
                 color="light"
                 font-size="3"
               />
             </button>
             <button
-              class="c36"
+              class="c37"
               title="Next page"
             >
               <span
-                class="c24 c37 icon icon-arrow-right-circle "
+                class="c24 c38 icon icon-arrow-right-circle "
                 color="light"
                 font-size="3"
               />

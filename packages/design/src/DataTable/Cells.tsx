@@ -11,7 +11,7 @@ import {
   TableColumn,
   LabelDescription,
 } from './types';
-import { LabelContent } from './StyledTable';
+import { LabelContent, LabelWrapper } from './StyledTable';
 
 export const Cell = props => <td children={props.children} {...props} />;
 
@@ -81,10 +81,31 @@ export const DateCell = ({ data }: { data: Date }) => (
   <Cell>{displayDate(data)}</Cell>
 );
 
+const TextEllipsisLabelContent = ({
+  text,
+  maxLength,
+}: {
+  text: string;
+  maxLength: number;
+}) => {
+  let displayText = text;
+  const isLonger = text.length > maxLength;
+
+  if (isLonger) {
+    displayText = text.substring(0, 100);
+  }
+
+  return (
+    <LabelContent title={text} dots={isLonger}>
+      {displayText}
+    </LabelContent>
+  );
+};
+
 const renderLabelCell = (labels: string[] = []) => {
   const $labels = labels.map(label => (
     <Label mr="1" key={label} kind="secondary">
-      <LabelContent title={label}>{label}</LabelContent>
+      <TextEllipsisLabelContent text={label} maxLength={100} />
     </Label>
   ));
 
@@ -115,12 +136,16 @@ export const ClickableLabelCell = ({
           cursor: pointer;
         `}
       >
-        <LabelContent title={labelText}>{labelText}</LabelContent>
+        <TextEllipsisLabelContent text={labelText} maxLength={100} />
       </Label>
     );
   });
 
-  return <Cell>{$labels}</Cell>;
+  return (
+    <Cell>
+      <LabelWrapper>{$labels}</LabelWrapper>
+    </Cell>
+  );
 };
 
 type SortHeaderCellProps<T> = {

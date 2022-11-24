@@ -320,7 +320,7 @@ exports[`failed 1`] = `
   width: 100%;
 }
 
-.c24 {
+.c25 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -348,22 +348,22 @@ exports[`failed 1`] = `
   padding: 0px 16px;
 }
 
-.c24:active {
+.c25:active {
   opacity: 0.56;
 }
 
-.c24:hover,
-.c24:focus {
+.c25:hover,
+.c25:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c24:active {
+.c25:active {
   opacity: 0.24;
 }
 
-.c24:disabled {
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -374,7 +374,7 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c29 {
+.c30 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -420,14 +420,14 @@ exports[`failed 1`] = `
   display: flex;
 }
 
-.c26 {
+.c27 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c27 {
+.c28 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -560,7 +560,7 @@ exports[`failed 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c25 {
+.c26 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -572,18 +572,21 @@ exports[`failed 1`] = `
   border-bottom-left-radius: 8px;
 }
 
-.c23 {
+.c24 {
   line-height: 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100em;
-  height: 20px;
-  white-space: nowrap;
   position: relative;
   top: 1px;
 }
 
 .c22 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+}
+
+.c23 {
   box-sizing: border-box;
   border-radius: 10px;
   display: inline-flex;
@@ -601,28 +604,28 @@ exports[`failed 1`] = `
   cursor: pointer;
 }
 
-.c28 {
+.c29 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c28 .c17 {
+.c29 .c17 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c28:hover .c17,
-.c28:focus .c17 {
+.c29:hover .c17,
+.c29:focus .c17 {
   opacity: 1;
 }
 
-.c28:disabled {
+.c29:disabled {
   cursor: default;
 }
 
-.c28:disabled .c17 {
+.c29:disabled .c17 {
   opacity: 0.1;
 }
 
@@ -735,6 +738,30 @@ exports[`failed 1`] = `
   padding-right: 16px;
   padding-left: 16px;
   width: 120px;
+}
+
+@media (max-width:1300px) {
+  .c24 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c24 {
+    max-width: 30em;
+  }
+}
+
+@media (max-width:1300px) {
+  .c22 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c22 {
+    max-width: 30em;
+  }
 }
 
 <div
@@ -899,24 +926,28 @@ exports[`failed 1`] = `
         <td>
           <div
             class="c22"
-            kind="secondary"
           >
             <div
               class="c23"
-              title="cluster: root"
+              kind="secondary"
             >
-              cluster: root
+              <div
+                class="c24"
+                title="cluster: root"
+              >
+                cluster: root
+              </div>
             </div>
-          </div>
-          <div
-            class="c22"
-            kind="secondary"
-          >
             <div
               class="c23"
-              title="env: aws"
+              kind="secondary"
             >
-              env: aws
+              <div
+                class="c24"
+                title="env: aws"
+              >
+                env: aws
+              </div>
             </div>
           </div>
         </td>
@@ -924,7 +955,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c24"
+            class="c25"
             kind="border"
           >
             Connect
@@ -944,24 +975,28 @@ exports[`failed 1`] = `
         <td>
           <div
             class="c22"
-            kind="secondary"
           >
             <div
               class="c23"
-              title="cluster: root"
+              kind="secondary"
             >
-              cluster: root
+              <div
+                class="c24"
+                title="cluster: root"
+              >
+                cluster: root
+              </div>
             </div>
-          </div>
-          <div
-            class="c22"
-            kind="secondary"
-          >
             <div
               class="c23"
-              title="env: gcp"
+              kind="secondary"
             >
-              env: gcp
+              <div
+                class="c24"
+                title="env: gcp"
+              >
+                env: gcp
+              </div>
             </div>
           </div>
         </td>
@@ -969,7 +1004,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c24"
+            class="c25"
             kind="border"
           >
             Connect
@@ -989,24 +1024,28 @@ exports[`failed 1`] = `
         <td>
           <div
             class="c22"
-            kind="secondary"
           >
             <div
               class="c23"
-              title="cluster: root"
+              kind="secondary"
             >
-              cluster: root
+              <div
+                class="c24"
+                title="cluster: root"
+              >
+                cluster: root
+              </div>
             </div>
-          </div>
-          <div
-            class="c22"
-            kind="secondary"
-          >
             <div
               class="c23"
-              title="env: aws"
+              kind="secondary"
             >
-              env: aws
+              <div
+                class="c24"
+                title="env: aws"
+              >
+                env: aws
+              </div>
             </div>
           </div>
         </td>
@@ -1014,7 +1053,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c24"
+            class="c25"
             kind="border"
           >
             Connect
@@ -1024,36 +1063,36 @@ exports[`failed 1`] = `
     </tbody>
   </table>
   <nav
-    class="c25"
+    class="c26"
   >
     <div
-      class="c26"
+      class="c27"
       width="100%"
     >
       <div
-        class="c27"
+        class="c28"
       />
       <div
         class="c19"
       >
         <button
-          class="c28"
+          class="c29"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c17 c29 icon icon-arrow-left-circle "
+            class="c17 c30 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c28"
+          class="c29"
           disabled=""
           title="Next page"
         >
           <span
-            class="c17 c29 icon icon-arrow-right-circle "
+            class="c17 c30 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -1116,7 +1155,7 @@ exports[`open source loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c24 {
+.c25 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1144,22 +1183,22 @@ exports[`open source loaded 1`] = `
   padding: 0px 16px;
 }
 
-.c24:active {
+.c25:active {
   opacity: 0.56;
 }
 
-.c24:hover,
-.c24:focus {
+.c25:hover,
+.c25:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c24:active {
+.c25:active {
   opacity: 0.24;
 }
 
-.c24:disabled {
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1170,7 +1209,7 @@ exports[`open source loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c29 {
+.c30 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -1216,14 +1255,14 @@ exports[`open source loaded 1`] = `
   display: flex;
 }
 
-.c26 {
+.c27 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c27 {
+.c28 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -1356,7 +1395,7 @@ exports[`open source loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c25 {
+.c26 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -1368,18 +1407,21 @@ exports[`open source loaded 1`] = `
   border-bottom-left-radius: 8px;
 }
 
-.c23 {
+.c24 {
   line-height: 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100em;
-  height: 20px;
-  white-space: nowrap;
   position: relative;
   top: 1px;
 }
 
 .c22 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+}
+
+.c23 {
   box-sizing: border-box;
   border-radius: 10px;
   display: inline-flex;
@@ -1397,28 +1439,28 @@ exports[`open source loaded 1`] = `
   cursor: pointer;
 }
 
-.c28 {
+.c29 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c28 .c17 {
+.c29 .c17 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c28:hover .c17,
-.c28:focus .c17 {
+.c29:hover .c17,
+.c29:focus .c17 {
   opacity: 1;
 }
 
-.c28:disabled {
+.c29:disabled {
   cursor: default;
 }
 
-.c28:disabled .c17 {
+.c29:disabled .c17 {
   opacity: 0.1;
 }
 
@@ -1531,6 +1573,30 @@ exports[`open source loaded 1`] = `
   padding-right: 16px;
   padding-left: 16px;
   width: 120px;
+}
+
+@media (max-width:1300px) {
+  .c24 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c24 {
+    max-width: 30em;
+  }
+}
+
+@media (max-width:1300px) {
+  .c22 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c22 {
+    max-width: 30em;
+  }
 }
 
 <div
@@ -1701,24 +1767,28 @@ exports[`open source loaded 1`] = `
         <td>
           <div
             class="c22"
-            kind="secondary"
           >
             <div
               class="c23"
-              title="cluster: root"
+              kind="secondary"
             >
-              cluster: root
+              <div
+                class="c24"
+                title="cluster: root"
+              >
+                cluster: root
+              </div>
             </div>
-          </div>
-          <div
-            class="c22"
-            kind="secondary"
-          >
             <div
               class="c23"
-              title="env: aws"
+              kind="secondary"
             >
-              env: aws
+              <div
+                class="c24"
+                title="env: aws"
+              >
+                env: aws
+              </div>
             </div>
           </div>
         </td>
@@ -1726,7 +1796,7 @@ exports[`open source loaded 1`] = `
           align="right"
         >
           <button
-            class="c24"
+            class="c25"
             kind="border"
           >
             Connect
@@ -1746,24 +1816,28 @@ exports[`open source loaded 1`] = `
         <td>
           <div
             class="c22"
-            kind="secondary"
           >
             <div
               class="c23"
-              title="cluster: root"
+              kind="secondary"
             >
-              cluster: root
+              <div
+                class="c24"
+                title="cluster: root"
+              >
+                cluster: root
+              </div>
             </div>
-          </div>
-          <div
-            class="c22"
-            kind="secondary"
-          >
             <div
               class="c23"
-              title="env: gcp"
+              kind="secondary"
             >
-              env: gcp
+              <div
+                class="c24"
+                title="env: gcp"
+              >
+                env: gcp
+              </div>
             </div>
           </div>
         </td>
@@ -1771,7 +1845,7 @@ exports[`open source loaded 1`] = `
           align="right"
         >
           <button
-            class="c24"
+            class="c25"
             kind="border"
           >
             Connect
@@ -1791,24 +1865,28 @@ exports[`open source loaded 1`] = `
         <td>
           <div
             class="c22"
-            kind="secondary"
           >
             <div
               class="c23"
-              title="cluster: root"
+              kind="secondary"
             >
-              cluster: root
+              <div
+                class="c24"
+                title="cluster: root"
+              >
+                cluster: root
+              </div>
             </div>
-          </div>
-          <div
-            class="c22"
-            kind="secondary"
-          >
             <div
               class="c23"
-              title="env: aws"
+              kind="secondary"
             >
-              env: aws
+              <div
+                class="c24"
+                title="env: aws"
+              >
+                env: aws
+              </div>
             </div>
           </div>
         </td>
@@ -1816,7 +1894,7 @@ exports[`open source loaded 1`] = `
           align="right"
         >
           <button
-            class="c24"
+            class="c25"
             kind="border"
           >
             Connect
@@ -1826,36 +1904,36 @@ exports[`open source loaded 1`] = `
     </tbody>
   </table>
   <nav
-    class="c25"
+    class="c26"
   >
     <div
-      class="c26"
+      class="c27"
       width="100%"
     >
       <div
-        class="c27"
+        class="c28"
       />
       <div
         class="c19"
       >
         <button
-          class="c28"
+          class="c29"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c17 c29 icon icon-arrow-left-circle "
+            class="c17 c30 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c28"
+          class="c29"
           disabled=""
           title="Next page"
         >
           <span
-            class="c17 c29 icon icon-arrow-right-circle "
+            class="c17 c30 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { space, borderRadius } from 'design/system';
 import { darken } from 'design/theme/utils/colorManipulator';
@@ -116,13 +116,40 @@ export const StyledEmptyIndicator = styled.div(
 `
 );
 
+const labelWidths = css`
+  @media (max-width: 1300px) {
+    max-width: 40em;
+  }
+
+  @media (max-width: 1100px) {
+    max-width: 30em;
+  }
+`;
+
 export const LabelContent = styled.div`
   line-height: 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100em;
-  height: 20px;
-  white-space: nowrap;
   position: relative;
   top: 1px;
+
+  ${labelWidths}
+
+  ${({ dots }) => {
+    if (dots) {
+      return css`
+        &:after {
+          content: '...';
+        }
+      `;
+    }
+  }}
+`;
+
+export const LabelWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+
+  ${labelWidths}
 `;
