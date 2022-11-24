@@ -19,49 +19,110 @@ import { useStore } from 'shared/libs/stores';
 import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import * as types from 'teleterm/services/tshd/types';
 
-export class ModalsService extends ImmutableStore<Dialog> {
-  state: Dialog = {
-    kind: 'none',
+type State = {
+  // At most two modals can be displayed at the same time.
+  // The important dialog is displayed above the regular one. This is to avoid losing the state of
+  // the regular modal if we happen to need to interrupt whatever the user is doing and display an
+  // important modal.
+  important: Dialog;
+  regular: Dialog;
+};
+
+export class ModalsService extends ImmutableStore<State> {
+  state: State = {
+    important: {
+      kind: 'none',
+    },
+    regular: {
+      kind: 'none',
+    },
   };
 
-  /*
-   * openDialog opens the given dialog. It returns a function which can be used to close the dialog
-   * and automatically call the dialog's onCancel callback (if present).
+  /**
+   * openRegularDialog opens the given dialog as a regular dialog. A regular dialog can get covered
+   * by an important dialog. The regular dialog won't get unmounted if an important dialog is shown
+   * over the regular one.
+   *
+   * Calling openRegularDialog while another regular dialog is displayed will simply overwrite the
+   * old dialog with the new one.
+   *
+   * The returned function can be used to close the dialog and automatically call the dialog's
+   * onCancel callback (if present).
    */
-  openDialog(dialog: Dialog): () => void {
-    this.setState(() => dialog);
+  openRegularDialog(dialog: Dialog): () => void {
+    this.setState(draftState => {
+      draftState.regular = dialog;
+    });
 
     return () => {
-      this.closeDialog();
+      this.closeRegularDialog();
       dialog['onCancel']?.();
     };
   }
 
+  /**
+   * openImportantDialog opens the given dialog as an important dialog. An important dialog will be
+   * displayed above a regular dialog but it will not affect the regular dialog in any other way.
+   *
+   * openImportantDialog should be reserved for situations where the interaction with the app
+   * happens outside of its UI and requires us to interrupt the user and show them a modal.
+   * One example of such scenario is showing the modal to relogin after the user attempts to make a
+   * database connection through a gateway with expired user and db certs.
+   *
+   * Calling openImportantDialog while another important dialog is displayed will simply overwrite
+   * the old dialog with the new one.
+   *
+   * The returned function can be used to close the dialog and automatically call the dialog's
+   * onCancel callback (if present).
+   */
+  openImportantDialog(dialog: Dialog): () => void {
+    this.setState(draftState => {
+      draftState.important = dialog;
+    });
+
+    return () => {
+      this.closeImportantDialog();
+      dialog['onCancel']?.();
+    };
+  }
+
+  // TODO(ravicious): Remove this method in favor of calling openRegularDialog directly.
   openClusterConnectDialog(options: {
     clusterUri?: string;
     onSuccess?(clusterUri: string): void;
     onCancel?(): void;
   }) {
-    return this.openDialog({
+    return this.openRegularDialog({
       kind: 'cluster-connect',
       ...options,
     });
   }
 
+  // TODO(ravicious): Remove this method in favor of calling openRegularDialog directly.
   openDocumentsReopenDialog(options: {
     onConfirm?(): void;
     onCancel?(): void;
   }) {
-    return this.openDialog({
+    return this.openRegularDialog({
       kind: 'documents-reopen',
       ...options,
     });
   }
 
-  closeDialog() {
-    this.setState(() => ({
-      kind: 'none',
-    }));
+  closeRegularDialog() {
+    this.setState(draftState => {
+      draftState.regular = {
+        kind: 'none',
+      };
+    });
+  }
+
+  closeImportantDialog() {
+    this.setState(draftState => {
+      draftState.important = {
+        kind: 'none',
+      };
+    });
   }
 
   useState() {
