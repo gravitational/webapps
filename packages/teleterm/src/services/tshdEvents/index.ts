@@ -6,6 +6,9 @@ import * as apiService from 'teleterm/services/tshd/v1/tshd_events_service_grpc_
 import Logger from 'teleterm/logger';
 import { SubscribeToTshdEvent } from 'teleterm/types';
 
+export type ReloginRequest = api.ReloginRequest.AsObject;
+export type SendNotificationRequest = api.SendNotificationRequest.AsObject;
+
 /**
  * Starts tshd events server.
  * @return {Promise} Object containing the address the server is listening on and subscribeToEvent
@@ -108,19 +111,36 @@ function createService(logger: Logger): {
   };
 
   const service: apiService.ITshdEventsServiceServer = {
-    // TODO(ravicious): Remove this once we add an actual RPC to tshd events service.
-    test: (call, callback) => {
+    relogin: (call, callback) => {
       const request = call.request.toObject();
 
-      logger.info('Emitting test', request);
+      logger.info('Emitting relogin', request);
 
       const onCancelled = (callback: () => void) => {
         call.on('cancelled', callback);
       };
 
-      emitter.emit('test', { request, onCancelled }).then(
+      emitter.emit('relogin', { request, onCancelled }).then(
         () => {
-          callback(null, new api.TestResponse());
+          callback(null, new api.ReloginResponse());
+        },
+        error => {
+          callback(error);
+        }
+      );
+    },
+    sendNotification: (call, callback) => {
+      const request = call.request.toObject();
+
+      logger.info('Emitting sendNotification', request);
+
+      const onCancelled = (callback: () => void) => {
+        call.on('cancelled', callback);
+      };
+
+      emitter.emit('sendNotification', { request, onCancelled }).then(
+        () => {
+          callback(null, new api.SendNotificationResponse());
         },
         error => {
           callback(error);

@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MainProcessClient, ElectronGlobals } from 'teleterm/types';
+import {
+  MainProcessClient,
+  ElectronGlobals,
+  SubscribeToTshdEvent,
+} from 'teleterm/types';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { TerminalsService } from 'teleterm/ui/services/terminals';
@@ -25,6 +29,8 @@ import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService/workspacesService';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
+import { ReloginService } from 'teleterm/services/relogin';
+import { TshdNotificationsService } from 'teleterm/services/tshdNotificationsService';
 
 import { CommandLauncher } from './commandLauncher';
 import { IAppContext } from './types';
@@ -44,9 +50,13 @@ export default class AppContext implements IAppContext {
   connectionTracker: ConnectionTrackerService;
   fileTransferService: FileTransferService;
   resourcesService: ResourcesService;
+  subscribeToTshdEvent: SubscribeToTshdEvent;
+  reloginService: ReloginService;
+  tshdNotificationsService: TshdNotificationsService;
 
   constructor(config: ElectronGlobals) {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
+    this.subscribeToTshdEvent = config.subscribeToTshdEvent;
     this.mainProcessClient = mainProcessClient;
     this.fileTransferService = new FileTransferService(tshClient);
     this.resourcesService = new ResourcesService(tshClient);
@@ -86,10 +96,32 @@ export default class AppContext implements IAppContext {
       this.workspacesService,
       this.clustersService
     );
+
+    this.reloginService = new ReloginService(
+      mainProcessClient,
+      this.modalsService,
+      this.clustersService
+    );
+    this.tshdNotificationsService = new TshdNotificationsService(
+      this.notificationsService,
+      this.clustersService
+    );
   }
 
   async init(): Promise<void> {
+    this.setUpTshdEventSubscriptions();
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
+  }
+
+  private setUpTshdEventSubscriptions() {
+    this.subscribeToTshdEvent('relogin', ({ request, onCancelled }) => {
+      // The handler for the relogin event should return only after the relogin procedure finishes.
+      return this.reloginService.relogin(request, onCancelled);
+    });
+
+    this.subscribeToTshdEvent('sendNotification', ({ request }) => {
+      this.tshdNotificationsService.sendNotification(request);
+    });
   }
 }
