@@ -152,8 +152,8 @@ export class SharedDirectoryManager {
       throw new Error('cannot read the bytes of a directory');
     }
 
-    const file = await fileHandle.createWritable({keepExistingData: true});
-    file.write({ type: "write", position: Number(offset), data })
+    const file = await fileHandle.createWritable({ keepExistingData: true });
+    file.write({ type: 'write', position: Number(offset), data });
     file.close(); // Needed to actually write data to disk.
 
     return data.length;
