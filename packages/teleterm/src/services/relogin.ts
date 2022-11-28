@@ -34,7 +34,7 @@ export class ReloginService {
     return new Promise((resolve, reject) => {
       // GatewayCertReissuer in tshd makes sure that we only ever have one concurrent request to the
       // relogin event. So at the moment, ReloginService won't ever call openImportantDialog twice.
-      const closeModal = this.modalsService.openImportantDialog({
+      const { closeDialog } = this.modalsService.openImportantDialog({
         kind: 'cluster-connect',
         clusterUri: request.rootClusterUri,
         reason,
@@ -43,7 +43,7 @@ export class ReloginService {
           reject(new Error('Login process was canceled by the user')),
       });
 
-      onRequestCancelled(closeModal);
+      onRequestCancelled(closeDialog);
     });
   }
 }

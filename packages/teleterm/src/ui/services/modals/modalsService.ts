@@ -46,17 +46,19 @@ export class ModalsService extends ImmutableStore<State> {
    * Calling openRegularDialog while another regular dialog is displayed will simply overwrite the
    * old dialog with the new one.
    *
-   * The returned function can be used to close the dialog and automatically call the dialog's
-   * onCancel callback (if present).
+   * The returned closeDialog function can be used to close the dialog and automatically call the
+   * dialog's onCancel callback (if present).
    */
-  openRegularDialog(dialog: Dialog): () => void {
+  openRegularDialog(dialog: Dialog): { closeDialog: () => void } {
     this.setState(draftState => {
       draftState.regular = dialog;
     });
 
-    return () => {
-      this.closeRegularDialog();
-      dialog['onCancel']?.();
+    return {
+      closeDialog: () => {
+        this.closeRegularDialog();
+        dialog['onCancel']?.();
+      },
     };
   }
 
@@ -72,17 +74,19 @@ export class ModalsService extends ImmutableStore<State> {
    * Calling openImportantDialog while another important dialog is displayed will simply overwrite
    * the old dialog with the new one.
    *
-   * The returned function can be used to close the dialog and automatically call the dialog's
-   * onCancel callback (if present).
+   * The returned closeDialog function can be used to close the dialog and automatically call the
+   * dialog's onCancel callback (if present).
    */
-  openImportantDialog(dialog: Dialog): () => void {
+  openImportantDialog(dialog: Dialog): { closeDialog: () => void } {
     this.setState(draftState => {
       draftState.important = dialog;
     });
 
-    return () => {
-      this.closeImportantDialog();
-      dialog['onCancel']?.();
+    return {
+      closeDialog: () => {
+        this.closeImportantDialog();
+        dialog['onCancel']?.();
+      },
     };
   }
 

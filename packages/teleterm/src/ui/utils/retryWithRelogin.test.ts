@@ -48,7 +48,7 @@ it('opens the login modal window and calls actionToRetry again on successful rel
       onSuccess('');
 
       // Dialog cancel function.
-      return () => {};
+      return { closeDialog: () => {} };
     });
 
   jest
@@ -118,7 +118,7 @@ it('calls actionToRetry again if relogin attempt was canceled', async () => {
       onCancel();
 
       // Dialog cancel function.
-      return () => {};
+      return { closeDialog: () => {} };
     });
 
   jest
