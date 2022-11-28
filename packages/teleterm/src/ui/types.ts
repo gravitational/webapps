@@ -28,7 +28,7 @@ import { ConnectionTrackerService } from 'teleterm/ui/services/connectionTracker
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { ResourcesService } from 'teleterm/ui/services/resources';
 import { ReloginService } from 'teleterm/services/relogin';
-import { TshdNotificationsService } from 'teleterm/services/tshdNotificationsService';
+import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
 
 export interface IAppContext {
   clustersService: ClustersService;

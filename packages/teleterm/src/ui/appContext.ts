@@ -30,7 +30,7 @@ import { WorkspacesService } from 'teleterm/ui/services/workspacesService/worksp
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { ReloginService } from 'teleterm/services/relogin';
-import { TshdNotificationsService } from 'teleterm/services/tshdNotificationsService';
+import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
 
 import { CommandLauncher } from './commandLauncher';
 import { IAppContext } from './types';
