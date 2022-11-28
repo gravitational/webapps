@@ -16,8 +16,9 @@ limitations under the License.
 
 import { useStore } from 'shared/libs/stores';
 
-import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import * as types from 'teleterm/services/tshd/types';
+
+import { ImmutableStore } from '../immutableStore';
 
 type State = {
   // At most two modals can be displayed at the same time.
