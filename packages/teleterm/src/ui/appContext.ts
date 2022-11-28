@@ -50,6 +50,19 @@ export default class AppContext implements IAppContext {
   connectionTracker: ConnectionTrackerService;
   fileTransferService: FileTransferService;
   resourcesService: ResourcesService;
+  /**
+   * subscribeToTshdEvent lets you add a listener that's going to be called every time a client
+   * makes a particular RPC to the tshd events service. The listener receives the request converted
+   * to a simple JS object since classes cannot be passed through the context bridge.
+   *
+   * @param {string} eventName - Name of the event.
+   * @param {function} listener - A function that gets called when a client calls the specific
+   * event. It accepts an object with two properties:
+   *
+   * - request is the request payload converted to a simple JS object.
+   * - onCancelled is a function which lets you register a callback which will be called when the
+   * request gets canceled by the client.
+   */
   subscribeToTshdEvent: SubscribeToTshdEvent;
   reloginService: ReloginService;
   tshdNotificationsService: TshdNotificationsService;

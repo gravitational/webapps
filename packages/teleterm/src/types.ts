@@ -23,6 +23,7 @@ export {
  *
  *     {
  *       nameOfTheRpc: (call, callback) => {
+ *         call.onCancelled(() => { … })
  *         const request = call.request.toObject()
  *         // Do something with the request fields…
  *       }
@@ -54,32 +55,5 @@ export type ElectronGlobals = {
   readonly mainProcessClient: MainProcessClient;
   readonly tshClient: TshClient;
   readonly ptyServiceClient: PtyServiceClient;
-  /**
-   * subscribeToTshdEvent lets you add a listener that's going to be called every time a client
-   * makes a particular RPC to the tshd events service. The listener receives the request converted
-   * to a simple JS object since classes cannot be passed through the context bridge.
-   * @param {string} eventName - Name of the event.
-   * @param {subscribeToTshdEventListener} listener - A function that gets called when a client
-   * calls the specific event.
-   */
   readonly subscribeToTshdEvent: SubscribeToTshdEvent;
 };
-
-/**
- * @callback subscribeToTshdEventListener
- * @param {Object} eventData
- * @param {Object} eventData.request - The request payload converted to a simple JS object.
- * @param {subscribeToTshdEventListenerOnCancelled} eventData.onCancelled - A function which lets
- * you register a callback to be called when the call gets cancelled by the client.
- */
-
-/**
- * @callback subscribeToTshdEventListenerOnCancelled
- * @param {subscribeToTshdEventListenerOnCancelledCallback} callback - A function to be called when
- * a call is cancelled by the client.
- */
-
-/**
- * A function to be called when a call is cancelled by the client.
- * @callback subscribeToTshdEventListenerOnCancelledCallback
- */
