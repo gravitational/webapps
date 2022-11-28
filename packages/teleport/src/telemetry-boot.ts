@@ -30,7 +30,7 @@ export function instantiateTelemetry() {
 
   const resource = Resource.default().merge(
     new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: 'web-ui',
+      [SemanticResourceAttributes.SERVICE_NAME]: 'teleport-web-ui',
       [SemanticResourceAttributes.SERVICE_VERSION]: '0.1.0',
     })
   );

@@ -44,29 +44,34 @@ export default function useSshSession(doc: DocumentSsh) {
   React.useEffect(() => {
     // initializes tty instances
     function initTty(session) {
-      tracer.startActiveSpan('initTTY', undefined, context.active(), span => {
-        const tty = ctx.createTty(session);
+      tracer.startActiveSpan(
+        'initTTY',
+        undefined, // SpanOptions
+        context.active(),
+        span => {
+          const tty = ctx.createTty(session);
 
-        // subscribe to tty events to handle connect/disconnects events
-        tty.on(TermEventEnum.CLOSE, () => ctx.closeTab(doc));
+          // subscribe to tty events to handle connect/disconnects events
+          tty.on(TermEventEnum.CLOSE, () => ctx.closeTab(doc));
 
-        tty.on(TermEventEnum.CONN_CLOSE, () =>
-          ctx.updateSshDocument(doc.id, { status: 'disconnected' })
-        );
+          tty.on(TermEventEnum.CONN_CLOSE, () =>
+            ctx.updateSshDocument(doc.id, { status: 'disconnected' })
+          );
 
-        tty.on(TermEventEnum.SESSION, payload => {
-          const data = JSON.parse(payload);
-          data.session.kind = 'ssh';
-          data.session.resourceName = data.session.server_hostname;
-          handleTtyConnect(ctx, data.session, doc.id);
-        });
+          tty.on(TermEventEnum.SESSION, payload => {
+            const data = JSON.parse(payload);
+            data.session.kind = 'ssh';
+            data.session.resourceName = data.session.server_hostname;
+            handleTtyConnect(ctx, data.session, doc.id);
+          });
 
-        // assign tty reference so it can be passed down to xterm
-        ttyRef.current = tty;
-        setSession(session);
-        setStatus('initialized');
-        span.end();
-      });
+          // assign tty reference so it can be passed down to xterm
+          ttyRef.current = tty;
+          setSession(session);
+          setStatus('initialized');
+          span.end();
+        }
+      );
     }
 
     // cleanup by unsubscribing from tty

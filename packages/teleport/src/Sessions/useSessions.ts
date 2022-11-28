@@ -32,7 +32,7 @@ export default function useSessions(ctx: Ctx, clusterId: string) {
   function onRefresh() {
     return tracer.startActiveSpan(
       'onRefresh',
-      undefined,
+      undefined, // SpanOptions
       context.active(),
       span => {
         return ctx.sshService.fetchSessions(clusterId).then(resp => {
