@@ -128,8 +128,6 @@ const labelWidths = css`
 
 export const LabelContent = styled.div`
   line-height: 20px;
-  position: relative;
-  top: 1px;
 
   ${labelWidths}
 
@@ -150,6 +148,8 @@ export const LabelWrapper = styled.div`
   flex-wrap: wrap;
   max-width: 100%;
   align-items: center;
+  position: relative;
+  top: 1px;
 
   ${labelWidths}
 `;

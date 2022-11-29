@@ -111,7 +111,7 @@ const renderLabelCell = (labels: string[] = []) => {
 
   return (
     <Cell>
-      <div css={{ lineHeight: '20px' }}>{$labels}</div>
+      <LabelWrapper>{$labels}</LabelWrapper>
     </Cell>
   );
 };

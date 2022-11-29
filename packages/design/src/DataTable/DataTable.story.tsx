@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import Table from './Table';
-import { LabelCell, DateCell } from './Cells';
+import { LabelCell, DateCell, ClickableLabelCell } from './Cells';
 
 export default {
   title: 'Design/DataTable',
 };
 
-export const DataTable = () => {
+export const VariousColumns = () => {
   return (
     <Table<DummyDataType>
       columns={[
@@ -42,7 +42,7 @@ export const DataTable = () => {
   );
 };
 
-export const DataTablePaged = () => {
+export const ClientSidePagination = () => {
   const [allData, setAllData] = useState(data);
 
   return (
@@ -87,7 +87,7 @@ export const DataTablePaged = () => {
   );
 };
 
-export function DataTableISODateStrings() {
+export function ISODateStrings() {
   return (
     <Table<DummyDataISOStringType>
       columns={[
@@ -118,6 +118,33 @@ export function DataTableISODateStrings() {
       emptyText={'No Dummy Data Found'}
       isSearchable
     />
+  );
+}
+
+export function DefaultAndClickableLabels() {
+  return (
+    <Table<DefaultAndClickableLabelsDataType>
+      columns={[
+        { key: 'name', headerText: 'Name', isSortable: true },
+        {
+          key: 'tags',
+          headerText: 'Clickable Labels',
+          render: row => (
+            <ClickableLabelCell
+              labels={row.tags}
+              onClick={label => console.log('Label clicked', label)}
+            />
+          ),
+        },
+        {
+          key: 'tags2',
+          headerText: 'Default Labels',
+          render: row => <LabelCell data={row.tags2} />,
+        },
+      ]}
+      data={defaultAndClickableData}
+      emptyText={'No Dummy Data Found'}
+    ></Table>
   );
 }
 
@@ -293,6 +320,108 @@ const isoDateStringData: DummyDataISOStringType[] = [
   },
 ];
 
+const defaultAndClickableData: DefaultAndClickableLabelsDataType[] = [
+  {
+    name: 'first',
+    tags: [
+      {
+        name: 'tag1',
+        value: 'value1',
+      },
+      {
+        name: 'tag2',
+        value: 'value2',
+      },
+    ],
+    tags2: ['t1', 't2', 'some text'],
+  },
+  {
+    name: 'second row with some text and stuff',
+    tags: [
+      {
+        name: 'tag1',
+        value: `a bit longer value a bit longer value a bit longer value 
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value`,
+      },
+      {
+        name: 'tag2',
+        value: 'value2',
+      },
+    ],
+    tags2: [
+      't1',
+      't2',
+      'some text',
+      `a bit longer value a bit longer value a bit longer value 
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value`,
+    ],
+  },
+  {
+    name: 'third row with some text and stuff',
+    tags: [
+      {
+        name: 'tag1',
+        value: `a bit longer value a bit longer value a bit longer value 
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value`,
+      },
+      {
+        name: 'tag2',
+        value: 'value2',
+      },
+      {
+        name: 'tag1',
+        value: `a bit longer value a bit longer value a bit longer value 
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value
+        a bit longer value a bit longer value`,
+      },
+    ],
+    tags2: [
+      't1',
+      't2',
+      'some text',
+      `a bit longer value a bit longer value a bit longer value 
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value`,
+      `a bit longer value a bit longer value a bit longer value 
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value
+      a bit longer value a bit longer value`,
+    ],
+  },
+];
+
 type DummyDataType = {
   name: string;
   desc: string;
@@ -309,4 +438,10 @@ type DummyDataISOStringType = Omit<
 > & {
   createdDate: string;
   removedDate: string;
+};
+
+type DefaultAndClickableLabelsDataType = {
+  name: string;
+  tags: { name: string; value: string }[];
+  tags2: string[];
 };
