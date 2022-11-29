@@ -35,7 +35,15 @@ interface NotificationProps {
 const defaultAutoRemoveDurationMs = 10_000; // 10s
 
 export function Notification(props: NotificationProps & propTypes) {
-  const {item, onRemove, Icon, getColor, isAutoRemovable, autoRemoveDurationMs, ...styleProps} = props
+  const {
+    item,
+    onRemove,
+    Icon,
+    getColor,
+    isAutoRemovable,
+    autoRemoveDurationMs,
+    ...styleProps
+  } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const timeoutHandler = useRef<number>();
