@@ -130,10 +130,7 @@ export function DefaultAndClickableLabels() {
           key: 'tags',
           headerText: 'Clickable Labels',
           render: row => (
-            <ClickableLabelCell
-              labels={row.tags}
-              onClick={label => console.log('Label clicked', label)}
-            />
+            <ClickableLabelCell labels={row.tags} onClick={() => null} />
           ),
         },
         {

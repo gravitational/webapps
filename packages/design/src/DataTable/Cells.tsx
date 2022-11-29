@@ -2,7 +2,7 @@ import React from 'react';
 
 import { displayDate } from 'shared/services/loc';
 
-import { Label } from 'design';
+import { Label, Flex } from 'design';
 import * as Icons from 'design/Icon';
 
 import {
@@ -11,7 +11,6 @@ import {
   TableColumn,
   LabelDescription,
 } from './types';
-import { LabelContent, LabelWrapper } from './StyledTable';
 
 export const Cell = props => <td children={props.children} {...props} />;
 
@@ -81,37 +80,16 @@ export const DateCell = ({ data }: { data: Date }) => (
   <Cell>{displayDate(data)}</Cell>
 );
 
-const TextEllipsisLabelContent = ({
-  text,
-  maxLength,
-}: {
-  text: string;
-  maxLength: number;
-}) => {
-  let displayText = text;
-  const isLonger = text.length > maxLength;
-
-  if (isLonger) {
-    displayText = text.substring(0, 100);
-  }
-
-  return (
-    <LabelContent title={text} dots={isLonger}>
-      {displayText}
-    </LabelContent>
-  );
-};
-
 const renderLabelCell = (labels: string[] = []) => {
-  const $labels = labels.map(label => (
-    <Label mr="1" key={label} kind="secondary">
-      <TextEllipsisLabelContent text={label} maxLength={100} />
+  const $labels = labels.map((label, index) => (
+    <Label mr="1" key={`${label}${index}`} kind="secondary" title={label}>
+      {label}
     </Label>
   ));
 
   return (
     <Cell>
-      <LabelWrapper>{$labels}</LabelWrapper>
+      <Flex flexWrap="wrap">{$labels}</Flex>
     </Cell>
   );
 };
@@ -123,27 +101,28 @@ export const ClickableLabelCell = ({
   labels: LabelDescription[];
   onClick: (label: LabelDescription) => void;
 }) => {
-  const $labels = labels.map(label => {
+  const $labels = labels.map((label, index) => {
     const labelText = `${label.name}: ${label.value}`;
 
     return (
       <Label
         onClick={() => onClick(label)}
-        key={`${label.name}:${label.value}`}
+        key={`${label.name}${label.value}${index}`}
         mr="1"
         kind="secondary"
         css={`
           cursor: pointer;
         `}
+        title={labelText}
       >
-        <TextEllipsisLabelContent text={labelText} maxLength={100} />
+        {labelText}
       </Label>
     );
   });
 
   return (
     <Cell>
-      <LabelWrapper>{$labels}</LabelWrapper>
+      <Flex flexWrap="wrap">{$labels}</Flex>
     </Cell>
   );
 };
