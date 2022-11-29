@@ -69,7 +69,7 @@ export function SelectResource(props: SelectResourceProps) {
   const { acl } = userContext;
 
   const [showAddApp, setShowAddApp] = useState(false);
-  const [showAddDB, setShowAddDB] = useState(false);
+  // const [showAddDB, setShowAddDB] = useState(false);
 
   const tabs: Tab[] = [
     {
@@ -127,12 +127,12 @@ export function SelectResource(props: SelectResourceProps) {
         tabs={tabs}
         onChange={index => props.onSelect(tabs[index].kind)}
       />
-      {props.selectedResourceKind === ResourceKind.Database && (
+      {/* {props.selectedResourceKind === ResourceKind.Database && (
         <DatabaseResource
           disabled={disabled}
           onProceed={() => setShowAddDB(true)}
         />
-      )}
+      )} */}
       {props.selectedResourceKind === ResourceKind.Application && (
         <ApplicationResource
           disabled={disabled}
@@ -151,8 +151,14 @@ export function SelectResource(props: SelectResourceProps) {
       {props.selectedResourceKind === ResourceKind.Server && (
         <ServerResource disabled={disabled} onProceed={() => props.onNext()} />
       )}
+      {props.selectedResourceKind === ResourceKind.Database && (
+        <DatabaseResource
+          disabled={disabled}
+          onProceed={() => props.onNext()}
+        />
+      )}
       {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
-      {showAddDB && (
+      {/* {showAddDB && (
         <AddDatabase
           isEnterprise={ctx.isEnterprise}
           username={userContext.username}
@@ -160,7 +166,7 @@ export function SelectResource(props: SelectResourceProps) {
           authType={userContext.authType}
           onClose={() => setShowAddDB(false)}
         />
-      )}
+      )} */}
     </Box>
   );
 }

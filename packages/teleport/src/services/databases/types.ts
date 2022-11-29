@@ -24,6 +24,7 @@ export interface Database {
   labels: AgentLabel[];
   names?: string[];
   users?: string[];
+  hostname?: string;
 }
 
 export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';

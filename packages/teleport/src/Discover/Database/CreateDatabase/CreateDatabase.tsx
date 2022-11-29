@@ -115,7 +115,7 @@ export function CreateDatabaseView({
                     'database connection endpoint is required'
                   )}
                   value={dbUri}
-                  placeholder="Enter database connection endpoint"
+                  placeholder="db.example.com:1234"
                   onChange={e => setDbUri(e.target.value)}
                 />
               </Box>
