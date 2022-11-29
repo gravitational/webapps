@@ -1,11 +1,11 @@
 import { tsh, SyncStatus } from 'teleterm/ui/services/clusters/types';
-
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
+import { RootClusterUri } from 'teleterm/ui/uri';
 
 import { ClustersService } from './clustersService';
 
-const clusterUri = '/clusters/test';
+const clusterUri: RootClusterUri = '/clusters/test';
 
 const clusterMock: tsh.Cluster = {
   uri: clusterUri,
@@ -35,7 +35,7 @@ const dbMock: tsh.Database = {
 };
 
 const gatewayMock: tsh.Gateway = {
-  uri: 'gatewayTestUri',
+  uri: '/gateways/gatewayTestUri',
   localAddress: 'localhost',
   localPort: '2000',
   protocol: 'https',
@@ -213,7 +213,7 @@ test('create a gateway', async () => {
   const service = createService({
     createGateway,
   });
-  const targetUri = 'testId';
+  const targetUri = '/clusters/foo/dbs/testId';
   const port = '2000';
   const user = 'alice';
 
@@ -230,7 +230,7 @@ test('remove a gateway', async () => {
   const service = createService({
     removeGateway,
   });
-  const gatewayUri = 'gatewayUri';
+  const gatewayUri = '/gateways/gatewayUri';
 
   await service.removeGateway(gatewayUri);
 
