@@ -12,7 +12,13 @@ import {
 } from 'teleterm/ui/services/statePersistence';
 import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
-import { routing } from 'teleterm/ui/uri';
+import {
+  ClusterOrResourceUri,
+  ClusterUri,
+  DocumentUri,
+  RootClusterUri,
+  routing,
+} from 'teleterm/ui/uri';
 
 import {
   AccessRequestsService,
@@ -22,28 +28,28 @@ import {
 import { Document, DocumentsService } from './documentsService';
 
 export interface WorkspacesState {
-  rootClusterUri?: string;
-  workspaces: Record<string, Workspace>;
+  rootClusterUri?: RootClusterUri;
+  workspaces: Record<RootClusterUri, Workspace>;
 }
 
 export interface Workspace {
-  localClusterUri: string;
+  localClusterUri: ClusterUri;
   documents: Document[];
-  location: string;
+  location: DocumentUri;
   accessRequests: {
     isBarCollapsed: boolean;
     pending: PendingAccessRequest;
   };
   previous?: {
     documents: Document[];
-    location: string;
+    location: DocumentUri;
   };
 }
 
 export class WorkspacesService extends ImmutableStore<WorkspacesState> {
-  private documentsServicesCache = new Map<string, DocumentsService>();
+  private documentsServicesCache = new Map<RootClusterUri, DocumentsService>();
   private accessRequestsServicesCache = new Map<
-    string,
+    RootClusterUri,
     AccessRequestsService
   >();
   state: WorkspacesState = {
@@ -60,30 +66,30 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     super();
   }
 
-  getActiveWorkspace(): Workspace | undefined {
+  getActiveWorkspace() {
     return this.state.workspaces[this.state.rootClusterUri];
   }
 
-  getRootClusterUri(): string | undefined {
+  getRootClusterUri() {
     return this.state.rootClusterUri;
   }
 
-  getWorkspaces(): Record<string, Workspace> {
+  getWorkspaces() {
     return this.state.workspaces;
   }
 
-  getWorkspace(clusterUri: string): Workspace {
+  getWorkspace(clusterUri: RootClusterUri) {
     return this.state.workspaces[clusterUri];
   }
 
-  getActiveWorkspaceDocumentService(): DocumentsService | undefined {
+  getActiveWorkspaceDocumentService() {
     if (!this.state.rootClusterUri) {
       return;
     }
     return this.getWorkspaceDocumentService(this.state.rootClusterUri);
   }
 
-  getActiveWorkspaceAccessRequestsService(): AccessRequestsService | undefined {
+  getActiveWorkspaceAccessRequestsService() {
     if (!this.state.rootClusterUri) {
       return;
     }
@@ -91,8 +97,8 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   }
 
   setWorkspaceLocalClusterUri(
-    clusterUri: string,
-    localClusterUri: string
+    clusterUri: RootClusterUri,
+    localClusterUri: ClusterUri
   ): void {
     this.setState(draftState => {
       draftState.workspaces[clusterUri].localClusterUri = localClusterUri;
@@ -100,7 +106,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   }
 
   getWorkspaceDocumentService(
-    clusterUri: string
+    clusterUri: RootClusterUri
   ): DocumentsService | undefined {
     if (!this.documentsServicesCache.has(clusterUri)) {
       this.documentsServicesCache.set(
@@ -121,7 +127,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   }
 
   getWorkspaceAccessRequestsService(
-    clusterUri: string
+    clusterUri: RootClusterUri
   ): AccessRequestsService | undefined {
     if (!this.accessRequestsServicesCache.has(clusterUri)) {
       this.accessRequestsServicesCache.set(
@@ -145,7 +151,9 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     return documentService && documentService.isActive(documentUri);
   }
 
-  doesResourceBelongToActiveWorkspace(resourceUri: string): boolean {
+  doesResourceBelongToActiveWorkspace(
+    resourceUri: ClusterOrResourceUri
+  ): boolean {
     return (
       this.state.rootClusterUri &&
       routing.belongsToProfile(this.state.rootClusterUri, resourceUri)
@@ -161,7 +169,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     this.persistState();
   }
 
-  setActiveWorkspace(clusterUri: string): Promise<void> {
+  setActiveWorkspace(clusterUri: RootClusterUri): Promise<void> {
     const setWorkspace = () => {
       this.setState(draftState => {
         // adding a new workspace
@@ -229,14 +237,14 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       .catch(() => undefined); // catch ClusterConnectDialog cancellation
   }
 
-  removeWorkspace(clusterUri: string): void {
+  removeWorkspace(clusterUri: RootClusterUri): void {
     this.setState(draftState => {
       delete draftState.workspaces[clusterUri];
     });
   }
 
-  getConnectedWorkspacesClustersUri(): string[] {
-    return Object.keys(this.state.workspaces).filter(
+  getConnectedWorkspacesClustersUri() {
+    return (Object.keys(this.state.workspaces) as RootClusterUri[]).filter(
       clusterUri => this.clustersService.findCluster(clusterUri)?.connected
     );
   }
@@ -276,7 +284,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     }
   }
 
-  private reopenPreviousDocuments(clusterUri: string): void {
+  private reopenPreviousDocuments(clusterUri: RootClusterUri): void {
     this.setState(draftState => {
       const workspace = draftState.workspaces[clusterUri];
       workspace.documents = workspace.previous.documents.map(d => {
@@ -300,7 +308,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     });
   }
 
-  private discardPreviousDocuments(clusterUri: string): void {
+  private discardPreviousDocuments(clusterUri: RootClusterUri): void {
     this.setState(draftState => {
       const workspace = draftState.workspaces[clusterUri];
       workspace.previous = undefined;
@@ -326,7 +334,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     );
   }
 
-  private getWorkspaceDefaultState(localClusterUri: string): Workspace {
+  private getWorkspaceDefaultState(localClusterUri: ClusterUri): Workspace {
     const rootClusterUri = routing.ensureRootClusterUri(localClusterUri);
     const defaultDocument = this.getWorkspaceDocumentService(
       rootClusterUri
