@@ -24,3 +24,7 @@ export { ResourceKind } from './ResourceKind';
 export { Step, StepContainer } from './Step';
 export { TextBox, TextIcon } from './Text';
 export { LabelsCreater } from './LabelsCreater';
+export {
+  ConnectionDiagnosticResult,
+  useConnectionDiagnostic,
+} from './ConnectionDiagnostic';
