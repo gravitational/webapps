@@ -1,4 +1,2 @@
-import { service } from './userEvent';
-
-export { service as userEventService };
+export { userEventService as userEventService } from './userEvent';
 export * from './types';

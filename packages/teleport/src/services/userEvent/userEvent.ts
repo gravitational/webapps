@@ -5,20 +5,20 @@ import { CaptureEvent } from './types';
 
 export type UserEvent = {
   event: CaptureEvent;
-  alert?: string;
+  alertId?: string;
 };
 
 export type PreUserEvent = UserEvent & {
   username: string;
 };
 
-export const service = {
+export const userEventService = {
   captureUserEvent(userEvent: UserEvent) {
     // using api.fetch instead of api.fetchJSON
     // because we are not expecting a JSON response
     void api.fetch(cfg.api.captureUserEventPath, {
       method: 'POST',
-      body: JSON.stringify({ ...userEvent }),
+      body: JSON.stringify(userEvent),
     });
   },
 

@@ -34,14 +34,14 @@ export function OnboardDiscover({
   onClose(): void;
   onOnboard(): void;
 }) {
-  const proceed = () => {
+  const handleOnboard = () => {
     userEventService.captureUserEvent({
       event: CaptureEvent.OnboardAddFirstResourceClickEvent,
     });
     onOnboard();
   };
 
-  const delay = () => {
+  const handleClose = () => {
     userEventService.captureUserEvent({
       event: CaptureEvent.OnboardAddFirstResourceLaterClickEvent,
     });
@@ -72,10 +72,10 @@ export function OnboardDiscover({
         </Text>
       </DialogContent>
       <DialogFooter>
-        <ButtonPrimary width="100%" size="large" onClick={proceed}>
+        <ButtonPrimary width="100%" size="large" onClick={handleOnboard}>
           add my first resource
         </ButtonPrimary>
-        <ButtonText pt={2} width="100%" size="large" onClick={delay}>
+        <ButtonText pt={2} width="100%" size="large" onClick={handleClose}>
           I'll do that later
         </ButtonText>
       </DialogFooter>

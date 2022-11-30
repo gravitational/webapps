@@ -42,7 +42,7 @@ export default function RecoveryCodesDialog({
     });
   };
 
-  const proceed = () => {
+  const handleContinue = () => {
     userEventService.capturePreUserEvent({
       event: CaptureEvent.PreUserOnboardRecoveryCodesContinueClickEvent,
       username: username,
@@ -124,7 +124,7 @@ export default function RecoveryCodesDialog({
               size="large"
               width="100%"
               className="no-print"
-              onClick={proceed}
+              onClick={handleContinue}
             >
               {btnText}
             </ButtonPrimary>
