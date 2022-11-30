@@ -2,8 +2,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 
 import { useAsync, AbortedSignalError } from './useAsync';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 test('run returns a promise which resolves with the attempt data', async () => {
   const returnValue = Symbol();
   const { result, waitForNextUpdate } = renderHook(() =>
@@ -97,7 +95,7 @@ test('run does not update state after being re-run when the callback returns a r
 
 test('run resolves the promise to an error after being re-run when the callback returns a rejected promise', async () => {
   const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync((count: number) => Promise.reject(new Error('oops ' + count)))
+    useAsync((count: number) => Promise.reject(new Error(`oops ${count}`)))
   );
 
   let [, run] = result.current;
@@ -119,7 +117,7 @@ test('run resolves the promise to an error after being re-run when the callback 
 
 test('run does not update state after being re-run when the callback returns a rejected promise', async () => {
   const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync((count: number) => Promise.reject(new Error('oops ' + count)))
+    useAsync((count: number) => Promise.reject(new Error(`oops ${count}`)))
   );
 
   let [, run] = result.current;

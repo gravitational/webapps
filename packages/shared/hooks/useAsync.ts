@@ -96,7 +96,7 @@ export function useAsync<Args extends unknown[], AttemptData>(
           if (!isMounted()) {
             return [null, new AbortedSignalError()] as [AttemptData, Error];
           }
-          if (asyncTask.current != promise) {
+          if (asyncTask.current !== promise) {
             return [null, new AbortedSignalError()] as [AttemptData, Error];
           }
 
@@ -112,7 +112,7 @@ export function useAsync<Args extends unknown[], AttemptData>(
           if (!isMounted()) {
             return [null, new AbortedSignalError()] as [AttemptData, Error];
           }
-          if (asyncTask.current != promise) {
+          if (asyncTask.current !== promise) {
             return [null, new AbortedSignalError()] as [AttemptData, Error];
           }
 
