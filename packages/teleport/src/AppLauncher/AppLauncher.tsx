@@ -45,7 +45,6 @@ export function AppLauncher() {
 
       await fetch('https://' + fqdn + '/x-teleport-auth', {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'X-Cookie-Value': session.cookieValue,
         },
