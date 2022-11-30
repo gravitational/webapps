@@ -123,13 +123,13 @@ export const ClickableLabelCell = ({
   labels: LabelDescription[];
   onClick: (label: LabelDescription) => void;
 }) => {
-  const $labels = labels.map(label => {
+  const $labels = labels.map((label, index) => {
     const labelText = `${label.name}: ${label.value}`;
 
     return (
       <Label
         onClick={() => onClick(label)}
-        key={`${label.name}:${label.value}`}
+        key={`${label.name}${label.value}${index}`}
         mr="1"
         kind="secondary"
         css={`

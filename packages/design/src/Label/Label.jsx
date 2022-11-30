@@ -60,15 +60,12 @@ const kind = ({ kind, theme }) => {
 const Label = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
+  display: inline-block;
   font-size: 10px;
   font-weight: 500;
   padding: 0 8px;
   margin: 1px 0;
+  vertical-align: middle;
 
   ${kind}
   ${space}

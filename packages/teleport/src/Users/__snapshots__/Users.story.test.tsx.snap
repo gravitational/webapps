@@ -47,7 +47,7 @@ exports[`success state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
+.c20 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -76,22 +76,22 @@ exports[`success state 1`] = `
   height: 24px;
 }
 
-.c18:active {
+.c20:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c20:hover,
+.c20:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c18:active {
+.c20:active {
   opacity: 0.24;
 }
 
-.c18:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -109,7 +109,7 @@ exports[`success state 1`] = `
   color: #FFFFFF;
 }
 
-.c19 {
+.c21 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -118,21 +118,17 @@ exports[`success state 1`] = `
   font-size: 14px;
 }
 
-.c17 {
+.c18 {
   box-sizing: border-box;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
+  display: inline-block;
   font-size: 10px;
   font-weight: 500;
-  padding: 0 6px;
+  padding: 0 8px;
   margin: 1px 0;
+  vertical-align: middle;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
 }
 
@@ -295,6 +291,20 @@ exports[`success state 1`] = `
   border-top-right-radius: 8px;
 }
 
+.c19 {
+  line-height: 20px;
+}
+
+.c17 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+  position: relative;
+  top: 1px;
+}
+
 .c12 {
   background: none;
   border: none;
@@ -367,6 +377,30 @@ exports[`success state 1`] = `
 .c6::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
+}
+
+@media (max-width:1300px) {
+  .c19 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c19 {
+    max-width: 30em;
+  }
+}
+
+@media (max-width:1300px) {
+  .c17 {
+    max-width: 40em;
+  }
+}
+
+@media (max-width:1100px) {
+  .c17 {
+    max-width: 30em;
+  }
 }
 
 <div>
@@ -506,9 +540,18 @@ exports[`success state 1`] = `
           <td>
             <div
               class="c17"
-              kind="secondary"
             >
-              tugu
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="tugu"
+                >
+                  tugu
+                </div>
+              </div>
             </div>
           </td>
           <td
@@ -520,13 +563,13 @@ exports[`success state 1`] = `
             align="right"
           >
             <button
-              class="c18"
+              class="c20"
               height="24px"
               kind="border"
             >
               OPTIONS
               <span
-                class="c13 c19 icon icon-caret-down "
+                class="c13 c21 icon icon-caret-down "
                 color="text.secondary"
                 font-size="2"
               />
@@ -540,9 +583,18 @@ exports[`success state 1`] = `
           <td>
             <div
               class="c17"
-              kind="secondary"
             >
-              admin
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="admin"
+                >
+                  admin
+                </div>
+              </div>
             </div>
           </td>
           <td
@@ -554,13 +606,13 @@ exports[`success state 1`] = `
             align="right"
           >
             <button
-              class="c18"
+              class="c20"
               height="24px"
               kind="border"
             >
               OPTIONS
               <span
-                class="c13 c19 icon icon-caret-down "
+                class="c13 c21 icon icon-caret-down "
                 color="text.secondary"
                 font-size="2"
               />
@@ -574,15 +626,29 @@ exports[`success state 1`] = `
           <td>
             <div
               class="c17"
-              kind="secondary"
             >
-              ruhh
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              admin
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="ruhh"
+                >
+                  ruhh
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="admin"
+                >
+                  admin
+                </div>
+              </div>
             </div>
           </td>
           <td
@@ -594,13 +660,13 @@ exports[`success state 1`] = `
             align="right"
           >
             <button
-              class="c18"
+              class="c20"
               height="24px"
               kind="border"
             >
               OPTIONS
               <span
-                class="c13 c19 icon icon-caret-down "
+                class="c13 c21 icon icon-caret-down "
                 color="text.secondary"
                 font-size="2"
               />
@@ -614,33 +680,62 @@ exports[`success state 1`] = `
           <td>
             <div
               class="c17"
-              kind="secondary"
             >
-              ubip
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              duzjadj
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              dupiwuzocafe
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              abc
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              anavebikilonim
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="ubip"
+                >
+                  ubip
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="duzjadj"
+                >
+                  duzjadj
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="dupiwuzocafe"
+                >
+                  dupiwuzocafe
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="abc"
+                >
+                  abc
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="anavebikilonim"
+                >
+                  anavebikilonim
+                </div>
+              </div>
             </div>
           </td>
           <td
@@ -659,21 +754,40 @@ exports[`success state 1`] = `
           <td>
             <div
               class="c17"
-              kind="secondary"
             >
-              vuit
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              vedkonm
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              valvapel
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="vuit"
+                >
+                  vuit
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="vedkonm"
+                >
+                  vedkonm
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="valvapel"
+                >
+                  valvapel
+                </div>
+              </div>
             </div>
           </td>
           <td
@@ -692,21 +806,40 @@ exports[`success state 1`] = `
           <td>
             <div
               class="c17"
-              kind="secondary"
             >
-              kaco
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              ziuzzow
-            </div>
-            <div
-              class="c17"
-              kind="secondary"
-            >
-              admin
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="kaco"
+                >
+                  kaco
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="ziuzzow"
+                >
+                  ziuzzow
+                </div>
+              </div>
+              <div
+                class="c18"
+                kind="secondary"
+              >
+                <div
+                  class="c19"
+                  title="admin"
+                >
+                  admin
+                </div>
+              </div>
             </div>
           </td>
           <td

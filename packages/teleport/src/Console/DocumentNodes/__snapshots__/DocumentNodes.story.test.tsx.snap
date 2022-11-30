@@ -270,8 +270,6 @@ exports[`render DocumentNodes 1`] = `
 
 .c31 {
   line-height: 20px;
-  position: relative;
-  top: 1px;
 }
 
 .c29 {
@@ -280,20 +278,19 @@ exports[`render DocumentNodes 1`] = `
   flex-wrap: wrap;
   max-width: 100%;
   align-items: center;
+  position: relative;
+  top: 1px;
 }
 
 .c30 {
   box-sizing: border-box;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
+  display: inline-block;
   font-size: 10px;
   font-weight: 500;
-  padding: 0 6px;
+  padding: 0 8px;
   margin: 1px 0;
+  vertical-align: middle;
   background-color: #01172C;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;

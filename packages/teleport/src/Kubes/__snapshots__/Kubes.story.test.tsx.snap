@@ -534,8 +534,6 @@ exports[`failed 1`] = `
 
 .c24 {
   line-height: 20px;
-  position: relative;
-  top: 1px;
 }
 
 .c22 {
@@ -544,20 +542,19 @@ exports[`failed 1`] = `
   flex-wrap: wrap;
   max-width: 100%;
   align-items: center;
+  position: relative;
+  top: 1px;
 }
 
 .c23 {
   box-sizing: border-box;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
+  display: inline-block;
   font-size: 10px;
   font-weight: 500;
-  padding: 0 6px;
+  padding: 0 8px;
   margin: 1px 0;
+  vertical-align: middle;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
@@ -1321,8 +1318,6 @@ exports[`loaded 1`] = `
 
 .c24 {
   line-height: 20px;
-  position: relative;
-  top: 1px;
 }
 
 .c22 {
@@ -1331,20 +1326,19 @@ exports[`loaded 1`] = `
   flex-wrap: wrap;
   max-width: 100%;
   align-items: center;
+  position: relative;
+  top: 1px;
 }
 
 .c23 {
   box-sizing: border-box;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
+  display: inline-block;
   font-size: 10px;
   font-weight: 500;
-  padding: 0 6px;
+  padding: 0 8px;
   margin: 1px 0;
+  vertical-align: middle;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
   margin-right: 4px;
