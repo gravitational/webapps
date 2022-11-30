@@ -39,21 +39,21 @@ function setItem(key: string, data: string) {
   window.localStorage.setItem(key, data);
 }
 
-type DismissedAlert = {
+type DismissedAlerts = {
   [alertName: string]: number;
 };
 
 export function useAlerts(initialAlerts: ClusterAlert[] = []) {
   const [alerts, setAlerts] = useState<ClusterAlert[]>(initialAlerts);
-  const [dismissedAlerts, setDismissedAlerts] = useState<DismissedAlert>({});
+  const [dismissedAlerts, setDismissedAlerts] = useState<DismissedAlerts>({});
   const { clusterId } = useStickyClusterId();
 
   useEffect(() => {
     const disabledAlerts = getItem(DISABLED_ALERTS);
     if (disabledAlerts) {
       // Loop through the existing ones and remove those that have passed 24h.
-      const data = JSON.parse(disabledAlerts);
-      Object.entries(data).forEach(([name, expiry]: [string, string]) => {
+      const data: DismissedAlerts = JSON.parse(disabledAlerts);
+      Object.entries(data).forEach(([name, expiry]) => {
         if (new Date().getTime() > +expiry) {
           delete data[name];
         }
@@ -78,7 +78,7 @@ export function useAlerts(initialAlerts: ClusterAlert[] = []) {
 
   function dismissAlert(name: string) {
     const disabledAlerts = getItem(DISABLED_ALERTS);
-    let data: DismissedAlert = {};
+    let data: DismissedAlerts = {};
     if (disabledAlerts) {
       data = JSON.parse(disabledAlerts);
     }
