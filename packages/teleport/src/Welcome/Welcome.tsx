@@ -21,10 +21,7 @@ import history from 'teleport/services/history';
 import LogoHero from 'teleport/components/LogoHero';
 import cfg from 'teleport/config';
 
-import { userEventService } from 'teleport/services/userEvent';
-
-import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
-
+import { CaptureEvent, userEventService } from 'teleport/services/userEvent';
 import useToken from 'teleport/Welcome/useToken';
 
 import { NewCredentials } from './NewCredentials';
@@ -36,8 +33,8 @@ export default function Welcome() {
 
   const handleOnInviteContinue = () => {
     userEventService.capturePreUserEvent({
-      event: userEvents.preUser.onboard.getStartedClickEvent,
-      username:resetToken && resetToken.user || "", //todo mberg
+      event: CaptureEvent.PreUserOnboardGetStartedClickEvent,
+      username:resetToken && resetToken.user || "",
     });
     history.push(cfg.getUserInviteTokenContinueRoute(tokenId));
   };

@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import { Box, Flex, Link, Text } from 'design';
 import { Cross, Info, Warning } from 'design/Icon';
 
-import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+import { CaptureEvent } from 'teleport/services/userEvent/types';
 import { userEventService } from 'teleport/services/userEvent';
 
 export type Severity = 'info' | 'warning' | 'danger';
@@ -67,7 +67,7 @@ export function Banner({
             style={{ fontWeight: 'bold' }}
             onClick={() =>
               userEventService.captureUserEvent({
-                event: userEvents.bannerClickEvent,
+                event: CaptureEvent.BannerClickEvent,
                 alert: id,
               })
             }

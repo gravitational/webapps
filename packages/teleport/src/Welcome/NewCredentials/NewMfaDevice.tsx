@@ -16,23 +16,18 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Text, ButtonPrimary, Flex, Box, Link, Image } from 'design';
+import { Box, ButtonPrimary, Flex, Image, Link, Text } from 'design';
 import { Danger } from 'design/Alert';
 import { ArrowBack } from 'design/Icon';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
-import {
-  requiredField,
-  requiredToken,
-} from 'shared/components/Validation/rules';
+import { requiredField, requiredToken } from 'shared/components/Validation/rules';
 import createMfaOptions from 'shared/utils/createMfaOptions';
 
 import { useRefAutoFocus } from 'shared/hooks';
 import { Auth2faType } from 'shared/services';
 
-import { userEventService } from 'teleport/services/userEvent';
-
-import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+import { CaptureEvent, userEventService } from 'teleport/services/userEvent';
 
 import { Props as CredentialsProps, SliderProps } from './NewCredentials';
 import secKeyGraphic from './sec-key-with-bg.png';
@@ -71,8 +66,8 @@ export function NewMfaDevice(props: Props) {
     e.preventDefault(); // prevent form submit default
 
     userEventService.capturePreUserEvent({
-      event: userEvents.preUser.onboard.registerChallengeSubmitEvent,
-      username: resetToken.user, // todo mberg
+      event: CaptureEvent.PreUserOnboardRegisterChallengeSubmitEvent,
+      username: resetToken.user,
     });
 
     if (!validator.validate()) {

@@ -22,7 +22,7 @@ import Dialog, {
   DialogHeader,
 } from 'design/Dialog';
 
-import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+import { CaptureEvent } from 'teleport/services/userEvent/types';
 import { userEventService } from 'teleport/services/userEvent';
 
 import resourcesPng from './resources.png';
@@ -36,14 +36,14 @@ export function OnboardDiscover({
 }) {
   const proceed = () => {
     userEventService.captureUserEvent({
-      event: userEvents.onboard.addFirstResourceClickEvent,
+      event: CaptureEvent.OnboardAddFirstResourceClickEvent,
     });
     onOnboard();
   };
 
   const delay = () => {
     userEventService.captureUserEvent({
-      event: userEvents.onboard.addFirstResourceLaterClickEvent,
+      event: CaptureEvent.OnboardAddFirstResourceLaterClickEvent,
     });
     onClose();
   };

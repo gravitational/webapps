@@ -16,13 +16,12 @@
 
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { Flex, Card, Text, Box, ButtonPrimary } from 'design';
+import { Box, ButtonPrimary, Card, Flex, Text } from 'design';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 
 import { RecoveryCodes } from 'teleport/services/auth';
-import { userEventService } from 'teleport/services/userEvent';
-import userEvents from 'teleport/services/userEvent/UserEvents/userEvents';
+import { CaptureEvent, userEventService } from 'teleport/services/userEvent';
 
 export default function RecoveryCodesDialog({
   recoveryCodes,
@@ -45,8 +44,8 @@ export default function RecoveryCodesDialog({
 
   const proceed = () => {
     userEventService.capturePreUserEvent({
-      event: userEvents.preUser.onboard.recoveryCodesContinueClickEvent,
-      username: username, // todo mberg
+      event: CaptureEvent.PreUserOnboardRecoveryCodesContinueClickEvent,
+      username: username,
     });
     onContinue();
   };

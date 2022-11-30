@@ -1,8 +1,10 @@
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 
+import { CaptureEvent } from './types';
+
 export type UserEvent = {
-  event: string;
+  event: CaptureEvent;
   alert?: string;
 };
 
