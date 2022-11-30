@@ -24,7 +24,7 @@ import type { ClusterAlert } from 'teleport/services/alerts';
 
 const logger = Logger.create('ClusterAlerts');
 
-const DISABLED_BANNERS = 'disabledAlerts';
+const DISABLED_ALERTS = 'disabledAlerts';
 const MS_HOUR = 60 * 60 * 1000;
 
 export function addHours(date: number, hours: number) {
@@ -40,16 +40,16 @@ function setItem(key: string, data: string) {
 }
 
 type DismissedAlert = {
-  [alertName: string]: string;
+  [alertName: string]: number;
 };
 
 export function useAlerts(initialAlerts: ClusterAlert[] = []) {
   const [alerts, setAlerts] = useState<ClusterAlert[]>(initialAlerts);
-  const [dismissedAlerts, setDismissedAlerts] = useState<DismissedAlert[]>([]);
+  const [dismissedAlerts, setDismissedAlerts] = useState<DismissedAlert>({});
   const { clusterId } = useStickyClusterId();
 
   useEffect(() => {
-    const disabledAlerts = getItem(DISABLED_BANNERS);
+    const disabledAlerts = getItem(DISABLED_ALERTS);
     if (disabledAlerts) {
       // Loop through the existing ones and remove those that have passed 24h.
       const data = JSON.parse(disabledAlerts);
@@ -59,7 +59,7 @@ export function useAlerts(initialAlerts: ClusterAlert[] = []) {
         }
       });
       setDismissedAlerts(data);
-      setItem(DISABLED_BANNERS, JSON.stringify(data));
+      setItem(DISABLED_ALERTS, JSON.stringify(data));
     }
   }, []);
 
@@ -77,13 +77,14 @@ export function useAlerts(initialAlerts: ClusterAlert[] = []) {
   }, [clusterId]);
 
   function dismissAlert(name: string) {
-    const disabledAlerts = getItem(DISABLED_BANNERS);
-    let data = {};
+    const disabledAlerts = getItem(DISABLED_ALERTS);
+    let data: DismissedAlert = {};
     if (disabledAlerts) {
       data = JSON.parse(disabledAlerts);
     }
     data[name] = addHours(new Date().getTime(), 24);
-    setItem(DISABLED_BANNERS, JSON.stringify(data));
+    setDismissedAlerts(data);
+    setItem(DISABLED_ALERTS, JSON.stringify(data));
   }
 
   const dismissedAlertNames = Object.keys(dismissedAlerts);
