@@ -137,6 +137,9 @@ See [Teleport Connect build
 process](https://gravitational.slab.com/posts/teleport-connect-build-process-fu6da5ld) on Slab for
 bulid process documentation that is specific to Gravitational.
 
+### Linux
+To create RPM package for aarch64 target you need to provide `USE_SYSTEM_FPM=1` env var. 
+
 ### macOS
 
 To make a fully-fledged build on macOS with Touch ID support, you need two things:
