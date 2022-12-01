@@ -23,6 +23,8 @@ import { DocumentsReopen } from 'teleterm/ui/DocumentsReopen';
 
 import ClusterLogout from '../ClusterLogout/ClusterLogout';
 
+import { UsageData } from './modals/UsageData';
+
 export default function ModalsHost() {
   const { modalsService } = useAppContext();
   const dialog = modalsService.useState();
@@ -65,6 +67,22 @@ export default function ModalsHost() {
         onConfirm={() => {
           handleClose();
           dialog.onConfirm();
+        }}
+      />
+    );
+  }
+
+  if (dialog.kind === 'usage-data') {
+    return (
+      <UsageData
+        onCancel={handleClose}
+        onAllow={() => {
+          handleClose();
+          dialog.onAllow();
+        }}
+        onDecline={() => {
+          handleClose();
+          dialog.onDecline();
         }}
       />
     );
