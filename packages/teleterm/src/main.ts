@@ -26,11 +26,16 @@ if (app.requestSingleInstanceLock()) {
 function initializeApp(): void {
   const settings = getRuntimeSettings();
   const logger = initMainLogger(settings);
-  const fileStorage = createFileStorage({
+  const appStateFileStorage = createFileStorage({
     filePath: path.join(settings.userDataDir, 'app_state.json'),
+    debounceWrites: true,
   });
-  const configService = new ConfigServiceImpl();
-  const windowsManager = new WindowsManager(fileStorage, settings);
+  const appConfigFileStorage = createFileStorage({
+    filePath: path.join(settings.userDataDir, 'app_config.json'),
+    debounceWrites: false,
+  });
+  const configService = new ConfigServiceImpl(appConfigFileStorage);
+  const windowsManager = new WindowsManager(appStateFileStorage, settings);
 
   process.on('uncaughtException', error => {
     logger.error('', error);
@@ -42,7 +47,7 @@ function initializeApp(): void {
     settings,
     logger,
     configService,
-    fileStorage,
+    fileStorage: appStateFileStorage,
   });
 
   app.on(
@@ -64,7 +69,7 @@ function initializeApp(): void {
   );
 
   app.on('will-quit', () => {
-    fileStorage.putAllSync();
+    appStateFileStorage.putAllSync();
     globalShortcut.unregisterAll();
     mainProcess.dispose();
   });
