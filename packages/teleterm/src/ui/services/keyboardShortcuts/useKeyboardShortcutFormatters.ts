@@ -22,7 +22,8 @@ interface KeyboardShortcutFormattingOptions {
 export function useKeyboardShortcutFormatters(): KeyboardShortcutFormatters {
   const { mainProcessClient } = useAppContext();
   const { platform } = mainProcessClient.getRuntimeSettings();
-  const { keyboardShortcuts } = mainProcessClient.configService.get();
+  const keyboardShortcuts =
+    mainProcessClient.configService.get('keyboardShortcuts').value;
 
   return {
     getLabelWithShortcut(label, shortcutKey, options) {

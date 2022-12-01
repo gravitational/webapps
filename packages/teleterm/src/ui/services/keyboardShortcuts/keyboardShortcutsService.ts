@@ -18,8 +18,8 @@ export class KeyboardShortcutsService {
     private platform: Platform,
     private configService: ConfigService
   ) {
-    const config = this.configService.get();
-    this.recalculateKeysToShortcuts(config.keyboardShortcuts);
+    const config = this.configService.get('keyboardShortcuts');
+    this.recalculateKeysToShortcuts(config.value);
     this.attachKeydownHandler();
   }
 

@@ -15,7 +15,8 @@ import ThemeProvider from './ThemeProvider';
 import { LayoutManager } from './LayoutManager';
 
 export const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
-  const { appearance } = ctx.mainProcessClient.configService.get();
+  const appearance =
+    ctx.mainProcessClient.configService.get('appearance').value;
   return (
     <StyledApp>
       <CatchError>
