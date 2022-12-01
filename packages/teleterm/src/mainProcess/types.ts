@@ -93,7 +93,7 @@ export enum TabContextMenuEventType {
 
 export enum ConfigServiceEventType {
   Get = 'Get',
-  Update = 'Update',
+  Set = 'Set',
 }
 
 export enum FileStorageEventType {

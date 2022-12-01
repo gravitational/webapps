@@ -47,6 +47,7 @@ function getTestSetup({ documents }: { documents: Document[] }) {
     getRuntimeSettings: () => ({} as RuntimeSettings),
     configService: {
       get: () =>
+        // @ts-ignore
         ({
           keyboardShortcuts: {
             'tab-close': 'Command-W',
@@ -57,7 +58,7 @@ function getTestSetup({ documents }: { documents: Document[] }) {
             'toggle-identity': 'Command-I',
           },
         } as Config),
-      update() {},
+      set() {},
     },
   };
 
