@@ -93,6 +93,7 @@ module.exports = {
   },
   rpm: {
     artifactName: '${name}-${version}.${arch}.${ext}',
+    fpm: ['--rpm-rpmbuild-define', '_build_id_links none'],
   },
   deb: {
     artifactName: '${name}_${version}_${arch}.${ext}',
