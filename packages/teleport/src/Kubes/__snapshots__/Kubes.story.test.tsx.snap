@@ -320,7 +320,7 @@ exports[`failed 1`] = `
   width: 100%;
 }
 
-.c25 {
+.c24 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -348,22 +348,22 @@ exports[`failed 1`] = `
   padding: 0px 16px;
 }
 
-.c25:active {
+.c24:active {
   opacity: 0.56;
 }
 
-.c25:hover,
-.c25:focus {
+.c24:hover,
+.c24:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c25:active {
+.c24:active {
   opacity: 0.24;
 }
 
-.c25:disabled {
+.c24:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -374,7 +374,7 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c30 {
+.c29 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -420,14 +420,20 @@ exports[`failed 1`] = `
   display: flex;
 }
 
-.c27 {
+.c22 {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c26 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c28 {
+.c27 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -520,7 +526,7 @@ exports[`failed 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c26 {
+.c25 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -530,20 +536,6 @@ exports[`failed 1`] = `
   background: #222C59;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-}
-
-.c24 {
-  line-height: 20px;
-}
-
-.c22 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 100%;
-  align-items: center;
-  position: relative;
-  top: 1px;
 }
 
 .c23 {
@@ -561,28 +553,28 @@ exports[`failed 1`] = `
   cursor: pointer;
 }
 
-.c29 {
+.c28 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c29 .c17 {
+.c28 .c17 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c29:hover .c17,
-.c29:focus .c17 {
+.c28:hover .c17,
+.c28:focus .c17 {
   opacity: 1;
 }
 
-.c29:disabled {
+.c28:disabled {
   cursor: default;
 }
 
-.c29:disabled .c17 {
+.c28:disabled .c17 {
   opacity: 0.1;
 }
 
@@ -735,30 +727,6 @@ exports[`failed 1`] = `
 .c0::after {
   content: ' ';
   padding-bottom: 24px;
-}
-
-@media (max-width:1300px) {
-  .c24 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c24 {
-    max-width: 30em;
-  }
-}
-
-@media (max-width:1300px) {
-  .c22 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c22 {
-    max-width: 30em;
-  }
 }
 
 <div
@@ -902,23 +870,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="env: prod"
-              >
-                env: prod
-              </div>
+              env: prod
             </div>
           </div>
         </td>
@@ -926,7 +884,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             kind="border"
           >
             Connect
@@ -945,12 +903,7 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="env: staging"
-              >
-                env: staging
-              </div>
+              env: staging
             </div>
           </div>
         </td>
@@ -958,7 +911,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             kind="border"
           >
             Connect
@@ -977,23 +930,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster-name: some-cluster-name"
-              >
-                cluster-name: some-cluster-name
-              </div>
+              cluster-name: some-cluster-name
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="env: idk"
-              >
-                env: idk
-              </div>
+              env: idk
             </div>
           </div>
         </td>
@@ -1001,7 +944,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             kind="border"
           >
             Connect
@@ -1011,36 +954,36 @@ exports[`failed 1`] = `
     </tbody>
   </table>
   <nav
-    class="c26"
+    class="c25"
   >
     <div
-      class="c27"
+      class="c26"
       width="100%"
     >
       <div
-        class="c28"
+        class="c27"
       />
       <div
         class="c19"
       >
         <button
-          class="c29"
+          class="c28"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c17 c30 icon icon-arrow-left-circle "
+            class="c17 c29 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c29"
+          class="c28"
           disabled=""
           title="Next page"
         >
           <span
-            class="c17 c30 icon icon-arrow-right-circle "
+            class="c17 c29 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -1104,7 +1047,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c25 {
+.c24 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1132,22 +1075,22 @@ exports[`loaded 1`] = `
   padding: 0px 16px;
 }
 
-.c25:active {
+.c24:active {
   opacity: 0.56;
 }
 
-.c25:hover,
-.c25:focus {
+.c24:hover,
+.c24:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c25:active {
+.c24:active {
   opacity: 0.24;
 }
 
-.c25:disabled {
+.c24:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1158,7 +1101,7 @@ exports[`loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c30 {
+.c29 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -1204,14 +1147,20 @@ exports[`loaded 1`] = `
   display: flex;
 }
 
-.c27 {
+.c22 {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c26 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c28 {
+.c27 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -1304,7 +1253,7 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c26 {
+.c25 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -1314,20 +1263,6 @@ exports[`loaded 1`] = `
   background: #222C59;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-}
-
-.c24 {
-  line-height: 20px;
-}
-
-.c22 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 100%;
-  align-items: center;
-  position: relative;
-  top: 1px;
 }
 
 .c23 {
@@ -1345,28 +1280,28 @@ exports[`loaded 1`] = `
   cursor: pointer;
 }
 
-.c29 {
+.c28 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c29 .c17 {
+.c28 .c17 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c29:hover .c17,
-.c29:focus .c17 {
+.c28:hover .c17,
+.c28:focus .c17 {
   opacity: 1;
 }
 
-.c29:disabled {
+.c28:disabled {
   cursor: default;
 }
 
-.c29:disabled .c17 {
+.c28:disabled .c17 {
   opacity: 0.1;
 }
 
@@ -1519,30 +1454,6 @@ exports[`loaded 1`] = `
 .c0::after {
   content: ' ';
   padding-bottom: 24px;
-}
-
-@media (max-width:1300px) {
-  .c24 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c24 {
-    max-width: 30em;
-  }
-}
-
-@media (max-width:1300px) {
-  .c22 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c22 {
-    max-width: 30em;
-  }
 }
 
 <div
@@ -1692,23 +1603,13 @@ exports[`loaded 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="env: prod"
-              >
-                env: prod
-              </div>
+              env: prod
             </div>
           </div>
         </td>
@@ -1716,7 +1617,7 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             kind="border"
           >
             Connect
@@ -1735,12 +1636,7 @@ exports[`loaded 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="env: staging"
-              >
-                env: staging
-              </div>
+              env: staging
             </div>
           </div>
         </td>
@@ -1748,7 +1644,7 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             kind="border"
           >
             Connect
@@ -1767,23 +1663,13 @@ exports[`loaded 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster-name: some-cluster-name"
-              >
-                cluster-name: some-cluster-name
-              </div>
+              cluster-name: some-cluster-name
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="env: idk"
-              >
-                env: idk
-              </div>
+              env: idk
             </div>
           </div>
         </td>
@@ -1791,7 +1677,7 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             kind="border"
           >
             Connect
@@ -1801,36 +1687,36 @@ exports[`loaded 1`] = `
     </tbody>
   </table>
   <nav
-    class="c26"
+    class="c25"
   >
     <div
-      class="c27"
+      class="c26"
       width="100%"
     >
       <div
-        class="c28"
+        class="c27"
       />
       <div
         class="c19"
       >
         <button
-          class="c29"
+          class="c28"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c17 c30 icon icon-arrow-left-circle "
+            class="c17 c29 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c29"
+          class="c28"
           disabled=""
           title="Next page"
         >
           <span
-            class="c17 c30 icon icon-arrow-right-circle "
+            class="c17 c29 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />

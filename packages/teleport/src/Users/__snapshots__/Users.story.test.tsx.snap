@@ -47,7 +47,7 @@ exports[`success state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c20 {
+.c19 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -76,22 +76,22 @@ exports[`success state 1`] = `
   height: 24px;
 }
 
-.c20:active {
+.c19:active {
   opacity: 0.56;
 }
 
-.c20:hover,
-.c20:focus {
+.c19:hover,
+.c19:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c20:active {
+.c19:active {
   opacity: 0.24;
 }
 
-.c20:disabled {
+.c19:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -109,7 +109,7 @@ exports[`success state 1`] = `
   color: #FFFFFF;
 }
 
-.c21 {
+.c20 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -160,6 +160,12 @@ exports[`success state 1`] = `
 .c11 {
   box-sizing: border-box;
   display: flex;
+}
+
+.c17 {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .c1 {
@@ -291,20 +297,6 @@ exports[`success state 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c19 {
-  line-height: 20px;
-}
-
-.c17 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 100%;
-  align-items: center;
-  position: relative;
-  top: 1px;
-}
-
 .c12 {
   background: none;
   border: none;
@@ -377,30 +369,6 @@ exports[`success state 1`] = `
 .c6::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
-}
-
-@media (max-width:1300px) {
-  .c19 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c19 {
-    max-width: 30em;
-  }
-}
-
-@media (max-width:1300px) {
-  .c17 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c17 {
-    max-width: 30em;
-  }
 }
 
 <div>
@@ -545,12 +513,7 @@ exports[`success state 1`] = `
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="tugu"
-                >
-                  tugu
-                </div>
+                tugu
               </div>
             </div>
           </td>
@@ -563,13 +526,13 @@ exports[`success state 1`] = `
             align="right"
           >
             <button
-              class="c20"
+              class="c19"
               height="24px"
               kind="border"
             >
               OPTIONS
               <span
-                class="c13 c21 icon icon-caret-down "
+                class="c13 c20 icon icon-caret-down "
                 color="text.secondary"
                 font-size="2"
               />
@@ -588,12 +551,7 @@ exports[`success state 1`] = `
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="admin"
-                >
-                  admin
-                </div>
+                admin
               </div>
             </div>
           </td>
@@ -606,13 +564,13 @@ exports[`success state 1`] = `
             align="right"
           >
             <button
-              class="c20"
+              class="c19"
               height="24px"
               kind="border"
             >
               OPTIONS
               <span
-                class="c13 c21 icon icon-caret-down "
+                class="c13 c20 icon icon-caret-down "
                 color="text.secondary"
                 font-size="2"
               />
@@ -631,23 +589,13 @@ exports[`success state 1`] = `
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="ruhh"
-                >
-                  ruhh
-                </div>
+                ruhh
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="admin"
-                >
-                  admin
-                </div>
+                admin
               </div>
             </div>
           </td>
@@ -660,13 +608,13 @@ exports[`success state 1`] = `
             align="right"
           >
             <button
-              class="c20"
+              class="c19"
               height="24px"
               kind="border"
             >
               OPTIONS
               <span
-                class="c13 c21 icon icon-caret-down "
+                class="c13 c20 icon icon-caret-down "
                 color="text.secondary"
                 font-size="2"
               />
@@ -685,56 +633,31 @@ exports[`success state 1`] = `
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="ubip"
-                >
-                  ubip
-                </div>
+                ubip
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="duzjadj"
-                >
-                  duzjadj
-                </div>
+                duzjadj
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="dupiwuzocafe"
-                >
-                  dupiwuzocafe
-                </div>
+                dupiwuzocafe
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="abc"
-                >
-                  abc
-                </div>
+                abc
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="anavebikilonim"
-                >
-                  anavebikilonim
-                </div>
+                anavebikilonim
               </div>
             </div>
           </td>
@@ -759,34 +682,19 @@ exports[`success state 1`] = `
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="vuit"
-                >
-                  vuit
-                </div>
+                vuit
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="vedkonm"
-                >
-                  vedkonm
-                </div>
+                vedkonm
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="valvapel"
-                >
-                  valvapel
-                </div>
+                valvapel
               </div>
             </div>
           </td>
@@ -811,34 +719,19 @@ exports[`success state 1`] = `
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="kaco"
-                >
-                  kaco
-                </div>
+                kaco
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="ziuzzow"
-                >
-                  ziuzzow
-                </div>
+                ziuzzow
               </div>
               <div
                 class="c18"
                 kind="secondary"
               >
-                <div
-                  class="c19"
-                  title="admin"
-                >
-                  admin
-                </div>
+                admin
               </div>
             </div>
           </td>

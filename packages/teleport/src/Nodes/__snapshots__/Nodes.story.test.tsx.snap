@@ -320,7 +320,7 @@ exports[`failed 1`] = `
   width: 100%;
 }
 
-.c25 {
+.c24 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -349,22 +349,22 @@ exports[`failed 1`] = `
   height: 24px;
 }
 
-.c25:active {
+.c24:active {
   opacity: 0.56;
 }
 
-.c25:hover,
-.c25:focus {
+.c24:hover,
+.c24:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c25:active {
+.c24:active {
   opacity: 0.24;
 }
 
-.c25:disabled {
+.c24:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -375,7 +375,7 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c26 {
+.c25 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -384,7 +384,7 @@ exports[`failed 1`] = `
   font-size: 14px;
 }
 
-.c31 {
+.c30 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -430,14 +430,20 @@ exports[`failed 1`] = `
   display: flex;
 }
 
-.c28 {
+.c22 {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c27 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c29 {
+.c28 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -570,7 +576,7 @@ exports[`failed 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c27 {
+.c26 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -580,20 +586,6 @@ exports[`failed 1`] = `
   background: #222C59;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-}
-
-.c24 {
-  line-height: 20px;
-}
-
-.c22 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 100%;
-  align-items: center;
-  position: relative;
-  top: 1px;
 }
 
 .c23 {
@@ -611,28 +603,28 @@ exports[`failed 1`] = `
   cursor: pointer;
 }
 
-.c30 {
+.c29 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c30 .c17 {
+.c29 .c17 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c30:hover .c17,
-.c30:focus .c17 {
+.c29:hover .c17,
+.c29:focus .c17 {
   opacity: 1;
 }
 
-.c30:disabled {
+.c29:disabled {
   cursor: default;
 }
 
-.c30:disabled .c17 {
+.c29:disabled .c17 {
   opacity: 0.1;
 }
 
@@ -745,30 +737,6 @@ exports[`failed 1`] = `
   padding-right: 16px;
   padding-left: 16px;
   width: 120px;
-}
-
-@media (max-width:1300px) {
-  .c24 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c24 {
-    max-width: 30em;
-  }
-}
-
-@media (max-width:1300px) {
-  .c22 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c22 {
-    max-width: 30em;
-  }
 }
 
 <div
@@ -920,23 +888,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -944,13 +902,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -972,23 +930,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -996,13 +944,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1024,23 +972,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -1048,13 +986,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1076,23 +1014,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -1100,13 +1028,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1128,23 +1056,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -1152,13 +1070,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1185,23 +1103,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -1209,13 +1117,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1242,23 +1150,13 @@ exports[`failed 1`] = `
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c23"
               kind="secondary"
             >
-              <div
-                class="c24"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -1266,13 +1164,13 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c25"
+            class="c24"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c17 c26 icon icon-caret-down "
+              class="c17 c25 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1282,36 +1180,36 @@ exports[`failed 1`] = `
     </tbody>
   </table>
   <nav
-    class="c27"
+    class="c26"
   >
     <div
-      class="c28"
+      class="c27"
       width="100%"
     >
       <div
-        class="c29"
+        class="c28"
       />
       <div
         class="c19"
       >
         <button
-          class="c30"
+          class="c29"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c17 c31 icon icon-arrow-left-circle "
+            class="c17 c30 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c30"
+          class="c29"
           disabled=""
           title="Next page"
         >
           <span
-            class="c17 c31 icon icon-arrow-right-circle "
+            class="c17 c30 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -1374,7 +1272,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c28 {
+.c27 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1403,22 +1301,22 @@ exports[`loaded 1`] = `
   height: 24px;
 }
 
-.c28:active {
+.c27:active {
   opacity: 0.56;
 }
 
-.c28:hover,
-.c28:focus {
+.c27:hover,
+.c27:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c28:active {
+.c27:active {
   opacity: 0.24;
 }
 
-.c28:disabled {
+.c27:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1429,7 +1327,7 @@ exports[`loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c29 {
+.c28 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -1438,7 +1336,7 @@ exports[`loaded 1`] = `
   font-size: 14px;
 }
 
-.c34 {
+.c33 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
@@ -1484,14 +1382,20 @@ exports[`loaded 1`] = `
   display: flex;
 }
 
-.c31 {
+.c25 {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c30 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c32 {
+.c31 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -1682,7 +1586,7 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c30 {
+.c29 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -1692,20 +1596,6 @@ exports[`loaded 1`] = `
   background: #222C59;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-}
-
-.c27 {
-  line-height: 20px;
-}
-
-.c25 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 100%;
-  align-items: center;
-  position: relative;
-  top: 1px;
 }
 
 .c26 {
@@ -1723,28 +1613,28 @@ exports[`loaded 1`] = `
   cursor: pointer;
 }
 
-.c33 {
+.c32 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c33 .c20 {
+.c32 .c20 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c33:hover .c20,
-.c33:focus .c20 {
+.c32:hover .c20,
+.c32:focus .c20 {
   opacity: 1;
 }
 
-.c33:disabled {
+.c32:disabled {
   cursor: default;
 }
 
-.c33:disabled .c20 {
+.c32:disabled .c20 {
   opacity: 0.1;
 }
 
@@ -1857,30 +1747,6 @@ exports[`loaded 1`] = `
   padding-right: 16px;
   padding-left: 16px;
   width: 120px;
-}
-
-@media (max-width:1300px) {
-  .c27 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c27 {
-    max-width: 30em;
-  }
-}
-
-@media (max-width:1300px) {
-  .c25 {
-    max-width: 40em;
-  }
-}
-
-@media (max-width:1100px) {
-  .c25 {
-    max-width: 30em;
-  }
 }
 
 <div
@@ -2057,23 +1923,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2081,13 +1937,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2109,23 +1965,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2133,13 +1979,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2161,23 +2007,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2185,13 +2021,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2213,23 +2049,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2237,13 +2063,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2265,23 +2091,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2289,13 +2105,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2322,23 +2138,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2346,13 +2152,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2379,23 +2185,13 @@ exports[`loaded 1`] = `
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="cluster: one"
-              >
-                cluster: one
-              </div>
+              cluster: one
             </div>
             <div
               class="c26"
               kind="secondary"
             >
-              <div
-                class="c27"
-                title="kernel: 4.15.0-51-generic"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
+              kernel: 4.15.0-51-generic
             </div>
           </div>
         </td>
@@ -2403,13 +2199,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c28"
+            class="c27"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c20 c29 icon icon-caret-down "
+              class="c20 c28 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -2419,36 +2215,36 @@ exports[`loaded 1`] = `
     </tbody>
   </table>
   <nav
-    class="c30"
+    class="c29"
   >
     <div
-      class="c31"
+      class="c30"
       width="100%"
     >
       <div
-        class="c32"
+        class="c31"
       />
       <div
         class="c22"
       >
         <button
-          class="c33"
+          class="c32"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c20 c34 icon icon-arrow-left-circle "
+            class="c20 c33 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c33"
+          class="c32"
           disabled=""
           title="Next page"
         >
           <span
-            class="c20 c34 icon icon-arrow-right-circle "
+            class="c20 c33 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
