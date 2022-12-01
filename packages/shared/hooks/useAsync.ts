@@ -57,22 +57,6 @@ import { useCallback, useState, useRef, useEffect } from 'react';
  *    }
  * }
  *
- * @example Aborting and useEffect cleanup function.
- * If the first argument passed to the run function is an abort signal and the signal gets aborted,
- * useAsync will ignore the return value of the promise from the callback.
- *
- * This lets you write a cleanup function for useEffect:
- *
- * const [attempt, run] = useAsync((message: string) => doAsyncStuff(message));
- *
- * useEffect(() => {
- *   const abortController = new AbortController();
- *   run(abortController.signal, 'hello');
- *
- *   return () => {
- *     abortController.abort();
- *   };
- * });
  */
 export function useAsync<Args extends unknown[], AttemptData>(
   cb: (...args: Args) => Promise<AttemptData>
@@ -94,10 +78,10 @@ export function useAsync<Args extends unknown[], AttemptData>(
       return promise.then(
         data => {
           if (!isMounted()) {
-            return [null, new AbortedSignalError()] as [AttemptData, Error];
+            return [null, new CanceledError()] as [AttemptData, Error];
           }
           if (asyncTask.current !== promise) {
-            return [null, new AbortedSignalError()] as [AttemptData, Error];
+            return [null, new CanceledError()] as [AttemptData, Error];
           }
 
           setState(prevState => ({
@@ -110,10 +94,10 @@ export function useAsync<Args extends unknown[], AttemptData>(
         },
         err => {
           if (!isMounted()) {
-            return [null, new AbortedSignalError()] as [AttemptData, Error];
+            return [null, new CanceledError()] as [AttemptData, Error];
           }
           if (asyncTask.current !== promise) {
-            return [null, new AbortedSignalError()] as [AttemptData, Error];
+            return [null, new CanceledError()] as [AttemptData, Error];
           }
 
           setState(prevState => ({
@@ -155,7 +139,7 @@ function useIsMounted() {
 }
 
 // TODO: Rename the error.
-export class AbortedSignalError extends Error {
+export class CanceledError extends Error {
   constructor() {
     super('Ignored response from useAsync because the signal got aborted');
     this.name = 'AbortedSignalError';

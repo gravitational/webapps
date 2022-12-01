@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 
-import { useAsync, AbortedSignalError } from './useAsync';
+import { useAsync, CanceledError } from './useAsync';
 
 test('run returns a promise which resolves with the attempt data', async () => {
   const returnValue = Symbol();
@@ -30,7 +30,7 @@ test('run resolves the promise to an error and does not update the state on unmo
   });
   unmount();
 
-  await expect(promise).resolves.toEqual([null, new AbortedSignalError()]);
+  await expect(promise).resolves.toEqual([null, new CanceledError()]);
   const [attempt] = result.current;
   expect(attempt.status).toBe('processing');
 });
@@ -47,7 +47,7 @@ test('run resolves the promise to an error and does not update the state on unmo
   });
   unmount();
 
-  await expect(promise).resolves.toEqual([null, new AbortedSignalError()]);
+  await expect(promise).resolves.toEqual([null, new CanceledError()]);
   const [attempt] = result.current;
   expect(attempt.status).toBe('processing');
 });
@@ -68,10 +68,7 @@ test('run resolves the promise to an error after being re-run when the callback 
   });
   await waitForNextUpdate();
 
-  await expect(firstRunPromise).resolves.toEqual([
-    null,
-    new AbortedSignalError(),
-  ]);
+  await expect(firstRunPromise).resolves.toEqual([null, new CanceledError()]);
 });
 
 test('run does not update state after being re-run when the callback returns a resolved promise', async () => {
@@ -109,10 +106,7 @@ test('run resolves the promise to an error after being re-run when the callback 
   });
   await waitForNextUpdate();
 
-  await expect(firstRunPromise).resolves.toEqual([
-    null,
-    new AbortedSignalError(),
-  ]);
+  await expect(firstRunPromise).resolves.toEqual([null, new CanceledError()]);
 });
 
 test('run does not update state after being re-run when the callback returns a rejected promise', async () => {
