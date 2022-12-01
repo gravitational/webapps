@@ -72,22 +72,36 @@ test('run resolves the promise to an error after being re-run when the callback 
 });
 
 test('run does not update state after being re-run when the callback returns a resolved promise', async () => {
-  const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync((count: number) => Promise.resolve(count))
+  let resolveFirstPromise, resolveSecondPromise;
+  const firstPromise = new Promise(resolve => {
+    resolveFirstPromise = resolve;
+  });
+  const secondPromise = new Promise(resolve => {
+    resolveSecondPromise = resolve;
+  });
+
+  const { result } = renderHook(() =>
+    // Passing a promise lets us control when the callback resolves.
+    useAsync((promise: Promise<unknown>) => promise)
   );
 
   let [, run] = result.current;
-  act(() => {
-    run(1);
-  });
-  const attemptAfterFirstRun = result.current[0];
+  await act(async () => {
+    // Start two runs, one after the other.
+    const firstRunPromise = run(firstPromise);
+    const secondRunPromise = run(secondPromise);
 
-  act(() => {
-    run(2);
-  });
-  await waitForNextUpdate();
+    // Once the first promise resolves, it should see that another one was started. The first
+    // promise should return early with an error.
+    resolveFirstPromise();
+    await firstRunPromise;
 
-  expect(attemptAfterFirstRun.status).toBe('processing');
+    const attemptAfterFirstPromise = result.current[0];
+    expect(attemptAfterFirstPromise.status).toBe('processing');
+
+    resolveSecondPromise();
+    await secondRunPromise;
+  });
 });
 
 test('run resolves the promise to an error after being re-run when the callback returns a rejected promise', async () => {
@@ -110,20 +124,34 @@ test('run resolves the promise to an error after being re-run when the callback 
 });
 
 test('run does not update state after being re-run when the callback returns a rejected promise', async () => {
-  const { result, waitForNextUpdate } = renderHook(() =>
-    useAsync((count: number) => Promise.reject(new Error(`oops ${count}`)))
+  let rejectFirstPromise, rejectSecondPromise;
+  const firstPromise = new Promise((resolve, reject) => {
+    rejectFirstPromise = reject;
+  });
+  const secondPromise = new Promise((resolve, reject) => {
+    rejectSecondPromise = reject;
+  });
+
+  const { result } = renderHook(() =>
+    // Passing a promise lets us control when the callback resolves.
+    useAsync((promise: Promise<unknown>) => promise)
   );
 
   let [, run] = result.current;
-  act(() => {
-    run(1);
-  });
-  const attemptAfterFirstRun = result.current[0];
+  await act(async () => {
+    // Start two runs, one after the other.
+    const firstRunPromise = run(firstPromise);
+    const secondRunPromise = run(secondPromise);
 
-  act(() => {
-    run(2);
-  });
-  await waitForNextUpdate();
+    // Once the first promise resolves, it should see that another one was started. The first
+    // promise should return early with an error.
+    rejectFirstPromise();
+    await firstRunPromise;
 
-  expect(attemptAfterFirstRun.status).toBe('processing');
+    const attemptAfterFirstPromise = result.current[0];
+    expect(attemptAfterFirstPromise.status).toBe('processing');
+
+    rejectSecondPromise();
+    await secondRunPromise;
+  });
 });
