@@ -29,6 +29,7 @@ import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { CommandLauncher } from './commandLauncher';
 import { IAppContext } from './types';
 import { ResourcesService } from './services/resources/resourcesService';
+import { ConfigService } from 'teleterm/services/config';
 
 export default class AppContext implements IAppContext {
   clustersService: ClustersService;
@@ -92,14 +93,12 @@ export default class AppContext implements IAppContext {
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
   }
+}
 
-  //example
-  private askForUsageMetrics() {
-    const { configService } = this.mainProcessClient;
-
-    // only if we didn't ask
-    if (!configService.get('usageMetrics.enabled').metadata.isStored) {
-      configService.set('usageMetrics.enabled', true);
-    }
+//example
+function askForUsageMetrics(configService: ConfigService) {
+  // only if we didn't ask
+  if (!configService.get('usageMetrics.enabled').metadata.isStored) {
+    configService.set('usageMetrics.enabled', true);
   }
 }
