@@ -34,7 +34,6 @@ export function SearchPanel({
   }, [filter]);
 
   function onToggle() {
-    setQuery('');
     setIsAdvancedSearch(!isAdvancedSearch);
   }
 

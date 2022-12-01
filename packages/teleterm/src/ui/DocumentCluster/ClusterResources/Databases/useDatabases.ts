@@ -19,46 +19,21 @@ import { AttemptStatus } from 'shared/hooks/useAsync';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { Database, ServerSideParams } from 'teleterm/services/tshd/types';
 import { routing } from 'teleterm/ui/uri';
-import { GatewayProtocol } from 'teleterm/ui/services/clusters';
+import { GatewayProtocol, makeDatabase } from 'teleterm/ui/services/clusters';
 
 import { useServerSideResources } from '../useServerSideResources';
-import { useClusterContext } from '../../clusterContext';
-
-function getEmptyTableText(status: AttemptStatus) {
-  switch (status) {
-    case 'error':
-      return 'Failed to fetch databases.';
-    case '':
-      return 'Searching…';
-    case 'processing':
-      return 'Searching…';
-    case 'success':
-      return 'No databases found.';
-  }
-}
 
 export function useDatabases() {
   const appContext = useAppContext();
-  const clusterContext = useClusterContext();
-  const documentUri = clusterContext.documentUri;
 
-  const {
-    fetchAttempt,
-    updateQuery,
-    agentFilter,
-    prevPage,
-    nextPage,
-    updateSearch,
-    onAgentLabelClick,
-    updateSort,
-    pageCount,
-  } = useServerSideResources<Database>(
-    { fieldName: 'name', dir: 'ASC' }, // default sort
-    (params: ServerSideParams) =>
-      appContext.resourcesService.fetchDatabases(params)
-  );
+  const { fetchAttempt, ...serverSideResources } =
+    useServerSideResources<Database>(
+      { fieldName: 'name', dir: 'ASC' }, // default sort
+      (params: ServerSideParams) =>
+        appContext.resourcesService.fetchDatabases(params)
+    );
 
-  function connect(db: Database, dbUser: string): void {
+  function connect(db: ReturnType<typeof makeDatabase>, dbUser: string): void {
     const rootClusterUri = routing.ensureRootClusterUri(db.uri);
     const documentsService =
       appContext.workspacesService.getWorkspaceDocumentService(rootClusterUri);
@@ -97,24 +72,9 @@ export function useDatabases() {
   }
 
   return {
-    connect,
     fetchAttempt,
-    dbs: fetchAttempt.data?.agentsList,
-    agentFilter,
-    updateQuery,
-    updateSearch,
-    documentUri,
-    onAgentLabelClick,
-    pageCount,
-    disabledRows: fetchAttempt.status === 'processing',
-    nextPage,
-    prevPage,
-    emptyTableText: getEmptyTableText(fetchAttempt.status),
-    customSort: {
-      dir: agentFilter.sort?.dir,
-      fieldName: agentFilter.sort?.fieldName,
-      onSort: updateSort,
-    },
+    connect,
+    ...serverSideResources,
   };
 }
 

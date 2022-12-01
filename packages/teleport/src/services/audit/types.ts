@@ -49,6 +49,7 @@ export const eventCodes = {
   APP_SESSION_CHUNK: 'T2008I',
   APP_SESSION_START: 'T2007I',
   APP_SESSION_END: 'T2011I',
+  APP_SESSION_DYNAMODB_REQUEST: 'T2013I',
   APP_CREATED: 'TAP03I',
   APP_UPDATED: 'TAP04I',
   APP_DELETED: 'TAP05I',
@@ -487,6 +488,13 @@ export type RawEvents = {
       app_name: string;
     }
   >;
+  [eventCodes.APP_SESSION_DYNAMODB_REQUEST]: RawEvent<
+    typeof eventCodes.APP_SESSION_DYNAMODB_REQUEST,
+    {
+      target: string;
+      app_name: string;
+    }
+  >;
   [eventCodes.SUBSYSTEM]: RawEvent<
     typeof eventCodes.SUBSYSTEM,
     {
@@ -558,6 +566,9 @@ export type RawEvents = {
     typeof eventCodes.KUBE_REQUEST,
     {
       kubernetes_cluster: string;
+      verb: string;
+      request_path: string;
+      response_code: string;
     }
   >;
   [eventCodes.KUBE_CREATED]: RawEvent<

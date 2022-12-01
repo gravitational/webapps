@@ -20,7 +20,10 @@ import { ButtonBorder } from 'design';
 import { Danger } from 'design/Alert';
 import { SearchPanel, SearchPagination } from 'shared/components/Search';
 
+import { makeKube } from 'teleterm/ui/services/clusters';
+
 import { DarkenWhileDisabled } from '../DarkenWhileDisabled';
+import { getEmptyTableText } from '../getEmptyTableText';
 
 import { useKubes, State } from './useKubes';
 
@@ -31,7 +34,6 @@ export default function Container() {
 
 function KubeList(props: State) {
   const {
-    kubes = [],
     connect,
     fetchAttempt,
     agentFilter,
@@ -41,10 +43,11 @@ function KubeList(props: State) {
     nextPage,
     updateQuery,
     onAgentLabelClick,
-    disabledRows,
     updateSearch,
-    emptyTableText,
   } = props;
+  const kubes = fetchAttempt.data?.agentsList.map(makeKube) || [];
+  const disabled = fetchAttempt.status === 'processing';
+  const emptyText = getEmptyTableText(fetchAttempt.status, 'kubes');
 
   return (
     <>
@@ -57,9 +60,9 @@ function KubeList(props: State) {
         pageCount={pageCount}
         filter={agentFilter}
         showSearchBar={true}
-        disableSearch={disabledRows}
+        disableSearch={disabled}
       />
-      <DarkenWhileDisabled disabled={disabledRows}>
+      <DarkenWhileDisabled disabled={disabled}>
         <Table
           data={kubes}
           columns={[
@@ -69,11 +72,11 @@ function KubeList(props: State) {
               isSortable: true,
             },
             {
-              key: 'labelsList',
+              key: 'labels',
               headerText: 'Labels',
-              render: ({ labelsList }) => (
+              render: ({ labels }) => (
                 <ClickableLabelCell
-                  labels={labelsList}
+                  labels={labels}
                   onClick={onAgentLabelClick}
                 />
               ),
@@ -84,7 +87,7 @@ function KubeList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText={emptyTableText}
+          emptyText={emptyText}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
       </DarkenWhileDisabled>

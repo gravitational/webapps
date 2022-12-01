@@ -586,6 +586,17 @@ export const formatters: Formatters = {
       return `New session data chunk created for application [${app_name}] accessed by user [${user}]`;
     },
   },
+  [eventCodes.APP_SESSION_DYNAMODB_REQUEST]: {
+    type: 'app.session.dynamodb.request',
+    desc: 'App Session DynamoDB Request',
+    format: ({ user, app_name, target }) => {
+      let message = `User [${user}] has made a request to application [${app_name}]`;
+      if (target) {
+        message += `, target: [${target}]`;
+      }
+      return message;
+    },
+  },
   [eventCodes.SUBSYSTEM]: {
     type: 'subsystem',
     desc: 'Subsystem Requested',
@@ -674,8 +685,8 @@ export const formatters: Formatters = {
   [eventCodes.KUBE_REQUEST]: {
     type: 'kube.request',
     desc: 'Kubernetes Request',
-    format: ({ user, kubernetes_cluster }) =>
-      `User [${user}] made a request to kubernetes cluster [${kubernetes_cluster}]`,
+    format: ({ user, kubernetes_cluster, verb, request_path, response_code }) =>
+      `User [${user}] received a [${response_code}] from a [${verb} ${request_path}] request to kubernetes cluster [${kubernetes_cluster}]`,
   },
   [eventCodes.KUBE_CREATED]: {
     type: 'kube.create',

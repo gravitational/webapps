@@ -13,51 +13,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { AttemptStatus } from 'shared/hooks/useAsync';
-
 import { Server, ServerSideParams } from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { makeServer } from 'teleterm/ui/services/clusters';
 
 import { useServerSideResources } from '../useServerSideResources';
-
-function getEmptyTableText(status: AttemptStatus) {
-  switch (status) {
-    case 'error':
-      return 'Failed to fetch servers.';
-    case '':
-      return 'Searching…';
-    case 'processing':
-      return 'Searching…';
-    case 'success':
-      return 'No servers found.';
-  }
-}
 
 export function useServers() {
   const appContext = useAppContext();
 
-  const {
-    fetchAttempt,
-    updateQuery,
-    agentFilter,
-    prevPage,
-    nextPage,
-    updateSearch,
-    onAgentLabelClick,
-    updateSort,
-    pageCount,
-  } = useServerSideResources<Server>(
-    { fieldName: 'hostname', dir: 'ASC' }, // default sort
-    (params: ServerSideParams) =>
-      appContext.resourcesService.fetchServers(params)
-  );
+  const { fetchAttempt, ...serversideResources } =
+    useServerSideResources<Server>(
+      { fieldName: 'hostname', dir: 'ASC' }, // default sort
+      (params: ServerSideParams) =>
+        appContext.resourcesService.fetchServers(params)
+    );
 
   function getSshLogins(serverUri: string): string[] {
     const cluster = appContext.clustersService.findClusterByResource(serverUri);
     return cluster?.loggedInUser?.sshLoginsList || [];
   }
 
-  function connect(server: Server, login: string): void {
+  function connect(server: ReturnType<typeof makeServer>, login: string): void {
     const rootCluster = appContext.clustersService.findRootClusterByResource(
       server.uri
     );
@@ -73,23 +50,9 @@ export function useServers() {
 
   return {
     fetchAttempt,
-    servers: fetchAttempt.data?.agentsList,
     getSshLogins,
     connect,
-    agentFilter,
-    updateQuery,
-    updateSearch,
-    onAgentLabelClick,
-    pageCount,
-    disabledRows: fetchAttempt.status === 'processing',
-    nextPage,
-    prevPage,
-    emptyTableText: getEmptyTableText(fetchAttempt.status),
-    customSort: {
-      dir: agentFilter.sort?.dir,
-      fieldName: agentFilter.sort?.fieldName,
-      onSort: updateSort,
-    },
+    ...serversideResources,
   };
 }
 

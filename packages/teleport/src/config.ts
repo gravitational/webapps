@@ -129,6 +129,7 @@ const cfg = {
     changeUserPasswordPath: '/v1/webapi/users/password',
     nodesPath:
       '/v1/webapi/sites/:clusterId/nodes?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
+    databasePath: `/v1/webapi/sites/:clusterId/databases/:database`,
     databasesPath: `/v1/webapi/sites/:clusterId/databases?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?`,
     desktopsPath: `/v1/webapi/sites/:clusterId/desktops?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?`,
     desktopServicesPath: `/v1/webapi/sites/:clusterId/desktopservices?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?`,
@@ -140,7 +141,7 @@ const cfg = {
     desktopIsActive: '/v1/webapi/sites/:clusterId/desktops/:desktopName/active',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
-      'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
+      'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params&traceparent=:traceparent',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
     kubernetesPath:
       '/v1/webapi/sites/:clusterId/kubernetes?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
@@ -154,6 +155,7 @@ const cfg = {
     trustedClustersPath: '/v1/webapi/trustedcluster/:name?',
 
     joinTokenPath: '/v1/webapi/token',
+    dbScriptPath: '/scripts/:token/install-database.sh',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
 
@@ -270,6 +272,10 @@ const cfg = {
 
   getNodeScriptUrl(token: string) {
     return cfg.baseUrl + generatePath(cfg.api.nodeScriptPath, { token });
+  },
+
+  getDbScriptUrl(token: string) {
+    return cfg.baseUrl + generatePath(cfg.api.dbScriptPath, { token });
   },
 
   getConfigureADUrl(token: string) {
@@ -418,7 +424,14 @@ const cfg = {
     });
   },
 
-  getDatabasesUrl(clusterId: string, params: UrlResourcesParams) {
+  getDatabaseUrl(clusterId: string, dbName: string) {
+    return generateResourcePath(cfg.api.databasePath, {
+      clusterId,
+      database: dbName,
+    });
+  },
+
+  getDatabasesUrl(clusterId: string, params?: UrlResourcesParams) {
     return generateResourcePath(cfg.api.databasesPath, {
       clusterId,
       ...params,
