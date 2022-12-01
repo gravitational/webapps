@@ -92,4 +92,14 @@ export default class AppContext implements IAppContext {
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
   }
+
+  //example
+  private askForUsageMetrics() {
+    const { configService } = this.mainProcessClient;
+
+    // only if we didn't ask
+    if (!configService.get('usageMetrics.enabled').metadata.isStored) {
+      configService.set('usageMetrics.enabled', true);
+    }
+  }
 }

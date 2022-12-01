@@ -4,6 +4,7 @@ import { FileStorage } from 'teleterm/services/fileStorage';
 
 import { keyboardShortcutsConfigProvider } from './providers/keyboardShortcutsConfigProvider';
 import { appearanceConfigProvider } from './providers/appearanceConfigProvider';
+import { usageMetricsConfigProvider } from './providers/usageMetricsConfigProvider';
 import {
   Config,
   ConfigGetter,
@@ -25,6 +26,7 @@ export class ConfigServiceImpl implements ConfigService {
   private configProviders: ConfigServiceProviders = {
     keyboardShortcuts: keyboardShortcutsConfigProvider,
     appearance: appearanceConfigProvider,
+    usageMetrics: usageMetricsConfigProvider,
   };
 
   constructor(private appConfigFileStorage: FileStorage) {
