@@ -71,23 +71,6 @@ const kubeMock: tsh.Kube = {
   ],
 };
 
-const appMock: tsh.Application = {
-  uri: `${clusterUri}/apps/appTestUri`,
-  name: 'TestApp',
-  labelsList: [
-    {
-      name: 'Type',
-      value: 'OnDemand',
-    },
-  ],
-  appUri: 'appTestUri',
-  awsConsole: false,
-  awsRolesList: [],
-  description: '',
-  fqdn: '',
-  publicAddr: 'app.test',
-};
-
 const NotificationsServiceMock = NotificationsService as jest.MockedClass<
   typeof NotificationsService
 >;
@@ -130,7 +113,6 @@ function testIfClusterResourcesHaveBeenCleared(service: ClustersService): void {
     syncing: false,
     dbs: { status: '' },
     servers: { status: '' },
-    apps: { status: '' },
     kubes: { status: '' },
   });
 }
@@ -337,17 +319,6 @@ test('find kubes by cluster uri', () => {
   expect(foundKubes).toStrictEqual([kubeMock]);
 });
 
-test('find apps by cluster uri', () => {
-  const service = createService({});
-  service.setState(draftState => {
-    draftState.apps.set(appMock.uri, appMock);
-  });
-
-  const foundApps = service.findApps(clusterUri);
-
-  expect(foundApps).toStrictEqual([appMock]);
-});
-
 test('find cluster by resource uri', () => {
   const service = createService({});
   service.setState(draftState => {
@@ -376,24 +347,6 @@ test.each([
   });
 
   expect(foundDbs).toStrictEqual([dbMock]);
-});
-
-test.each([
-  { prop: 'name', value: appMock.name },
-  { prop: 'publicAddr', value: appMock.publicAddr },
-  { prop: 'description', value: appMock.description },
-  { prop: 'labelsList', value: appMock.labelsList[0].value },
-])('search apps by prop: $prop', ({ value }) => {
-  const service = createService({});
-  service.setState(draftState => {
-    draftState.apps.set(appMock.uri, appMock);
-  });
-
-  const foundApps = service.searchApps(clusterUri, {
-    search: value.toLocaleLowerCase(),
-  });
-
-  expect(foundApps).toStrictEqual([appMock]);
 });
 
 test.each([

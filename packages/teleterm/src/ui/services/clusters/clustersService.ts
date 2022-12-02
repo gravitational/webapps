@@ -39,7 +39,6 @@ import {
 
 export function createClusterServiceState(): ClustersServiceState {
   return {
-    apps: new Map(),
     kubes: new Map(),
     clusters: new Map(),
     gateways: new Map(),
@@ -48,7 +47,6 @@ export function createClusterServiceState(): ClustersServiceState {
     serversSyncStatus: new Map(),
     dbsSyncStatus: new Map(),
     kubesSyncStatus: new Map(),
-    appsSyncStatus: new Map(),
   };
 }
 
@@ -230,39 +228,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     } catch (err) {
       this.setState(draft => {
         draft.kubesSyncStatus.set(clusterUri, {
-          status: 'failed',
-          statusText: err.message,
-        });
-      });
-    }
-  }
-
-  async syncApps(clusterUri: string) {
-    const cluster = this.state.clusters.get(clusterUri);
-    if (!cluster.connected) {
-      this.setState(draft => {
-        draft.appsSyncStatus.delete(clusterUri);
-        helpers.updateMap(clusterUri, draft.apps, []);
-      });
-
-      return;
-    }
-
-    this.setState(draft => {
-      draft.appsSyncStatus.set(clusterUri, {
-        status: 'processing',
-      });
-    });
-
-    try {
-      const received = await this.client.listApps(clusterUri);
-      this.setState(draft => {
-        draft.appsSyncStatus.set(clusterUri, { status: 'ready' });
-        helpers.updateMap(clusterUri, draft.apps, received);
-      });
-    } catch (err) {
-      this.setState(draft => {
-        draft.appsSyncStatus.set(clusterUri, {
           status: 'failed',
           statusText: err.message,
         });
@@ -553,12 +518,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return this.state.dbs.get(dbUri);
   }
 
-  findApps(clusterUri: string) {
-    return [...this.state.apps.values()].filter(s =>
-      routing.isClusterApp(clusterUri, s.uri)
-    );
-  }
-
   findKubes(clusterUri: string) {
     return [...this.state.kubes.values()].filter(s =>
       routing.isClusterKube(clusterUri, s.uri)
@@ -615,20 +574,17 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const empty: SyncStatus = { status: '' };
     const dbs = this.state.dbsSyncStatus.get(clusterUri) || empty;
     const servers = this.state.serversSyncStatus.get(clusterUri) || empty;
-    const apps = this.state.appsSyncStatus.get(clusterUri) || empty;
     const kubes = this.state.kubesSyncStatus.get(clusterUri) || empty;
 
     const syncing =
       dbs.status === 'processing' ||
       servers.status === 'processing' ||
-      apps.status === 'processing' ||
       kubes.status === 'processing';
 
     return {
       syncing,
       dbs,
       servers,
-      apps,
       kubes,
     };
   }
@@ -724,10 +680,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
         draft.servers.delete(server.uri);
       });
 
-      this.findApps(clusterUri).forEach(app => {
-        draft.apps.delete(app.uri);
-      });
-
       this.findKubes(clusterUri).forEach(kube => {
         draft.kubes.delete(kube.uri);
       });
@@ -735,7 +687,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       draft.serversSyncStatus.delete(clusterUri);
       draft.dbsSyncStatus.delete(clusterUri);
       draft.kubesSyncStatus.delete(clusterUri);
-      draft.appsSyncStatus.delete(clusterUri);
     });
   }
 
@@ -744,20 +695,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return databases.filter(obj =>
       isMatch(obj, query.search, {
         searchableProps: ['name', 'desc', 'labelsList'],
-        cb: (targetValue, searchValue, propName) => {
-          if (propName === 'labelsList') {
-            return this._isIncludedInTagTargetValue(targetValue, searchValue);
-          }
-        },
-      })
-    );
-  }
-
-  searchApps(clusterUri: string, query: SearchQuery) {
-    const apps = this.findApps(clusterUri);
-    return apps.filter(obj =>
-      isMatch(obj, query.search, {
-        searchableProps: ['name', 'publicAddr', 'description', 'labelsList'],
         cb: (targetValue, searchValue, propName) => {
           if (propName === 'labelsList') {
             return this._isIncludedInTagTargetValue(targetValue, searchValue);
