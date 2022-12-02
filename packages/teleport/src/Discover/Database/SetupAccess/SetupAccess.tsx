@@ -31,6 +31,7 @@ import type { State } from 'teleport/Discover/Shared/SetupAccess';
 
 export default function Container(props: AgentStepProps) {
   const state = useUserTraits(props);
+  console.log(state, props);
   return <SetupAccess {...state} />;
 }
 

@@ -130,7 +130,7 @@ export function SelectResource(props: SelectResourceProps) {
       {props.selectedResourceKind === ResourceKind.Database && (
         <DatabaseResource
           disabled={disabled}
-          onProceed={() => setShowAddDB(true)}
+          onProceed={() => props.onNext()}
         />
       )}
       {props.selectedResourceKind === ResourceKind.Application && (

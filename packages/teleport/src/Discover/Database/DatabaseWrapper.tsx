@@ -8,8 +8,6 @@ import {
   SCRIPT_TIMEOUT,
 } from 'teleport/Discover/Database/config';
 
-import { DatabaseProvider } from 'teleport/Discover/Database/DatabaseContext';
-
 import { ResourceKind } from '../Shared';
 
 interface DatabaseWrapperProps {
@@ -24,7 +22,7 @@ export function DatabaseWrapper(props: DatabaseWrapperProps) {
         interval={PING_INTERVAL}
         resourceKind={ResourceKind.Database}
       >
-        <DatabaseProvider>{props.children}</DatabaseProvider>
+        {props.children}
       </PingTeleportProvider>
     </JoinTokenProvider>
   );

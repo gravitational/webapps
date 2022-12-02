@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Text, Box } from 'design';
 import { Danger } from 'design/Alert';
 import Validation, { Validator } from 'shared/components/Validation';
@@ -32,10 +32,102 @@ import { useCreateDatabase, State } from './useCreateDatabase';
 
 import type { AgentStepProps } from '../../types';
 import type { AgentLabel } from 'teleport/services/agents';
+import { FieldInputProps } from 'shared/components/FieldInput/FieldInput';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 
 export function CreateDatabase(props: AgentStepProps) {
   const state = useCreateDatabase(props);
   return <CreateDatabaseView {...state} />;
+}
+
+function getInitialInputState<T>(children: React.ReactNode) {
+  const values = {} as T;
+
+  React.Children.forEach(children, (child: JSX.Element) => {
+    values[child.props.name] = '';
+  });
+
+  return values;
+}
+
+export function RegisterDatabaseInput(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  props: Omit<FieldInputProps, 'onChange'> & { name: string }
+) {
+  return null;
+}
+
+interface RegisterDatabaseBaseProps<T> {
+  disabled: boolean;
+  onSubmit: (values: T) => void;
+}
+
+export interface RegisterDatabaseValues {
+  labels: AgentLabel[];
+}
+
+export function RegisterDatabaseBase<T>(
+  props: React.PropsWithChildren<RegisterDatabaseBaseProps<T>>
+) {
+  const [inputStates, setInputStates] = useState<T>(
+    getInitialInputState<T>(props.children)
+  );
+  const [labels, setLabels] = useState<AgentLabel[]>([]);
+
+  const setInputValue = useCallback((name: string, value: string) => {
+    setInputStates(inputStates => ({ ...inputStates, [name]: value }));
+  }, []);
+
+  const inputs = React.Children.map(
+    props.children,
+    (child: JSX.Element, index) => (
+      <Box width="500px" mb={2} key={index}>
+        <FieldInput
+          {...child.props}
+          value={inputStates[child.props.name]}
+          onChange={event =>
+            setInputValue(child.props.name, event.target.value)
+          }
+        />
+      </Box>
+    )
+  );
+
+  function handleOnProceed(validator: Validator) {
+    if (!validator.validate()) {
+      return;
+    }
+
+    console.log('here');
+
+    props.onSubmit({ ...inputStates, labels });
+  }
+
+  return (
+    <Validation>
+      {({ validator }) => (
+        <Box>
+          {inputs}
+
+          <Box>
+            <Text bold>Labels (optional)</Text>
+
+            <LabelsCreater
+              labels={labels}
+              setLabels={setLabels}
+              isLabelOptional={true}
+              disableBtns={props.disabled}
+            />
+          </Box>
+
+          <ActionButtons
+            onProceed={() => handleOnProceed(validator)}
+            disableProceed={props.disabled}
+          />
+        </Box>
+      )}
+    </Validation>
+  );
 }
 
 export function CreateDatabaseView({ attempt, createDbAndQueryDb }: State) {

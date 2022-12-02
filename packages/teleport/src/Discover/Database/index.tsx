@@ -27,6 +27,10 @@ import {
   DatabaseLocation,
 } from 'teleport/Discover/Database/resources';
 
+import * as AWS from './AWS';
+import { SetupAccess } from './SetupAccess';
+import { TestConnection } from './TestConnection';
+
 export const DatabaseResource: Resource<Database> = {
   kind: ResourceKind.Database,
   icon: <DatabaseIcon />,
@@ -44,16 +48,16 @@ export const DatabaseResource: Resource<Database> = {
         case DatabaseLocation.AWS:
           configureResourceViews = [
             {
-              title: 'Deploy Database Agent',
-              component: InstallActiveDirectory,
+              title: 'Register a Database',
+              component: AWS.RegisterDatabase,
             },
             {
-              title: 'Register a Database',
-              component: InstallActiveDirectory,
+              title: 'Deploy Database Agent',
+              component: AWS.DeployDatabaseAgent,
             },
             {
               title: 'Configure IAM Policy',
-              component: InstallActiveDirectory,
+              component: AWS.ConfigureIAMPolicy,
             },
           ];
 
@@ -85,16 +89,15 @@ export const DatabaseResource: Resource<Database> = {
       },
       {
         title: 'Configure Resource',
-        component: InstallActiveDirectory,
         views: configureResourceViews,
       },
       {
         title: 'Setup Access',
-        component: InstallActiveDirectory,
+        component: SetupAccess,
       },
       {
         title: 'Test Connection',
-        component: InstallActiveDirectory,
+        component: TestConnection,
       },
     ];
   },

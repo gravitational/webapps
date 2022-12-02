@@ -64,7 +64,7 @@ export function TextSelectCopy({
     >
       <Flex mr="2" style={boxStyles}>
         {bash && <Box mr="1" style={{ userSelect: 'none' }}>{`$`}</Box>}
-        <div ref={ref}>{text}</div>
+        <pre style={{ margin: 0 }} ref={ref}>{text}</pre>
       </Flex>
       <ButtonPrimary
         onClick={onCopyClick}

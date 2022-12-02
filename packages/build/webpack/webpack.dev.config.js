@@ -55,7 +55,7 @@ module.exports = {
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
-  devtool: process.env.WEBPACK_SOURCE_MAP || 'eval-source-map',
+  devtool: process.env.WEBPACK_SOURCE_MAP || 'source-map',
   mode: 'development',
   plugins,
   module: {
