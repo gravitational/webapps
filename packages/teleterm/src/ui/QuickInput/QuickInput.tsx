@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import { debounce } from 'lodash';
 import { Box, Flex } from 'design';
 import { color, height, space, width } from 'styled-system';
+import { Spinner } from 'design/Icon';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
@@ -163,12 +164,17 @@ function QuickInput() {
         onKeyDown={handleKeyDown}
         isOpened={visible}
       />
+      {autocompleteAttempt.status === 'processing' && (
+        <Animate>
+          <Spinner />
+        </Animate>
+      )}
       {!visible && <Shortcut>{props.keyboardShortcut}</Shortcut>}
       {visible && hasSuggestions && (
         <QuickInputList
           ref={refList}
           position={measuredInputTextWidth}
-          items={autocompleteResult.suggestions}
+          items={autocompleteAttempt.data}
           activeItem={activeSuggestion}
           onPick={props.onEnter}
         />
@@ -233,6 +239,24 @@ const Shortcut = styled(Box)`
   line-height: 12px;
   font-size: 12px;
   border-radius: 2px;
+`;
+
+const Animate = styled(Box)`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 2px 2px;
+  line-height: 12px;
+  font-size: 12px;
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const KeyEnum = {
