@@ -144,7 +144,6 @@ export default function useQuickInput() {
 
     // If there are suggestions to show, the first onBack call should always just close the
     // suggestions and the second call should actually go back.
-    // TODO: Do we need to account for other suggestionsAttempt statuses?
     if (visible && hasSuggestions) {
       quickInputService.hide();
     } else {
@@ -167,7 +166,6 @@ export default function useQuickInput() {
   }, [
     // We want to reset the active suggestion only between successful attempts and only if the
     // suggestions didn't change.
-    // TODO: Verify if the below line is correct.
     suggestionsAttempt.data?.map(suggestion => suggestion.token).join(','),
   ]);
 
