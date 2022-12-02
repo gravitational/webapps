@@ -19,7 +19,10 @@ import { Box, ButtonPrimary, ButtonText, Text } from 'design';
 import { Danger } from 'design/Alert';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
-import { requiredConfirmedPassword, requiredPassword } from 'shared/components/Validation/rules';
+import {
+  requiredConfirmedPassword,
+  requiredPassword,
+} from 'shared/components/Validation/rules';
 import { useRefAutoFocus } from 'shared/hooks';
 
 import { CaptureEvent, userEventService } from 'teleport/services/userEvent';

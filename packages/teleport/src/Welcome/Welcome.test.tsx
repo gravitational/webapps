@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { MemoryRouter, Route, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import { screen, fireEvent, render, waitFor } from 'design/utils/testing';
+import { fireEvent, render, screen, waitFor } from 'design/utils/testing';
 import { Logger } from 'shared/libs/logger';
 
 import cfg from 'teleport/config';
@@ -69,14 +69,14 @@ describe('teleport/components/Welcome', () => {
       screen.getByText(/Please click the button below to create an account/i)
     ).toBeInTheDocument();
 
-    expect(auth.fetchPasswordToken).toHaveBeenCalledTimes(1);
+    expect(auth.fetchPasswordToken).not.toHaveBeenCalled();
 
     fireEvent.click(screen.getByText(/get started/i));
     mockHistory.push(inviteContinuePath);
 
     expect(history.push).toHaveBeenCalledWith(inviteContinuePath);
     await waitFor(() => {
-      expect(auth.fetchPasswordToken).toHaveBeenCalledTimes(2);
+      expect(auth.fetchPasswordToken).toHaveBeenCalled();
     });
 
     expect(screen.getByText(/confirm password/i)).toBeInTheDocument();
@@ -102,6 +102,8 @@ describe('teleport/components/Welcome', () => {
         /Please click the button below to begin recovery of your account/i
       )
     ).toBeInTheDocument();
+
+    expect(auth.fetchPasswordToken).not.toHaveBeenCalled();
 
     fireEvent.click(screen.getByText(/Continue/i));
     mockHistory.push(resetContinuePath);

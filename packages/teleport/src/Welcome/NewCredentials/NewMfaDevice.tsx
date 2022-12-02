@@ -21,7 +21,10 @@ import { Danger } from 'design/Alert';
 import { ArrowBack } from 'design/Icon';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
-import { requiredField, requiredToken } from 'shared/components/Validation/rules';
+import {
+  requiredField,
+  requiredToken,
+} from 'shared/components/Validation/rules';
 import createMfaOptions from 'shared/utils/createMfaOptions';
 
 import { useRefAutoFocus } from 'shared/hooks';

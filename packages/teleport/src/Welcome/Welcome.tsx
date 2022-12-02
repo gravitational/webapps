@@ -21,21 +21,13 @@ import history from 'teleport/services/history';
 import LogoHero from 'teleport/components/LogoHero';
 import cfg from 'teleport/config';
 
-import { CaptureEvent, userEventService } from 'teleport/services/userEvent';
-import useToken from 'teleport/Welcome/useToken';
-
 import { NewCredentials } from './NewCredentials';
 import { CardWelcome } from './CardWelcome';
 
 export default function Welcome() {
   const { tokenId } = useParams<{ tokenId: string }>();
-  const { resetToken } = useToken(tokenId);
 
   const handleOnInviteContinue = () => {
-    userEventService.capturePreUserEvent({
-      event: CaptureEvent.PreUserOnboardGetStartedClickEvent,
-      username:resetToken && resetToken.user || "",
-    });
     history.push(cfg.getUserInviteTokenContinueRoute(tokenId));
   };
 
