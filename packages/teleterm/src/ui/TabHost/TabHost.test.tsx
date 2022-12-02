@@ -88,12 +88,6 @@ function getTestSetup({ documents }: { documents: Document[] }) {
   };
 
   const workspacesService: Partial<WorkspacesService> = {
-    // @ts-expect-error - using mocks
-    getWorkspacesDocumentsServices() {
-      return [
-        { clusterUri: 'test_uri', workspaceDocumentsService: docsService },
-      ];
-    },
     isDocumentActive(documentUri: string) {
       return documentUri === documents[0].uri;
     },

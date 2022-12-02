@@ -90,16 +90,6 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     return this.getWorkspaceAccessRequestsService(this.state.rootClusterUri);
   }
 
-  getWorkspacesDocumentsServices(): Array<{
-    clusterUri: string;
-    workspaceDocumentsService: DocumentsService;
-  }> {
-    return Object.entries(this.state.workspaces).map(([clusterUri]) => ({
-      clusterUri,
-      workspaceDocumentsService: this.getWorkspaceDocumentService(clusterUri),
-    }));
-  }
-
   setWorkspaceLocalClusterUri(
     clusterUri: string,
     localClusterUri: string
