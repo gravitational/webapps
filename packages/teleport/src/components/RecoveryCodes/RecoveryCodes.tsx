@@ -44,7 +44,7 @@ export default function RecoveryCodesDialog({
 
   const handleContinue = () => {
     userEventService.capturePreUserEvent({
-      event: CaptureEvent.PreUserOnboardRecoveryCodesContinueClickEvent,
+      event: CaptureEvent.PreUserRecoveryCodesContinueClickEvent,
       username: username,
     });
     onContinue();
