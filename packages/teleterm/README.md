@@ -137,8 +137,15 @@ See [Teleport Connect build
 process](https://gravitational.slab.com/posts/teleport-connect-build-process-fu6da5ld) on Slab for
 bulid process documentation that is specific to Gravitational.
 
+### Native dependencies
+
+If node-pty doesn't provide precompiled binaries for your system and the specific Electron version,
+you will need to install [the dependencies required by
+node-pty](https://github.com/microsoft/node-pty#dependencies).
+
 ### Linux
-To create RPM package for aarch64 target you need to provide `USE_SYSTEM_FPM=1` env var. 
+
+To create RPM package for aarch64 target you need to provide `USE_SYSTEM_FPM=1` env var.
 
 ### macOS
 
