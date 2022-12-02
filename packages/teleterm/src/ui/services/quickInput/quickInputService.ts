@@ -101,9 +101,6 @@ export class QuickInputService extends Store<State> {
   // Parses the input string and returns AutocompleteResult which includes information about which
   // token we currently show the autocomplete for and what are the autocomplete suggestions (items)
   // to show.
-  //
-  // TODO(ravicious): This function needs to take cursor index into account instead of assuming that
-  // you want to complete only what's at the end of the input string.
   parse(input: string): ParseResult {
     const parseResult = this.quickCommandParser.parse(input);
 

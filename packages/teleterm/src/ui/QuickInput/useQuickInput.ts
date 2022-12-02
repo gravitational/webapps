@@ -50,11 +50,6 @@ export default function useQuickInput() {
   );
 
   const [suggestionsAttempt, getSuggestions] = useAsync(() =>
-    // TODO: Add retryWithRelogin.
-    // TODO: Account for race condition, that is: someone keeps typing when there's already a
-    // request in progress.
-    // https://beta.reactjs.org/learn/you-might-not-need-an-effect#fetching-data
-    // TODO: Send error notifications on error.
     retryWithRelogin(
       appContext,
       workspacesService.getActiveWorkspace()?.localClusterUri,
