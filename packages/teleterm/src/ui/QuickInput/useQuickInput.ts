@@ -30,6 +30,7 @@ import {
 } from 'teleterm/ui/services/quickInput/types';
 import { routing } from 'teleterm/ui/uri';
 import { KeyboardShortcutType } from 'teleterm/services/config';
+
 import { retryWithRelogin } from '../utils';
 
 export default function useQuickInput() {
@@ -61,11 +62,18 @@ export default function useQuickInput() {
     )
   );
 
+  useEffect(() => {
+    if (suggestionsAttempt.status === 'error') {
+      appContext.notificationsService.notifyError({
+        title: 'Error fetching suggestions.',
+        description: suggestionsAttempt.statusText,
+      });
+    }
+  }, [suggestionsAttempt.status]);
+
   React.useEffect(() => {
     getSuggestions();
   }, [parseResult]);
-
-  console.log('suggestionAttempt', suggestionsAttempt);
 
   const hasSuggestions =
     suggestionsAttempt.status === 'success' &&
