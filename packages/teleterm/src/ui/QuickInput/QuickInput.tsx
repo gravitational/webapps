@@ -38,9 +38,10 @@ export default function Container() {
 
 function QuickInput() {
   const props = useQuickInput();
-  const { visible, activeSuggestion, autocompleteResult, inputValue } = props;
+  const { visible, activeSuggestion, autocompleteAttempt, inputValue } = props;
   const hasSuggestions =
-    autocompleteResult.kind === 'autocomplete.partial-match';
+    autocompleteAttempt.data?.length > 0 &&
+    autocompleteAttempt.status === 'success';
   const refInput = useRef<HTMLInputElement>();
   const measuringInputRef = useRef<HTMLSpanElement>();
   const refList = useRef<HTMLElement>();
@@ -52,7 +53,7 @@ function QuickInput() {
     return debounce(() => {
       props.onInputChange(refInput.current.value);
       measureInputTextWidth();
-    }, 100);
+    }, 200);
   }, []);
 
   // Update input value if it changed outside of this component. This happens when the user pick an
@@ -96,7 +97,7 @@ function QuickInput() {
     }
     const next = getNext(
       activeSuggestion + nudge,
-      autocompleteResult.suggestions.length
+      autocompleteAttempt.data?.length
     );
     props.onActiveSuggestion(next);
   };
