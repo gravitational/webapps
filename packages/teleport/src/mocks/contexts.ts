@@ -47,8 +47,6 @@ export const fullAcl: Acl = {
   clipboardSharingEnabled: true,
   desktopSessionRecordingEnabled: true,
   directorySharingEnabled: true,
-  download: fullAccess,
-  license: fullAccess,
 };
 
 export const userContext = makeUserContext({

@@ -81,7 +81,7 @@ export class FeatureClusters extends Feature {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isAvailable(ctx: Ctx): boolean {
-    return ctx.getFeatureFlags().trustedClusters;
+    return true; // TODO(isaiah)
   }
 
   register(ctx: Ctx) {
