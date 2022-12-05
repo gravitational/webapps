@@ -76,7 +76,7 @@ export function useDiscover(config: UseMainConfig) {
     const nextView = findViewAtIndex(views, currentStep + numToIncrement);
 
     if (nextView) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(currentStep + numToIncrement);
     }
   }
 

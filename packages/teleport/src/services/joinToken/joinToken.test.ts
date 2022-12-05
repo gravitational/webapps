@@ -47,7 +47,7 @@ test('fetchJoinToken request fields are set as requested', () => {
     roles: ['Node'],
     rules: [{ awsAccountId: '1234', awsArn: 'xxxx' }],
     method: 'iam',
-    agentMatcherLabel: [{ name: 'env', value: 'dev' }],
+    suggestedAgentMatcherLabels: [{ name: 'env', value: 'dev' }],
   };
   svc.fetchJoinToken(mock);
   expect(api.post).toHaveBeenCalledWith(
