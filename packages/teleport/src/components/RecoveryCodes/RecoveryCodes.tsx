@@ -43,10 +43,13 @@ export default function RecoveryCodesDialog({
   };
 
   const handleContinue = () => {
-    userEventService.capturePreUserEvent({
-      event: CaptureEvent.PreUserRecoveryCodesContinueClickEvent,
-      username: username,
-    });
+    if (username) {
+      userEventService.capturePreUserEvent({
+        event: CaptureEvent.PreUserRecoveryCodesContinueClickEvent,
+        username: username,
+      });
+    }
+
     onContinue();
   };
 
