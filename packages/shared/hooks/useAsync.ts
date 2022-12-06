@@ -141,7 +141,7 @@ function useIsMounted() {
 export class CanceledError extends Error {
   constructor() {
     super('Ignored response from useAsync because the signal got aborted');
-    this.name = 'AbortedSignalError';
+    this.name = 'CanceledError';
   }
 }
 
