@@ -14,28 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
-import { ResourcesService } from 'teleterm/ui/services/resources';
-import { ClustersService } from 'teleterm/ui/services/clusters';
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 
 import {
   AutocompleteToken,
   SuggestionCmd,
-  SuggestionServer,
-  SuggestionSshLogin,
-  SuggestionDatabase,
   QuickInputParser,
-  QuickInputSuggester,
   ParseResult,
 } from './types';
+import * as suggesters from './suggesters';
 
 // Pair of helper values to return when a given parser arrives at a situation where it knows there
 // will be no suggestions to return (and hence also no useful target token to return).
 const emptyTargetToken: AutocompleteToken = { value: '', startIndex: 0 };
 const noSuggestions = () => Promise.resolve([]);
-// The max amount of results to return from the server side query
-const limit = 10;
 
 export class QuickCommandParser implements QuickInputParser {
   private parserRegistry: Map<string, QuickInputParser>;
@@ -170,8 +162,8 @@ export class QuickTshSshParser implements QuickInputParser {
   );
 
   constructor(
-    private sshLoginSuggester: QuickSshLoginSuggester,
-    private serverSuggester: QuickServerSuggester
+    private sshLoginSuggester: suggesters.QuickSshLoginSuggester,
+    private serverSuggester: suggesters.QuickServerSuggester
   ) {}
 
   // TODO: Support cluster arg.
@@ -265,7 +257,7 @@ export class QuickTshSshParser implements QuickInputParser {
 export class QuickTshProxyDbParser implements QuickInputParser {
   private totalDbNameRegex = /^\S+$/i;
 
-  constructor(private databaseSuggester: QuickDatabaseSuggester) {}
+  constructor(private databaseSuggester: suggesters.QuickDatabaseSuggester) {}
 
   parse(rawInput: string, startIndex: number): ParseResult {
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
@@ -313,99 +305,5 @@ export class QuickTshProxyDbParser implements QuickInputParser {
       command: { kind: 'command.unknown' },
       getSuggestions: noSuggestions,
     };
-  }
-}
-
-export class QuickSshLoginSuggester
-  implements QuickInputSuggester<SuggestionSshLogin>
-{
-  constructor(
-    private workspacesService: WorkspacesService,
-    private clustersService: ClustersService
-  ) {}
-
-  async getSuggestions(input: string): Promise<SuggestionSshLogin[]> {
-    // TODO(ravicious): Handle the `--cluster` tsh ssh flag.
-    const localClusterUri =
-      this.workspacesService.getActiveWorkspace()?.localClusterUri;
-    if (!localClusterUri) {
-      return [];
-    }
-    const cluster = this.clustersService.findCluster(localClusterUri);
-    const allLogins = cluster?.loggedInUser?.sshLoginsList || [];
-    let matchingLogins: typeof allLogins;
-
-    if (!input) {
-      matchingLogins = allLogins;
-    } else {
-      matchingLogins = allLogins.filter(login =>
-        login.startsWith(input.toLowerCase())
-      );
-    }
-
-    return matchingLogins.map(login => ({
-      kind: 'suggestion.ssh-login' as const,
-      token: login,
-      // This allows the user to immediately begin typing the hostname.
-      appendToToken: '@',
-      data: login,
-    }));
-  }
-}
-
-export class QuickServerSuggester
-  implements QuickInputSuggester<SuggestionServer>
-{
-  constructor(
-    private workspacesService: WorkspacesService,
-    private resourcesService: ResourcesService
-  ) {}
-
-  async getSuggestions(input: string): Promise<SuggestionServer[]> {
-    // TODO(ravicious): Handle the `--cluster` tsh ssh flag.
-    const localClusterUri =
-      this.workspacesService.getActiveWorkspace()?.localClusterUri;
-    if (!localClusterUri) {
-      return [];
-    }
-    const servers = await this.resourcesService.fetchServers({
-      clusterUri: localClusterUri,
-      search: input,
-      limit,
-    });
-
-    return servers.agentsList.map(server => ({
-      kind: 'suggestion.server' as const,
-      token: server.hostname,
-      data: server,
-    }));
-  }
-}
-
-export class QuickDatabaseSuggester
-  implements QuickInputSuggester<SuggestionDatabase>
-{
-  constructor(
-    private workspacesService: WorkspacesService,
-    private resourcesService: ResourcesService
-  ) {}
-
-  async getSuggestions(input: string): Promise<SuggestionDatabase[]> {
-    const localClusterUri =
-      this.workspacesService.getActiveWorkspace()?.localClusterUri;
-    if (!localClusterUri) {
-      return [];
-    }
-    const databases = await this.resourcesService.fetchDatabases({
-      clusterUri: localClusterUri,
-      search: input,
-      limit,
-    });
-
-    return databases.agentsList.map(database => ({
-      kind: 'suggestion.database' as const,
-      token: database.name,
-      data: database,
-    }));
   }
 }

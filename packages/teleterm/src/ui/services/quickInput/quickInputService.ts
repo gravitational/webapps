@@ -21,7 +21,8 @@ import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 import { ResourcesService } from 'teleterm/ui/services/resources';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 
-import * as pickers from './quickPickers';
+import * as parsers from './parsers';
+import * as suggestors from './suggesters';
 import { AutocompleteToken, ParseResult, Suggestion } from './types';
 
 type State = {
@@ -30,7 +31,7 @@ type State = {
 };
 
 export class QuickInputService extends Store<State> {
-  private quickCommandParser: pickers.QuickCommandParser;
+  private quickCommandParser: parsers.QuickCommandParser;
   lastFocused: WeakRef<HTMLElement>;
 
   constructor(
@@ -41,31 +42,31 @@ export class QuickInputService extends Store<State> {
   ) {
     super();
     this.lastFocused = new WeakRef(document.createElement('div'));
-    this.quickCommandParser = new pickers.QuickCommandParser(launcher);
+    this.quickCommandParser = new parsers.QuickCommandParser(launcher);
     this.setState({
       inputValue: '',
     });
 
-    const sshLoginSuggester = new pickers.QuickSshLoginSuggester(
+    const sshLoginSuggester = new suggestors.QuickSshLoginSuggester(
       workspacesService,
       clustersService
     );
-    const serverSuggester = new pickers.QuickServerSuggester(
+    const serverSuggester = new suggestors.QuickServerSuggester(
       workspacesService,
       resourcesService
     );
-    const databaseSuggester = new pickers.QuickDatabaseSuggester(
+    const databaseSuggester = new suggestors.QuickDatabaseSuggester(
       workspacesService,
       resourcesService
     );
 
     this.quickCommandParser.registerParserForCommand(
       'tsh ssh',
-      new pickers.QuickTshSshParser(sshLoginSuggester, serverSuggester)
+      new parsers.QuickTshSshParser(sshLoginSuggester, serverSuggester)
     );
     this.quickCommandParser.registerParserForCommand(
       'tsh proxy db',
-      new pickers.QuickTshProxyDbParser(databaseSuggester)
+      new parsers.QuickTshProxyDbParser(databaseSuggester)
     );
   }
 

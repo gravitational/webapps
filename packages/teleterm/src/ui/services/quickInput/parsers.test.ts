@@ -1,10 +1,10 @@
-import { QuickSshLoginSuggester, QuickServerSuggester } from './quickPickers';
+import { QuickSshLoginSuggester, QuickServerSuggester } from './suggesters';
 
 // Jest doesn't let us selectively automock classes. See https://github.com/facebook/jest/issues/11995
 //
 // So instead for now we just mock all classes in the module and then do `jest.requireActual` when
 // we need to have the actual class when writing tests for it.
-jest.mock('./quickPickers');
+jest.mock('./parsers');
 
 afterEach(() => {
   jest.restoreAllMocks();
@@ -18,7 +18,7 @@ test("tsh ssh picker returns unknown command if it's missing the first positiona
     typeof QuickServerSuggester
   >;
   const ActualQuickTshSshParser =
-    jest.requireActual('./quickPickers').QuickTshSshParser;
+    jest.requireActual('./parsers').QuickTshSshParser;
 
   const parser = new ActualQuickTshSshParser(
     new QuickSshLoginSuggesterMock(undefined, undefined),
@@ -40,7 +40,7 @@ test('tsh ssh picker returns unknown command if the input includes any additiona
     typeof QuickServerSuggester
   >;
   const ActualQuickTshSshParser =
-    jest.requireActual('./quickPickers').QuickTshSshParser;
+    jest.requireActual('./parsers').QuickTshSshParser;
 
   const parser = new ActualQuickTshSshParser(
     new QuickSshLoginSuggesterMock(undefined, undefined),

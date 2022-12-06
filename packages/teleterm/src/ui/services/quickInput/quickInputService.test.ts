@@ -6,7 +6,8 @@ import { ResourcesService } from 'teleterm/ui/services/resources';
 import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequestsService';
 
 import { QuickInputService } from './quickInputService';
-import * as pickers from './quickPickers';
+import * as parsers from './parsers';
+import * as suggestors from './suggesters';
 import { SuggestionCmd, SuggestionSshLogin } from './types';
 
 afterEach(() => {
@@ -108,7 +109,7 @@ test('parse returns correct result for an SSH login suggestion', async () => {
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getSuggestions')
+    .spyOn(suggestors.QuickSshLoginSuggester.prototype, 'getSuggestions')
     .mockImplementation(async () => {
       return [
         {
@@ -147,7 +148,7 @@ test('parse returns correct result for an SSH login suggestion with spaces betwe
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getSuggestions')
+    .spyOn(suggestors.QuickSshLoginSuggester.prototype, 'getSuggestions')
     .mockImplementation(async () => {
       return [
         {
@@ -241,9 +242,9 @@ test('parse returns correct result for a database name suggestion', async () => 
 });
 
 test("parse doesn't return any suggestions if the only suggestion completely matches the target token", async () => {
-  jest.mock('./quickPickers');
-  const QuickCommandParserMock = pickers.QuickCommandParser as jest.MockedClass<
-    typeof pickers.QuickCommandParser
+  jest.mock('./parsers');
+  const QuickCommandParserMock = parsers.QuickCommandParser as jest.MockedClass<
+    typeof parsers.QuickCommandParser
   >;
   jest
     .spyOn(QuickCommandParserMock.prototype, 'parse')
@@ -280,9 +281,9 @@ test("parse doesn't return any suggestions if the only suggestion completely mat
 });
 
 test('parse returns no suggestions if any of the parsers returns empty suggestions array', async () => {
-  jest.mock('./quickPickers');
-  const QuickCommandParserMock = pickers.QuickCommandParser as jest.MockedClass<
-    typeof pickers.QuickCommandParser
+  jest.mock('./parsers');
+  const QuickCommandParserMock = parsers.QuickCommandParser as jest.MockedClass<
+    typeof parsers.QuickCommandParser
   >;
   jest
     .spyOn(QuickCommandParserMock.prototype, 'parse')
@@ -333,7 +334,7 @@ test("the SSH login autocomplete is shown only if there's at least one space aft
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getSuggestions')
+    .spyOn(suggestors.QuickSshLoginSuggester.prototype, 'getSuggestions')
     .mockImplementation(async () => {
       return [
         {
@@ -486,7 +487,7 @@ test("parse returns the first argument as loginHost when there's no @ sign", asy
     onlyTshSshCommand
   );
   jest
-    .spyOn(pickers.QuickSshLoginSuggester.prototype, 'getSuggestions')
+    .spyOn(suggestors.QuickSshLoginSuggester.prototype, 'getSuggestions')
     .mockImplementation(async () => {
       return [
         {
