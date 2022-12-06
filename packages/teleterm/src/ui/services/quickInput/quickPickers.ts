@@ -34,6 +34,8 @@ import {
 // will be no suggestions to return (and hence also no useful target token to return).
 const emptyTargetToken: AutocompleteToken = { value: '', startIndex: 0 };
 const noSuggestions = () => Promise.resolve([]);
+// The max amount of results to return from the server side query
+const limit = 10;
 
 export class QuickCommandParser implements QuickInputParser {
   private parserRegistry: Map<string, QuickInputParser>;
@@ -369,7 +371,7 @@ export class QuickServerSuggester
     const servers = await this.resourcesService.fetchServers({
       clusterUri: localClusterUri,
       search: input,
-      limit: 5,
+      limit,
     });
 
     return servers.agentsList.map(server => ({
@@ -397,7 +399,7 @@ export class QuickDatabaseSuggester
     const databases = await this.resourcesService.fetchDatabases({
       clusterUri: localClusterUri,
       search: input,
-      limit: 5,
+      limit,
     });
 
     return databases.agentsList.map(database => ({
