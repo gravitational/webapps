@@ -22,7 +22,7 @@ import { ResourcesService } from 'teleterm/ui/services/resources';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 
 import * as parsers from './parsers';
-import * as suggestors from './suggesters';
+import * as suggesters from './suggesters';
 import { AutocompleteToken, ParseResult, Suggestion } from './types';
 
 type State = {
@@ -47,15 +47,15 @@ export class QuickInputService extends Store<State> {
       inputValue: '',
     });
 
-    const sshLoginSuggester = new suggestors.QuickSshLoginSuggester(
+    const sshLoginSuggester = new suggesters.QuickSshLoginSuggester(
       workspacesService,
       clustersService
     );
-    const serverSuggester = new suggestors.QuickServerSuggester(
+    const serverSuggester = new suggesters.QuickServerSuggester(
       workspacesService,
       resourcesService
     );
-    const databaseSuggester = new suggestors.QuickDatabaseSuggester(
+    const databaseSuggester = new suggesters.QuickDatabaseSuggester(
       workspacesService,
       resourcesService
     );
