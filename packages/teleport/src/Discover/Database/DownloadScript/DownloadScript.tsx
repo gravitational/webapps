@@ -147,7 +147,7 @@ export function DownloadScript(
     timedOut: pollingTimedOut,
     start,
     result,
-  } = usePingTeleport<Database>();
+  } = usePingTeleport<Database>(props.agentMeta.resourceName);
 
   function regenerateScriptAndRepoll() {
     reloadJoinToken();
