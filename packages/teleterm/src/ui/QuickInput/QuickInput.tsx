@@ -39,10 +39,10 @@ export default function Container() {
 
 function QuickInput() {
   const props = useQuickInput();
-  const { visible, activeSuggestion, autocompleteAttempt, inputValue } = props;
+  const { visible, activeSuggestion, suggestionsAttempt, inputValue } = props;
   const hasSuggestions =
-    autocompleteAttempt.data?.length > 0 &&
-    autocompleteAttempt.status === 'success';
+    suggestionsAttempt.data?.length > 0 &&
+    suggestionsAttempt.status === 'success';
   const refInput = useRef<HTMLInputElement>();
   const measuringInputRef = useRef<HTMLSpanElement>();
   const refList = useRef<HTMLElement>();
@@ -54,7 +54,7 @@ function QuickInput() {
     return debounce(() => {
       props.onInputChange(refInput.current.value);
       measureInputTextWidth();
-    }, 200);
+    }, 100);
   }, []);
 
   // Update input value if it changed outside of this component. This happens when the user pick an
@@ -98,7 +98,7 @@ function QuickInput() {
     }
     const next = getNext(
       activeSuggestion + nudge,
-      autocompleteAttempt.data?.length
+      suggestionsAttempt.data?.length
     );
     props.onActiveSuggestion(next);
   };
@@ -118,7 +118,7 @@ function QuickInput() {
         props.onEnter(activeSuggestion);
         return;
       case KeyEnum.ESC:
-        props.onBack();
+        props.onEscape();
         return;
       case KeyEnum.TAB:
         return;
@@ -164,9 +164,13 @@ function QuickInput() {
         onKeyDown={handleKeyDown}
         isOpened={visible}
       />
-      {autocompleteAttempt.status === 'processing' && (
+      {suggestionsAttempt.status === 'processing' && (
         <Animate>
-          <Spinner />
+          <Spinner
+            css={`
+              vertical-align: top;
+            `}
+          />
         </Animate>
       )}
       {!visible && <Shortcut>{props.keyboardShortcut}</Shortcut>}
@@ -174,7 +178,7 @@ function QuickInput() {
         <QuickInputList
           ref={refList}
           position={measuredInputTextWidth}
-          items={autocompleteAttempt.data}
+          items={suggestionsAttempt.data}
           activeItem={activeSuggestion}
           onPick={props.onEnter}
         />

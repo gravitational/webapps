@@ -58,16 +58,17 @@ export default function useQuickInput() {
   );
 
   useEffect(() => {
-    if (suggestionsAttempt.status === 'error') {
-      appContext.notificationsService.notifyError({
-        title: 'Error fetching suggestions.',
-        description: suggestionsAttempt.statusText,
-      });
+    async function get() {
+      const [response, err] = await getSuggestions();
+      if (err && err.name !== 'CanceledError') {
+        console.log('err', err);
+        appContext.notificationsService.notifyError({
+          title: 'Error fetching suggestions.',
+          description: suggestionsAttempt.statusText,
+        });
+      }
     }
-  }, [suggestionsAttempt.status]);
-
-  React.useEffect(() => {
-    getSuggestions();
+    get();
   }, [parseResult]);
 
   const hasSuggestions =
@@ -138,8 +139,7 @@ export default function useQuickInput() {
     quickInputService.pickSuggestion(targetToken, suggestion);
   };
 
-  // TODO: Find a better name for this function.
-  const onBack = () => {
+  const onEscape = () => {
     setActiveSuggestion(0);
 
     // If there are suggestions to show, the first onBack call should always just close the
@@ -160,22 +160,24 @@ export default function useQuickInput() {
   // Reset active suggestion when the suggestion list changes.
   // We extract just the tokens and stringify the list to avoid stringifying big objects.
   // See https://github.com/facebook/react/issues/14476#issuecomment-471199055
-  // TODO: It's another action we should perform after the input has changed.
+  // TODO(ravicious): Remove the unnecessary effect.
+  // https://beta.reactjs.org/learn/you-might-not-need-an-effect#chains-of-computations
+  // https://beta.reactjs.org/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
   useEffect(() => {
     setActiveSuggestion(0);
   }, [
-    // We want to reset the active suggestion only between successful attempts and only if the
-    // suggestions didn't change.
+    // We want to reset the active suggestion only if the
+    // suggestions have changed.
     suggestionsAttempt.data?.map(suggestion => suggestion.token).join(','),
   ]);
 
   return {
     visible,
-    autocompleteAttempt: suggestionsAttempt,
+    suggestionsAttempt,
     activeSuggestion,
     inputValue,
     onFocus,
-    onBack,
+    onEscape,
     onEnter,
     onActiveSuggestion,
     onInputChange: quickInputService.setInputValue,
