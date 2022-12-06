@@ -59,7 +59,7 @@ export default function useQuickInput() {
 
   useEffect(() => {
     async function get() {
-      const [response, err] = await getSuggestions();
+      const [, err] = await getSuggestions();
       if (err && err.name !== 'CanceledError') {
         console.log('err', err);
         appContext.notificationsService.notifyError({
