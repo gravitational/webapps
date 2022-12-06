@@ -27,6 +27,7 @@ import EventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
 
 import { ProgressBarTty } from './ProgressBar';
 import Xterm from './Xterm';
+import { getAccessToken, getHostName } from 'teleport/services/api';
 
 export default function Player({ sid, clusterId }) {
   const { tty } = useSshPlayer(clusterId, sid);
@@ -88,6 +89,12 @@ const StyledPlayer = styled.div`
 function useSshPlayer(clusterId: string, sid: string) {
   const tty = React.useMemo(() => {
     const url = cfg.getTerminalSessionUrl({ clusterId, sid });
+    const address = cfg.api.ttyPlaybackWsAddr
+      .replace(':fqdn', getHostName())
+      .replace(':clusterId', clusterId)
+      .replace(':sid', sid)
+      .replace(':token', getAccessToken());
+
     return new TtyPlayer(new EventProvider({ url }));
   }, [sid, clusterId]);
 
