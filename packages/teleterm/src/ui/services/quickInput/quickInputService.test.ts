@@ -323,8 +323,10 @@ test("the SSH login autocomplete isn't shown if there's no space after `tsh ssh`
     new WorkspacesServiceMock(undefined, undefined, undefined, undefined)
   );
 
-  const { command } = quickInputService.parse('tsh ssh');
+  const { command, getSuggestions } = quickInputService.parse('tsh ssh');
+  const suggestions = await getSuggestions();
 
+  expect(suggestions).toHaveLength(0);
   expect(command).toEqual({ kind: 'command.unknown' });
 });
 
