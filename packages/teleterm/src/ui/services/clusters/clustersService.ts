@@ -182,6 +182,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async syncLeafClusters(clusterUri: string) {
     await this.syncLeafClustersList(clusterUri);
 
+    // TODO: Is this necessary?
     this.syncGateways();
   }
 
