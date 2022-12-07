@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useEffect } from 'react';
 
-import { useAsync } from 'shared/hooks/useAsync';
+import { CanceledError, useAsync } from 'shared/hooks/useAsync';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import {
@@ -60,11 +60,10 @@ export default function useQuickInput() {
   useEffect(() => {
     async function get() {
       const [, err] = await getSuggestions();
-      if (err && err.name !== 'CanceledError') {
-        console.log('err', err);
+      if (err && !(err instanceof CanceledError)) {
         appContext.notificationsService.notifyError({
-          title: 'Error fetching suggestions.',
-          description: suggestionsAttempt.statusText,
+          title: 'Error fetching suggestions',
+          description: err.message,
         });
       }
     }
