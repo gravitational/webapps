@@ -27,52 +27,68 @@ import {
 import DocumentCluster from './DocumentCluster';
 
 export default {
-  title: 'Teleterm/Cluster',
+  title: 'Teleterm/DocumentCluster',
 };
 
 export const Online = () => {
   const state = createClusterServiceState();
-  state.clusters.set('/clusters/localhost', {
-    uri: '/clusters/localhost',
+  const clusterUri = '/clusters/localhost';
+  state.clusters.set(clusterUri, {
+    uri: clusterUri,
     leaf: false,
     name: 'localhost',
     connected: true,
     proxyHost: 'localhost:3080',
   });
 
-  return renderState(state);
+  return renderState(state, clusterUri);
 };
 
 export const Offline = () => {
   const state = createClusterServiceState();
-  state.clusters.set('/clusters/localhost', {
-    uri: '/clusters/localhost',
+  const clusterUri = '/clusters/localhost';
+  state.clusters.set(clusterUri, {
+    uri: clusterUri,
     leaf: false,
     name: 'localhost',
     connected: false,
     proxyHost: 'localhost:3080',
   });
 
-  return renderState(state);
+  return renderState(state, clusterUri);
 };
 
 export const Notfound = () => {
   const state = createClusterServiceState();
-  return renderState(state);
+  return renderState(state, undefined);
 };
 
-function renderState(state: ClustersServiceState) {
-  const appContext = new MockAppContext();
-  appContext.workspacesService.getActiveWorkspaceDocumentService().update =
-    () => null;
-  appContext.clustersService.state = state;
-
+function renderState(
+  state: ClustersServiceState,
+  activeClusterUri: string | undefined
+) {
   const doc = {
     kind: 'doc.cluster',
     clusterUri: '/clusters/localhost',
     uri: '123',
     title: 'sample',
   } as const;
+  const appContext = new MockAppContext();
+  appContext.clustersService.state = state;
+
+  if (activeClusterUri) {
+    appContext.workspacesService.setState(draftState => {
+      draftState.rootClusterUri = activeClusterUri;
+      draftState.workspaces = {
+        activeClusterUri: {
+          localClusterUri: activeClusterUri,
+          documents: [doc],
+          location: doc.uri,
+          accessRequests: undefined,
+        },
+      };
+    });
+  }
 
   return (
     <AppContextProvider value={appContext}>

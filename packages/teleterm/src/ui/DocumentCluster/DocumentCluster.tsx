@@ -38,10 +38,16 @@ export default function Container(props: DocumentProps) {
   );
 
   useEffect(() => {
+    const rootClusterUri = routing.ensureRootClusterUri(clusterUri);
+
+    if (!appCtx.workspacesService.getWorkspace(rootClusterUri)) {
+      return;
+    }
+
     // because we don't wait for the leaf clusters to fetch before we show them
     // we can't access `actualName` when cluster document is created
     appCtx.workspacesService
-      .getWorkspaceDocumentService(routing.ensureRootClusterUri(clusterUri))
+      .getWorkspaceDocumentService(rootClusterUri)
       .update(props.doc.uri, {
         title: clusterCtx.state.clusterName,
       });
