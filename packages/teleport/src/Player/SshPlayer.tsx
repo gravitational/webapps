@@ -23,14 +23,15 @@ import cfg from 'teleport/config';
 import TtyPlayer, {
   StatusEnum as TtyStatusEnum,
 } from 'teleport/lib/term/ttyPlayer';
+import TtyStramPlayer from 'teleport/lib/term/ttyStreamPlayer';
 import EventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
 
 import { ProgressBarTty } from './ProgressBar';
 import Xterm from './Xterm';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 
-export default function Player({ sid, clusterId }) {
-  const { tty } = useSshPlayer(clusterId, sid);
+export default function Player({ sid, clusterId, durationMs }) {
+  const { tty } = useSshPlayer(clusterId, sid, durationMs);
   const { statusText, status } = tty;
   const eventCount = tty.getEventCount();
   const isError = status === TtyStatusEnum.ERROR;
@@ -86,7 +87,7 @@ const StyledPlayer = styled.div`
   justify-content: space-between;
 `;
 
-function useSshPlayer(clusterId: string, sid: string) {
+function useSshPlayer(clusterId: string, sid: string, durationMs: number) {
   const tty = React.useMemo(() => {
     const url = cfg.getTerminalSessionUrl({ clusterId, sid });
     const address = cfg.api.ttyPlaybackWsAddr
@@ -95,7 +96,9 @@ function useSshPlayer(clusterId: string, sid: string) {
       .replace(':sid', sid)
       .replace(':token', getAccessToken());
 
-    return new TtyPlayer(new EventProvider({ url }));
+    return new TtyStramPlayer(address, durationMs);
+
+    // return new TtyPlayer(new EventProvider({ url }));
   }, [sid, clusterId]);
 
   // to trigger re-render when tty state changes
@@ -113,9 +116,7 @@ function useSshPlayer(clusterId: string, sid: string) {
     }
 
     tty.on('change', onChange);
-    tty.connect().then(() => {
-      tty.play();
-    });
+    tty.connect();
 
     return cleanup;
   }, [tty]);

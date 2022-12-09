@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { throttle } from 'lodash';
 
-import TtyPlayer from 'teleport/lib/term/ttyPlayer';
+import TtyPlayer from 'teleport/lib/term/ttyStreamPlayer';
 
 import ProgressBar from './ProgressBar';
 
@@ -61,11 +61,7 @@ export function useTtyProgress(tty: TtyPlayer) {
 
 function makeTtyProgress(tty: TtyPlayer) {
   function toggle() {
-    if (tty.isPlaying()) {
-      tty.stop();
-    } else {
-      tty.play();
-    }
+    tty.togglePlayPause();
   }
 
   function move(value) {

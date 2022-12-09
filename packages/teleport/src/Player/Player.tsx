@@ -106,7 +106,7 @@ export default function Player() {
             durationMs={durationMs}
           />
         ) : (
-          <SshPlayer sid={sid} clusterId={clusterId} />
+          <SshPlayer sid={sid} clusterId={clusterId} durationMs={durationMs} />
         )}
       </Flex>
     </StyledPlayer>
