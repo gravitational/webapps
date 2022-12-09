@@ -23,6 +23,8 @@ import styled from 'styled-components';
 import cfg from 'teleport/config';
 import { Participant, Session, SessionKind } from 'teleport/services/session';
 
+import { JoinMenuButton } from './JoinMenu';
+
 export default function SessionList(props: Props) {
   const { sessions, pageSize = 100 } = props;
 
@@ -111,7 +113,13 @@ const renderJoinCell = ({ sid, clusterId, kind }: Session) => {
   const url = cfg.getSshSessionRoute({ sid, clusterId });
   return (
     <Cell align="right" height="26px">
-      <ButtonBorder
+      <JoinMenuButton
+        participantModes={['Observer', 'Moderator', 'Peer']}
+        onClick={participantMode => {
+          console.log(participantMode);
+        }}
+      />
+      {/* <ButtonBorder
         kind="primary"
         as="a"
         href={url}
@@ -120,7 +128,7 @@ const renderJoinCell = ({ sid, clusterId, kind }: Session) => {
         size="small"
       >
         Join
-      </ButtonBorder>
+      </ButtonBorder> */}
     </Cell>
   );
 };
