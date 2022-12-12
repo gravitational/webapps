@@ -28,6 +28,7 @@ export interface App {
   fqdn: string;
   awsRoles: AwsRole[];
   awsConsole: boolean;
+  oktaApp: boolean;
 }
 
 export type AppsResponse = {
@@ -35,8 +36,11 @@ export type AppsResponse = {
   startKey?: string;
   totalCount?: number;
 };
-
 export type AwsRole = {
   arn: string;
+  display: string;
+};
+export type OktaRole = {
+  id: string;
   display: string;
 };

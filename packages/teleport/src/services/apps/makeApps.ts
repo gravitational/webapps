@@ -28,6 +28,7 @@ export default function makeApp(json: any): App {
     clusterId,
     fqdn,
     awsConsole = false,
+    oktaApp = false,
   } = json;
 
   const canCreateUrl = fqdn && clusterId && publicAddr;
@@ -50,5 +51,6 @@ export default function makeApp(json: any): App {
     launchUrl,
     awsRoles,
     awsConsole,
+    oktaApp,
   };
 }

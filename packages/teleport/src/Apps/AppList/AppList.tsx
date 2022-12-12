@@ -33,12 +33,14 @@ import {
 } from 'design/theme/palette';
 import { AmazonAws } from 'design/Icon';
 
-import { App } from 'teleport/services/apps';
+import { App, OktaRole } from 'teleport/services/apps';
 import { AgentLabel } from 'teleport/services/agents';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
 import AwsLaunchButton from './AwsLaunchButton';
+import OktaLaunchButton from './OktaLaunchButton';
+import { logDOM } from '@testing-library/dom';
 
 export default function AppList(props: Props) {
   const {
@@ -154,19 +156,39 @@ function renderAppIcon({ name, awsConsole }: App) {
 function renderLaunchButtonCell({
   launchUrl,
   awsConsole,
+  oktaApp, 
   awsRoles,
   fqdn,
   clusterId,
   publicAddr,
 }: App) {
-  const $btn = awsConsole ? (
+  let $btn;
+  if(awsConsole) {
+    $btn = (
     <AwsLaunchButton
       awsRoles={awsRoles}
       fqdn={fqdn}
       clusterId={clusterId}
       publicAddr={publicAddr}
     />
-  ) : (
+  )
+  } else if(oktaApp) {
+    const oktaRoles = [
+      {
+        id: "okta-dev",
+        display: "Okta Developer",
+      }
+    ];
+    $btn = (
+    <OktaLaunchButton
+      oktaRoles={oktaRoles}
+      fqdn={fqdn}
+      clusterId={clusterId}
+      publicAddr={publicAddr}
+    />
+    )
+  } else {
+    $btn = (
     <ButtonBorder
       as="a"
       width="88px"
@@ -177,7 +199,8 @@ function renderLaunchButtonCell({
     >
       LAUNCH
     </ButtonBorder>
-  );
+  )
+  }
 
   return <Cell align="right">{$btn}</Cell>;
 }

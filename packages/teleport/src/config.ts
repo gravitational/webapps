@@ -580,6 +580,7 @@ export interface UrlLauncherParams {
   clusterId?: string;
   publicAddr?: string;
   arn?: string;
+  oktaRole?: string;
 }
 
 export interface UrlPlayerParams {
