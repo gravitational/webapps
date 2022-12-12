@@ -196,6 +196,16 @@ On top of that, you must provide env vars that will be used for notarization. `A
 be set to the account email address associated with the developer ID. `APPLE_PASSWORD` must be [an
 app-specific password](https://support.apple.com/en-us/HT204397), not the account password.
 
+## App behavior
+
+### Making tsh available to use outside of Connect
+
+* On Linux, a post install script creates a symlink in /usr/bin to tsh bundled with Connect.
+* On Windows, the `bin` directory in the resources dir is added to the `Path` env var during
+  installation.
+* On macOS, the user can execute `tsh install` from the command bar. The command executes a script
+  which symlinks the tsh bundled with Connect to `/usr/local/bin`.
+
 ## Architecture
 
 ### Resource lifecycle
