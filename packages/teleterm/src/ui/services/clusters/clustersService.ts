@@ -15,6 +15,7 @@ import { NotificationsService } from 'teleterm/ui/services/notifications';
 import {
   Cluster,
   CreateAccessRequestParams,
+  GetRequestableRolesParams,
   ReviewAccessRequestParams,
   ServerSideParams,
 } from 'teleterm/services/tshd/types';
@@ -84,16 +85,12 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async loginLocal(params: LoginLocalParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginLocal(params, abortSignal);
-    await this.syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
-      params.clusterUri
-    );
+    await this.syncRootClusterAndCatchErrors(params.clusterUri);
   }
 
   async loginSso(params: LoginSsoParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginSso(params, abortSignal);
-    await this.syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
-      params.clusterUri
-    );
+    await this.syncRootClusterAndCatchErrors(params.clusterUri);
   }
 
   async loginPasswordless(
@@ -101,44 +98,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     abortSignal: tsh.TshAbortSignal
   ) {
     await this.client.loginPasswordless(params, abortSignal);
-    await this.syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
-      params.clusterUri
-    );
-  }
-
-  private async syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
-    clusterUri: string
-  ) {
-    await Promise.allSettled([
-      this.syncRootClusterAndCatchErrors(clusterUri),
-      // A temporary workaround until the gateways are able to refresh their own certs on incoming
-      // connections.
-      //
-      // After logging in and obtaining fresh certs for the cluster, we need to make the gateways
-      // obtain fresh certs as well. Currently, the only way to achieve that is to restart them.
-      this.restartClusterGatewaysAndCatchErrors(clusterUri).then(() =>
-        // Sync gateways to update their status, in case one of them failed to start back up.
-        // In that case, that gateway won't be included in the gateway list in the tsh daemon.
-        this.syncGateways()
-      ),
-    ]);
-  }
-
-  async restartClusterGatewaysAndCatchErrors(rootClusterUri: string) {
-    await Promise.allSettled(
-      this.findGateways(rootClusterUri).map(async gateway => {
-        try {
-          await this.restartGateway(gateway.uri);
-        } catch (error) {
-          const title = `Could not restart the database connection for ${gateway.targetUser}@${gateway.targetName}`;
-
-          this.notificationsService.notifyError({
-            title,
-            description: error.message,
-          });
-        }
-      })
-    );
+    await this.syncRootClusterAndCatchErrors(params.clusterUri);
   }
 
   async syncRootClusterAndCatchErrors(clusterUri: string) {
@@ -399,13 +359,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
   }
 
-  async getRequestableRoles(rootClusterUri: string) {
-    const cluster = this.state.clusters.get(rootClusterUri);
+  async getRequestableRoles(params: GetRequestableRolesParams) {
+    const cluster = this.state.clusters.get(params.rootClusterUri);
     if (!cluster.connected) {
       return;
     }
 
-    return this.client.getRequestableRoles(rootClusterUri);
+    return this.client.getRequestableRoles(params);
   }
 
   getAssumedRequests(rootClusterUri: string) {
@@ -536,10 +496,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       });
       throw error;
     }
-  }
-
-  async restartGateway(gatewayUri: string) {
-    await this.client.restartGateway(gatewayUri);
   }
 
   async setGatewayTargetSubresourceName(
