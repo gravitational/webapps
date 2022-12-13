@@ -90,6 +90,6 @@ export class StatePersistenceService {
   }
 
   private putState(state: StatePersistenceState): void {
-    this._fileStorage.put('state', state);
+    this._fileStorage.putKey('state', state);
   }
 }

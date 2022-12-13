@@ -7,11 +7,13 @@ import Logger from 'teleterm/logger';
 const logger = new Logger('FileStorage');
 
 export interface FileStorage {
-  put(path: string, json: any): void;
+  putKey(key: string, json: any): void;
+
+  put(json: any): void;
 
   putAllSync(): void;
 
-  get<T>(path: string): T;
+  get<T>(path?: string): T;
 }
 
 export function createFileStorage(opts: {
@@ -23,10 +25,19 @@ export function createFileStorage(opts: {
   }
 
   const { filePath } = opts;
-  const state = loadState(opts.filePath);
+  let state = loadState(opts.filePath);
 
-  function put(key: string, json: any) {
+  function putKey(key: string, json: any) {
     state[key] = json;
+    writeState();
+  }
+
+  function put(json: any) {
+    state = { ...json };
+    writeState();
+  }
+
+  function writeState() {
     const text = stringify(state);
 
     opts.debounceWrites
@@ -43,12 +54,13 @@ export function createFileStorage(opts: {
     }
   }
 
-  function get<T>(key: string): T {
-    return state[key] as T;
+  function get<T>(key?: string): T {
+    return key ? state[key] : (state as T);
   }
 
   return {
     put,
+    putKey,
     putAllSync,
     get,
   };
