@@ -129,10 +129,7 @@ export default class AppContext implements IAppContext {
     this.setUpTshdEventSubscriptions();
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
-    showConfigParsingErrors(
-      this.mainProcessClient.configService.getParsingErrors(),
-      this.notificationsService
-    );
+    this.showConfigParsingErrors();
   }
 
   private setUpTshdEventSubscriptions() {
@@ -145,19 +142,17 @@ export default class AppContext implements IAppContext {
       this.tshdNotificationsService.sendNotification(request);
     });
   }
-}
 
-function showConfigParsingErrors(
-  errors: ZodIssue[] | undefined,
-  notificationsService: NotificationsService
-): void {
-  if (errors) {
-    errors.forEach(error => {
-      notificationsService.notifyError({
-        title: `Removed invalid config key`,
-        description: `${error.message} at ${error.path.join('.')}`,
+  private showConfigParsingErrors(): void {
+    const errors = this.mainProcessClient.configService.getParsingErrors();
+    if (errors) {
+      errors.forEach(error => {
+        this.notificationsService.notifyError({
+          title: `Removed invalid config key`,
+          description: `${error.message} at ${error.path.join('.')}`,
+        });
       });
-    });
+    }
   }
 }
 
