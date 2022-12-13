@@ -8,6 +8,7 @@ import {
   Gateway,
   GetDatabasesResponse,
   GetKubesResponse,
+  GetRequestableRolesParams,
   GetServersResponse,
   Kube,
   LoginLocalParams,
@@ -19,6 +20,7 @@ import {
   TshAbortController,
   TshAbortSignal,
   TshClient,
+  GetRequestableRolesResponse,
 } from '../types';
 import { AccessRequest } from '../v1/access_request_pb';
 
@@ -32,7 +34,9 @@ export class MockTshClient implements TshClient {
   getDatabases: (params: ServerSideParams) => Promise<GetDatabasesResponse>;
   listDatabaseUsers: (dbUri: string) => Promise<string[]>;
   getAllServers: (clusterUri: string) => Promise<Server[]>;
-  getRequestableRoles: (clusterUri: string) => Promise<string[]>;
+  getRequestableRoles: (
+    params: GetRequestableRolesParams
+  ) => Promise<GetRequestableRolesResponse>;
   getServers: (params: ServerSideParams) => Promise<GetServersResponse>;
   assumeRole: (
     clusterUri: string,
@@ -59,7 +63,6 @@ export class MockTshClient implements TshClient {
   listGateways: () => Promise<Gateway[]>;
   createGateway: (params: CreateGatewayParams) => Promise<Gateway>;
   removeGateway: (gatewayUri: string) => Promise<undefined>;
-  restartGateway: (gatewayUri: string) => Promise<undefined>;
   setGatewayTargetSubresourceName: (
     gatewayUri: string,
     targetSubresourceName: string
@@ -87,3 +90,15 @@ export class MockTshClient implements TshClient {
   logout: (clusterUri: string) => Promise<undefined>;
   transferFile: () => undefined;
 }
+
+export const gateway: Gateway = {
+  uri: '/gateways/gateway1',
+  targetName: 'postgres',
+  targetUri: '/clusters/teleport-local/dbs/postgres',
+  targetUser: 'alice',
+  targetSubresourceName: '',
+  localAddress: 'localhost',
+  localPort: '59116',
+  protocol: 'postgres',
+  cliCommand: 'psql postgres://alice@localhost:59116',
+};

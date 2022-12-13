@@ -51,6 +51,7 @@ function initializeApp(): void {
     logger,
     configService,
     fileStorage: appStateFileStorage,
+    windowsManager,
   });
 
   app.on(
