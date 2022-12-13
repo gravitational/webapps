@@ -20,6 +20,8 @@ export const EventTypeEnum = {
   END: 'session.end',
   PRINT: 'print',
   RESIZE: 'resize',
+  RESET: 'reset',
+  MOVE: 'move',
 };
 
 export const TermEventEnum = {

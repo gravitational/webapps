@@ -26,6 +26,7 @@ export const StatusEnum = {
   ERROR: 'ERROR',
   PAUSED: 'PAUSED',
   LOADING: 'LOADING',
+  ENDED: 'ENDED',
 };
 
 enum Action {
@@ -61,9 +62,6 @@ export default class TtyPlayer extends Tty {
   private eventCount = 0;
   public current = 0;
   public currentEventIndex = 0;
-  public _posToEventIndexMap = [];
-  public _chunkQueue = [];
-  public writeInFlight = false;
   private timer: NodeJS.Timer;
 
   constructor(private address: string, public duration: number) {
@@ -112,6 +110,11 @@ export default class TtyPlayer extends Tty {
       this.status = StatusEnum.PLAYING;
     }
 
+    if (message.message === 'end') {
+      this.status = StatusEnum.ENDED;
+      return;
+    }
+
     switch (message.event) {
       case EventTypeEnum.START:
         this.resize(message);
@@ -122,7 +125,18 @@ export default class TtyPlayer extends Tty {
       case EventTypeEnum.PRINT:
         this.print(message);
         break;
+      case EventTypeEnum.RESET:
+        this.reset();
+        break;
+      case EventTypeEnum.MOVE:
+        this.current = message.position;
+        break;
     }
+  }
+
+  private reset() {
+    this.current = 0;
+    this.emit(TermEventEnum.RESET);
   }
 
   private resize(message: any): void {
@@ -192,7 +206,22 @@ export default class TtyPlayer extends Tty {
     }
   }
 
-  move(value: any) {}
+  play() {
+    if (!this.isPlaying()) {
+      this.togglePlayPause();
+    }
+  }
+
+  move(value: number) {
+    if (this.status === StatusEnum.ENDED) {
+      this.current = 0;
+      this.status = StatusEnum.LOADING;
+      this.connect();
+      return;
+    }
+
+    this.sendMsg(JSON.stringify({ action: Action.MOVE, movePosition: value }));
+  }
 
   private startInterval() {
     if (!this.timer) {
