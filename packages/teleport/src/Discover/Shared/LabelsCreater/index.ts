@@ -15,3 +15,4 @@
  */
 
 export { LabelsCreater } from './LabelsCreater';
+export type { DiscoverLabel } from './LabelsCreater';
