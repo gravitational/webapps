@@ -94,6 +94,7 @@ export enum TabContextMenuEventType {
 export enum ConfigServiceEventType {
   Get = 'Get',
   Set = 'Set',
+  GetParsingErrors = 'GetParsingErrors',
 }
 
 export enum FileStorageEventType {

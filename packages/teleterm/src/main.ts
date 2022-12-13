@@ -10,7 +10,7 @@ import { enableWebHandlersProtection } from 'teleterm/mainProcess/protocolHandle
 import { LoggerColor, createFileLoggerService } from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
-import { ConfigServiceImpl } from 'teleterm/services/config';
+import { createConfigService } from 'teleterm/services/config';
 import { createFileStorage } from 'teleterm/services/fileStorage';
 import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 
@@ -34,7 +34,10 @@ function initializeApp(): void {
     filePath: path.join(settings.userDataDir, 'app_config.json'),
     debounceWrites: false,
   });
-  const configService = new ConfigServiceImpl(appConfigFileStorage);
+  const configService = createConfigService(
+    appConfigFileStorage,
+    settings.platform
+  );
   const windowsManager = new WindowsManager(appStateFileStorage, settings);
 
   process.on('uncaughtException', error => {

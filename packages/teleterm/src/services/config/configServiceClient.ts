@@ -17,6 +17,8 @@ export function subscribeToConfigServiceEvents(
           return (event.returnValue = configService.get(item.path));
         case ConfigServiceEventType.Set:
           return configService.set(item.path, item.value);
+        case ConfigServiceEventType.GetParsingErrors:
+          return (event.returnValue = configService.getParsingErrors());
       }
     }
   );
@@ -36,6 +38,11 @@ export function createConfigServiceClient(): ConfigService {
         value,
       });
     },
-    restoreDefault: () => {},
+    getParsingErrors: () => {
+      return ipcRenderer.sendSync(
+        ConfigServiceEventChannel,
+        ConfigServiceEventType.GetParsingErrors
+      );
+    },
   };
 }
