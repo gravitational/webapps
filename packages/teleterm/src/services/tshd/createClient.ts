@@ -65,7 +65,7 @@ export default function createClient(
     async getKubes({
       clusterUri,
       search,
-      sort,
+      sort = { fieldName: 'name', dir: 'ASC' },
       query,
       searchAsRoles,
       startKey,
@@ -145,7 +145,7 @@ export default function createClient(
     async getDatabases({
       clusterUri,
       search,
-      sort,
+      sort = { fieldName: 'name', dir: 'ASC' },
       query,
       searchAsRoles,
       startKey,
@@ -228,7 +228,7 @@ export default function createClient(
       clusterUri,
       search,
       query,
-      sort,
+      sort = { fieldName: 'hostname', dir: 'ASC' },
       searchAsRoles,
       startKey,
       limit,
@@ -334,19 +334,29 @@ export default function createClient(
       });
     },
 
-    async getRequestableRoles(clusterUri: string) {
-      const req = new api.GetRequestableRolesRequest().setClusterUri(
-        clusterUri
+    async getRequestableRoles(params: types.GetRequestableRolesParams) {
+      const req = new api.GetRequestableRolesRequest()
+        .setClusterUri(params.rootClusterUri)
+        .setResourceIdsList(
+          params.resourceIds.map(({ id, clusterName, kind }) => {
+            const resourceId = new ResourceID();
+            resourceId.setName(id);
+            resourceId.setClusterName(clusterName);
+            resourceId.setKind(kind);
+            return resourceId;
+          })
+        );
+      return new Promise<types.GetRequestableRolesResponse>(
+        (resolve, reject) => {
+          tshd.getRequestableRoles(req, (err, response) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(response.toObject());
+            }
+          });
+        }
       );
-      return new Promise<string[]>((resolve, reject) => {
-        tshd.getRequestableRoles(req, (err, response) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(response.toObject().rolesList);
-          }
-        });
-      });
     },
 
     async addRootCluster(addr: string) {
@@ -570,19 +580,6 @@ export default function createClient(
       const req = new api.RemoveGatewayRequest().setGatewayUri(gatewayUri);
       return new Promise<void>((resolve, reject) => {
         tshd.removeGateway(req, err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-      });
-    },
-
-    async restartGateway(gatewayUri = '') {
-      const req = new api.RestartGatewayRequest().setGatewayUri(gatewayUri);
-      return new Promise<void>((resolve, reject) => {
-        tshd.restartGateway(req, err => {
           if (err) {
             reject(err);
           } else {

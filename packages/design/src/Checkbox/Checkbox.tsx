@@ -14,22 +14,29 @@
  * limitations under the License.
  */
 
-import nodeAccessRO from './nodeAccessRO.yaml?raw';
-import nodeAccessRW from './nodeAccessRW.yaml?raw';
-import connDiagRW from './connDiagRW.yaml?raw';
-import kubeAccessRW from './kubeAccessRW.yaml?raw';
-import kubeAccessRO from './kubeAccessRO.yaml?raw';
-import dbAccessRW from './dbAccessRW.yaml?raw';
-import dbAccessRO from './dbAccessRO.yaml?raw';
-import dbCU from './dbCU.yaml?raw';
+import styled from 'styled-components';
 
-export {
-  nodeAccessRO,
-  nodeAccessRW,
-  connDiagRW,
-  kubeAccessRW,
-  kubeAccessRO,
-  dbAccessRO,
-  dbAccessRW,
-  dbCU,
-};
+import { Flex } from 'design';
+
+export const CheckboxWrapper = styled(Flex)`
+  padding: 8px;
+  margin-bottom: 4px;
+  width: 300px;
+  align-items: center;
+  border: 1px solid ${props => props.theme.colors.primary.light};
+  border-radius: 8px;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+`;
+
+export const CheckboxInput = styled.input`
+  margin-right: 10px;
+  accent-color: ${props => props.theme.colors.secondary.main};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
