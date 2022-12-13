@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ZodIssue } from 'zod';
+
 import { MainProcessClient, ElectronGlobals } from 'teleterm/types';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { ModalsService } from 'teleterm/ui/services/modals';
@@ -25,11 +27,11 @@ import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService/workspacesService';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
+import { ConfigService } from 'teleterm/services/config';
 
 import { CommandLauncher } from './commandLauncher';
 import { IAppContext } from './types';
 import { ResourcesService } from './services/resources/resourcesService';
-import { ConfigService } from 'teleterm/services/config';
 
 export default class AppContext implements IAppContext {
   clustersService: ClustersService;
@@ -92,13 +94,32 @@ export default class AppContext implements IAppContext {
   async init(): Promise<void> {
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
+    showConfigParsingErrors(
+      this.mainProcessClient.configService.getParsingErrors(),
+      this.notificationsService
+    );
   }
 }
 
-//example
+function showConfigParsingErrors(
+  errors: ZodIssue[] | undefined,
+  notificationsService: NotificationsService
+): void {
+  if (errors) {
+    errors.forEach(error => {
+      notificationsService.notifyError({
+        title: `Removed invalid config key`,
+        description: `${error.message} at ${error.path.join('.')}`,
+      });
+    });
+  }
+}
+
+//example, remove
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function askForUsageMetrics(configService: ConfigService) {
   // only if we didn't ask
-  if (!configService.get('usageMetrics.enabled').metadata.isStored) {
-    configService.set('usageMetrics.enabled', true);
+  if (!configService.get('usageMetricsEnabled').metadata.isStored) {
+    configService.set('usageMetricsEnabled', true);
   }
 }
