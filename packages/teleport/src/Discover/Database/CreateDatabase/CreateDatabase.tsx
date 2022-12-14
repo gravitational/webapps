@@ -15,7 +15,8 @@
  */
 
 import React, { useState } from 'react';
-import { Text, Box, Flex } from 'design';
+import { Text, Box, Flex, AnimatedProgressBar } from 'design';
+import Dialog, { DialogContent } from 'design/DialogConfirmation';
 import { Danger } from 'design/Alert';
 import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
@@ -44,7 +45,7 @@ export function CreateDatabase(props: AgentStepProps) {
 
 export function CreateDatabaseView({
   attempt,
-  createDbAndQueryDb,
+  registerDatabase,
   canCreateDatabase,
   engine,
 }: State) {
@@ -63,7 +64,7 @@ export function CreateDatabaseView({
 
     // TODO (lisa or ryan): preserve "self hosted" or "aws"
     // and protocol on first step, and use it here.
-    createDbAndQueryDb({
+    registerDatabase({
       labels,
       name: dbName,
       uri: dbUri,
@@ -77,7 +78,9 @@ export function CreateDatabaseView({
       {({ validator }) => (
         <Box maxWidth="800px">
           <Header>Register a Database</Header>
-          <HeaderSubtitle>Lorem ipsum dolores</HeaderSubtitle>
+          <HeaderSubtitle>
+            Create a new database resource for the database server.
+          </HeaderSubtitle>
           {attempt.status === 'failed' && (
             <Danger children={attempt.statusText} />
           )}
@@ -123,6 +126,12 @@ export function CreateDatabaseView({
               {/* TODO (lisa or ryan): add AWS input fields */}
               <Box>
                 <Text bold>Labels (optional)</Text>
+                <Text mb={2}>
+                  Labels make this new database discoverable by the database
+                  server. <br />
+                  Not defining labels is equivalent to asteriks (any database
+                  server can discover this database).
+                </Text>
                 <LabelsCreater
                   labels={labels}
                   setLabels={setLabels}
@@ -139,8 +148,30 @@ export function CreateDatabaseView({
               attempt.status === 'processing' || !canCreateDatabase
             }
           />
+          {attempt.status === 'processing' && <CreateDatabaseDialog />}
         </Box>
       )}
     </Validation>
   );
 }
+
+const CreateDatabaseDialog = () => {
+  return (
+    <Dialog disableEscapeKeyDown={false} open={true}>
+      <DialogContent
+        width="400px"
+        alignItems="center"
+        mb={0}
+        textAlign="center"
+      >
+        <Text bold caps>
+          Register Database
+        </Text>
+        <Text mb={2} mt={3}>
+          In Progress...
+        </Text>
+        <AnimatedProgressBar />
+      </DialogContent>
+    </Dialog>
+  );
+};

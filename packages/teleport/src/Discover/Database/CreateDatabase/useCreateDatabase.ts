@@ -28,11 +28,13 @@ export function useCreateDatabase(props: AgentStepProps) {
   const ctx = useTeleport();
   const { attempt, setAttempt } = useAttempt('');
 
-  async function createDbAndQueryDb(db: CreateDatabaseRequest) {
+  async function registerDatabase(db: CreateDatabaseRequest) {
     setAttempt({ status: 'processing' });
     try {
       // TODO (lisa): The exisitng logic below is no longer correct, will modify/update
       // after this issue gets resolved: https://github.com/gravitational/teleport/issues/19032
+
+      // 30 second poller.
       //
       // Logic to implement:
       //
@@ -102,7 +104,7 @@ export function useCreateDatabase(props: AgentStepProps) {
   const access = ctx.storeUser.getDatabaseAccess();
   return {
     attempt,
-    createDbAndQueryDb,
+    registerDatabase,
     canCreateDatabase: access.create,
     engine: (props.resourceState as Database).engine,
   };

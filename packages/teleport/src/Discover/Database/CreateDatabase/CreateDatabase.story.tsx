@@ -56,7 +56,7 @@ export const Failed = () => (
 
 const props: State = {
   attempt: { status: '' },
-  createDbAndQueryDb: () => null,
+  registerDatabase: () => null,
   canCreateDatabase: true,
   engine: DatabaseEngine.PostgreSQL,
 };
