@@ -6,7 +6,7 @@ import Logger from 'teleterm/logger';
 const logger = new Logger('ConfigStore');
 
 export function createConfigStore<
-  Schema extends z.AnyZodObject,
+  Schema extends z.ZodTypeAny,
   Shape = z.infer<Schema>
 >(schema: Schema, fileStorage: FileStorage) {
   const { storedConfig, configWithDefaults, errors } = validateStoredConfig();
@@ -46,7 +46,7 @@ export function createConfigStore<
     if (parsed.success === true) {
       return {
         storedConfig,
-        configWithDefaults: parsed.data as Shape,
+        configWithDefaults: parsed.data,
         errors: undefined,
       };
     } else {
@@ -67,7 +67,7 @@ export function createConfigStore<
       }
       return {
         storedConfig: withoutInvalidKeys,
-        configWithDefaults: reParsed.data as Shape,
+        configWithDefaults: reParsed.data,
         errors: parsed.error.issues,
       };
     }
