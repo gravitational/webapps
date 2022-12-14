@@ -26,10 +26,8 @@ export function createConfigStore<
     storedConfig[key] = value;
   }
 
-  function getParsingErrors(): ZodIssue[] | undefined {
-    if (parsed.success === false) {
-      return parsed.error.issues;
-    }
+  function readValidationErrors(): ZodIssue[] | undefined {
+    return errors;
   }
 
   function parse(data: Partial<Shape>) {
@@ -75,5 +73,5 @@ export function createConfigStore<
     }
   }
 
-  return { get, set, getParsingErrors };
+  return { get, set, readValidationErrors };
 }
