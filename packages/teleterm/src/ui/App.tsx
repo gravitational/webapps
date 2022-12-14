@@ -22,10 +22,11 @@ export const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
           <AppContextProvider value={ctx}>
             <ThemeProvider
               fonts={{
-                mono: ctx.mainProcessClient.configService.get('monoFontFamily')
-                  .value,
+                mono: ctx.mainProcessClient.configService.get(
+                  'fonts.monoFamily'
+                ).value,
                 sansSerif: ctx.mainProcessClient.configService.get(
-                  'sansSerifFontFamily'
+                  'fonts.sansSerifFamily'
                 ).value,
               }}
             >

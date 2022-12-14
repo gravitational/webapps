@@ -20,25 +20,24 @@ export class KeyboardShortcutsService {
     private configService: ConfigService
   ) {
     this.shortcutsConfig = {
-      'tab-1': this.configService.get('keymap.tab-1').value,
-      'tab-2': this.configService.get('keymap.tab-2').value,
-      'tab-3': this.configService.get('keymap.tab-3').value,
-      'tab-4': this.configService.get('keymap.tab-4').value,
-      'tab-5': this.configService.get('keymap.tab-5').value,
-      'tab-6': this.configService.get('keymap.tab-6').value,
-      'tab-7': this.configService.get('keymap.tab-7').value,
-      'tab-8': this.configService.get('keymap.tab-8').value,
-      'tab-9': this.configService.get('keymap.tab-9').value,
-      'tab-close': this.configService.get('keymap.tab-close').value,
-      'tab-previous': this.configService.get('keymap.tab-previous').value,
-      'tab-next': this.configService.get('keymap.tab-next').value,
-      'tab-new': this.configService.get('keymap.tab-new').value,
-      'open-quick-input': this.configService.get('keymap.open-quick-input')
+      'tab-1': this.configService.get('keymap.tab1').value,
+      'tab-2': this.configService.get('keymap.tab2').value,
+      'tab-3': this.configService.get('keymap.tab3').value,
+      'tab-4': this.configService.get('keymap.tab4').value,
+      'tab-5': this.configService.get('keymap.tab5').value,
+      'tab-6': this.configService.get('keymap.tab6').value,
+      'tab-7': this.configService.get('keymap.tab7').value,
+      'tab-8': this.configService.get('keymap.tab8').value,
+      'tab-9': this.configService.get('keymap.tab9').value,
+      'tab-close': this.configService.get('keymap.tabClose').value,
+      'tab-previous': this.configService.get('keymap.tabPrevious').value,
+      'tab-next': this.configService.get('keymap.tabNext').value,
+      'tab-new': this.configService.get('keymap.tabNew').value,
+      'open-quick-input': this.configService.get('keymap.openQuickInput').value,
+      'toggle-connections': this.configService.get('keymap.toggleConnections')
         .value,
-      'toggle-connections': this.configService.get('keymap.toggle-connections')
-        .value,
-      'toggle-clusters': this.configService.get('keymap.toggle-clusters').value,
-      'toggle-identity': this.configService.get('keymap.toggle-identity').value,
+      'toggle-clusters': this.configService.get('keymap.toggleClusters').value,
+      'toggle-identity': this.configService.get('keymap.toggleIdentity').value,
     };
     this.recalculateKeysToShortcuts(this.shortcutsConfig);
     this.attachKeydownHandler();

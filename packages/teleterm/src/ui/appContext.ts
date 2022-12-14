@@ -160,7 +160,7 @@ export default class AppContext implements IAppContext {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function askForUsageMetrics(configService: ConfigService) {
   // only if we didn't ask
-  if (!configService.get('usageMetricsEnabled').metadata.isStored) {
-    configService.set('usageMetricsEnabled', true);
+  if (!configService.get('usageMetrics.enabled').metadata.isStored) {
+    configService.set('usageMetrics.enabled', true);
   }
 }
