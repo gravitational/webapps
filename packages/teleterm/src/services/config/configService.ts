@@ -10,10 +10,14 @@ const createAppConfigSchema = (platform: Platform) => {
   const defaultFonts = getDefaultFonts(platform);
 
   // Important: all keys except 'usageMetrics.enabled' are currently not
-  // configurable by the user, we need to better validate the input (especially
-  // fonts, where any CSS can be injected).
-  // To make a key configurable, remove `omitStoredConfigValue`.
+  // configurable by the user. Before we let the user configure them,
+  // we need to set up some actual validation, so that for example
+  // arbitrary CSS cannot be injected into the app through font settings.
+  //
+  // However, we want them to be in the config schema, so we included
+  // them here, but we do not read their value from the stored config.
   return z.object({
+    'usageMetrics.enabled': z.boolean().default(false),
     'keymap.tab1': omitStoredConfigValue(
       z.string().default(defaultKeymap['tab-1'])
     ),
@@ -71,7 +75,6 @@ const createAppConfigSchema = (platform: Platform) => {
     'fonts.monoFamily': omitStoredConfigValue(
       z.string().default(defaultFonts['mono'])
     ),
-    'usageMetrics.enabled': z.boolean().default(false),
   });
 };
 
