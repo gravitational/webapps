@@ -5,30 +5,80 @@ import { Platform } from 'teleterm/mainProcess/types';
 
 import { createConfigStore } from './configStore';
 
-const appConfigSchema = z.object({
-  'keymap.tab-1': z.string(),
-  'keymap.tab-2': z.string(),
-  'keymap.tab-3': z.string(),
-  'keymap.tab-4': z.string(),
-  'keymap.tab-5': z.string(),
-  'keymap.tab-6': z.string(),
-  'keymap.tab-7': z.string(),
-  'keymap.tab-8': z.string(),
-  'keymap.tab-9': z.string(),
-  'keymap.tab-close': z.string(),
-  'keymap.tab-new': z.string(),
-  'keymap.tab-previous': z.string(),
-  'keymap.tab-next': z.string(),
-  'keymap.toggle-connections': z.string(),
-  'keymap.toggle-clusters': z.string(),
-  'keymap.toggle-identity': z.string(),
-  'keymap.open-quick-input': z.string(),
-  sansSerifFontFamily: z.string(),
-  monoFontFamily: z.string(),
-  usageMetricsEnabled: z.boolean(),
-});
+const createAppConfigSchema = (platform: Platform) => {
+  const defaultKeymap = getDefaultKeymap(platform);
+  const defaultFonts = getDefaultFonts(platform);
 
-export type AppConfig = z.infer<typeof appConfigSchema>;
+  // Important: all keys except 'usageMetrics.enabled' are currently not
+  // configurable by the user, we need to better validate the input (especially
+  // fonts, where any CSS can be injected).
+  // To make a key configurable, remove `omitStoredConfigValue`.
+  return z.object({
+    'keymap.tab1': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-1'])
+    ),
+    'keymap.tab2': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-2'])
+    ),
+    'keymap.tab3': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-3'])
+    ),
+    'keymap.tab4': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-4'])
+    ),
+    'keymap.tab5': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-5'])
+    ),
+    'keymap.tab6': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-6'])
+    ),
+    'keymap.tab7': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-7'])
+    ),
+    'keymap.tab8': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-8'])
+    ),
+    'keymap.tab9': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-9'])
+    ),
+    'keymap.tabClose': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-close'])
+    ),
+    'keymap.tabNew': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-new'])
+    ),
+    'keymap.tabPrevious': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-previous'])
+    ),
+    'keymap.tabNext': omitStoredConfigValue(
+      z.string().default(defaultKeymap['tab-next'])
+    ),
+    'keymap.toggleConnections': omitStoredConfigValue(
+      z.string().default(defaultKeymap['toggle-connections'])
+    ),
+    'keymap.toggleClusters': omitStoredConfigValue(
+      z.string().default(defaultKeymap['toggle-clusters'])
+    ),
+    'keymap.toggleIdentity': omitStoredConfigValue(
+      z.string().default(defaultKeymap['toggle-identity'])
+    ),
+    'keymap.openQuickInput': omitStoredConfigValue(
+      z.string().default(defaultKeymap['open-quick-input'])
+    ),
+    'fonts.sansSerifFamily': omitStoredConfigValue(
+      z.string().default(defaultFonts['sansSerif'])
+    ),
+    'fonts.monoFamily': omitStoredConfigValue(
+      z.string().default(defaultFonts['mono'])
+    ),
+    'usageMetrics.enabled': z.boolean().default(false),
+  });
+};
+
+const omitStoredConfigValue = <T>(schema: z.ZodType<T>) =>
+  z.preprocess(() => undefined, schema);
+
+export type AppConfig = z.infer<ReturnType<typeof createAppConfigSchema>>;
 
 /**
  * Modifier keys must be defined in the following order:
@@ -55,7 +105,7 @@ export type KeyboardShortcutType =
   | 'toggle-identity';
 
 export type KeyboardShortcutsConfig = Record<KeyboardShortcutType, string>;
-const getKeymap = (platform: Platform) => {
+const getDefaultKeymap = (platform: Platform) => {
   switch (platform) {
     case 'win32':
       return {
@@ -120,7 +170,7 @@ const getKeymap = (platform: Platform) => {
   }
 };
 
-function getFonts(platform: Platform) {
+function getDefaultFonts(platform: Platform) {
   switch (platform) {
     case 'win32':
       return {
@@ -144,37 +194,10 @@ export function createConfigService(
   appConfigFileStorage: FileStorage,
   platform: Platform
 ) {
-  const keymap = getKeymap(platform);
-  const fonts = getFonts(platform);
-
-  // Defaults could be provided in the schema using .default(), but currently
-  // there is no way to remove them during parsing (so returned data that is
-  // saved to the file would contain all the properties).
-  // Come back to it when this is resolved https://github.com/colinhacks/zod/issues/1593
-  const defaults: AppConfig = {
-    'keymap.tab-1': keymap['tab-1'],
-    'keymap.tab-2': keymap['tab-2'],
-    'keymap.tab-3': keymap['tab-3'],
-    'keymap.tab-4': keymap['tab-4'],
-    'keymap.tab-5': keymap['tab-5'],
-    'keymap.tab-6': keymap['tab-6'],
-    'keymap.tab-7': keymap['tab-7'],
-    'keymap.tab-8': keymap['tab-8'],
-    'keymap.tab-9': keymap['tab-9'],
-    'keymap.open-quick-input': keymap['open-quick-input'],
-    'keymap.toggle-connections': keymap['toggle-connections'],
-    'keymap.toggle-clusters': keymap['toggle-clusters'],
-    'keymap.tab-close': keymap['tab-close'],
-    'keymap.tab-new': keymap['tab-new'],
-    'keymap.tab-next': keymap['tab-next'],
-    'keymap.tab-previous': keymap['tab-previous'],
-    'keymap.toggle-identity': keymap['toggle-identity'],
-    monoFontFamily: fonts.mono,
-    sansSerifFontFamily: fonts.sansSerif,
-    usageMetricsEnabled: false,
-  };
-
-  return createConfigStore(appConfigSchema, defaults, appConfigFileStorage);
+  return createConfigStore(
+    createAppConfigSchema(platform),
+    appConfigFileStorage
+  );
 }
 
 export type ConfigService = ReturnType<typeof createConfigService>;
