@@ -19,7 +19,7 @@ test('stored and default values are combined', () => {
   fileStorage.put('usageMetrics.enabled', true);
   const configStore = createConfigStore(schema, fileStorage);
 
-  expect(configStore.readValidationErrors()).toBeUndefined();
+  expect(configStore.getStoredConfigErrors()).toBeUndefined();
 
   const usageMetricsEnabled = configStore.get('usageMetrics.enabled');
   expect(usageMetricsEnabled.value).toBe(true);
@@ -35,7 +35,7 @@ test('in case of invalid value a default one is returned', () => {
   fileStorage.put('usageMetrics.enabled', 'abcde');
   const configStore = createConfigStore(schema, fileStorage);
 
-  expect(configStore.readValidationErrors()).toStrictEqual([
+  expect(configStore.getStoredConfigErrors()).toStrictEqual([
     {
       code: 'invalid_type',
       expected: 'boolean',

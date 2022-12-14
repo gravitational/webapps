@@ -11,7 +11,7 @@ export function createMockConfigService(
     set(key, value) {
       values[key] = value;
     },
-    readValidationErrors() {
+    getStoredConfigErrors() {
       return [];
     },
   };

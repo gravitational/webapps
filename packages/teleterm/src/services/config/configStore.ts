@@ -26,7 +26,7 @@ export function createConfigStore<
     storedConfig[key] = value;
   }
 
-  function readValidationErrors(): ZodIssue[] | undefined {
+  function getStoredConfigErrors(): ZodIssue[] | undefined {
     return errors;
   }
 
@@ -70,5 +70,5 @@ export function createConfigStore<
     };
   }
 
-  return { get, set, readValidationErrors };
+  return { get, set, getStoredConfigErrors };
 }

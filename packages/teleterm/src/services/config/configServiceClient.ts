@@ -17,8 +17,8 @@ export function subscribeToConfigServiceEvents(
           return (event.returnValue = configService.get(item.path));
         case ConfigServiceEventType.Set:
           return configService.set(item.path, item.value);
-        case ConfigServiceEventType.ReadValidationErrors:
-          return (event.returnValue = configService.readValidationErrors());
+        case ConfigServiceEventType.GetStoredConfigErrors:
+          return (event.returnValue = configService.getStoredConfigErrors());
       }
     }
   );
@@ -38,10 +38,10 @@ export function createConfigServiceClient(): ConfigService {
         value,
       });
     },
-    readValidationErrors: () => {
+    getStoredConfigErrors: () => {
       return ipcRenderer.sendSync(
         ConfigServiceEventChannel,
-        ConfigServiceEventType.ReadValidationErrors
+        ConfigServiceEventType.GetStoredConfigErrors
       );
     },
   };

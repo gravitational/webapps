@@ -142,7 +142,7 @@ export default class AppContext implements IAppContext {
   }
 
   private showConfigParsingErrors(): void {
-    const errors = this.mainProcessClient.configService.readValidationErrors();
+    const errors = this.mainProcessClient.configService.getStoredConfigErrors();
     if (errors) {
       errors.forEach(error => {
         this.notificationsService.notifyError({
