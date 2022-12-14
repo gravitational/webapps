@@ -33,12 +33,12 @@ export function Clusters() {
     )
   );
 
-  function selectItem(id: ClusterUri): void {
+  function selectItem(clusterUri: ClusterUri): void {
     setIsPopoverOpened(false);
     if (clusters.hasPendingAccessRequest) {
-      setConfirmChangeTo(id);
+      setConfirmChangeTo(clusterUri);
     } else {
-      clusters.selectItem(id);
+      clusters.selectItem(clusterUri);
     }
   }
 
