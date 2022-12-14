@@ -3,12 +3,8 @@ import { FileStorage } from 'teleterm/services/fileStorage';
 export function createMockFileStorage(): FileStorage {
   let state = {};
   return {
-    putKey(key: string, json: any) {
-      state[key] = json;
-    },
-
-    put(json: any) {
-      state = json;
+    put(path: string, json: any) {
+      state[path] = json;
     },
 
     get<T>(key?: string): T {

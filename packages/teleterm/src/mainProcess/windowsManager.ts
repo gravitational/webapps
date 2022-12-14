@@ -158,7 +158,7 @@ export class WindowsManager {
       ...window.getNormalBounds(),
     };
 
-    this.fileStorage.putKey(this.storageKey, windowState);
+    this.fileStorage.put(this.storageKey, windowState);
   }
 
   private popupUniversalContextMenu(
