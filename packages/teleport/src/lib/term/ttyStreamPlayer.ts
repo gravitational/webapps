@@ -63,6 +63,7 @@ export default class TtyPlayer extends Tty {
   public current = 0;
   public currentEventIndex = 0;
   private timer: NodeJS.Timer;
+  private speed = 1;
 
   constructor(private address: string, public duration: number) {
     super({});
@@ -226,7 +227,7 @@ export default class TtyPlayer extends Tty {
   private startInterval() {
     if (!this.timer) {
       this.timer = setInterval(() => {
-        this.current += 10;
+        this.current += 10 * this.speed;
         this.change();
       }, PLAY_SPEED);
     }
@@ -239,5 +240,10 @@ export default class TtyPlayer extends Tty {
 
   private change() {
     this.emit('change');
+  }
+
+  setPlaySpeed(speed: number) {
+    this.sendMsg(JSON.stringify({ action: Action.PLAY_SPEED, speed }));
+    this.change();
   }
 }

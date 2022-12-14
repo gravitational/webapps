@@ -64,8 +64,12 @@ function makeTtyProgress(tty: TtyPlayer) {
     tty.togglePlayPause();
   }
 
-  function move(value) {
+  function move(value: number) {
     tty.move(value);
+  }
+
+  function setSpeed(speed: number) {
+    tty.setPlaySpeed(speed);
   }
 
   return {
@@ -74,6 +78,7 @@ function makeTtyProgress(tty: TtyPlayer) {
     time: tty.getCurrentTime(),
     isLoading: tty.isLoading(),
     isPlaying: tty.isPlaying(),
+    onPlaySpeedChange: setSpeed,
     current: tty.current,
     move,
     toggle,

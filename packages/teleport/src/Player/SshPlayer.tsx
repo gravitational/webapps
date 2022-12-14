@@ -97,8 +97,6 @@ function useSshPlayer(clusterId: string, sid: string, durationMs: number) {
       .replace(':token', getAccessToken());
 
     return new TtyStramPlayer(address, durationMs);
-
-    // return new TtyPlayer(new EventProvider({ url }));
   }, [sid, clusterId]);
 
   // to trigger re-render when tty state changes
