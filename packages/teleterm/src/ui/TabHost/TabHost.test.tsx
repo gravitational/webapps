@@ -24,12 +24,12 @@ function getMockDocuments(): Document[] {
   return [
     {
       kind: 'doc.blank',
-      uri: 'test_uri_1',
+      uri: '/docs/test_uri_1',
       title: 'Test 1',
     },
     {
       kind: 'doc.blank',
-      uri: 'test_uri_2',
+      uri: '/docs/test_uri_2',
       title: 'Test 2',
     },
   ];
@@ -84,17 +84,11 @@ function getTestSetup({ documents }: { documents: Document[] }) {
   };
 
   const workspacesService: Partial<WorkspacesService> = {
-    // @ts-expect-error - using mocks
-    getWorkspacesDocumentsServices() {
-      return [
-        { clusterUri: 'test_uri', workspaceDocumentsService: docsService },
-      ];
-    },
     isDocumentActive(documentUri: string) {
       return documentUri === documents[0].uri;
     },
     getRootClusterUri() {
-      return 'test_uri';
+      return '/clusters/test_uri';
     },
     getWorkspaces() {
       return {};
@@ -108,7 +102,7 @@ function getTestSetup({ documents }: { documents: Document[] }) {
         },
         documents,
         location: undefined,
-        localClusterUri: 'test_uri',
+        localClusterUri: '/clusters/test_uri',
       };
     },
     // @ts-expect-error - using mocks
@@ -118,7 +112,7 @@ function getTestSetup({ documents }: { documents: Document[] }) {
     useState: jest.fn(),
     state: {
       workspaces: {},
-      rootClusterUri: 'test_uri',
+      rootClusterUri: '/clusters/test_uri',
     },
   };
 
@@ -207,8 +201,8 @@ test('open new tab', () => {
   });
   const { add, open } = docsService;
   const mockedClusterDocument: DocumentCluster = {
-    clusterUri: 'test',
-    uri: 'test',
+    clusterUri: '/clusters/test',
+    uri: '/docs/test',
     title: 'Test',
     kind: 'doc.cluster',
   };
