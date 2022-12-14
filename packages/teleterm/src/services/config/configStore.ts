@@ -49,28 +49,25 @@ export function createConfigStore<
         configWithDefaults: parsed.data,
         errors: undefined,
       };
-    } else {
-      const withoutInvalidKeys = { ...storedConfig };
-      parsed.error.issues.forEach(error => {
-        // remove only top-level keys
-        delete withoutInvalidKeys[error.path[0]];
-        logger.info(
-          `Invalid config key, error: ${error.message} at ${error.path.join(
-            '.'
-          )}`
-        );
-      });
-      const reParsed = parse(withoutInvalidKeys);
-      if (reParsed.success === false) {
-        // it should not occur after removing invalid keys, but just in case
-        throw new Error('Re-parsing config file failed', reParsed.error.cause);
-      }
-      return {
-        storedConfig: withoutInvalidKeys,
-        configWithDefaults: reParsed.data,
-        errors: parsed.error.issues,
-      };
     }
+    const withoutInvalidKeys = { ...storedConfig };
+    parsed.error.issues.forEach(error => {
+      // remove only top-level keys
+      delete withoutInvalidKeys[error.path[0]];
+      logger.info(
+        `Invalid config key, error: ${error.message} at ${error.path.join('.')}`
+      );
+    });
+    const reParsed = parse(withoutInvalidKeys);
+    if (reParsed.success === false) {
+      // it should not occur after removing invalid keys, but just in case
+      throw new Error('Re-parsing config file failed', reParsed.error.cause);
+    }
+    return {
+      storedConfig: withoutInvalidKeys,
+      configWithDefaults: reParsed.data,
+      errors: parsed.error.issues,
+    };
   }
 
   return { get, set, readValidationErrors };
