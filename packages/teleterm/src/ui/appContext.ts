@@ -148,8 +148,8 @@ export default class AppContext implements IAppContext {
     if (errors) {
       errors.forEach(error => {
         this.notificationsService.notifyError({
-          title: `Removed invalid config key`,
-          description: `${error.message} at ${error.path.join('.')}`,
+          title: `Invalid config value for key ${error.path[0]}`,
+          description: error.message,
         });
       });
     }
