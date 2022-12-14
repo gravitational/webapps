@@ -10,44 +10,30 @@ beforeAll(() => {
 });
 
 const schema = z.object({
-  monoFontFamily: z.string(),
-  usageMetricsEnabled: z.boolean(),
+  'fonts.monoFamily': z.string().default('Arial'),
+  'usageMetrics.enabled': z.boolean().default(false),
 });
 
-test('stored and default properties are combined', () => {
+test('stored and default values are combined', () => {
   const fileStorage = createMockFileStorage();
-  fileStorage.put({ usageMetricsEnabled: true });
-  const configStore = createConfigStore(
-    schema,
-    {
-      usageMetricsEnabled: false,
-      monoFontFamily: 'Arial',
-    },
-    fileStorage
-  );
+  fileStorage.put('usageMetrics.enabled', true);
+  const configStore = createConfigStore(schema, fileStorage);
 
   expect(configStore.getParsingErrors()).toBeUndefined();
 
-  const usageMetricsEnabled = configStore.get('usageMetricsEnabled');
+  const usageMetricsEnabled = configStore.get('usageMetrics.enabled');
   expect(usageMetricsEnabled.value).toBe(true);
   expect(usageMetricsEnabled.metadata.isStored).toBe(true);
 
-  const monoFontFamily = configStore.get('monoFontFamily');
+  const monoFontFamily = configStore.get('fonts.monoFamily');
   expect(monoFontFamily.value).toBe('Arial');
   expect(monoFontFamily.metadata.isStored).toBe(false);
 });
 
-test('invalid properties are removed and defaults are returned', () => {
+test('in case of invalid value a default one is returned', () => {
   const fileStorage = createMockFileStorage();
-  fileStorage.put({ usageMetricsEnabled: 'abcde' });
-  const configStore = createConfigStore(
-    schema,
-    {
-      usageMetricsEnabled: false,
-      monoFontFamily: 'Arial',
-    },
-    fileStorage
-  );
+  fileStorage.put('usageMetrics.enabled', 'abcde');
+  const configStore = createConfigStore(schema, fileStorage);
 
   expect(configStore.getParsingErrors()).toStrictEqual([
     {
@@ -55,11 +41,26 @@ test('invalid properties are removed and defaults are returned', () => {
       expected: 'boolean',
       received: 'string',
       message: 'Expected boolean, received string',
-      path: ['usageMetricsEnabled'],
+      path: ['usageMetrics.enabled'],
     },
   ]);
 
-  const usageMetricsEnabled = configStore.get('usageMetricsEnabled');
+  const usageMetricsEnabled = configStore.get('usageMetrics.enabled');
   expect(usageMetricsEnabled.value).toBe(false);
   expect(usageMetricsEnabled.metadata.isStored).toBe(false);
+
+  const monoFontFamily = configStore.get('fonts.monoFamily');
+  expect(monoFontFamily.value).toBe('Arial');
+  expect(monoFontFamily.metadata.isStored).toBe(false);
+});
+
+test('calling set updated the value in store', () => {
+  const fileStorage = createMockFileStorage();
+  const configStore = createConfigStore(schema, fileStorage);
+
+  configStore.set('usageMetrics.enabled', true);
+
+  const usageMetricsEnabled = configStore.get('usageMetrics.enabled');
+  expect(usageMetricsEnabled.value).toBe(true);
+  expect(usageMetricsEnabled.metadata.isStored).toBe(true);
 });

@@ -8,22 +8,22 @@ const logger = new Logger('ConfigStore');
 export function createConfigStore<
   Schema extends z.AnyZodObject,
   Shape = z.infer<Schema>
->(schema: Schema, defaults: Shape, fileStorage: FileStorage) {
-  const parsed = parse(fileStorage.get());
-  updateConfigFile();
+>(schema: Schema, fileStorage: FileStorage) {
+  const { storedConfig, configWithDefaults, errors } = validateStoredConfig();
 
   function get<K extends keyof Shape>(
     key: K
   ): { value: Shape[K]; metadata: { isStored: boolean } } {
-    const stored = fileStorage.get<Shape>();
     return {
-      value: { ...defaults, ...stored }[key],
-      metadata: { isStored: stored[key] !== undefined },
+      value: configWithDefaults[key],
+      metadata: { isStored: storedConfig[key] !== undefined },
     };
   }
 
   function set<K extends keyof Shape>(key: K, value: Shape[K]): void {
-    fileStorage.putKey(key as string, value);
+    fileStorage.put(key as string, value);
+    configWithDefaults[key] = value;
+    storedConfig[key] = value;
   }
 
   function getParsingErrors(): ZodIssue[] | undefined {
@@ -32,32 +32,46 @@ export function createConfigStore<
     }
   }
 
-  function parse(data: Shape) {
-    return schema
-      .partial() // make all keys optional
-      .safeParse(data);
+  function parse(data: Partial<Shape>) {
+    return schema.safeParse(data);
   }
 
-  function updateConfigFile(): void {
+  //TODO (gzdunek): syntax errors of the JSON file are silently ignored, report
+  // them to the user too
+  function validateStoredConfig(): {
+    storedConfig: Partial<Shape>;
+    configWithDefaults: Shape;
+    errors: ZodIssue[] | undefined;
+  } {
+    const storedConfig = fileStorage.get<Partial<Shape>>();
+    const parsed = parse(storedConfig);
     if (parsed.success === true) {
-      fileStorage.put(parsed.data); // parsed.data does not contain unknown keys
+      return {
+        storedConfig,
+        configWithDefaults: parsed.data as Shape,
+        errors: undefined,
+      };
     } else {
-      const withoutInvalidProperties = { ...fileStorage.get<Shape>() };
+      const withoutInvalidKeys = { ...storedConfig };
       parsed.error.issues.forEach(error => {
         // remove only top-level keys
-        delete withoutInvalidProperties[error.path[0]];
+        delete withoutInvalidKeys[error.path[0]];
         logger.info(
-          `Removed invalid config key, error: ${
-            error.message
-          } at ${error.path.join('.')}`
+          `Invalid config key, error: ${error.message} at ${error.path.join(
+            '.'
+          )}`
         );
       });
-      const reParsed = parse(withoutInvalidProperties);
+      const reParsed = parse(withoutInvalidKeys);
       if (reParsed.success === false) {
         // it should not occur after removing invalid keys, but just in case
         throw new Error('Re-parsing config file failed', reParsed.error.cause);
       }
-      fileStorage.put(reParsed.data);
+      return {
+        storedConfig: withoutInvalidKeys,
+        configWithDefaults: reParsed.data as Shape,
+        errors: parsed.error.issues,
+      };
     }
   }
 
