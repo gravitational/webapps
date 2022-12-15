@@ -65,8 +65,8 @@ export function UsageData(props: UsageDataProps) {
         </DialogHeader>
         <DialogContent mb={4}>
           <Text typography="body1" color="text.secondary">
-            Do you allow for sending anonymized usage data about Teleport
-            Connect? This will help us to improve the product.
+            Do you agree to Teleport Connect collecting anonymized usage data?
+            This will help us improve the product.
           </Text>
         </DialogContent>
         <DialogFooter>
