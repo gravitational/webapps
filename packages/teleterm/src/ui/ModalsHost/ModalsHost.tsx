@@ -20,6 +20,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 import { ClusterConnect } from 'teleterm/ui/ClusterConnect';
 import { DocumentsReopen } from 'teleterm/ui/DocumentsReopen';
+import { Dialog } from 'teleterm/ui/services/modals';
 
 import ClusterLogout from '../ClusterLogout/ClusterLogout';
 
@@ -27,66 +28,79 @@ import { UsageData } from './modals/UsageData';
 
 export default function ModalsHost() {
   const { modalsService } = useAppContext();
-  const dialog = modalsService.useState();
+  const { regular: regularDialog, important: importantDialog } =
+    modalsService.useState();
 
-  const handleClose = () => modalsService.closeDialog();
+  const closeRegularDialog = () => modalsService.closeRegularDialog();
+  const closeImportantDialog = () => modalsService.closeImportantDialog();
 
-  if (dialog.kind === 'cluster-connect') {
-    return (
-      <ClusterConnect
-        clusterUri={dialog.clusterUri}
-        onCancel={() => {
-          handleClose();
-          dialog.onCancel?.();
-        }}
-        onSuccess={clusterUri => {
-          handleClose();
-          dialog.onSuccess(clusterUri);
-        }}
-      />
-    );
+  return (
+    <>
+      {renderDialog(regularDialog, closeRegularDialog)}
+      {renderDialog(importantDialog, closeImportantDialog)}
+    </>
+  );
+}
+
+function renderDialog(dialog: Dialog, handleClose: () => void) {
+  switch (dialog.kind) {
+    case 'cluster-connect': {
+      return (
+        <ClusterConnect
+          clusterUri={dialog.clusterUri}
+          reason={dialog.reason}
+          onCancel={() => {
+            handleClose();
+            dialog.onCancel?.();
+          }}
+          onSuccess={clusterUri => {
+            handleClose();
+            dialog.onSuccess(clusterUri);
+          }}
+        />
+      );
+    }
+    case 'cluster-logout': {
+      return (
+        <ClusterLogout
+          clusterUri={dialog.clusterUri}
+          clusterTitle={dialog.clusterTitle}
+          onClose={handleClose}
+        />
+      );
+    }
+    case 'documents-reopen': {
+      return (
+        <DocumentsReopen
+          onCancel={() => {
+            handleClose();
+            dialog.onCancel();
+          }}
+          onConfirm={() => {
+            handleClose();
+            dialog.onConfirm();
+          }}
+        />
+      );
+    }
+    case 'usage-data': {
+      return (
+        <UsageData
+          onCancel={handleClose}
+          onAllow={() => {
+            handleClose();
+            dialog.onAllow();
+          }}
+          onDecline={() => {
+            handleClose();
+            dialog.onDecline();
+          }}
+        />
+      );
+    }
+
+    default: {
+      return null;
+    }
   }
-
-  if (dialog.kind === 'cluster-logout') {
-    return (
-      <ClusterLogout
-        clusterUri={dialog.clusterUri}
-        clusterTitle={dialog.clusterTitle}
-        onClose={handleClose}
-      />
-    );
-  }
-
-  if (dialog.kind === 'documents-reopen') {
-    return (
-      <DocumentsReopen
-        onCancel={() => {
-          handleClose();
-          dialog.onCancel();
-        }}
-        onConfirm={() => {
-          handleClose();
-          dialog.onConfirm();
-        }}
-      />
-    );
-  }
-
-  if (dialog.kind === 'usage-data') {
-    return (
-      <UsageData
-        onCancel={handleClose}
-        onAllow={() => {
-          handleClose();
-          dialog.onAllow();
-        }}
-        onDecline={() => {
-          handleClose();
-          dialog.onDecline();
-        }}
-      />
-    );
-  }
-
-  return null;
 }

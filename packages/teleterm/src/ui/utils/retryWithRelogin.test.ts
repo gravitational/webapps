@@ -15,7 +15,7 @@ it('returns the result of actionToRetry if no error is thrown', async () => {
 
   const actualReturnValue = await retryWithRelogin(
     undefined,
-    '',
+    '/clusters/foo',
     actionToRetry
   );
 
@@ -44,7 +44,12 @@ it('opens the login modal window and calls actionToRetry again on successful rel
   // Immediately resolve the login promise.
   jest
     .spyOn(appContext.modalsService, 'openClusterConnectDialog')
-    .mockImplementation(({ onSuccess }) => onSuccess(''));
+    .mockImplementation(({ onSuccess }) => {
+      onSuccess('/clusters/foo');
+
+      // Dialog cancel function.
+      return { closeDialog: () => {} };
+    });
 
   jest
     .spyOn(appContext.workspacesService, 'doesResourceBelongToActiveWorkspace')
@@ -109,7 +114,12 @@ it('calls actionToRetry again if relogin attempt was canceled', async () => {
 
   jest
     .spyOn(appContext.modalsService, 'openClusterConnectDialog')
-    .mockImplementation(({ onCancel }) => onCancel());
+    .mockImplementation(({ onCancel }) => {
+      onCancel();
+
+      // Dialog cancel function.
+      return { closeDialog: () => {} };
+    });
 
   jest
     .spyOn(appContext.workspacesService, 'doesResourceBelongToActiveWorkspace')

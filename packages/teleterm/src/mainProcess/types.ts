@@ -41,6 +41,7 @@ export type MainProcessClient = {
     relativePath: string;
     isDirectory?: boolean;
   }): Promise<void>;
+  forceFocusWindow(): void;
 };
 
 export type ChildProcessAddresses = {
@@ -93,7 +94,8 @@ export enum TabContextMenuEventType {
 
 export enum ConfigServiceEventType {
   Get = 'Get',
-  Update = 'Update',
+  Set = 'Set',
+  GetStoredConfigErrors = 'GetStoredConfigErrors',
 }
 
 export enum FileStorageEventType {

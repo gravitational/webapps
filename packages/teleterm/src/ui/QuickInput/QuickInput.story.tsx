@@ -34,7 +34,7 @@ export const Story = () => {
     workspaces: {
       '/clusters/localhost': {
         documents: [],
-        location: '',
+        location: undefined,
         localClusterUri: '/clusters/localhost',
         accessRequests: {
           pending: getEmptyPendingAccessRequest(),
@@ -66,7 +66,13 @@ export const Story = () => {
 
   return (
     <AppContextProvider value={appContext}>
-      <QuickInput />
+      <div
+        css={`
+          height: 40px;
+        `}
+      >
+        <QuickInput />
+      </div>
     </AppContextProvider>
   );
 };
