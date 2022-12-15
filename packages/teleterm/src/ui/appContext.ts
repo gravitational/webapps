@@ -131,7 +131,7 @@ export default class AppContext implements IAppContext {
     this.setUpTshdEventSubscriptions();
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
-    this.showConfigParsingErrors();
+    this.notifyAboutStoredConfigErrors();
   }
 
   private setUpTshdEventSubscriptions() {
@@ -150,14 +150,14 @@ export default class AppContext implements IAppContext {
     });
   }
 
-  private showConfigParsingErrors(): void {
+  private notifyAboutStoredConfigErrors(): void {
     const errors = this.mainProcessClient.configService.getStoredConfigErrors();
     if (errors) {
-      errors.forEach(error => {
-        this.notificationsService.notifyError({
-          title: `Invalid config value for key ${error.path[0]}`,
-          description: error.message,
-        });
+      this.notificationsService.notifyError({
+        title: 'Encountered errors in config file',
+        description: errors
+          .map(error => `${error.path[0]}: ${error.message}`)
+          .join('\n'),
       });
     }
   }
