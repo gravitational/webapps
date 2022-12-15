@@ -13,7 +13,7 @@
 // limitations under the License.
 import Logger from 'shared/libs/logger';
 
-import { TermEventEnum } from 'teleport/lib/term/enums.js';
+import { StatusCodeEnum, TermEventEnum } from 'teleport/lib/term/enums.js';
 import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 
 import Codec, {
@@ -560,11 +560,12 @@ export default class Client extends EventEmitterWebAuthnSender {
   // Emits an errType event, closing the socket if the error was fatal.
   private handleError(
     err: Error,
-    errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR
+    errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
+    statusCode = StatusCodeEnum.ABNORMAL
   ) {
     this.logger.error(err);
     this.emit(errType, err);
-    this.socket?.close();
+    this.socket?.close(statusCode);
   }
 
   // Emits an warnType event
@@ -581,8 +582,8 @@ export default class Client extends EventEmitterWebAuthnSender {
   // so don't call this if your calling object is relying on listeners.
   // It's safe to call this multiple times, calls subsequent to the first call
   // will simply do nothing.
-  nuke() {
+  nuke(statusCode = StatusCodeEnum.NORMAL) {
     this.removeAllListeners();
-    this.socket?.close();
+    this.socket?.close(statusCode);
   }
 }

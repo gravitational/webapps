@@ -34,4 +34,5 @@ export const TermEventEnum = {
 
 export const StatusCodeEnum = {
   NORMAL: 1000,
+  ABNORMAL: 1006,
 };
