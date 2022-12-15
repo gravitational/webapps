@@ -49,4 +49,5 @@ const props = {
   createJoinToken() {
     return Promise.resolve(null);
   },
+  dbOption: 0,
 };

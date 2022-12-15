@@ -41,6 +41,11 @@ import { AuthType } from 'teleport/services/user';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
 import useTeleport from 'teleport/useTeleport';
+import {
+  Database,
+  DatabaseEngine,
+  DatabaseLocation,
+} from 'teleport/Discover/Database/resources';
 
 import useAddDatabase, { State } from './useAddDatabase';
 
@@ -59,6 +64,7 @@ export function AddDatabase({
   onClose,
   isEnterprise,
   version,
+  dbOption = 0,
 }: Props & State) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -73,7 +79,7 @@ export function AddDatabase({
 
   const [selectedDbOption, setSelectedDbOption] = useState<
     Option<DatabaseInfo>
-  >(dbOptions[0]);
+  >(dbOptions[dbOption]);
 
   const connectCmd =
     authType === 'sso'
@@ -333,20 +339,100 @@ const generateDbStartCmd = (
   }
 };
 
+// options is the list of db options used
+// for a dropdown menu.
+//
+// Modifying this list also requires modifying:
+// - enum DatabaseOption
+// - function getDatabaseOption
 const options: DatabaseInfo[] = [
-  formatDatabaseInfo('rds', 'postgres'),
+  formatDatabaseInfo('rds', 'postgres'), // TODO (ryan): remove after implementing
   formatDatabaseInfo('rds', 'mysql'),
   formatDatabaseInfo('rds', 'sqlserver'),
   formatDatabaseInfo('redshift', 'postgres'),
   formatDatabaseInfo('gcp', 'postgres'),
   formatDatabaseInfo('gcp', 'mysql'),
   formatDatabaseInfo('gcp', 'sqlserver'),
-  formatDatabaseInfo('self-hosted', 'postgres'),
-  formatDatabaseInfo('self-hosted', 'mysql'),
-  formatDatabaseInfo('self-hosted', 'mongodb'),
   formatDatabaseInfo('self-hosted', 'sqlserver'),
   formatDatabaseInfo('self-hosted', 'redis'),
+  // Modifying this list also requires modifying:
+  // - enum DatabaseOption
+  // - function getDatabaseOption
+
+  // TODO (lisa): remove, will be implemented shortly
+  formatDatabaseInfo('self-hosted', 'mysql'),
+  formatDatabaseInfo('self-hosted', 'mongodb'),
 ];
+
+// Modifying this list also requires modifying:
+// - const options
+// - function getDatabaseOption
+export enum DatabaseOption {
+  AwsRdsPostgres, // TODO (ryan): remove after implementing
+  AwsRdsMySql,
+  AwsRdsSqlServer,
+  RedshiftPostgres,
+  GcpPostgres,
+  GcpMySql,
+  GcpSqlServer,
+  SelfHostedSqlServer,
+  SelfHostedRedis,
+
+  // TODO (lisa): remove, will be implemented shortly
+  SelfHostedMySql,
+  SelfHostedMongoDb,
+}
+
+export function getDatabaseOption(state: Database) {
+  const { location, engine } = state;
+  if (location === DatabaseLocation.AWS) {
+    if (engine === DatabaseEngine.MySQL) {
+      return DatabaseOption.AwsRdsMySql;
+    }
+    if (engine === DatabaseEngine.SQLServer) {
+      return DatabaseOption.AwsRdsSqlServer;
+    }
+    if (engine === DatabaseEngine.RedShift) {
+      return DatabaseOption.RedshiftPostgres;
+    }
+
+    // TODO (ryan): remove after implmenting
+    if (engine === DatabaseEngine.PostgreSQL) {
+      return DatabaseOption.AwsRdsPostgres;
+    }
+  }
+
+  if (location === DatabaseLocation.GCP) {
+    if (engine === DatabaseEngine.PostgreSQL) {
+      return DatabaseOption.GcpPostgres;
+    }
+    if (engine === DatabaseEngine.MySQL) {
+      return DatabaseOption.GcpMySql;
+    }
+    if (engine === DatabaseEngine.SQLServer) {
+      return DatabaseOption.GcpSqlServer;
+    }
+  }
+
+  if (location === DatabaseLocation.SelfHosted) {
+    if (engine === DatabaseEngine.SQLServer) {
+      return DatabaseOption.SelfHostedSqlServer;
+    }
+    if (engine === DatabaseEngine.Redis) {
+      return DatabaseOption.SelfHostedRedis;
+    }
+
+    // TODO (lisa): remove, will be implemented shortly
+    if (engine === DatabaseEngine.MySQL) {
+      return DatabaseOption.SelfHostedMySql;
+    }
+    if (engine === DatabaseEngine.Mongo) {
+      return DatabaseOption.SelfHostedMongoDb;
+    }
+  }
+
+  return DatabaseOption.AwsRdsMySql;
+}
 
 export type Props = {
   isEnterprise: boolean;
@@ -354,4 +440,5 @@ export type Props = {
   username: string;
   version: string;
   authType: AuthType;
+  dbOption: DatabaseOption;
 };
