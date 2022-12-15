@@ -45,7 +45,7 @@ module.exports = {
     gatekeeperAssess: false,
     // If CONNECT_TSH_APP_PATH is provided, we assume that tsh.app is already signed.
     signIgnore: env.CONNECT_TSH_APP_PATH && ['tsh.app'],
-    icon: 'assets/icon-mac.png',
+    icon: 'build_resources/icon-mac.png',
     // On macOS, helper apps (such as tsh.app) should be under Contents/MacOS, hence using
     // `extraFiles` instead of `extraResources`.
     // https://developer.apple.com/documentation/bundleresources/placing_content_in_a_bundle
@@ -83,7 +83,7 @@ module.exports = {
   win: {
     target: ['nsis'],
     artifactName: '${productName} Setup-${version}.${ext}',
-    icon: 'assets/icon-win.ico',
+    icon: 'build_resources/icon-win.ico',
     extraResources: [
       env.CONNECT_TSH_BIN_PATH && {
         from: env.CONNECT_TSH_BIN_PATH,
@@ -105,7 +105,7 @@ module.exports = {
     target: ['tar.gz', 'rpm', 'deb'],
     artifactName: '${name}-${version}-${arch}.${ext}', //tar.gz
     category: 'Development',
-    icon: 'assets/icon-linux',
+    icon: 'build_resources/icon-linux',
     extraResources: [
       env.CONNECT_TSH_BIN_PATH && {
         from: env.CONNECT_TSH_BIN_PATH,
@@ -114,8 +114,7 @@ module.exports = {
     ].filter(Boolean),
   },
   directories: {
-    buildResources: 'assets',
+    buildResources: 'build_resources',
     output: 'build/release',
   },
-  extraResources: ['./assets/**'],
 };
