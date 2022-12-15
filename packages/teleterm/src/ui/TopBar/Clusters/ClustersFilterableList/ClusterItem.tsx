@@ -4,9 +4,11 @@ import { CircleCheck } from 'design/Icon';
 
 import styled from 'styled-components';
 
-import { ListItem } from 'teleterm/ui/components/ListItem';
+import { ListItem, ListItemProps } from 'teleterm/ui/components/ListItem';
 import { useKeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 import { Cluster } from 'teleterm/services/tshd/types';
+
+import type { PropsWithTheme } from 'design/theme';
 
 interface ClusterItemProps {
   index: number;
@@ -53,7 +55,12 @@ export function ClusterItem(props: ClusterItemProps) {
   );
 }
 
-const StyledListItem = styled(ListItem)`
+interface StyledListItemProps extends ListItemProps {
+  isLeaf: boolean;
+  isSelected: boolean;
+}
+
+const StyledListItem = styled(ListItem)<StyledListItemProps>`
   padding-left: ${props => (props.isLeaf ? '32px' : null)};
   background: ${getBackgroundColor};
 
@@ -68,7 +75,7 @@ const InvertedLabel = styled(Label)`
   background-color: ${props => props.theme.colors.secondary.contrastText};
 `;
 
-function getBackgroundColor(props) {
+function getBackgroundColor(props: PropsWithTheme<StyledListItemProps>) {
   if (props.isSelected) {
     if (props.isActive) {
       return props.theme.colors.secondary.light;
@@ -80,7 +87,7 @@ function getBackgroundColor(props) {
   }
 }
 
-function getHoverBackgroundColor(props) {
+function getHoverBackgroundColor(props: PropsWithTheme<StyledListItemProps>) {
   if (props.isSelected) {
     return props.theme.colors.secondary.light;
   }

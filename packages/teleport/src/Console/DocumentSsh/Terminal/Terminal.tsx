@@ -31,7 +31,7 @@ export default class Terminal extends React.Component<{ tty: Tty }> {
 
   terminal: XTermCtrl;
 
-  refTermContainer = React.createRef<HTMLElement>();
+  refTermContainer = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     const platform = getPlatform();

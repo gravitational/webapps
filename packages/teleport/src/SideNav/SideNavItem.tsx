@@ -15,52 +15,18 @@ limitations under the License.
 */
 
 import styled from 'styled-components';
-import defaultTheme from 'design/theme';
+
 import { color } from 'design/system';
 
-const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
-  const css = {
-    position: 'relative',
-    fontSize: '12px',
-    fontWeight: theme.regular,
-    fontFamily: theme.font,
-    paddingLeft: theme.space[9] + 'px',
-    paddingRight: theme.space[5] + 'px',
-    background: theme.colors.primary.light,
-    color: theme.colors.text.secondary,
-    minHeight: '56px',
+import type { ColorProps } from 'design/system';
 
-    '&:active, &.active': {
-      borderLeftColor: $nested ? 'none' : theme.colors.accent,
-      background: theme.colors.primary.lighter,
-      color: theme.colors.primary.contrastText,
-      fontWeight: theme.bold,
+interface SideNavItemBaseProps {
+  $nested?: boolean;
+}
 
-      '.marker': {
-        background: theme.colors.secondary.light,
-      },
-    },
+type SideNavItemProps = SideNavItemBaseProps & ColorProps;
 
-    '&:hover': {
-      background: theme.colors.primary.lighter,
-    },
-    '&:focus, &:hover': {
-      color: theme.colors.primary.contrastText,
-    },
-  };
-
-  if ($nested) {
-    css.fontSize = '11px';
-    css.background = 'none';
-    css.fontWeight = theme.regular;
-    css.paddingLeft = '96px';
-    css.minHeight = '40px';
-  }
-
-  return css;
-};
-
-const SideNavItem = styled.div`
+export const SideNavItem = styled.div<SideNavItemProps>`
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -72,8 +38,36 @@ const SideNavItem = styled.div`
   text-decoration: none;
   width: 100%;
   line-height: 24px;
-  ${fromTheme}
+  position: relative;
+  font-size: ${p => (p.$nested ? '11px' : '12px')};
+  font-weight: ${p => p.theme.regular};
+  font-family: ${p => p.theme.font};
+  padding-left: ${p => (p.$nested ? '96px' : p.theme.space[9] + 'px')};
+  padding-right: ${p => p.theme.space[5] + 'px'};
+  background: ${p => (p.$nested ? 'none' : p.theme.colors.primary.light)};
+  color: ${p => p.theme.colors.text.secondary};
+  min-height: ${p => (p.$nested ? '40px' : '56px')};
+
+  &:active,
+  &.active {
+    border-left-color: ${p => (p.$nested ? 'none' : p.theme.colors.accent)};
+    background: ${p => (p.$nested ? 'none' : p.theme.colors.primary.lighter)};
+    color: ${p => p.theme.colors.primary.contrastText};
+    font-weight: ${p => (p.$nested ? p.theme.regular : p.theme.bold)};
+
+    .marker {
+      background: ${p => (p.$nested ? 'none' : p.theme.colors.secondary.light)};
+    }
+  }
+
+  &:hover {
+    background: ${p => (p.$nested ? 'none' : p.theme.colors.primary.lighter)};
+  }
+
+  &:focus,
+  &:hover {
+    color: ${p => p.theme.colors.primary.contrastText};
+  }
+
   ${color}
 `;
-
-export default SideNavItem;

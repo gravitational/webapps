@@ -23,9 +23,11 @@ import Tty from 'teleport/lib/term/tty';
 import { TermEventEnum } from 'teleport/lib/term/enums';
 import StyledXterm from 'teleport/Console/StyledXterm';
 
+import type { Theme } from 'design/theme';
+
 export default function Xterm({ tty }: { tty: Tty }) {
-  const refContainer = useRef<HTMLElement>();
-  const theme = useTheme();
+  const refContainer = useRef<HTMLDivElement>();
+  const theme = useTheme() as Theme;
 
   useEffect(() => {
     const term = new TerminalPlayer(tty, {

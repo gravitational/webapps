@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const ListItem = styled.li`
+export interface ListItemProps {
+  isActive: boolean;
+}
+
+export const ListItem = styled.li<ListItemProps>`
   white-space: nowrap;
   box-sizing: border-box;
   display: flex;

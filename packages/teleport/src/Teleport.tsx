@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { Suspense } from 'react';
-import ThemeProvider from 'design/ThemeProvider';
+import { ThemeProvider } from 'design/ThemeProvider';
 
 import { Router, Route, Switch } from 'teleport/components/Router';
 import { CatchError } from 'teleport/components/CatchError';

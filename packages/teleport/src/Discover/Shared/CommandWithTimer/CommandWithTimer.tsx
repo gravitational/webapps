@@ -96,7 +96,11 @@ export type Poll = {
   error?: PollError;
 };
 
-export const PollBox = styled(Box)`
+interface PollBoxProps {
+  pollState: PollState;
+}
+
+export const PollBox = styled(Box)<PollBoxProps>`
   max-width: 800px;
   background-color: rgba(255, 255, 255, 0.05);
   padding: ${props => `${props.theme.space[3]}px`};

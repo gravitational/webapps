@@ -23,7 +23,7 @@ import { Cli, Server, Person, Database } from 'design/Icon';
 
 import * as types from 'teleterm/ui/services/quickInput/types';
 
-const QuickInputList = React.forwardRef<HTMLElement, Props>((props, ref) => {
+const QuickInputList = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const activeItemRef = useRef<HTMLDivElement>();
   const { items, activeItem } = props;
   if (items.length === 0) {
@@ -149,14 +149,16 @@ function UnknownItem(props: { item: types.Suggestion }) {
   return <div>unknown kind: {kind} </div>;
 }
 
-const StyledItem = styled.div(({ theme, $active }) => {
+interface StyledItemProps {
+  $active: boolean;
+}
+
+const StyledItem = styled.div<StyledItemProps>(({ theme, $active }) => {
   return {
     '&:hover, &:focus': {
       cursor: 'pointer',
       background: theme.colors.primary.lighter,
     },
-
-    borderBottom: `2px solid ${theme.colors.primary.placeholder}`,
     padding: '2px 8px',
     color: theme.colors.primary.contrastText,
     background: $active
@@ -165,26 +167,32 @@ const StyledItem = styled.div(({ theme, $active }) => {
   };
 });
 
-const StyledGlobalSearchResults = styled.div(({ theme, position }) => {
-  return {
-    boxShadow: '8px 8px 18px rgb(0 0 0)',
-    color: theme.colors.primary.contrastText,
-    background: theme.colors.primary.light,
-    boxSizing: 'border-box',
-    marginTop: '42px',
-    left: position ? position + 'px' : 0,
-    display: 'block',
-    transition: '0.12s',
-    position: 'absolute',
-    borderRadius: '4px',
-    fontSize: '12px',
-    listStyle: 'none outside none',
-    textShadow: 'none',
-    zIndex: '1000',
-    maxHeight: '350px',
-    overflow: 'auto',
-  };
-});
+interface StyledGlobalSearchResultsProps {
+  position?: number;
+}
+
+const StyledGlobalSearchResults = styled.div<StyledGlobalSearchResultsProps>(
+  ({ theme, position }) => {
+    return {
+      boxShadow: '8px 8px 18px rgb(0 0 0)',
+      color: theme.colors.primary.contrastText,
+      background: theme.colors.primary.light,
+      boxSizing: 'border-box',
+      marginTop: '42px',
+      left: position ? position + 'px' : 0,
+      display: 'block',
+      transition: '0.12s',
+      position: 'absolute',
+      borderRadius: '4px',
+      fontSize: '12px',
+      listStyle: 'none outside none',
+      textShadow: 'none',
+      zIndex: '1000',
+      maxHeight: '350px',
+      overflow: 'auto',
+    };
+  }
+);
 
 const ComponentMap: Record<
   types.Suggestion['kind'],

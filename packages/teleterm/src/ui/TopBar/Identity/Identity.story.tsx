@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Flex from 'design/Flex';
+import { Flex } from 'design/Flex';
 
 import * as tshd from 'teleterm/services/tshd/types';
 

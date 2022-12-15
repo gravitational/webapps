@@ -14,12 +14,10 @@ export function SearchPagination({ prevPage, nextPage }: Props) {
             onClick={prevPage}
             title="Previous page"
             disabled={!prevPage}
-            mx={0}
           >
             <CircleArrowLeft fontSize="3" />
           </StyledArrowBtn>
           <StyledArrowBtn
-            ml={0}
             onClick={nextPage}
             title="Next page"
             disabled={!nextPage}

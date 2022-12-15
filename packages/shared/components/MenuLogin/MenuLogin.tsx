@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useImperativeHandle, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Menu, { MenuItem } from 'design/Menu';
 import { space } from 'design/system';
@@ -27,6 +27,9 @@ import { useAsync, Attempt } from 'shared/hooks/useAsync';
 
 import { MenuLoginProps, LoginItem, MenuLoginHandle } from './types';
 
+import type { SpaceProps } from 'design/system';
+import type { Theme } from 'design/theme';
+
 export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
   (props, ref) => {
     const {
@@ -36,7 +39,7 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
       required = true,
       width,
     } = props;
-    const anchorRef = useRef<HTMLElement>();
+    const anchorRef = useRef<HTMLButtonElement>();
     const [isOpen, setIsOpen] = useState(false);
     const [getLoginItemsAttempt, runGetLoginItems] = useAsync(() =>
       Promise.resolve().then(() => props.getLoginItems())
@@ -77,7 +80,7 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
         <ButtonBorder
           height="24px"
           size="small"
-          setRef={anchorRef}
+          ref={anchorRef}
           onClick={onOpen}
         >
           CONNECT
@@ -139,14 +142,16 @@ function getLoginItemListContent(
   getLoginItemsAttempt: Attempt<LoginItem[]>,
   onClick: (e: React.MouseEvent<HTMLAnchorElement>, login: string) => void
 ) {
+  const theme = useTheme() as Theme;
+
   switch (getLoginItemsAttempt.status) {
     case '':
     case 'processing':
       return (
         <Indicator
-          css={({ theme }) => `
+          css={`
             align-self: center;
-            color: ${theme.colors.secondary.dark}
+            color: ${theme.colors.secondary.dark};
           `}
         />
       );
@@ -200,7 +205,9 @@ const StyledMenuItem = styled(MenuItem)(
 `
 );
 
-const Input = styled.input(
+type InputProps = SpaceProps;
+
+const Input = styled.input<InputProps>(
   ({ theme }) => `
   background: ${theme.colors.subtle};
   border: 1px solid ${theme.colors.subtle};

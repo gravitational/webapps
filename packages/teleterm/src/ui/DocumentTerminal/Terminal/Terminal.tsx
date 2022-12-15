@@ -23,10 +23,12 @@ import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 
 import XTermCtrl from './ctrl';
 
+import type { Theme } from 'design/theme';
+
 export default function Terminal(props: Props) {
-  const refElement = useRef<HTMLElement>();
+  const refElement = useRef<HTMLDivElement>();
   const refCtrl = useRef<XTermCtrl>();
-  const fontFamily = useTheme().fonts.mono;
+  const fontFamily = (useTheme() as Theme).fonts.mono;
 
   useEffect(() => {
     const ctrl = new XTermCtrl(props.ptyProcess, {

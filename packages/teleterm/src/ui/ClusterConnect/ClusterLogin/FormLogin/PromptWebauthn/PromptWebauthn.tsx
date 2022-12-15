@@ -53,19 +53,13 @@ function PromptTouch({ onCancel, prompt }: Props) {
   );
 }
 
-function PromptCredential({
-  loginUsernames,
-  onUserResponse,
-  processing,
-  onCancel,
-}: Props) {
+function PromptCredential({ loginUsernames, onUserResponse, onCancel }: Props) {
   return (
     <Box height="330px" width="100%">
       <Text mb={2} bold>
         Select the user for login:
       </Text>
       <Box
-        disabled={processing}
         css={`
           overflow: auto;
           height: 240px;

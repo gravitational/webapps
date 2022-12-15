@@ -38,13 +38,13 @@ export default function FieldSelect({
   isSimpleValue = false,
   autoFocus = false,
   isDisabled = false,
-  ...styles
+  style,
 }: Props) {
   const { valid, message } = useRule(rule(value));
   const hasError = Boolean(!valid);
   const labelText = hasError ? message : label;
   return (
-    <Box mb="4" {...styles}>
+    <Box mb="4" style={style}>
       {label && (
         <LabelInput htmlFor={'select'} hasError={hasError}>
           {labelText}
@@ -83,6 +83,7 @@ type Props = SelectProps & {
   autoFocus?: boolean;
   label?: string;
   rule?: (options: unknown) => () => unknown;
+  style?: React.CSSProperties;
   // styles
   [key: string]: any;
 };

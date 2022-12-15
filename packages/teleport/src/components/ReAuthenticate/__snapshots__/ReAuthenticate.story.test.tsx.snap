@@ -1,7 +1,160 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render failed state for re-authentication dialog 1`] = `
-.c7 {
+.c18 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  margin-top: 16px;
+}
+
+.c18:active {
+  opacity: 0.56;
+}
+
+.c18:hover,
+.c18:focus {
+  background: #651FFF;
+}
+
+.c18:active {
+  background: #354AA4;
+}
+
+.c18:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c19 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c19:active {
+  opacity: 0.56;
+}
+
+.c19:hover,
+.c19:focus {
+  background: #2C3A73;
+}
+
+.c19:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  min-height: 32px;
+}
+
+.c9 {
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  flex: 1;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c16 {
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.c17 {
+  box-sizing: border-box;
+}
+
+.c5 {
+  display: flex;
+  align-items: center;
+}
+
+.c10 {
+  display: flex;
+  flex-direction: column;
+}
+
+.c12 {
+  display: flex;
+  align-items: flex-end;
+}
+
+.c1 {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+  touch-action: none;
+}
+
+.c0 {
+  position: fixed;
+  z-index: 1200;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+}
+
+.c8 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,109 +173,11 @@ exports[`render failed state for re-authentication dialog 1`] = `
   width: 100%;
 }
 
-.c7 a {
+.c8 a {
   color: #FFFFFF;
 }
 
-.c10 {
-  box-sizing: border-box;
-  margin-bottom: 0px;
-  margin-right: 16px;
-  width: 50%;
-}
-
-.c13 {
-  box-sizing: border-box;
-  width: 50%;
-}
-
-.c15 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-right: 16px;
-  margin-top: 16px;
-}
-
-.c15:active {
-  opacity: 0.56;
-}
-
-.c15:hover,
-.c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
-}
-
-.c15:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c16 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c16:active {
-  opacity: 0.56;
-}
-
-.c16:hover,
-.c16:focus {
-  background: #2C3A73;
-}
-
-.c16:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c11 {
+.c14 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -132,51 +187,21 @@ exports[`render failed state for re-authentication dialog 1`] = `
   margin-bottom: 4px;
 }
 
-.c5 {
+.c6 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   color: rgba(255,255,255,0.87);
 }
 
-.c6 {
+.c7 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   color: rgba(255,255,255,0.56);
   text-align: center;
-}
-
-.c9 {
-  box-sizing: border-box;
-  margin-top: 8px;
-  display: flex;
-  align-items: flex-end;
-}
-
-.c1 {
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  opacity: 1;
-  touch-action: none;
-}
-
-.c0 {
-  position: fixed;
-  z-index: 1200;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
 }
 
 .c2 {
@@ -206,27 +231,7 @@ exports[`render failed state for re-authentication dialog 1`] = `
   width: 400px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-
-.c8 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c14 {
-  box-sizing: border-box;
-}
-
-.c12 .react-select-container {
+.c15 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -240,8 +245,8 @@ exports[`render failed state for re-authentication dialog 1`] = `
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c15 .react-select__control,
+.c15 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -252,48 +257,48 @@ exports[`render failed state for re-authentication dialog 1`] = `
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c15 .react-select__control:hover,
+.c15 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c15 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c15 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c15 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c15 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c15 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c15 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c15 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c15 .react-select--is-disabled .react-select__single-value,
+.c15 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c15 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -314,49 +319,46 @@ exports[`render failed state for re-authentication dialog 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="c4"
+        class="c4 c5"
         style="flex-direction: column;"
       >
         <div
-          class="c5"
+          class="c6"
           color="text.primary"
         >
           Verify your identity
         </div>
         <div
-          class="c6"
+          class="c7"
           color="text.secondary"
         >
           You must verify your identity before peforming this action.
         </div>
       </div>
       <div
-        class="c7"
+        class="c8"
         kind="danger"
         width="100%"
       >
         an error has occurred
       </div>
       <div
-        class="c8"
+        class="c9 c10"
       >
         <div
-          class="c9"
+          class="c11 c12"
         >
           <div
-            class="c10"
-            data-testid="mfa-select"
-            width="50%"
+            class="c13"
           >
             <label
-              class="c11"
-              font-size="0"
+              class="c14"
               for="select"
             >
               Two-factor type
             </label>
             <div
-              class="c12"
+              class="c15"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -410,22 +412,22 @@ exports[`render failed state for re-authentication dialog 1`] = `
             </div>
           </div>
           <div
-            class="c13"
+            class="c16"
             width="50%"
           />
         </div>
       </div>
       <div
-        class="c14"
+        class="c17"
       >
         <button
-          class="c15"
+          class="c18"
           kind="primary"
         >
           Continue
         </button>
         <button
-          class="c16"
+          class="c19"
           kind="secondary"
         >
           Cancel
@@ -437,19 +439,7 @@ exports[`render failed state for re-authentication dialog 1`] = `
 `;
 
 exports[`render re-authentication dialog 1`] = `
-.c9 {
-  box-sizing: border-box;
-  margin-bottom: 0px;
-  margin-right: 16px;
-  width: 50%;
-}
-
-.c12 {
-  box-sizing: border-box;
-  width: 50%;
-}
-
-.c14 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -477,25 +467,25 @@ exports[`render re-authentication dialog 1`] = `
   margin-top: 16px;
 }
 
-.c14:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c17:hover,
+.c17:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c17:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -521,52 +511,62 @@ exports[`render re-authentication dialog 1`] = `
   padding: 0px 24px;
 }
 
-.c15:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
 }
 
-.c15:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
-  color: #FFFFFF;
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  width: 100%;
-  margin-bottom: 4px;
-}
-
-.c5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  text-transform: uppercase;
-  margin: 0px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c6 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  color: rgba(255,255,255,0.56);
-  text-align: center;
+.c4 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  min-height: 32px;
 }
 
 .c8 {
   box-sizing: border-box;
+  margin-bottom: 32px;
+  flex: 1;
+}
+
+.c10 {
+  box-sizing: border-box;
   margin-top: 8px;
+}
+
+.c12 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c15 {
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.c16 {
+  box-sizing: border-box;
+}
+
+.c5 {
+  display: flex;
+  align-items: center;
+}
+
+.c9 {
+  display: flex;
+  flex-direction: column;
+}
+
+.c11 {
   display: flex;
   align-items: flex-end;
 }
@@ -590,6 +590,33 @@ exports[`render re-authentication dialog 1`] = `
   bottom: 0;
   top: 0;
   left: 0;
+}
+
+.c13 {
+  color: #FFFFFF;
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.c6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.87);
+}
+
+.c7 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(255,255,255,0.56);
+  text-align: center;
 }
 
 .c2 {
@@ -619,27 +646,7 @@ exports[`render re-authentication dialog 1`] = `
   width: 400px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-
-.c7 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c13 {
-  box-sizing: border-box;
-}
-
-.c11 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -653,8 +660,8 @@ exports[`render re-authentication dialog 1`] = `
   border-radius: 4px;
 }
 
-.c11 .react-select__control,
-.c11 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -665,48 +672,48 @@ exports[`render re-authentication dialog 1`] = `
   box-shadow: none;
 }
 
-.c11 .react-select__control:hover,
-.c11 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c11 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c11 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c11 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c11 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c11 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c11 .react-select--is-disabled .react-select__single-value,
-.c11 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c11 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -727,42 +734,39 @@ exports[`render re-authentication dialog 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="c4"
+        class="c4 c5"
         style="flex-direction: column;"
       >
         <div
-          class="c5"
+          class="c6"
           color="text.primary"
         >
           Verify your identity
         </div>
         <div
-          class="c6"
+          class="c7"
           color="text.secondary"
         >
           You must verify your identity before peforming this action.
         </div>
       </div>
       <div
-        class="c7"
+        class="c8 c9"
       >
         <div
-          class="c8"
+          class="c10 c11"
         >
           <div
-            class="c9"
-            data-testid="mfa-select"
-            width="50%"
+            class="c12"
           >
             <label
-              class="c10"
-              font-size="0"
+              class="c13"
               for="select"
             >
               Two-factor type
             </label>
             <div
-              class="c11"
+              class="c14"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -816,22 +820,22 @@ exports[`render re-authentication dialog 1`] = `
             </div>
           </div>
           <div
-            class="c12"
+            class="c15"
             width="50%"
           />
         </div>
       </div>
       <div
-        class="c13"
+        class="c16"
       >
         <button
-          class="c14"
+          class="c17"
           kind="primary"
         >
           Continue
         </button>
         <button
-          class="c15"
+          class="c18"
           kind="secondary"
         >
           Cancel

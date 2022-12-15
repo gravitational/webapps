@@ -19,7 +19,7 @@ import styled from 'styled-components';
 
 import { space, color } from 'design/system';
 
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 
 const sizeMap = {
   0: {

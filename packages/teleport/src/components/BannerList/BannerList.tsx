@@ -73,7 +73,11 @@ export const BannerList = ({
   );
 };
 
-const Wrapper = styled(Box)`
+interface WrapperProps {
+  bannerCount: number;
+}
+
+const Wrapper = styled(Box)<WrapperProps>`
   display: flex;
   height: 100vh;
   flex-direction: column;

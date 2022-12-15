@@ -16,7 +16,7 @@ limitations under the License.
 
 import { ButtonBorder } from 'design';
 import Table, { Cell } from 'design/DataTable';
-import Icon, * as Icons from 'design/Icon/Icon';
+import * as Icons from 'design/Icon/Icon';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -84,7 +84,10 @@ export default function SessionList(props: Props) {
 }
 
 const kinds: {
-  [key in SessionKind]: { icon: React.ReactNode; joinable: boolean };
+  [key in SessionKind]: {
+    icon: (props: any) => JSX.Element;
+    joinable: boolean;
+  };
 } = {
   ssh: { icon: Icons.Cli, joinable: true },
   k8s: { icon: Icons.Kubernetes, joinable: false },
@@ -97,7 +100,7 @@ const renderIconCell = (kind: SessionKind) => {
   const { icon } = kinds[kind];
   return (
     <Cell>
-      <Icon p={1} mr={3} fontSize={3} as={icon} />
+      <Icons.Icon p={1} mr={3} fontSize={3} as={icon} />
     </Cell>
   );
 };

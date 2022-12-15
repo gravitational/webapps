@@ -12,37 +12,43 @@ interface ClusterSelectorProps {
   onClick(): void;
 }
 
-export const ClusterSelector = forwardRef<HTMLDivElement, ClusterSelectorProps>(
-  (props, ref) => {
-    const { getLabelWithShortcut } = useKeyboardShortcutFormatters();
-    const SortIcon = props.isOpened ? SortAsc : SortDesc;
-    const text = props.clusterName || 'Select Cluster';
+export const ClusterSelector = forwardRef<
+  HTMLButtonElement,
+  ClusterSelectorProps
+>((props, ref) => {
+  const { getLabelWithShortcut } = useKeyboardShortcutFormatters();
+  const SortIcon = props.isOpened ? SortAsc : SortDesc;
+  const text = props.clusterName || 'Select Cluster';
 
-    return (
-      <Container
-        ref={ref}
-        onClick={props.onClick}
-        isOpened={props.isOpened}
-        isClusterSelected={!!props.clusterName}
-        title={getLabelWithShortcut(
-          [props.clusterName, 'Open Clusters'].filter(Boolean).join('\n'),
-          'toggle-clusters'
-        )}
+  return (
+    <Container
+      ref={ref}
+      onClick={props.onClick}
+      isOpened={props.isOpened}
+      isClusterSelected={!!props.clusterName}
+      title={getLabelWithShortcut(
+        [props.clusterName, 'Open Clusters'].filter(Boolean).join('\n'),
+        'toggle-clusters'
+      )}
+    >
+      <Text
+        css={`
+          white-space: nowrap;
+        `}
       >
-        <Text
-          css={`
-            white-space: nowrap;
-          `}
-        >
-          {text}
-        </Text>
-        <SortIcon fontSize={12} ml={3} />
-      </Container>
-    );
-  }
-);
+        {text}
+      </Text>
+      <SortIcon fontSize={12} ml={3} />
+    </Container>
+  );
+});
 
-const Container = styled.button`
+interface ContainerProps {
+  isOpened: boolean;
+  isClusterSelected: boolean;
+}
+
+const Container = styled.button<ContainerProps>`
   background: inherit;
   color: inherit;
   font-family: inherit;

@@ -19,6 +19,8 @@ import styled from 'styled-components';
 
 import { height, space, color } from 'design/system';
 
+import type { ColorProps, HeightProps, SpaceProps } from 'design/system';
+
 export default function InputSearch({
   searchValue,
   setSearchValue,
@@ -66,7 +68,9 @@ const Wrapper = styled.div`
   background: ${props => props.theme.colors.primary.dark};
 `;
 
-const StyledInput = styled.input`
+type StyledInputProps = ColorProps & SpaceProps & HeightProps;
+
+const StyledInput = styled.input<StyledInputProps>`
   border: none;
   outline: none;
   box-sizing: border-box;

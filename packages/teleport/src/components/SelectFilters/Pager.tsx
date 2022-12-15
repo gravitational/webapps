@@ -16,7 +16,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import Icon, { CircleArrowLeft, CircleArrowRight } from 'design/Icon';
+import { Icon, CircleArrowLeft, CircleArrowRight } from 'design/Icon';
 import { Text, Flex } from 'design';
 
 export default function Pager({

@@ -98,7 +98,11 @@ const StyledWarningIcon = styled(Warning)`
   align-self: 'center';
 `;
 
-const StyledButton = styled(Button)`
+interface StyledButtonProps {
+  hasWarnings: boolean;
+}
+
+const StyledButton = styled(Button)<StyledButtonProps>`
   min-height: 0;
   height: ${({ theme }) => theme.fontSizes[7] + 'px'};
   background-color: ${props =>

@@ -16,8 +16,7 @@ limitations under the License.
 
 import styled from 'styled-components';
 
-import theme from './../theme';
-import Icon from './../Icon';
+import { Icon } from '../Icon';
 
 const MenuItemIcon = styled(Icon)`
   &:hover,
@@ -29,7 +28,6 @@ const MenuItemIcon = styled(Icon)`
 MenuItemIcon.displayName = 'MenuItemIcon';
 MenuItemIcon.defaultProps = {
   fontSize: 4,
-  theme: theme,
   mr: 2,
   color: 'colors.grey[400]',
 };

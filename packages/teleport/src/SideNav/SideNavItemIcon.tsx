@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import styled from 'styled-components';
-import Icon from 'design/Icon';
+import { Icon } from 'design/Icon';
 
 const SideNavItemIcon = styled(Icon)``;
 

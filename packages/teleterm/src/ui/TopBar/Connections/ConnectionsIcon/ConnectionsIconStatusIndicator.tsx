@@ -1,13 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
+
 import { Box } from 'design';
 
-export const ConnectionsIconStatusIndicator: React.FC<Props> = props => {
-  const { connected, ...styles } = props;
-  return <StyledStatus $connected={connected} {...styles} />;
-};
+interface ConnectionsIconStatusIndicatorProps {
+  connected: boolean;
+}
 
-const StyledStatus = styled<Props>(Box)`
+export const ConnectionsIconStatusIndicator = styled(
+  Box
+)<ConnectionsIconStatusIndicatorProps>`
   position: absolute;
   top: -4px;
   right: -4px;
@@ -17,16 +18,12 @@ const StyledStatus = styled<Props>(Box)`
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   ${props => {
-    const { $connected, theme } = props;
-    const backgroundColor = $connected ? theme.colors.success : null;
-    const border = $connected ? null : `1px solid ${theme.colors.light}`;
+    const { connected, theme } = props;
+    const backgroundColor = connected ? theme.colors.success : null;
+    const border = connected ? null : `1px solid ${theme.colors.light}`;
     return {
       backgroundColor,
       border,
     };
   }}
 `;
-
-type Props = {
-  connected: boolean;
-};

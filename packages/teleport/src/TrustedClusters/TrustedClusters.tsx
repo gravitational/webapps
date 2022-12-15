@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Danger } from 'design/Alert';
 import { Indicator, Text, Box, Flex, ButtonPrimary, Link } from 'design';
-import Card from 'design/Card';
+import { Card } from 'design/Card';
 import Image from 'design/Image';
 
 import {

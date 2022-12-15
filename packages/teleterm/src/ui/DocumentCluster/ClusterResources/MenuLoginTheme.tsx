@@ -3,7 +3,9 @@ import { ThemeProvider } from 'styled-components';
 
 import theme from 'teleterm/ui/ThemeProvider/theme';
 
-const menuLoginTheme = {
+import type { Theme } from 'design/theme';
+
+const menuLoginTheme: Theme = {
   ...theme,
   colors: {
     ...theme.colors,
@@ -18,6 +20,7 @@ const menuLoginTheme = {
       dark: theme.colors.text.primary,
     },
     grey: {
+      ...theme.colors.grey,
       [50]: 'rgba(255,255,255,0.05)',
       [900]: theme.colors.text.primary,
       [100]: theme.colors.text.secondary,

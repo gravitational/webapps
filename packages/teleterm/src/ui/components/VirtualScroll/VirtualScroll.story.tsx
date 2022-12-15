@@ -91,7 +91,11 @@ export function TreeList() {
   );
 }
 
-const ClickableItem = styled.span`
+interface ClickableItemProps {
+  ml: string;
+}
+
+const ClickableItem = styled.span<ClickableItemProps>`
   visibility: ${props => (props.hidden ? 'hidden' : 'visible')};
   margin-left: ${props => props.ml};
   font-weight: bold;

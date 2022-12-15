@@ -18,7 +18,7 @@ import React from 'react';
 
 import * as Icon from '../Icon';
 
-import Flex from './../Flex';
+import { Flex } from './../Flex';
 
 export default {
   title: 'Design/Icon',

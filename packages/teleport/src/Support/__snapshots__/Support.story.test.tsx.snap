@@ -1,104 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`support Cloud 1`] = `
-.c3 {
-  box-sizing: border-box;
-}
-
-.c9 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: #222C59;
-}
-
-.c6 {
+.c10 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
-}
-
-.c1 {
-  box-sizing: border-box;
-  padding-bottom: 40px;
-  padding-top: 4px;
-  padding-left: 32px;
-  padding-right: 32px;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
-.c5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 18px;
-  margin: 0px;
-  padding-right: 8px;
-}
-
-.c7 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin: 0px;
-}
-
-.c10 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
-.c2 {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  margin-top: 24px;
-  padding-bottom: 8px;
-  width: 210px;
-  border-bottom: 1px solid;
-  border-color: #111B48;
-  display: flex;
-  align-items: center;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  display: flex;
 }
 
 .c0 {
@@ -106,18 +12,120 @@ exports[`support Cloud 1`] = `
   padding-top: 24px;
   padding-left: 40px;
   padding-right: 40px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 4px;
+  padding-bottom: 40px;
+  background-color: #222C59;
+}
+
+.c5 {
+  box-sizing: border-box;
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  margin-top: 24px;
+  padding-bottom: 8px;
+  width: 210px;
+  border-bottom: 1px solid;
+  border-color: #111B48;
+  border-color: #111B48;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border: 1px solid;
+  border-color: #222C59;
+  border-radius: 8px;
+  border-radius: 8px;
+  border-color: #222C59;
+}
+
+.c15 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.c1 {
   display: flex;
+}
+
+.c6 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.c8 {
+  display: flex;
+  align-items: center;
+}
+
+.c4 {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  padding-right: 8px;
+}
+
+.c11 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.c16 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c2 {
   width: 100%;
   height: 100%;
   flex-direction: column;
 }
 
-.c0::after {
+.c2::after {
   content: ' ';
   padding-bottom: 24px;
 }
 
-.c8 {
+.c12 {
   display: block;
   color: #FFFFFF;
   border-radius: 4px;
@@ -125,63 +133,63 @@ exports[`support Cloud 1`] = `
   margin-bottom: 8px;
   padding: 4px 8px;
   transition: all 0.3s;
-  font-weight: 400;
   font-size: 12px;
+  font-weight: 400;
   line-height: 16px;
 }
 
-.c8:hover,
-.c8:focus {
+.c12:hover,
+.c12:focus {
   background: #2C3A73;
 }
 
 <div
-  class="c0"
+  class="c0 c1 c2"
 >
   <div
-    class="c1"
+    class="c3 c4"
   >
     <div
-      class="c2"
+      class="c5 c6"
     >
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-local_play "
+              class="c10 icon icon-local_play "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Support
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/discussions"
           rel="noreferrer"
         >
           Ask the Community Questions
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/issues/new/choose"
           rel="noreferrer"
         >
           Request a New Feature
         </a>
         <a
-          class="c8"
+          class="c12"
           href="mailto:support@goteleport.com"
           rel="noreferrer"
         >
@@ -189,57 +197,57 @@ exports[`support Cloud 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-list3 "
+              class="c10 icon icon-list3 "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Resources
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/getting-started?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
           Quickstart Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/server-access/guides/tsh?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
           tsh User Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/setup/admin?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
           Admin Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/cloud/downloads/"
           rel="noreferrer"
         >
           Download Page
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/faq?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
@@ -247,29 +255,29 @@ exports[`support Cloud 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-graph "
+              class="c10 icon icon-graph "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Troubleshooting
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/setup/admin/troubleshooting?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
@@ -277,36 +285,36 @@ exports[`support Cloud 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-notifications_active "
+              class="c10 icon icon-notifications_active "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Updates
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/blob/master/CHANGELOG.md"
           rel="noreferrer"
         >
           Product Changelog
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/blog/"
           rel="noreferrer"
         >
@@ -316,58 +324,58 @@ exports[`support Cloud 1`] = `
     </div>
   </div>
   <div
-    class="c9"
+    class="c13"
   >
     <h5
-      class="c10"
+      class="c14"
       font-weight="bold"
     >
       Cluster Information
     </h5>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Cluster Name
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         test
       </div>
     </div>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Teleport Version
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         4.4.0-dev
       </div>
     </div>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Public Address
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         localhost:3080
       </div>
@@ -377,104 +385,10 @@ exports[`support Cloud 1`] = `
 `;
 
 exports[`support Enterprise 1`] = `
-.c3 {
-  box-sizing: border-box;
-}
-
-.c9 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: #222C59;
-}
-
-.c6 {
+.c10 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
-}
-
-.c1 {
-  box-sizing: border-box;
-  padding-bottom: 40px;
-  padding-top: 4px;
-  padding-left: 32px;
-  padding-right: 32px;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
-.c5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 18px;
-  margin: 0px;
-  padding-right: 8px;
-}
-
-.c7 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin: 0px;
-}
-
-.c10 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
-.c2 {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  margin-top: 24px;
-  padding-bottom: 8px;
-  width: 210px;
-  border-bottom: 1px solid;
-  border-color: #111B48;
-  display: flex;
-  align-items: center;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  display: flex;
 }
 
 .c0 {
@@ -482,18 +396,120 @@ exports[`support Enterprise 1`] = `
   padding-top: 24px;
   padding-left: 40px;
   padding-right: 40px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 4px;
+  padding-bottom: 40px;
+  background-color: #222C59;
+}
+
+.c5 {
+  box-sizing: border-box;
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  margin-top: 24px;
+  padding-bottom: 8px;
+  width: 210px;
+  border-bottom: 1px solid;
+  border-color: #111B48;
+  border-color: #111B48;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border: 1px solid;
+  border-color: #222C59;
+  border-radius: 8px;
+  border-radius: 8px;
+  border-color: #222C59;
+}
+
+.c15 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.c1 {
   display: flex;
+}
+
+.c6 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.c8 {
+  display: flex;
+  align-items: center;
+}
+
+.c4 {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  padding-right: 8px;
+}
+
+.c11 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.c16 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c2 {
   width: 100%;
   height: 100%;
   flex-direction: column;
 }
 
-.c0::after {
+.c2::after {
   content: ' ';
   padding-bottom: 24px;
 }
 
-.c8 {
+.c12 {
   display: block;
   color: #FFFFFF;
   border-radius: 4px;
@@ -501,70 +517,70 @@ exports[`support Enterprise 1`] = `
   margin-bottom: 8px;
   padding: 4px 8px;
   transition: all 0.3s;
-  font-weight: 400;
   font-size: 12px;
+  font-weight: 400;
   line-height: 16px;
 }
 
-.c8:hover,
-.c8:focus {
+.c12:hover,
+.c12:focus {
   background: #2C3A73;
 }
 
 <div
-  class="c0"
+  class="c0 c1 c2"
 >
   <div
-    class="c1"
+    class="c3 c4"
   >
     <div
-      class="c2"
+      class="c5 c6"
     >
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-local_play "
+              class="c10 icon icon-local_play "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Support
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://support.goteleport.com"
           rel="noreferrer"
         >
           Create a Support Ticket
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/discussions"
           rel="noreferrer"
         >
           Ask the Community Questions
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/issues/new/choose"
           rel="noreferrer"
         >
           Request a New Feature
         </a>
         <a
-          class="c8"
+          class="c12"
           href="mailto:support@goteleport.com"
           rel="noreferrer"
         >
@@ -572,57 +588,57 @@ exports[`support Enterprise 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-list3 "
+              class="c10 icon icon-list3 "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Resources
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/getting-started?product=teleport&version=e_4.4.0-dev"
           rel="noreferrer"
         >
           Quickstart Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/server-access/guides/tsh?product=teleport&version=e_4.4.0-dev"
           rel="noreferrer"
         >
           tsh User Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/setup/admin?product=teleport&version=e_4.4.0-dev"
           rel="noreferrer"
         >
           Admin Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://dashboard.gravitational.com/web/downloads"
           rel="noreferrer"
         >
           Download Page
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/faq?product=teleport&version=e_4.4.0-dev"
           rel="noreferrer"
         >
@@ -630,29 +646,29 @@ exports[`support Enterprise 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-graph "
+              class="c10 icon icon-graph "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Troubleshooting
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/setup/admin/troubleshooting?product=teleport&version=e_4.4.0-dev"
           rel="noreferrer"
         >
@@ -660,36 +676,36 @@ exports[`support Enterprise 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-notifications_active "
+              class="c10 icon icon-notifications_active "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Updates
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/blob/master/CHANGELOG.md"
           rel="noreferrer"
         >
           Product Changelog
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/blog/"
           rel="noreferrer"
         >
@@ -699,58 +715,58 @@ exports[`support Enterprise 1`] = `
     </div>
   </div>
   <div
-    class="c9"
+    class="c13"
   >
     <h5
-      class="c10"
+      class="c14"
       font-weight="bold"
     >
       Cluster Information
     </h5>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Cluster Name
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         test
       </div>
     </div>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Teleport Version
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         4.4.0-dev
       </div>
     </div>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Public Address
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         localhost:3080
       </div>
@@ -760,104 +776,10 @@ exports[`support Enterprise 1`] = `
 `;
 
 exports[`support OSS 1`] = `
-.c3 {
-  box-sizing: border-box;
-}
-
-.c9 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: #222C59;
-}
-
-.c6 {
+.c10 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
-}
-
-.c1 {
-  box-sizing: border-box;
-  padding-bottom: 40px;
-  padding-top: 4px;
-  padding-left: 32px;
-  padding-right: 32px;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
-.c5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 18px;
-  margin: 0px;
-  padding-right: 8px;
-}
-
-.c7 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin: 0px;
-}
-
-.c10 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
-.c2 {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  margin-top: 24px;
-  padding-bottom: 8px;
-  width: 210px;
-  border-bottom: 1px solid;
-  border-color: #111B48;
-  display: flex;
-  align-items: center;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  display: flex;
 }
 
 .c0 {
@@ -865,18 +787,120 @@ exports[`support OSS 1`] = `
   padding-top: 24px;
   padding-left: 40px;
   padding-right: 40px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 4px;
+  padding-bottom: 40px;
+  background-color: #222C59;
+}
+
+.c5 {
+  box-sizing: border-box;
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  margin-top: 24px;
+  padding-bottom: 8px;
+  width: 210px;
+  border-bottom: 1px solid;
+  border-color: #111B48;
+  border-color: #111B48;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border: 1px solid;
+  border-color: #222C59;
+  border-radius: 8px;
+  border-radius: 8px;
+  border-color: #222C59;
+}
+
+.c15 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.c1 {
   display: flex;
+}
+
+.c6 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.c8 {
+  display: flex;
+  align-items: center;
+}
+
+.c4 {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  padding-right: 8px;
+}
+
+.c11 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.c16 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c2 {
   width: 100%;
   height: 100%;
   flex-direction: column;
 }
 
-.c0::after {
+.c2::after {
   content: ' ';
   padding-bottom: 24px;
 }
 
-.c8 {
+.c12 {
   display: block;
   color: #FFFFFF;
   border-radius: 4px;
@@ -884,63 +908,63 @@ exports[`support OSS 1`] = `
   margin-bottom: 8px;
   padding: 4px 8px;
   transition: all 0.3s;
-  font-weight: 400;
   font-size: 12px;
+  font-weight: 400;
   line-height: 16px;
 }
 
-.c8:hover,
-.c8:focus {
+.c12:hover,
+.c12:focus {
   background: #2C3A73;
 }
 
 <div
-  class="c0"
+  class="c0 c1 c2"
 >
   <div
-    class="c1"
+    class="c3 c4"
   >
     <div
-      class="c2"
+      class="c5 c6"
     >
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-local_play "
+              class="c10 icon icon-local_play "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Support
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/discussions"
           rel="noreferrer"
         >
           Ask the Community Questions
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/issues/new/choose"
           rel="noreferrer"
         >
           Request a New Feature
         </a>
         <a
-          class="c8"
+          class="c12"
           href="mailto:support@goteleport.com"
           rel="noreferrer"
         >
@@ -948,57 +972,57 @@ exports[`support OSS 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-list3 "
+              class="c10 icon icon-list3 "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Resources
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/getting-started?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
           Quickstart Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/server-access/guides/tsh?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
           tsh User Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/setup/admin?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
           Admin Guide
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/download/"
           rel="noreferrer"
         >
           Download Page
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/faq?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
@@ -1006,29 +1030,29 @@ exports[`support OSS 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-graph "
+              class="c10 icon icon-graph "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Troubleshooting
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/docs/setup/admin/troubleshooting?product=teleport&version=oss_4.4.0-dev"
           rel="noreferrer"
         >
@@ -1036,36 +1060,36 @@ exports[`support OSS 1`] = `
         </a>
       </div>
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c7 c8"
           width="210"
         >
           <div
-            class="c5"
+            class="c9"
             font-size="18"
           >
             <span
-              class="c6 icon icon-notifications_active "
+              class="c10 icon icon-notifications_active "
               color="light"
             />
           </div>
           <h5
-            class="c7"
+            class="c11"
           >
             Updates
           </h5>
         </div>
         <a
-          class="c8"
+          class="c12"
           href="https://github.com/gravitational/teleport/blob/master/CHANGELOG.md"
           rel="noreferrer"
         >
           Product Changelog
         </a>
         <a
-          class="c8"
+          class="c12"
           href="https://goteleport.com/blog/"
           rel="noreferrer"
         >
@@ -1075,58 +1099,58 @@ exports[`support OSS 1`] = `
     </div>
   </div>
   <div
-    class="c9"
+    class="c13"
   >
     <h5
-      class="c10"
+      class="c14"
       font-weight="bold"
     >
       Cluster Information
     </h5>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Cluster Name
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         test
       </div>
     </div>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Teleport Version
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         4.4.0-dev
       </div>
     </div>
     <div
-      class="c11"
+      class="c15 c1"
     >
       <div
-        class="c12"
+        class="c16"
         style="width: 130px;"
       >
         Public Address
         :
       </div>
       <div
-        class="c13"
+        class="c17"
       >
         localhost:3080
       </div>

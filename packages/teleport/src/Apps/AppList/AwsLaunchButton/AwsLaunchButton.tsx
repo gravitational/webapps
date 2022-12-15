@@ -8,7 +8,7 @@ import cfg from 'teleport/config';
 import { AwsRole } from 'teleport/services/apps';
 
 export default class AwsLaunchButton extends React.Component<Props> {
-  anchorEl = React.createRef();
+  anchorEl = React.createRef<HTMLButtonElement>();
 
   state = {
     open: false,
@@ -31,7 +31,7 @@ export default class AwsLaunchButton extends React.Component<Props> {
         <ButtonBorder
           width="88px"
           size="small"
-          setRef={e => (this.anchorEl = e)}
+          ref={this.anchorEl}
           onClick={this.onOpen}
         >
           LAUNCH
@@ -51,7 +51,7 @@ export default class AwsLaunchButton extends React.Component<Props> {
             horizontal: 'right',
           }}
           getContentAnchorEl={null}
-          anchorEl={this.anchorEl}
+          anchorEl={this.anchorEl.current}
           open={open}
           onClose={this.onClose}
         >

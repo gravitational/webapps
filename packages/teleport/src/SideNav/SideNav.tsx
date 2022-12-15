@@ -22,7 +22,7 @@ import { Flex, Image } from 'design';
 import cfg from 'teleport/config';
 
 import SideNavItemIcon from './SideNavItemIcon';
-import SideNavItem from './SideNavItem';
+import { SideNavItem } from './SideNavItem';
 import SideNavItemGroup from './SideNavItemGroup';
 import logoSvg from './logo';
 import useSideNav from './useSideNav';

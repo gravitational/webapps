@@ -28,8 +28,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter as Router } from 'react-router-dom';
 
-import ThemeProvider from 'design/ThemeProvider';
-import theme from 'design/theme';
+import { ThemeProvider } from 'design/ThemeProvider';
+import { theme } from 'design/theme';
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 

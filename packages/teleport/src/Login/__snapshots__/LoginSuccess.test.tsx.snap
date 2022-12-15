@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-.c2 {
+.c3 {
   display: inline-block;
   transition: color 0.3s;
   margin-bottom: 16px;
@@ -9,38 +9,40 @@ exports[`renders 1`] = `
   font-size: 56px;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 24px;
-  margin-bottom: 24px;
-  padding: 48px;
-  width: 540px;
-  background-color: #222C59;
-  text-align: center;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
 .c0 {
   display: block;
   outline: none;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 40px;
   margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 200px;
   max-height: 120px;
 }
 
-.c3 {
+.c1 {
+  box-sizing: border-box;
+  padding: 48px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 540px;
+  background-color: #222C59;
+  text-align: center;
+}
+
+.c2 {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 28px;
   line-height: 32px;
-  margin: 0px;
   margin-bottom: 24px;
 }
 
@@ -50,16 +52,16 @@ exports[`renders 1`] = `
     src="file_stub"
   />
   <div
-    class="c1"
+    class="c1 c2"
     width="540px"
   >
     <span
-      class="c2 icon icon-checkmark-circle "
+      class="c3 icon icon-checkmark-circle "
       color="success"
       font-size="56"
     />
     <div
-      class="c3"
+      class="c4"
     >
       Login Successful
     </div>

@@ -43,7 +43,11 @@ type Props = {
   disabled?: boolean;
 };
 
-const StyledWrapper = styled.label`
+interface StyledWrappedProps {
+  disabled: boolean;
+}
+
+const StyledWrapper = styled.label<StyledWrappedProps>`
   position: relative;
   display: flex;
   align-items: center;

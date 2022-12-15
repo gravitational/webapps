@@ -86,7 +86,11 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const TabLabel = styled.label`
+interface TabLabelProps {
+  itemCount: number;
+}
+
+const TabLabel = styled.label<TabLabelProps>`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -99,7 +103,14 @@ const TabInput = styled.input`
   display: none;
 `;
 
-const TabSlider = styled.div`
+interface TabSliderProps {
+  appearance: 'square' | 'round';
+  activeIndex: number;
+  itemCount: number;
+  size?: 'xlarge' | 'medium';
+}
+
+const TabSlider = styled.div<TabSliderProps>`
   background-color: #512fc9;
   border-radius: ${props => (props.appearance === 'square' ? '8px' : '60px')};
   box-shadow: 0px 2px 6px rgba(12, 12, 14, 0.1);
@@ -113,7 +124,12 @@ const TabSlider = styled.div`
   width: calc(${props => 100 / props.itemCount}% - 16px);
 `;
 
-const TabNav = styled.nav`
+interface TabNavProps {
+  appearance: 'square' | 'round';
+  size?: 'xlarge' | 'medium';
+}
+
+const TabNav = styled.nav<TabNavProps>`
   align-items: center;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: ${props => (props.appearance === 'square' ? '8px' : '60px')};

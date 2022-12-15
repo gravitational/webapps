@@ -38,7 +38,11 @@ const LinearProgress = (props: LinearProgressProps) => {
   );
 };
 
-const StyledProgress = styled.div`
+interface StyledProgressProps {
+  transparentBackground: boolean;
+}
+
+const StyledProgress = styled.div<StyledProgressProps>`
   position: relative;
   overflow: hidden;
   display: block;

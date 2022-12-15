@@ -198,8 +198,12 @@ const StyledSupportLink = styled.a.attrs({
   margin-bottom: 8px;
   padding: 4px 8px;
   transition: all 0.3s;
-  ${props => props.theme.typography.body2}
-  &:hover, &:focus {
+  font-size: ${props => props.theme.typography.body2.fontSize};
+  font-weight: ${props => props.theme.typography.body2.fontWeight};
+  line-height: ${props => props.theme.typography.body2.lineHeight};
+
+  &:hover,
+  &:focus {
     background: ${props => props.theme.colors.primary.lighter};
   }
 `;

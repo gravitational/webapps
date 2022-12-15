@@ -25,7 +25,7 @@ import {
   blueGrey,
   yellow,
 } from 'design/theme/palette';
-import typography, { fontSizes, fontWeights } from 'design/theme/typography';
+import { typography, fontSizes, fontWeights } from 'design/theme/typography';
 
 const space = [0, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80];
 const contrastThreshold = 3;

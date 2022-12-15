@@ -22,6 +22,8 @@ import { width, space } from 'design/system';
 
 import { Props, AsyncProps } from './types';
 
+import type { WidthProps, SpaceProps } from 'design/system';
+
 export default function Select(props: Props) {
   const { hasError = false, ...restOfProps } = props;
   return (
@@ -59,7 +61,13 @@ export function SelectAsync(props: AsyncProps) {
   );
 }
 
-export const StyledSelect = styled.div`
+interface StyledSelectBaseProps {
+  hasError?: boolean;
+}
+
+type StyledSelectProps = StyledSelectBaseProps & WidthProps & SpaceProps;
+
+export const StyledSelect = styled.div<StyledSelectProps>`
   .react-select-container {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;

@@ -26,7 +26,7 @@ interface UploadFormProps {
 }
 
 export function UploadForm(props: UploadFormProps) {
-  const dropzoneRef = useRef<HTMLDivElement>();
+  const dropzoneRef = useRef<HTMLButtonElement>();
   const fileSelectorRef = useRef<HTMLInputElement>();
   const [destinationPath, setDestinationPath] = useState('~/');
 
@@ -46,7 +46,7 @@ export function UploadForm(props: UploadFormProps) {
     fileSelectorRef.current.click();
   }
 
-  function handleDrop(e: React.DragEvent<HTMLDivElement>): void {
+  function handleDrop(e: React.DragEvent<HTMLButtonElement>): void {
     removeDropzoneStyle(e);
 
     const { files } = e.dataTransfer;
@@ -63,11 +63,11 @@ export function UploadForm(props: UploadFormProps) {
     }
   }
 
-  function addDropzoneStyle(e: React.DragEvent<HTMLDivElement>): void {
+  function addDropzoneStyle(e: React.DragEvent<HTMLButtonElement>): void {
     e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
   }
 
-  function removeDropzoneStyle(e: React.DragEvent<HTMLDivElement>): void {
+  function removeDropzoneStyle(e: React.DragEvent<HTMLButtonElement>): void {
     e.currentTarget.style.removeProperty('background-color');
   }
 

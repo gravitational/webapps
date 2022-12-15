@@ -17,10 +17,9 @@ limitations under the License.
 import styled from 'styled-components';
 
 import { borderColor } from './../system';
-import defaultTheme from './../theme';
-import Flex from './../Flex';
+import { Flex } from './../Flex';
 
-const fromTheme = ({ theme = defaultTheme }) => {
+const fromTheme = ({ theme }) => {
   return {
     background: theme.colors.primary.light,
     color: theme.colors.text.secondary,
@@ -58,7 +57,6 @@ SideNavItem.defaultProps = {
   pr: 5,
   bg: 'primary.main',
   color: 'text.primary',
-  theme: defaultTheme,
 };
 
 export default SideNavItem;

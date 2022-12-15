@@ -18,13 +18,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { space, width } from 'design/system';
-import defaultTheme from 'design/theme';
 
-const ButtonOutlined = (
-  { children, setRef, ...props } = { setRef: undefined }
-) => {
+const ButtonOutlined = ({ children, ref, ...props } = { ref: undefined }) => {
   return (
-    <StyledButton {...props} ref={setRef}>
+    <StyledButton {...props} ref={ref}>
       <span>{children}</span>
     </StyledButton>
   );
@@ -153,7 +150,6 @@ ButtonOutlined.propTypes = {
 
 ButtonOutlined.defaultProps = {
   size: 'medium',
-  theme: defaultTheme,
 };
 
 ButtonOutlined.displayName = 'ButtonOutlined';

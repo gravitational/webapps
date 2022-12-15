@@ -19,8 +19,9 @@ import React from 'react';
 import ButtonLink from './ButtonLink';
 import ButtonIcon from './ButtonIcon';
 import { AddUsers, Trash, Ellipsis } from './Icon';
-import Flex from './Flex';
-import Button, {
+import { Flex } from './Flex';
+import {
+  Button,
   ButtonPrimary,
   ButtonSecondary,
   ButtonWarning,

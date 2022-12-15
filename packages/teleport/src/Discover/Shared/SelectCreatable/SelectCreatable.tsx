@@ -16,7 +16,7 @@
 
 import React from 'react';
 import ReactSelectCreatable from 'react-select/creatable';
-import theme from 'design/theme';
+import { theme } from 'design/theme';
 
 const styles = {
   multiValue: (base, state) => {

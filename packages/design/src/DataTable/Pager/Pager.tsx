@@ -44,12 +44,10 @@ export function Pager({
           onClick={prevPage}
           title="Previous page"
           disabled={isPrevDisabled}
-          mx={0}
         >
           <CircleArrowLeft fontSize="3" />
         </StyledArrowBtn>
         <StyledArrowBtn
-          ml={0}
           onClick={nextPage}
           title="Next page"
           disabled={isNextDisabled}

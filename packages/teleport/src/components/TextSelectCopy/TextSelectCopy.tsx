@@ -20,6 +20,8 @@ import selectElementContent from 'design/utils/selectElementContent';
 import { ButtonPrimary, Box, Flex } from 'design';
 import { useTheme } from 'styled-components';
 
+import type { Theme } from 'design/theme';
+
 export function TextSelectCopy({
   text,
   fontFamily,
@@ -28,7 +30,7 @@ export function TextSelectCopy({
   bash = true,
   ...styles
 }: Props) {
-  const font = fontFamily || useTheme().fonts.mono;
+  const font = fontFamily || (useTheme() as Theme).fonts.mono;
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 
@@ -38,7 +40,7 @@ export function TextSelectCopy({
     onCopy && onCopy();
   }
 
-  const boxStyles =
+  const boxStyles: React.CSSProperties =
     bash && !allowMultiline
       ? {
           overflow: 'auto',

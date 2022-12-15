@@ -2,6 +2,15 @@
 
 exports[`render DocumentBlank 1`] = `
 .c4 {
+  display: inline-block;
+  transition: color 0.3s;
+  margin-top: 72px;
+  margin-bottom: 40px;
+  color: #01172C;
+  font-size: 256px;
+}
+
+.c5 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -27,31 +36,22 @@ exports[`render DocumentBlank 1`] = `
   padding: 0px 24px;
 }
 
-.c4:active {
+.c5:active {
   opacity: 0.56;
 }
 
-.c4:hover,
-.c4:focus {
+.c5:hover,
+.c5:focus {
   background: #651FFF;
 }
 
-.c4:active {
+.c5:active {
   background: #354AA4;
 }
 
-.c4:disabled {
+.c5:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
-}
-
-.c3 {
-  display: inline-block;
-  transition: color 0.3s;
-  margin-bottom: 40px;
-  margin-top: 72px;
-  color: #01172C;
-  font-size: 256px;
 }
 
 .c0 {
@@ -60,43 +60,43 @@ exports[`render DocumentBlank 1`] = `
   height: 100%;
   width: 100%;
   background-color: #010B1C;
-  display: flex;
-}
-
-.c1 {
-  box-sizing: border-box;
-  flex: 1;
-  display: flex;
 }
 
 .c2 {
   box-sizing: border-box;
   flex: 1;
+}
+
+.c1 {
+  display: flex;
+}
+
+.c3 {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   height="100%"
   style="position: absolute;"
   width="100%"
 >
   <div
-    class="c1"
+    class="c2 c1"
     style="overflow: auto; background: rgb(1, 11, 28); display: flex; position: relative;"
   >
     <div
-      class="c2"
+      class="c2 c3"
     >
       <span
-        class="c3 icon icon-terminal "
+        class="c4 icon icon-terminal "
         color="#01172C"
         font-size="256px"
       />
       <button
-        class="c4"
+        class="c5"
         kind="primary"
       >
         Start a New Session

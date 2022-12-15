@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import Button from 'design/Button';
+import { Button } from 'design/Button';
 import { darken, lighten } from 'design/theme/utils/colorManipulator';
 import * as Icons from 'design/Icon';
 
@@ -113,7 +113,7 @@ const StyledButton = styled(Button)`
   position: relative;
   box-sizing: border-box;
 
-  ${Icons.default} {
+  ${Icons.Icon} {
     font-size: 20px;
     opacity: 0.87;
   }

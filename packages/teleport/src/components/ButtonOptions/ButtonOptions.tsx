@@ -20,7 +20,6 @@ import 'react-day-picker/lib/style.css';
 import { ButtonOutlined } from 'design';
 import { CarrotDown } from 'design/Icon';
 import Menu from 'design/Menu';
-import defaultTheme from 'design/theme';
 
 type Props = {
   title: string;
@@ -35,7 +34,7 @@ type State = {
 };
 
 export default class ButtonOptions extends React.Component<Props, State> {
-  anchorEl: HTMLElement;
+  anchorEl = React.createRef<HTMLButtonElement>();
 
   constructor(props: Props) {
     super(props);
@@ -60,10 +59,9 @@ export default class ButtonOptions extends React.Component<Props, State> {
       <>
         <StyledButton
           size="small"
-          width="180px"
           disabled={props.disabled}
           ml={props.ml}
-          setRef={e => (this.anchorEl = e)}
+          ref={this.anchorEl}
           onClick={this.onOpen}
         >
           {props.title}
@@ -76,8 +74,8 @@ export default class ButtonOptions extends React.Component<Props, State> {
         </StyledButton>
         <Menu
           menuListCss={menuListCss}
-          anchorEl={this.state.anchorEl}
-          open={open}
+          anchorEl={this.anchorEl.current}
+          open={this.state.open}
           onClose={this.onClose}
           anchorOrigin={{
             vertical: 'center',
@@ -88,7 +86,7 @@ export default class ButtonOptions extends React.Component<Props, State> {
             horizontal: 'center',
           }}
         >
-          {open && this.renderItems(props.children)}
+          {this.state.open && this.renderItems(props.children)}
         </Menu>
       </>
     );
@@ -118,13 +116,16 @@ const menuListCss = () => `
   min-width: 100px;
 `;
 
-const StyledButton = styled(ButtonOutlined)`
+interface StyledButtonProps {
+  disabled: boolean;
+
+  ml?: number; // TODO: type ButtonOutlined so this comes from styled-system
+  onClick: (e: React.MouseEvent) => void; // this should go after typing ButtonOutlined too
+}
+
+const StyledButton = styled(ButtonOutlined)<StyledButtonProps>`
   border-color: ${props => props.theme.colors.primary.lighter};
   height: 32px;
   padding: 0 40px 0 24px;
-  width: auto;
+  width: 180px;
 `;
-
-StyledButton.defaultProps = {
-  theme: defaultTheme,
-};

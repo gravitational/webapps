@@ -22,7 +22,7 @@ import { matchPath } from 'react-router';
 import * as Icons from 'design/Icon';
 
 import SideNavItemIcon from './SideNavItemIcon';
-import SideNavItem from './SideNavItem';
+import { SideNavItem } from './SideNavItem';
 import { Item } from './useSideNav';
 
 const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {

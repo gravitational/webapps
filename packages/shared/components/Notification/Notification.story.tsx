@@ -31,7 +31,6 @@ export const AutoRemovable = () => {
     <>
       {showInfo ? (
         <Notification
-          mt={4}
           item={{
             id: crypto.randomUUID(),
             severity: 'info',
@@ -49,7 +48,6 @@ export const AutoRemovable = () => {
       )}
       {showWarning ? (
         <Notification
-          mt={4}
           item={{
             id: crypto.randomUUID(),
             severity: 'warn',
@@ -67,7 +65,6 @@ export const AutoRemovable = () => {
       )}
       {showError ? (
         <Notification
-          mt={4}
           item={{
             id: crypto.randomUUID(),
             severity: 'error',

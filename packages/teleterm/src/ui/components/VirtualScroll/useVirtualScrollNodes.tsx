@@ -98,7 +98,11 @@ export function useVirtualScrollNodes<T>(props: VirtualScrollProps<T>) {
   };
 }
 
-const EmptyNode = styled.div`
+interface EmptyNodeProps {
+  height: number;
+}
+
+const EmptyNode = styled.div<EmptyNodeProps>`
   width: 100%;
   height: ${props => props.height + 'px'};
 `;

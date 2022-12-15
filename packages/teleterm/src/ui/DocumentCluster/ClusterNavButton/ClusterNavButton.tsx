@@ -23,6 +23,8 @@ import {
   NavLocation,
 } from 'teleterm/ui/DocumentCluster/clusterContext';
 
+import type { SpaceProps, WidthProps } from 'design/system';
+
 export default function NavButton(props: NavButtonProps) {
   const { title, ...rest } = props;
   const clusterCtx = useClusterContext();
@@ -45,7 +47,13 @@ export type NavButtonProps = {
   [key: string]: any;
 };
 
-const StyledNavButton = styled.button(props => {
+interface StyledNavButtonBaseProps {
+  active: boolean;
+}
+
+type StyledNavButtonProps = StyledNavButtonBaseProps & SpaceProps & WidthProps;
+
+const StyledNavButton = styled.button<StyledNavButtonProps>(props => {
   return {
     color: props.active
       ? props.theme.colors.light

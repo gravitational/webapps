@@ -17,11 +17,16 @@ limitations under the License.
 import styled from 'styled-components';
 
 import { space, borderRadius } from 'design/system';
+
 import { darken } from 'design/theme/utils/colorManipulator';
 
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 
-export const StyledTable = styled.table(
+import type { BorderRadiusProps, SpaceProps } from 'design/system';
+
+type StyledTableProps = SpaceProps & BorderRadiusProps;
+
+export const StyledTable = styled.table<StyledTableProps>(
   props => `
   background: ${props.theme.colors.primary.light};
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
@@ -89,7 +94,9 @@ export const StyledTable = styled.table(
   borderRadius
 );
 
-export const StyledPanel = styled.nav`
+type StyledPanelProps = BorderRadiusProps;
+
+export const StyledPanel = styled.nav<StyledPanelProps>`
   padding: 16px 24px;
   display: flex;
   height: 24px;

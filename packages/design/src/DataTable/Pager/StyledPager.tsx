@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Icon from 'design/Icon';
+import { Icon } from 'design/Icon';
 
 export const StyledArrowBtn = styled.button`
   background: none;

@@ -24,6 +24,7 @@ import ActionMenu from './ActionMenu';
 import { WarningDropdown } from './WarningDropdown';
 
 import type { NotificationItem } from 'shared/components/Notification';
+import type { Theme } from 'design/theme';
 
 export default function TopBar(props: Props) {
   const {
@@ -36,7 +37,7 @@ export default function TopBar(props: Props) {
     warnings,
     onRemoveWarning,
   } = props;
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
 
   const primaryOnTrue = (b: boolean): any => {
     return {
@@ -96,13 +97,13 @@ export const TopBarHeight = 40;
 const StyledClipboard = styled(Clipboard)`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   font-size: ${({ theme }) => theme.fontSizes[4] + 'px'};
-  align-self: 'center';
+  align-self: center;
 `;
 
 const StyledFolderShared = styled(FolderShared)`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   font-size: ${({ theme }) => theme.fontSizes[6] + 'px'};
-  align-self: 'center';
+  align-self: center;
 `;
 
 type Props = {

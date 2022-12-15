@@ -92,41 +92,49 @@ export function TabItem(props: TabItemProps) {
   );
 }
 
-const StyledTabItem = styled.div(({ theme, active, dragging, canDrag }) => {
-  const styles: any = {
-    display: 'flex',
-    flexBasis: '0',
-    flexGrow: '1',
-    opacity: '1',
-    color: theme.colors.text.secondary,
-    alignItems: 'center',
-    minWidth: '0',
-    height: '100%',
-    border: 'none',
-    borderRadius: '8px 8px 0 0',
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      transition: 'color .3s',
-    },
-    position: 'relative',
-  };
+interface StyledTabItemProps {
+  active: boolean;
+  dragging: boolean;
+  canDrag: boolean;
+}
 
-  if (active) {
-    styles['backgroundColor'] = theme.colors.primary.darker;
-    styles['color'] = theme.colors.secondary.contrastText;
-    styles['transition'] = 'none';
+const StyledTabItem = styled.div<StyledTabItemProps>(
+  ({ theme, active, dragging, canDrag }) => {
+    const styles: any = {
+      display: 'flex',
+      flexBasis: '0',
+      flexGrow: '1',
+      opacity: '1',
+      color: theme.colors.text.secondary,
+      alignItems: 'center',
+      minWidth: '0',
+      height: '100%',
+      border: 'none',
+      borderRadius: '8px 8px 0 0',
+      '&:hover, &:focus': {
+        color: theme.colors.primary.contrastText,
+        transition: 'color .3s',
+      },
+      position: 'relative',
+    };
+
+    if (active) {
+      styles['backgroundColor'] = theme.colors.primary.darker;
+      styles['color'] = theme.colors.secondary.contrastText;
+      styles['transition'] = 'none';
+    }
+
+    if (dragging) {
+      styles['opacity'] = 0;
+    }
+
+    if (canDrag) {
+      styles['cursor'] = 'pointer';
+    }
+
+    return styles;
   }
-
-  if (dragging) {
-    styles['opacity'] = 0;
-  }
-
-  if (canDrag) {
-    styles['cursor'] = 'pointer';
-  }
-
-  return styles;
-});
+);
 
 const Title = styled(Text)`
   display: block;

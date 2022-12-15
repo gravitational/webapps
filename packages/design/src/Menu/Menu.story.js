@@ -17,8 +17,8 @@ limitations under the License.
 import React from 'react';
 
 import { ButtonPrimary } from '../Button';
-import Box from '../Box';
-import Flex from '../Flex';
+import { Box } from '../Box';
+import { Flex } from '../Flex';
 import * as Icons from '../Icon';
 
 import MenuItemIcon from './MenuItemIcon';

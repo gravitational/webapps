@@ -42,15 +42,21 @@ export function VirtualScroll<T>(props: VirtualScrollProps<T>) {
   );
 }
 
-const TotalHeight = styled.div`
+interface TotalHeightProps {
+  height: number;
+}
+
+const TotalHeight = styled.div<TotalHeightProps>`
   height: ${props => props.height + 'px'};
 `;
 
-const Offset = styled.div.attrs(props => ({
-  style: {
-    transform: `translateY(${props.moveBy + 'px'})`,
-  },
-}))``;
+interface OffsetProps {
+  moveBy: number;
+}
+
+const Offset = styled.div<OffsetProps>`
+  transform: translateY(${p => p.moveBy + 'px'});
+`;
 
 const Scrollable = styled.div`
   height: 100%;

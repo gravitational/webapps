@@ -18,9 +18,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Close as CloseIcon } from 'design/Icon';
 import { space } from 'design/system';
+
 import { Flex, Text } from 'design';
 
 import JoinedUsers from './JoinedUsers';
+
+import type { SpaceProps } from 'design/system';
+import type { PropsWithTheme } from 'design/theme';
 
 export default function TabItem(props: Props) {
   const { name, users, active, onClick, onClose, style } = props;
@@ -48,7 +52,7 @@ type Props = {
   style: any;
 };
 
-function fromProps({ theme, active }) {
+function fromProps({ theme, active }: PropsWithTheme<StyledTabItemProps>) {
   let styles: Record<any, any> = {
     border: 'none',
     borderRight: `1px solid ${theme.colors.bgTerminal}`,
@@ -71,7 +75,11 @@ function fromProps({ theme, active }) {
   return styles;
 }
 
-const StyledTabItem = styled(Flex)`
+interface StyledTabItemProps {
+  active: boolean;
+}
+
+const StyledTabItem = styled(Flex)<StyledTabItemProps>`
   max-width: 200px;
   height: 100%;
   ${fromProps}
@@ -85,7 +93,6 @@ const StyledTabButton = styled.button`
   text-decoration: none;
   outline: none;
   margin: 0;
-  text-decoration: none;
   color: inherit;
   line-height: 32px;
   background-color: transparent;
@@ -96,7 +103,9 @@ const StyledTabButton = styled.button`
   border: none;
 `;
 
-const StyledCloseButton = styled.button`
+type StyledCloseButtonProps = SpaceProps;
+
+const StyledCloseButton = styled.button<StyledCloseButtonProps>`
   background: transparent;
   border-radius: 2px;
   border: none;

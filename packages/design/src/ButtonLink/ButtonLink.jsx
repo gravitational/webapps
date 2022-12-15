@@ -17,10 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 
-import defaultTheme from 'design/theme';
-
-import Button from './../Button/Button';
-
+import { Button } from './../Button/Button';
 function ButtonLink({ ...props }) {
   return <Button as={StyledButtonLink} {...props} />;
 }
@@ -31,7 +28,6 @@ ButtonLink.propTypes = {
 
 ButtonLink.defaultProps = {
   size: 'medium',
-  theme: defaultTheme,
 };
 
 ButtonLink.displayName = 'ButtonLink';
