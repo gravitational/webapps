@@ -19,7 +19,7 @@ import SlideTabs from 'design/SlideTabs';
 import { Box, Flex, Image, Text } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
-import AddDatabase, { getDatabaseOption } from 'teleport/Databases/AddDatabase';
+import AddDatabase from 'teleport/Databases/AddDatabase';
 import useTeleport from 'teleport/useTeleport';
 
 import { Acl } from 'teleport/services/user';
@@ -171,7 +171,7 @@ export function SelectResource(props: SelectResourceProps) {
           version={userContext.cluster.authVersion}
           authType={userContext.authType}
           onClose={() => setShowAddDB(false)}
-          dbOption={getDatabaseOption(props.resourceState)}
+          selectedDb={props.resourceState}
         />
       )}
     </Box>

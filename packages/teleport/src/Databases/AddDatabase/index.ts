@@ -15,5 +15,4 @@ limitations under the License.
 */
 
 import AddDatabase from './AddDatabase';
-export { getDatabaseOption } from './AddDatabase';
 export default AddDatabase;

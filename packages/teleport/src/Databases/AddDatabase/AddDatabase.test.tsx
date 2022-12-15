@@ -15,31 +15,35 @@
  */
 
 import React from 'react';
-import { fireEvent, render, screen } from 'design/utils/testing';
+import { render, screen } from 'design/utils/testing';
+
+import {
+  DatabaseLocation,
+  DatabaseEngine,
+} from 'teleport/Discover/Database/resources';
 
 import { Props, AddDatabase } from './AddDatabase';
 import { State } from './useAddDatabase';
 
 describe('correct database add command generated with given input', () => {
   test.each`
-    input                    | output
-    ${'self-hosted mysql'}   | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] -o file'}
-    ${'rds mysql'}           | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] -o file --aws-region=[region]'}
-    ${'cloud sql mysql'}     | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] -o file --ca-cert-file=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'rds postgres'}        | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]'}
-    ${'cloud sql postgres'}  | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --ca-cert-file=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'redshift'}            | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
-    ${'self-hosted mongodb'} | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri] -o file'}
+    desc                     | location                       | engine                       | output
+    ${'self-hosted mysql'}   | ${DatabaseLocation.SelfHosted} | ${DatabaseEngine.MySQL}      | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] -o file'}
+    ${'rds mysql'}           | ${DatabaseLocation.AWS}        | ${DatabaseEngine.MySQL}      | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] -o file --aws-region=[region]'}
+    ${'cloud sql mysql'}     | ${DatabaseLocation.GCP}        | ${DatabaseEngine.MySQL}      | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] -o file --ca-cert-file=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'rds postgres'}        | ${DatabaseLocation.AWS}        | ${DatabaseEngine.PostgreSQL} | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]'}
+    ${'cloud sql postgres'}  | ${DatabaseLocation.GCP}        | ${DatabaseEngine.PostgreSQL} | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --ca-cert-file=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'redshift'}            | ${DatabaseLocation.AWS}        | ${DatabaseEngine.RedShift}   | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
+    ${'self-hosted mongodb'} | ${DatabaseLocation.SelfHosted} | ${DatabaseEngine.Mongo}      | ${'teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri] -o file'}
   `(
-    'should generate correct command for input: $input',
-    ({ input, output }) => {
-      render(<AddDatabase {...props} />);
-
-      const dropDownInputEl = document.querySelector('input');
-
-      fireEvent.change(dropDownInputEl, { target: { value: input } });
-      fireEvent.focus(dropDownInputEl);
-      fireEvent.keyDown(dropDownInputEl, { key: 'Enter', keyCode: 13 });
+    'should generate correct command for input: $desc',
+    ({ location, engine, output }) => {
+      render(
+        <AddDatabase
+          {...props}
+          selectedDb={{ location, engine, name: 'n/a' }}
+        />
+      );
 
       expect(screen.getByText(output)).toBeInTheDocument();
     }
@@ -60,5 +64,5 @@ const props: Props & State = {
   createJoinToken() {
     return Promise.resolve(null);
   },
-  dbOption: 0,
+  selectedDb: null,
 };

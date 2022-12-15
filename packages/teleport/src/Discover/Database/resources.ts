@@ -124,6 +124,7 @@ export const DATABASES: Database[] = [
 export function getDatabaseProtocol(engine: DatabaseEngine): DbProtocol {
   switch (engine) {
     case DatabaseEngine.PostgreSQL:
+    case DatabaseEngine.RedShift:
       return 'postgres';
     case DatabaseEngine.MySQL:
       return 'mysql';
