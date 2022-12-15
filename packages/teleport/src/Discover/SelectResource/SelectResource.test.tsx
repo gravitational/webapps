@@ -56,6 +56,8 @@ const fullAcl: Acl = {
   desktopSessionRecordingEnabled: true,
   directorySharingEnabled: true,
   connectionDiagnostic: fullAccess,
+  license: fullAccess,
+  download: fullAccess,
 };
 
 const userContextJson = {

@@ -130,6 +130,10 @@ export default class StoreUserContext extends Store<UserContext> {
     return tokens.create;
   }
 
+  getAccessDownloadCenter() {
+    return this.state.acl.license.list || this.state.acl.download.list;
+  }
+
   // hasAccessToAgentQuery checks for at least one valid query permission.
   // Nodes require only a 'list' access while the rest of the agents
   // require 'list + read'.
