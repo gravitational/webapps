@@ -19,7 +19,7 @@ import SlideTabs from 'design/SlideTabs';
 import { Box, Flex, Image, Text } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
-import AddDatabase from 'teleport/Databases/AddDatabase';
+import AddDatabase from 'teleport/Discover/Database/AddDatabaseModal';
 import useTeleport from 'teleport/useTeleport';
 
 import { Acl } from 'teleport/services/user';
