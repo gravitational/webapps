@@ -216,27 +216,28 @@ const UUID_V4_REGEX =
 
 function loadInstallationId(): string {
   const filePath = path.resolve(app.getPath('userData'), 'installation_id');
-  const writeNewId = (): string => {
-    try {
-      const newId = crypto.randomUUID();
-      fs.writeFileSync(filePath, newId);
-      return newId;
-    } catch (error) {
-      throw new Error(
-        `Could not write installation_id to ${filePath}, ${error.message}`
-      );
-    }
-  };
-
+  let id = '';
   try {
-    const id = fs.readFileSync(filePath, 'utf-8');
-    if (!UUID_V4_REGEX.test(id)) {
-      return writeNewId();
-    }
-    return id;
+    id = fs.readFileSync(filePath, 'utf-8');
   } catch (error) {
-    return writeNewId();
+    return writeInstallationId(filePath);
   }
+  if (!UUID_V4_REGEX.test(id)) {
+    return writeInstallationId(filePath);
+  }
+  return id;
+}
+
+function writeInstallationId(filePath: string): string {
+  const newId = crypto.randomUUID();
+  try {
+    fs.writeFileSync(filePath, newId);
+  } catch (error) {
+    throw new Error(
+      `Could not write installation_id to ${filePath}, ${error.message}`
+    );
+  }
+  return newId;
 }
 
 export { getRuntimeSettings, getAssetPath };
