@@ -20,10 +20,9 @@ import { Danger } from 'design/Alert';
 import { Indicator, Flex, Text, Box } from 'design';
 
 import cfg from 'teleport/config';
-import TtyPlayer, {
+import TtyStramPlayer, {
   StatusEnum as TtyStatusEnum,
-} from 'teleport/lib/term/ttyPlayer';
-import TtyStramPlayer from 'teleport/lib/term/ttyStreamPlayer';
+} from 'teleport/lib/term/ttyStreamPlayer';
 import EventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
 
 import { ProgressBarTty } from './ProgressBar';
