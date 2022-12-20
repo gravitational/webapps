@@ -22,7 +22,7 @@ export enum EventType {
   RESIZE = 'resize',
 }
 
-export enum TermEvent  {
+export enum TermEvent {
   RESIZE = 'terminal.resize',
   CLOSE = 'terminal.close',
   RESET = 'terminal.reset',

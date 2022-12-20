@@ -79,10 +79,7 @@ export default function useWebAuthn(emitterSender: EventEmitterWebAuthnSender) {
       emitterSender.on(TermEvent.WEBAUTHN_CHALLENGE, onChallenge);
 
       return () => {
-        emitterSender.removeListener(
-          TermEvent.WEBAUTHN_CHALLENGE,
-          onChallenge
-        );
+        emitterSender.removeListener(TermEvent.WEBAUTHN_CHALLENGE, onChallenge);
       };
     }
   }, [emitterSender]);
