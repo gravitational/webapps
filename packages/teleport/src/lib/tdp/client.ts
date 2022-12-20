@@ -13,7 +13,7 @@
 // limitations under the License.
 import Logger from 'shared/libs/logger';
 
-import { StatusCodeEnum, TermEventEnum } from 'teleport/lib/term/enums.js';
+import { WebsocketCloseCode, TermEvent } from 'teleport/lib/term/enums.js';
 import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 
 import Codec, {
@@ -246,7 +246,7 @@ export default class Client extends EventEmitterWebAuthnSender {
     try {
       const mfaJson = this.codec.decodeMfaJson(buffer);
       if (mfaJson.mfaType == 'n') {
-        this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
+        this.emit(TermEvent.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
       } else {
         // mfaJson.mfaType === 'u', or else decodeMfaJson would have thrown an error.
         this.handleError(
@@ -561,11 +561,11 @@ export default class Client extends EventEmitterWebAuthnSender {
   private handleError(
     err: Error,
     errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
-    statusCode = StatusCodeEnum.ABNORMAL
+    closeCode = WebsocketCloseCode.ABNORMAL
   ) {
     this.logger.error(err);
     this.emit(errType, err);
-    this.socket?.close(statusCode);
+    this.socket?.close(closeCode);
   }
 
   // Emits an warnType event
@@ -582,8 +582,8 @@ export default class Client extends EventEmitterWebAuthnSender {
   // so don't call this if your calling object is relying on listeners.
   // It's safe to call this multiple times, calls subsequent to the first call
   // will simply do nothing.
-  shutdown(statusCode = StatusCodeEnum.NORMAL) {
+  shutdown(closeCode = WebsocketCloseCode.NORMAL) {
     this.removeAllListeners();
-    this.socket?.close(statusCode);
+    this.socket?.close(closeCode);
   }
 }
