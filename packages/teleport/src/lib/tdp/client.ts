@@ -13,7 +13,7 @@
 // limitations under the License.
 import Logger from 'shared/libs/logger';
 
-import { WebsocketCloseCode, TermEvent } from 'teleport/lib/term/enums.js';
+import { WebsocketCloseCode, TermEvent } from 'teleport/lib/term/enums';
 import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 
 import Codec, {
