@@ -31,6 +31,9 @@ export class MockMainProcessClient implements MainProcessClient {
         requestedNetworkAddress: '',
       },
       installationId: '123e4567-e89b-12d3-a456-426614174000',
+      arch: 'arm64',
+      osVersion: '22.2.0',
+      connectVersion: '11.1.0',
     };
   }
 

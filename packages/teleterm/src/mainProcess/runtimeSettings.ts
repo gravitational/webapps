@@ -77,6 +77,9 @@ function getRuntimeSettings(): RuntimeSettings {
     installationId: loadInstallationId(
       path.resolve(app.getPath('userData'), 'installation_id')
     ),
+    arch: os.arch(),
+    osVersion: os.release(),
+    connectVersion: app.getVersion(),
   };
 }
 

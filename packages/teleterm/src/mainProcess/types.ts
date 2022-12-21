@@ -26,6 +26,9 @@ export type RuntimeSettings = {
     requestedNetworkAddress: string;
   };
   installationId: string;
+  arch: string;
+  osVersion: string;
+  connectVersion: string;
 };
 
 export type MainProcessClient = {
