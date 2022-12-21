@@ -152,7 +152,8 @@ export class UsageEventService {
   private getClusterProperties(uri: ClusterOrResourceUri) {
     const rootClusterUri = routing.ensureRootClusterUri(uri);
     const cluster = this.findCluster(rootClusterUri);
-    if (!(cluster && cluster.authServer && cluster.loggedInUser)) {
+    if (!(cluster && cluster.loggedInUser)) {
+      // TODO: add check for authClusterId
       logger.warn(`Missing cluster data for ${uri}, skipping event`);
       return;
     }

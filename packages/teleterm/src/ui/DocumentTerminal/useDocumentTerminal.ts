@@ -96,6 +96,12 @@ async function initState(
   if (!ptyProcess) {
     return;
   }
+  if (cmd.kind === 'pty.tsh-login') {
+    ctx.usageEventService.captureProtocolRun(clusterUri, 'ssh');
+  }
+  if (cmd.kind === 'pty.tsh-kube-login') {
+    ctx.usageEventService.captureProtocolRun(clusterUri, 'kube');
+  }
 
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();
 

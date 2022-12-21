@@ -1,9 +1,14 @@
 import { FileTransferListeners } from 'shared/components/FileTransfer';
 
-import { TshClient, FileTransferRequest } from 'teleterm/services/tshd/types';
+import { FileTransferRequest, TshClient } from 'teleterm/services/tshd/types';
+import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { FileTransferDirection } from 'teleterm/services/tshd/v1/service_pb';
 
 export class FileTransferService {
-  constructor(private tshClient: TshClient) {}
+  constructor(
+    private tshClient: TshClient,
+    private usageEventService: UsageEventService
+  ) {}
 
   transferFile(
     options: FileTransferRequest,
@@ -17,6 +22,24 @@ export class FileTransferService {
         abortController.signal.removeEventListener('abort', cb);
       },
     };
-    return this.tshClient.transferFile(options, abortSignal);
+    const listeners = this.tshClient.transferFile(options, abortSignal);
+    if (
+      options.direction ===
+      FileTransferDirection.FILE_TRANSFER_DIRECTION_DOWNLOAD
+    ) {
+      this.usageEventService.captureFileTransferRun(
+        options.clusterUri,
+        'download'
+      );
+    }
+    if (
+      options.direction === FileTransferDirection.FILE_TRANSFER_DIRECTION_UPLOAD
+    ) {
+      this.usageEventService.captureFileTransferRun(
+        options.clusterUri,
+        'upload'
+      );
+    }
+    return listeners;
   }
 }
