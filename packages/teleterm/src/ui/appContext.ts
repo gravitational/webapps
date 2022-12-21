@@ -127,11 +127,19 @@ export default class AppContext implements IAppContext {
     );
   }
 
-  async init(): Promise<void> {
+  async runBeforeUiIsVisible(): Promise<void> {
     this.setUpTshdEventSubscriptions();
     await this.clustersService.syncRootClusters();
-    this.workspacesService.restorePersistedState();
-    this.notifyAboutStoredConfigErrors();
+  }
+
+  async runAfterUiIsVisible(): Promise<void> {
+    try {
+      //await this.askAboutCollectingMetrics();
+      this.workspacesService.restorePersistedState();
+      this.notifyAboutStoredConfigErrors();
+    } catch (error) {
+      this.notificationsService.notifyError(error);
+    }
   }
 
   private setUpTshdEventSubscriptions() {
@@ -161,13 +169,27 @@ export default class AppContext implements IAppContext {
       });
     }
   }
-}
 
-//example, remove
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function askForUsageMetrics(configService: ConfigService) {
-  // only if we didn't ask
-  if (!configService.get('usageMetrics.enabled').metadata.isStored) {
-    configService.set('usageMetrics.enabled', true);
+  private async askAboutCollectingMetrics(): Promise<void> {
+    const { configService } = this.mainProcessClient;
+    if (configService.get('usageMetrics.enabled').metadata.isStored) {
+      return;
+    }
+    return new Promise(resolve => {
+      this.modalsService.openRegularDialog({
+        kind: 'usage-data',
+        onAllow() {
+          configService.set('usageMetrics.enabled', true);
+          resolve();
+        },
+        onDecline() {
+          configService.set('usageMetrics.enabled', false);
+          resolve();
+        },
+        onCancel() {
+          resolve();
+        },
+      });
+    });
   }
 }

@@ -1,29 +1,32 @@
-import React, { FC, useEffect } from 'react';
-
-import { useAsync } from 'shared/hooks/useAsync';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export const AppInitializer: FC = props => {
   const ctx = useAppContext();
-  const [state, init] = useAsync(() => ctx.init());
+  const [isUiVisible, setIsUiVisible] = useState(false);
 
-  useEffect(() => {
-    init();
-  }, []);
-
-  useEffect(() => {
-    if (state.status === 'error') {
-      ctx.notificationsService.notifyError(state.statusText);
+  const initializeApp = useCallback(async () => {
+    try {
+      await ctx.runBeforeUiIsVisible();
+      setIsUiVisible(true);
+      await ctx.runAfterUiIsVisible();
+    } catch (error) {
+      setIsUiVisible(true);
+      ctx.notificationsService.notifyError(error?.message);
     }
-  }, [state]);
+  }, [ctx]);
 
-  if (state.status === 'success' || state.status === 'error') {
-    return <>{props.children}</>;
+  useEffect(() => {
+    initializeApp();
+  }, [initializeApp]);
+
+  if (!isUiVisible) {
+    return <Centered>Loading</Centered>;
   }
 
-  return <Centered>Loading</Centered>;
+  return <>{props.children}</>;
 };
 
 const Centered = styled.div`
