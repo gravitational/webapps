@@ -183,7 +183,7 @@ function Session(props: PropsWithChildren<Props>) {
         onDisconnect={() => {
           setDisconnected(true);
           setClipboardState(false);
-          tdpClient.nuke();
+          tdpClient.shutdown();
         }}
         userHost={`${username}@${hostname}`}
         clipboardSharingEnabled={clipboardSharingActive}
