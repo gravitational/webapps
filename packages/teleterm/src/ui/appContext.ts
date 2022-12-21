@@ -35,13 +35,12 @@ import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { ReloginService } from 'teleterm/services/relogin';
 import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
-import { ConfigService } from 'teleterm/services/config';
+import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { ResourcesService } from 'teleterm/ui/services/resources';
 
 import { CommandLauncher } from './commandLauncher';
-import { IAppContext } from './types';
-import { ResourcesService } from './services/resources/resourcesService';
 
-export default class AppContext implements IAppContext {
+export default class AppContext {
   clustersService: ClustersService;
   modalsService: ModalsService;
   notificationsService: NotificationsService;
@@ -71,12 +70,22 @@ export default class AppContext implements IAppContext {
   subscribeToTshdEvent: SubscribeToTshdEvent;
   reloginService: ReloginService;
   tshdNotificationsService: TshdNotificationsService;
+  usageEventService: UsageEventService;
 
   constructor(config: ElectronGlobals) {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
     this.subscribeToTshdEvent = config.subscribeToTshdEvent;
     this.mainProcessClient = mainProcessClient;
-    this.fileTransferService = new FileTransferService(tshClient);
+    this.usageEventService = new UsageEventService(
+      tshClient,
+      this.mainProcessClient.configService,
+      clusterUri => this.clustersService.findCluster(clusterUri),
+      mainProcessClient.getRuntimeSettings()
+    );
+    this.fileTransferService = new FileTransferService(
+      tshClient,
+      this.usageEventService
+    );
     this.resourcesService = new ResourcesService(tshClient);
     this.statePersistenceService = new StatePersistenceService(
       this.mainProcessClient.fileStorage
@@ -86,7 +95,8 @@ export default class AppContext implements IAppContext {
     this.clustersService = new ClustersService(
       tshClient,
       this.mainProcessClient,
-      this.notificationsService
+      this.notificationsService,
+      this.usageEventService
     );
     this.workspacesService = new WorkspacesService(
       this.modalsService,
