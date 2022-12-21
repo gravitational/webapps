@@ -232,6 +232,7 @@ exports[`render custom polling 1`] = `
         00
         :
         00
+        
       </span>
     </div>
   </div>
@@ -993,6 +994,7 @@ exports[`render default polling 1`] = `
         00
         :
         00
+        
       </span>
     </div>
   </div>

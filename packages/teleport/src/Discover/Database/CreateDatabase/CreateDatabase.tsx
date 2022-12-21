@@ -15,13 +15,22 @@
  */
 
 import React, { useState } from 'react';
-import { Text, Box, Flex, AnimatedProgressBar } from 'design';
+import {
+  Text,
+  Box,
+  Flex,
+  AnimatedProgressBar,
+  ButtonPrimary,
+  ButtonSecondary,
+} from 'design';
 import Dialog, { DialogContent } from 'design/DialogConfirmation';
-import { Danger } from 'design/Alert';
+import * as Icons from 'design/Icon';
 import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
 import TextEditor from 'shared/components/TextEditor';
+
+import { Timeout } from 'teleport/Discover/Shared/Timeout';
 
 import {
   ActionButtons,
@@ -29,6 +38,7 @@ import {
   Header,
   LabelsCreater,
   Mark,
+  TextIcon,
 } from '../../Shared';
 import { dbCU } from '../../yamlTemplates';
 import { getDatabaseProtocol } from '../resources';
@@ -37,6 +47,7 @@ import { useCreateDatabase, State } from './useCreateDatabase';
 
 import type { AgentStepProps } from '../../types';
 import type { AgentLabel } from 'teleport/services/agents';
+import type { Attempt } from 'shared/hooks/useAttemptNext';
 
 export function CreateDatabase(props: AgentStepProps) {
   const state = useCreateDatabase(props);
@@ -45,9 +56,11 @@ export function CreateDatabase(props: AgentStepProps) {
 
 export function CreateDatabaseView({
   attempt,
+  clearAttempt,
   registerDatabase,
   canCreateDatabase,
   engine,
+  pollTimeout,
 }: State) {
   const [dbName, setDbName] = useState('');
   const [dbUri, setDbUri] = useState('');
@@ -81,9 +94,6 @@ export function CreateDatabaseView({
           <HeaderSubtitle>
             Create a new database resource for the database server.
           </HeaderSubtitle>
-          {attempt.status === 'failed' && (
-            <Danger children={attempt.statusText} />
-          )}
           {!canCreateDatabase && (
             <Box>
               <Text>
@@ -148,14 +158,31 @@ export function CreateDatabaseView({
               attempt.status === 'processing' || !canCreateDatabase
             }
           />
-          {attempt.status === 'processing' && <CreateDatabaseDialog />}
+          {(attempt.status === 'processing' || attempt.status === 'failed') && (
+            <CreateDatabaseDialog
+              pollTimeout={pollTimeout}
+              attempt={attempt}
+              retry={() => handleOnProceed(validator)}
+              close={clearAttempt}
+            />
+          )}
         </Box>
       )}
     </Validation>
   );
 }
 
-const CreateDatabaseDialog = () => {
+const CreateDatabaseDialog = ({
+  pollTimeout,
+  attempt,
+  retry,
+  close,
+}: {
+  pollTimeout: number;
+  attempt: Attempt;
+  retry(): void;
+  close(): void;
+}) => {
   return (
     <Dialog disableEscapeKeyDown={false} open={true}>
       <DialogContent
@@ -164,13 +191,45 @@ const CreateDatabaseDialog = () => {
         mb={0}
         textAlign="center"
       >
-        <Text bold caps>
-          Register Database
-        </Text>
-        <Text mb={2} mt={3}>
-          In Progress...
-        </Text>
-        <AnimatedProgressBar />
+        {attempt.status !== 'failed' ? (
+          <>
+            {' '}
+            <Text bold caps mb={4}>
+              Registering Database
+            </Text>
+            <AnimatedProgressBar />
+            <TextIcon
+              css={`
+                white-space: pre;
+              `}
+            >
+              <Icons.Restore fontSize={4} />
+              <Timeout
+                timeout={pollTimeout}
+                message=""
+                tailMessage={' seconds left'}
+              />
+            </TextIcon>
+          </>
+        ) : (
+          <Box width="100%">
+            <Text bold caps mb={3}>
+              Database Register Failed
+            </Text>
+            <Text mb={5}>
+              <Icons.Warning ml={1} mr={2} color="danger" />
+              Error: {attempt.statusText}
+            </Text>
+            <Flex>
+              <ButtonPrimary mr={2} width="50%" onClick={retry}>
+                Retry
+              </ButtonPrimary>
+              <ButtonSecondary width="50%" onClick={close}>
+                Close
+              </ButtonSecondary>
+            </Flex>
+          </Box>
+        )}
       </DialogContent>
     </Dialog>
   );
