@@ -14,34 +14,48 @@ import apiApp from './v1/app_pb';
 import apiService from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
 import apiAccessRequest from './v1/access_request_pb';
+import apiUsageEvents from './v1/usage_events_pb';
 
 export type Application = apiApp.App.AsObject;
+
 export interface Kube extends apiKube.Kube.AsObject {
   uri: uri.KubeUri;
 }
+
 export interface Server extends apiServer.Server.AsObject {
   uri: uri.ServerUri;
 }
+
 export interface Gateway extends apigateway.Gateway.AsObject {
   uri: uri.GatewayUri;
   targetUri: uri.DatabaseUri;
 }
+
 export type AccessRequest = apiAccessRequest.AccessRequest.AsObject;
 export type ResourceId = apiAccessRequest.ResourceID.AsObject;
 export type AccessRequestReview = apiAccessRequest.AccessRequestReview.AsObject;
+
 export interface GetServersResponse
   extends apiService.GetServersResponse.AsObject {
   agentsList: Server[];
 }
+
 export interface GetDatabasesResponse
   extends apiService.GetDatabasesResponse.AsObject {
   agentsList: Database[];
 }
+
 export interface GetKubesResponse extends apiService.GetKubesResponse.AsObject {
   agentsList: Kube[];
 }
+
 export type GetRequestableRolesResponse =
   apiService.GetRequestableRolesResponse.AsObject;
+
+export type ReportEventRequest = Modify<
+  apiUsageEvents.ReportEventRequest.AsObject,
+  { timestamp: Date }
+>;
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //
@@ -53,13 +67,16 @@ export type GatewayProtocol =
   | 'cockroachdb'
   | 'redis'
   | 'sqlserver';
+
 export interface Database extends apiDb.Database.AsObject {
   uri: uri.DatabaseUri;
 }
+
 export interface Cluster extends apiCluster.Cluster.AsObject {
   uri: uri.ClusterUri;
   loggedInUser?: LoggedInUser;
 }
+
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject & {
   assumedRequests?: Record<string, AssumedRequest>;
 };
@@ -160,6 +177,7 @@ export type TshClient = {
     options: FileTransferRequest,
     abortSignal?: TshAbortSignal
   ) => FileTransferListeners;
+  reportUsageEvent: (event: ReportEventRequest) => Promise<void>;
 };
 
 export type TshAbortController = {
@@ -233,3 +251,6 @@ export type AssumedRequest = {
   expires: Date;
   roles: string[];
 };
+
+// Replaces object property with a new type
+type Modify<T, R> = Omit<T, keyof R> & R;
