@@ -19,6 +19,10 @@ import {
   ElectronGlobals,
   SubscribeToTshdEvent,
 } from 'teleterm/types';
+import {
+  ReloginRequest,
+  SendNotificationRequest,
+} from 'teleterm/services/tshdEvents';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { TerminalsService } from 'teleterm/ui/services/terminals';
@@ -31,6 +35,7 @@ import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { ReloginService } from 'teleterm/services/relogin';
 import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
+import { ConfigService } from 'teleterm/services/config';
 
 import { CommandLauncher } from './commandLauncher';
 import { IAppContext } from './types';
@@ -126,16 +131,43 @@ export default class AppContext implements IAppContext {
     this.setUpTshdEventSubscriptions();
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
+    this.notifyAboutStoredConfigErrors();
   }
 
   private setUpTshdEventSubscriptions() {
     this.subscribeToTshdEvent('relogin', ({ request, onCancelled }) => {
       // The handler for the relogin event should return only after the relogin procedure finishes.
-      return this.reloginService.relogin(request, onCancelled);
+      return this.reloginService.relogin(
+        request as ReloginRequest,
+        onCancelled
+      );
     });
 
     this.subscribeToTshdEvent('sendNotification', ({ request }) => {
-      this.tshdNotificationsService.sendNotification(request);
+      this.tshdNotificationsService.sendNotification(
+        request as SendNotificationRequest
+      );
     });
+  }
+
+  private notifyAboutStoredConfigErrors(): void {
+    const errors = this.mainProcessClient.configService.getStoredConfigErrors();
+    if (errors) {
+      this.notificationsService.notifyError({
+        title: 'Encountered errors in config file',
+        description: errors
+          .map(error => `${error.path[0]}: ${error.message}`)
+          .join('\n'),
+      });
+    }
+  }
+}
+
+//example, remove
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function askForUsageMetrics(configService: ConfigService) {
+  // only if we didn't ask
+  if (!configService.get('usageMetrics.enabled').metadata.isStored) {
+    configService.set('usageMetrics.enabled', true);
   }
 }
