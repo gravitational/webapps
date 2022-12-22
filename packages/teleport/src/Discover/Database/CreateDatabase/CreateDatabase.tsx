@@ -66,6 +66,9 @@ export function CreateDatabaseView({
   const [dbUri, setDbUri] = useState('');
   const [labels, setLabels] = useState<AgentLabel[]>([]);
 
+  // TODO(lisa): default ports depend on type of database.
+  const [dbPort, setDbPort] = useState('5432');
+
   // TODO (lisa or ryan): these depend on if user chose AWS options:
   // const [awsAccountId, setAwsAccountId] = useState('')
   // const [awsResourceId, setAwsResourceId] = useState('')
@@ -80,7 +83,7 @@ export function CreateDatabaseView({
     registerDatabase({
       labels,
       name: dbName,
-      uri: dbUri,
+      uri: `${dbUri}:${dbPort}`,
       protocol: getDatabaseProtocol(engine),
       // TODO (lisa or ryan) add AWS fields
     });
@@ -122,15 +125,24 @@ export function CreateDatabaseView({
                   onChange={e => setDbName(e.target.value)}
                 />
               </Box>
-              <Box width="500px" mb={6}>
+              <Box width="500px" mb={2}>
                 <FieldInput
                   label="Database Connection Endpoint"
                   rule={requiredField(
                     'database connection endpoint is required'
                   )}
                   value={dbUri}
-                  placeholder="db.example.com:1234"
+                  placeholder="db.example.com"
                   onChange={e => setDbUri(e.target.value)}
+                />
+              </Box>
+              <Box width="500px" mb={6}>
+                <FieldInput
+                  label="Endpoint Port"
+                  rule={requirePort}
+                  value={dbPort}
+                  placeholder="5432"
+                  onChange={e => setDbPort(e.target.value)}
                 />
               </Box>
               {/* TODO (lisa or ryan): add AWS input fields */}
@@ -233,4 +245,19 @@ const CreateDatabaseDialog = ({
       </DialogContent>
     </Dialog>
   );
+};
+
+// PORT_REGEXP only allows digits with length 4.
+export const PORT_REGEX = /^\d{4}$/;
+const requirePort = value => () => {
+  const isValidId = value.match(PORT_REGEX);
+  if (!isValidId) {
+    return {
+      valid: false,
+      message: 'port must be 4 digits',
+    };
+  }
+  return {
+    valid: true,
+  };
 };
