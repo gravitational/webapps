@@ -49,11 +49,4 @@ else
   fi
 fi
 
-# DELETE IN 13.0.0
-# Remove the old symlink from times where we used the default after-install.tpl.
-OLD_SYMLINK=/usr/bin/teleport-connect
-if [ -e "$OLD_SYMLINK" ]; then
-    rm $OLD_SYMLINK
-fi
-
 # vim: syntax=sh
