@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ButtonBorder, Text, Box, Menu, MenuItem } from 'design';
 import { CarrotDown } from 'design/Icon';
+
 import cfg from 'teleport/config';
 import { ParticipantMode } from 'teleport/services/session';
 
@@ -14,9 +15,18 @@ export const JoinMenuButton = ({
   clusterId: string;
   participantModes: ParticipantMode[];
 }) => {
+  // Sorts the list of participantModes so that they are consistently shown in the order of "observer" -> "moderator" -> "peer"
+  const sortedParticipantModes = participantModes.sort((a, b) => {
+    if (a === 'observer') return -1;
+    if (b === 'observer') return 1;
+    if (a === 'moderator') return -1;
+    if (b === 'moderator') return 1;
+    return 0;
+  });
+
   return (
     <JoinMenu>
-      {participantModes.map(participantMode => (
+      {sortedParticipantModes.map(participantMode => (
         <MenuItem
           key={participantMode}
           as="a"
