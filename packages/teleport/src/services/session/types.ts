@@ -37,6 +37,8 @@ export interface Session {
   //  - desktop: is referring to the desktop
   //  - app: is referring to the app
   resourceName: string;
+  // participantModes are the participant modes that are available to the user listing this session.
+  participantModes: ParticipantMode[];
 }
 
 export type SessionMetadata = {
