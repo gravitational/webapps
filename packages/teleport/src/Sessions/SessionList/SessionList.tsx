@@ -21,7 +21,7 @@ import styled from 'styled-components';
 
 import { Participant, Session, SessionKind } from 'teleport/services/session';
 
-import { JoinMenuButton } from './JoinMenu';
+import { SessionJoinBtn } from './SessionJoinBtn';
 
 export default function SessionList(props: Props) {
   const { sessions, pageSize = 100 } = props;
@@ -115,7 +115,7 @@ const renderJoinCell = ({
 
   return (
     <Cell align="right" height="26px">
-      <JoinMenuButton
+      <SessionJoinBtn
         sid={sid}
         clusterId={clusterId}
         participantModes={participantModes}

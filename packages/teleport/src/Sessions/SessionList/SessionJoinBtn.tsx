@@ -6,7 +6,7 @@ import { CarrotDown } from 'design/Icon';
 import cfg from 'teleport/config';
 import { ParticipantMode } from 'teleport/services/session';
 
-export const JoinMenuButton = ({
+export const SessionJoinBtn = ({
   sid,
   clusterId,
   participantModes,
