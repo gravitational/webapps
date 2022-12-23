@@ -28,6 +28,9 @@ export default class AddressResolver {
 
   getConnStr(w, h) {
     const { ttyParams, ttyUrl } = this._cfg;
+    console.log('TTY PARAMS');
+    console.log(ttyParams);
+    console.log(this._cfg);
     const params = JSON.stringify({
       ...ttyParams,
       term: { h, w },

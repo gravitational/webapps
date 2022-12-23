@@ -27,8 +27,11 @@ import type {
   PrimaryAuthType,
   PrivateKeyPolicy,
 } from 'shared/services';
+
 import type { SortType } from 'teleport/services/agents';
 import type { RecordingType } from 'teleport/services/recordings';
+
+import { ParticipantMode } from 'teleport/services/session';
 
 const cfg = {
   isEnterprise: false,
@@ -346,7 +349,13 @@ const cfg = {
     });
   },
 
-  getSshSessionRoute({ clusterId, sid }: UrlParams) {
+  getSshSessionRoute({ clusterId, sid }: UrlParams, mode?: ParticipantMode) {
+    if (mode) {
+      return (
+        generatePath(cfg.routes.consoleSession, { clusterId, sid }) +
+        `?mode=${mode}`
+      );
+    }
     return generatePath(cfg.routes.consoleSession, { clusterId, sid });
   },
 
@@ -574,6 +583,7 @@ export interface UrlSshParams {
   login?: string;
   serverId?: string;
   sid?: string;
+  mode?: ParticipantMode;
   clusterId: string;
 }
 

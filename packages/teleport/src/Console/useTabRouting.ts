@@ -7,22 +7,23 @@ You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    */
 
 import React from 'react';
 import { useRouteMatch, useParams, useLocation } from 'react-router';
 
 import cfg, { UrlSshParams } from 'teleport/config';
+import { ParticipantMode } from 'teleport/services/session';
 
 import ConsoleContext from './consoleContext';
 
 export default function useRouting(ctx: ConsoleContext) {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const { clusterId } = useParams<{ clusterId: string }>();
   const sshRouteMatch = useRouteMatch<UrlSshParams>(cfg.routes.consoleConnect);
   const nodesRouteMatch = useRouteMatch(cfg.routes.consoleNodes);
@@ -41,6 +42,12 @@ export default function useRouting(ctx: ConsoleContext) {
     if (sshRouteMatch) {
       ctx.addSshDocument(sshRouteMatch.params);
     } else if (joinSshRouteMatch) {
+      // Extract the mode param from the URL if it is present.
+      const searchParams = new URLSearchParams(search);
+      const mode = searchParams.get('mode');
+      if (mode) {
+        joinSshRouteMatch.params.mode = mode as ParticipantMode;
+      }
       ctx.addSshDocument(joinSshRouteMatch.params);
     } else if (nodesRouteMatch) {
       ctx.addNodeDocument(clusterId);

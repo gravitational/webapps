@@ -21,7 +21,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import cfg from 'teleport/config';
-import { Participant, Session, SessionKind } from 'teleport/services/session';
+import {
+  Participant,
+  Session,
+  SessionKind,
+  ParticipantMode,
+} from 'teleport/services/session';
 
 import { JoinMenuButton } from './JoinMenu';
 
@@ -114,10 +119,9 @@ const renderJoinCell = ({ sid, clusterId, kind }: Session) => {
   return (
     <Cell align="right" height="26px">
       <JoinMenuButton
-        participantModes={['Observer', 'Moderator', 'Peer']}
-        onClick={participantMode => {
-          console.log(participantMode);
-        }}
+        sid={sid}
+        clusterId={clusterId}
+        participantModes={['observer', 'moderator', 'peer']}
       />
       {/* <ButtonBorder
         kind="primary"

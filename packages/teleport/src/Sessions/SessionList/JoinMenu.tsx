@@ -2,18 +2,27 @@ import React from 'react';
 
 import { ButtonBorder, Text, Box, Menu, MenuItem } from 'design';
 import { CarrotDown } from 'design/Icon';
+import cfg from 'teleport/config';
+import { ParticipantMode } from 'teleport/services/session';
 
 export const JoinMenuButton = ({
+  sid,
+  clusterId,
   participantModes,
-  onClick,
 }: {
-  participantModes: string[];
-  onClick: (participantMode) => void;
+  sid: string;
+  clusterId: string;
+  participantModes: ParticipantMode[];
 }) => {
   return (
     <JoinMenu>
       {participantModes.map(participantMode => (
-        <MenuItem onClick={() => onClick(participantMode)}>
+        <MenuItem
+          key={participantMode}
+          as="a"
+          href={cfg.getSshSessionRoute({ sid, clusterId }, participantMode)}
+          style={{ textTransform: 'capitalize' }}
+        >
           {participantMode}
         </MenuItem>
       ))}
