@@ -41,16 +41,18 @@ export function AppLauncher() {
         fqdn = app.fqdn;
       }
 
+      const port = location.port ? ':' + location.port : '';
       const session = await service.createAppSession(params);
 
-      await fetch('https://' + fqdn + '/x-teleport-auth', {
+      await fetch(`https://${fqdn}${port}/x-teleport-auth`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'X-Cookie-Value': session.cookieValue,
         },
       });
 
-      window.location.replace(`https://${fqdn}`);
+      window.location.replace(`https://${fqdn}${port}`);
     } catch (err) {
       setAttempt({
         status: 'failed',
