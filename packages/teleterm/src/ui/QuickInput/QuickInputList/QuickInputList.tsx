@@ -79,7 +79,7 @@ export default QuickInputList;
 
 function CmdItem(props: { item: types.SuggestionCmd }) {
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="baseline">
       <SquareIconBackground color="#512FC9">
         <Cli fontSize="10px" />
       </SquareIconBackground>
@@ -90,7 +90,7 @@ function CmdItem(props: { item: types.SuggestionCmd }) {
 
 function SshLoginItem(props: { item: types.SuggestionSshLogin }) {
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="baseline">
       <SquareIconBackground color="#FFAB00">
         <Person fontSize="10px" />
       </SquareIconBackground>
@@ -108,7 +108,7 @@ function ServerItem(props: { item: types.SuggestionServer }) {
   ));
 
   return (
-    <Flex alignItems="center" p={1} minWidth="300px">
+    <Flex alignItems="baseline" p={1} minWidth="300px">
       <SquareIconBackground color="#4DB2F0">
         <Server fontSize="10px" />
       </SquareIconBackground>
@@ -129,7 +129,7 @@ function DatabaseItem(props: { item: types.SuggestionDatabase }) {
   ));
 
   return (
-    <Flex alignItems="center" p={1} minWidth="300px">
+    <Flex alignItems="baseline" p={1} minWidth="300px">
       <SquareIconBackground color="#4DB2F0">
         <Database fontSize="10px" />
       </SquareIconBackground>
