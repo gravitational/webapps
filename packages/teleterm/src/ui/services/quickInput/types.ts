@@ -62,6 +62,12 @@ export type AutocompleteTshSshCommand = CommandBase<'command.tsh-ssh'> & {
   loginHost: string;
 };
 
+export type AutocompleteTshInstallCommand = CommandBase<'command.tsh-install'>;
+export type AutocompleteTshUninstallCommand =
+  CommandBase<'command.tsh-uninstall'>;
+
 export type AutocompleteCommand =
   | AutocompleteUnknownCommand
-  | AutocompleteTshSshCommand;
+  | AutocompleteTshSshCommand
+  | AutocompleteTshInstallCommand
+  | AutocompleteTshUninstallCommand;

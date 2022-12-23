@@ -17,6 +17,7 @@ limitations under the License.
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 
 import {
+  AutocompleteCommand,
   AutocompleteToken,
   SuggestionCmd,
   QuickInputParser,
@@ -136,13 +137,21 @@ export class QuickCommandParser implements QuickInputParser {
   private mapAutocompleteCommandsToSuggestions(
     commands: { name: string; displayName: string; description: string }[]
   ): SuggestionCmd[] {
-    return commands.map(cmd => ({
-      kind: 'suggestion.cmd' as const,
-      token: cmd.displayName,
+    return commands.map(cmd => {
+      const acceptsNoArguments =
+        this.parserRegistry.get(cmd.displayName) instanceof
+        QuickNoArgumentsParser;
+      // If a command accepts arguments, let's append a space when that suggestion is picked.
       // This allows us to immediately show autocomplete for the first argument of the command.
-      appendToToken: ' ',
-      data: cmd,
-    }));
+      const appendToToken = acceptsNoArguments ? '' : ' ';
+
+      return {
+        kind: 'suggestion.cmd' as const,
+        token: cmd.displayName,
+        appendToToken: appendToToken,
+        data: cmd,
+      };
+    });
   }
 }
 
@@ -303,6 +312,27 @@ export class QuickTshProxyDbParser implements QuickInputParser {
     return {
       targetToken: emptyTargetToken,
       command: { kind: 'command.unknown' },
+      getSuggestions: noSuggestions,
+    };
+  }
+}
+
+// QuickNoArgumentsParser is useful in situations where a command does not accept any arguments.
+// If QuickNoArgumentsParser is registered as the parser for that command, selecting that command
+// from suggestions will simply close autocomplete. Pressing Enter again will execute the command
+// passed to the constructor of QuickNoArgumentsParser.
+export class QuickNoArgumentsParser implements QuickInputParser {
+  constructor(private command: AutocompleteCommand) {}
+
+  parse(rawInput: string, startIndex: number): ParseResult {
+    const targetToken = {
+      value: '',
+      startIndex,
+    };
+
+    return {
+      targetToken,
+      command: this.command,
       getSuggestions: noSuggestions,
     };
   }

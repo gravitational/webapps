@@ -172,8 +172,17 @@ const commands = {
   },
   'autocomplete.tsh-proxy-db': {
     displayName: 'tsh proxy db',
-    description:
-      'Start local TLS proxy for database connections when using Teleport',
+    description: 'Start a local proxy for a database connection',
+    run() {},
+  },
+  'autocomplete.tsh-install': {
+    displayName: 'tsh install',
+    description: 'Install tsh in PATH',
+    run() {},
+  },
+  'autocomplete.tsh-uninstall': {
+    displayName: 'tsh uninstall',
+    description: 'Uninstall tsh from PATH',
     run() {},
   },
 };
