@@ -150,5 +150,11 @@ const defaultProps = {
       ],
       route: '',
     },
+    {
+      title: 'Support',
+      Icon: Icons.Question,
+      route: 'https://example.com',
+      items: [],
+    },
   ] as Item[],
 };
