@@ -178,11 +178,13 @@ const commands = {
   'autocomplete.tsh-install': {
     displayName: 'tsh install',
     description: 'Install tsh in PATH',
+    platforms: ['darwin'],
     run() {},
   },
   'autocomplete.tsh-uninstall': {
     displayName: 'tsh uninstall',
     description: 'Uninstall tsh from PATH',
+    platforms: ['darwin'],
     run() {},
   },
 };
@@ -199,8 +201,17 @@ export class CommandLauncher {
   }
 
   getAutocompleteCommands() {
+    const { platform } = this.appContext.mainProcessClient.getRuntimeSettings();
+
     return Object.entries(commands)
       .filter(([key]) => key.startsWith('autocomplete.'))
+      .filter(([, command]) => {
+        const platforms = command['platforms'];
+        return (
+          !platforms ||
+          (Array.isArray(platforms) && platforms.includes(platform))
+        );
+      })
       .map(([key, value]) => ({ name: key, ...value }));
   }
 }
