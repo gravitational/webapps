@@ -1,7 +1,9 @@
 import { RuntimeSettings, MainProcessClient } from 'teleterm/types';
-import { ConfigService } from 'teleterm/services/config';
 import { createMockFileStorage } from 'teleterm/services/fileStorage/fixtures/mocks';
-import { keyboardShortcutsConfigProvider } from 'teleterm/services/config/providers/keyboardShortcutsConfigProvider';
+// createConfigService has to be imported directly from configService.ts.
+// teleterm/services/config/index.ts reexports the config service client which depends on electron.
+// Importing electron breaks the fixtures if that's done from within storybook.
+import { createConfigService } from 'teleterm/services/config/configService';
 
 const platform = 'darwin';
 
@@ -28,6 +30,7 @@ export class MockMainProcessClient implements MainProcessClient {
       tshdEvents: {
         requestedNetworkAddress: '',
       },
+      installationId: '123e4567-e89b-12d3-a456-426614174000',
     };
   }
 
@@ -44,15 +47,7 @@ export class MockMainProcessClient implements MainProcessClient {
     return Promise.resolve({ canceled: false, filePath: '' });
   }
 
-  configService = {
-    get: () => ({
-      keyboardShortcuts: keyboardShortcutsConfigProvider.getDefaults(platform),
-      appearance: {
-        fonts: {},
-      },
-    }),
-    update: () => undefined,
-  } as unknown as ConfigService;
+  configService = createConfigService(createMockFileStorage(), platform);
 
   fileStorage = createMockFileStorage();
 
