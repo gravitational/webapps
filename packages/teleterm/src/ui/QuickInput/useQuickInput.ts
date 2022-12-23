@@ -122,6 +122,16 @@ export default function useQuickInput() {
         });
         break;
       }
+      case 'command.tsh-install': {
+        break;
+      }
+      case 'command.tsh-uninstall': {
+        break;
+      }
+      default: {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const exhaustiveCheck: never = command;
+      }
     }
 
     quickInputService.clearInputValueAndHide();

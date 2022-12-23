@@ -83,7 +83,11 @@ function CmdItem(props: { item: types.SuggestionCmd }) {
       <SquareIconBackground color="#512FC9">
         <Cli fontSize="10px" />
       </SquareIconBackground>
-      <Box mr={2}>{props.item.data.displayName}</Box>
+      {/* Equivalent of flex-shrink: 0, but styled-system doesn't support flex-shrink. */}
+      <Box flex="0 0 auto" mr={2}>
+        {props.item.data.displayName}
+      </Box>
+      <Box color="text.secondary">{props.item.data.description}</Box>
     </Flex>
   );
 }
