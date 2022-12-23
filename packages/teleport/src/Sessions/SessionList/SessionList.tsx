@@ -109,7 +109,7 @@ const renderJoinCell = ({
   participantModes,
 }: Session) => {
   const { joinable } = kinds[kind];
-  if (!joinable) {
+  if (!joinable || participantModes.length === 0) {
     return <Cell align="right" height="26px" />;
   }
 
