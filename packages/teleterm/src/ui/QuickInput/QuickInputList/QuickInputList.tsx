@@ -24,6 +24,10 @@ import { Cli, Server, Person, Database } from 'design/Icon';
 import * as types from 'teleterm/ui/services/quickInput/types';
 
 const QuickInputList = React.forwardRef<HTMLElement, Props>((props, ref) => {
+  // Ideally, this property would be described by the suggestion object itself rather than depending
+  // on `kind`. But for now we need it just for a single suggestion kind anyway.
+  const shouldSuggestionsStayInPlace =
+    props.items[0]?.kind === 'suggestion.cmd';
   const activeItemRef = useRef<HTMLDivElement>();
   const { items, activeItem } = props;
   if (items.length === 0) {
@@ -60,7 +64,7 @@ const QuickInputList = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   return (
     <StyledGlobalSearchResults
-      position={props.position}
+      position={shouldSuggestionsStayInPlace ? null : props.position}
       ref={ref}
       tabIndex={-1}
       data-attr="quickpicker.list"
