@@ -52,7 +52,8 @@ export default function TrustedClusters() {
 
   function save(content: string) {
     const isNew = resources.status === 'creating';
-    return tclusters.save(content, isNew);
+    const previousName = resources.item.name;
+    return tclusters.save(content, isNew, previousName);
   }
 
   return (

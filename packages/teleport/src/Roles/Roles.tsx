@@ -46,7 +46,7 @@ export function Roles(props: State) {
 
   function handleSave(content: string) {
     const isNew = resources.status === 'creating';
-    return save(content, isNew);
+    return save(content, isNew, resources.item.name);
   }
 
   return (

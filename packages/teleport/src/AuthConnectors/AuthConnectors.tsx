@@ -46,7 +46,8 @@ export function AuthConnectors(props: State) {
 
   function handleOnSave(content: string) {
     const isNew = resources.status === 'creating';
-    return save(content, isNew);
+    const previousName = resources.item.name;
+    return save(content, isNew, previousName);
   }
 
   return (

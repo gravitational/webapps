@@ -1,3 +1,4 @@
+import { parse as yamlParse } from 'yaml';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 
@@ -40,21 +41,44 @@ class ResourceService {
       .then(res => makeResource<'github'>(res));
   }
 
-  updateTrustedCluster(content: string) {
-    return api
-      .put(cfg.getTrustedClustersUrl(), { content })
+  validateResourceUpdate(content: string, previousName: string) {
+    let resource: any = {};
+    try {
+      resource = yamlParse(content);
+    } catch (e) {
+      // error if the resource definition is not YAML
+      return Promise.reject(new Error('resource definition is not a valid YAML'));
+    }
+
+    const newName = resource?.metadata?.name;
+    if (!newName) {
+      // error if the resource doesn't have a name
+      return Promise.reject(new Error('resource name in "metadata.name" is not found'));
+    }
+
+    if (newName !== previousName) {
+      // error if the user tried to change the resource name
+      return Promise.reject(new Error('resource renaming is not supported, please create a different resource and then delete this one'));
+    }
+
+    return Promise.resolve();
+  }
+
+  updateTrustedCluster(content: string, previousName: string) {
+    return this.validateResourceUpdate(content, previousName)
+      .then(_ => api.put(cfg.getTrustedClustersUrl(), { content }))
       .then(res => makeResource<'trusted_cluster'>(res));
   }
 
-  updateRole(content: string) {
-    return api
-      .put(cfg.getRolesUrl(), { content })
+  updateRole(content: string, previousName: string) {
+    return this.validateResourceUpdate(content, previousName)
+      .then(_ => api.put(cfg.getRolesUrl(), { content }))
       .then(res => makeResource<'role'>(res));
   }
 
-  updateGithubConnector(content: string) {
-    return api
-      .put(cfg.getGithubConnectorsUrl(), { content })
+  updateGithubConnector(content: string, previousName: string) {
+    return this.validateResourceUpdate(content, previousName)
+      .then(_ => api.put(cfg.getGithubConnectorsUrl(), { content }))
       .then(res => makeResource<'github'>(res));
   }
 
