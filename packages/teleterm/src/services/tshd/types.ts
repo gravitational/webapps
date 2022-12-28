@@ -56,6 +56,12 @@ export type ReportEventRequest = Modify<
   apiUsageEvents.ReportEventRequest.AsObject,
   { timestamp: Date }
 >;
+
+export type UsageEvent = Omit<
+  apiUsageEvents.ReportEventRequest.AsObject,
+  'timestamp' | 'distinctId' | 'authClusterId'
+>;
+
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //

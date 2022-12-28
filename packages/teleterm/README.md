@@ -117,6 +117,7 @@ lib/teleterm/api/protogen/
 ```sh
 $ cd webapps
 $ rm -rf ./packages/teleterm/src/services/tshd/v1/ && cp -R ../teleport/lib/teleterm/api/protogen/js/v1 ./packages/teleterm/src/services/tshd/v1
+$ rm -rf ./packages/teleterm/src/services/tshd/prehog && cp -R ../teleport/lib/prehog/gen-js/prehog ./packages/teleterm/src/services/tshd/prehog
 ```
 
 ### Generating shared process gRPC protobuf files

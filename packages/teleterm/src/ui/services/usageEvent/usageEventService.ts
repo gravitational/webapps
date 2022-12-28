@@ -15,11 +15,7 @@
  */
 
 import { ClusterOrResourceUri, ClusterUri, routing } from 'teleterm/ui/uri';
-import {
-  Cluster,
-  ReportEventRequest,
-  TshClient,
-} from 'teleterm/services/tshd/types';
+import { Cluster, UsageEvent, TshClient } from 'teleterm/services/tshd/types';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { ConfigService } from 'teleterm/services/config';
 import Logger from 'teleterm/logger';
@@ -39,9 +35,10 @@ export class UsageEventService {
     if (!clusterParams) {
       return;
     }
-    return this.reportUsageEvent({
-      loginEvent: {
-        clusterProperties: clusterParams,
+    return this.reportUsageEvent(clusterParams.authClusterId, {
+      connectLogin: {
+        clusterName: clusterParams.clusterName,
+        userName: clusterParams.userName,
         arch: this.runtimeSettings.arch,
         os: this.runtimeSettings.platform,
         osVersion: this.runtimeSettings.osVersion,
@@ -58,9 +55,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      protocolRunEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      connectProtocolRun: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         protocol,
       },
     });
@@ -74,9 +72,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      accessRequestCreateEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      connectAccessRequestCreate: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         kind,
       },
     });
@@ -87,9 +86,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      accessRequestReviewEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      connectAccessRequestReview: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
       },
     });
   }
@@ -99,9 +99,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      accessRequestAssumeRoleEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      connectAccessRequestAssumeRole: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
       },
     });
   }
@@ -114,23 +115,31 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      fileTransferRunEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      connectFileTransferRunEvent: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         direction,
       },
     });
   }
 
   captureUserJobRoleUpdate(jobRole: string): Promise<void> {
-    return this.reportUsageEvent({
-      userJobRoleUpdateEvent: {
+    return this.reportAnonymousUsageEvent({
+      connectUserJobRoleUpdateEvent: {
         jobRole,
       },
     });
   }
 
-  private reportUsageEvent(event: ReportEventRequest['event']): Promise<void> {
+  private reportAnonymousUsageEvent(event: UsageEvent): Promise<void> {
+    return this.reportUsageEvent('', event);
+  }
+
+  private reportUsageEvent(
+    authClusterId: string,
+    event: UsageEvent
+  ): Promise<void> {
     const isCollectingUsageMetricsEnabled = this.configService.get(
       'usageMetrics.enabled'
     ).value;
@@ -143,9 +152,10 @@ export class UsageEventService {
     }
 
     return this.tshClient.reportUsageEvent({
+      ...event,
+      authClusterId,
       distinctId: `connect.${this.runtimeSettings.installationId}`,
       timestamp: new Date(),
-      event,
     });
   }
 
