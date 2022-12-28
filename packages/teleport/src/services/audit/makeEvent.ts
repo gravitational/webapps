@@ -995,7 +995,7 @@ export const formatters: Formatters = {
       if (target) {
         message += `, target API: [${target}]`;
       }
-      return message
+      return message;
     },
   },
   [eventCodes.DYNAMODB_REQUEST_FAILURE]: {
@@ -1006,8 +1006,8 @@ export const formatters: Formatters = {
       if (target) {
         message += `, target API: [${target}]`;
       }
-      message += ", failed"
-      return message
+      message += ', failed';
+      return message;
     },
   },
   [eventCodes.MFA_DEVICE_ADD]: {
