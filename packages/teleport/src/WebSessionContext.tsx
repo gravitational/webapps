@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
+import React from 'react';
 
-export function useApps() {
-  const ctx = useClusterContext();
-  const apps = ctx.getApps();
-  const syncStatus = ctx.getSyncStatus().apps;
+import { WebSession } from './services/websession';
 
-  return {
-    apps,
-    syncStatus,
-  };
-}
+export const SessionContext = React.createContext<WebSession>(null);
 
-export type State = ReturnType<typeof useApps>;
+export const SessionContextProvider: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
+  return (
+    <SessionContext.Provider value={props.session} children={props.children} />
+  );
+};
+
+type Props = {
+  session: WebSession;
+};
