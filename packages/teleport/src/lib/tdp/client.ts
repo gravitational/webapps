@@ -541,7 +541,7 @@ export default class Client extends EventEmitterWebAuthnSender {
   private handleError(
     err: Error,
     errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
-    isFatal = true,
+    isFatal = true
   ) {
     this.logger.error(err);
     this.emit(errType, { err, isFatal });
