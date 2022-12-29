@@ -30,7 +30,7 @@ const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
     fontWeight: theme.regular,
     fontFamily: theme.font,
     paddingLeft: theme.space[9] + 'px',
-    paddingRight: theme.space[3] + 'px',
+    paddingRight: theme.space[2] + 'px',
     background: theme.colors.primary.light,
     color: theme.colors.text.secondary,
     minHeight: '56px',
