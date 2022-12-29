@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, CSSProperties } from 'react';
 import styled from 'styled-components';
 
 function SlideTabs({
@@ -23,6 +23,7 @@ function SlideTabs({
   onChange,
   size = 'xlarge',
   tabs,
+  navStyle,
 }: props) {
   const [activeIndex, setActiveIndex] = useState(initialSelected);
 
@@ -32,7 +33,12 @@ function SlideTabs({
 
   return (
     <Wrapper>
-      <TabNav role="tablist" appearance={appearance} size={size}>
+      <TabNav
+        role="tablist"
+        appearance={appearance}
+        size={size}
+        style={navStyle}
+      >
         {tabs.map((tabData, tabIndex) => {
           const tabDataType = typeof tabData === 'string';
           const tabName = tabDataType ? tabData : tabData.name;
@@ -75,6 +81,8 @@ type props = {
   size?: 'xlarge' | 'medium';
   // A list of tab names that you'd like displayed in the list of tabs.
   tabs: string[] | TabComponent[];
+  // Overrides the tab nav style
+  navStyle?: CSSProperties;
 };
 
 export type TabComponent = {
@@ -105,10 +113,9 @@ const TabSlider = styled.div`
   box-shadow: 0px 2px 6px rgba(12, 12, 14, 0.1);
   height: ${props => (props.size === 'xlarge' ? '56px' : '40px')};
   left: calc(${props => (100 / props.itemCount) * props.activeIndex}% + 8px);
-  margin: ${props =>
-    props.size === 'xlarge' ? '12px 12px 12px 0' : '4px 4px 4px 0'};
   position: absolute;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   transition: all 0.3s ease;
   width: calc(${props => 100 / props.itemCount}% - 16px);
 `;
