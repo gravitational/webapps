@@ -130,7 +130,11 @@ export default class StoreUserContext extends Store<UserContext> {
     return tokens.create;
   }
 
-  getAccessDownloadCenter() {
+  // hasDownloadCenterListAccess checks if the user
+  // has access to download either teleport binaries or the license.
+  // Since the page is used to download both of them, having access to one
+  // is enough to show access this page.
+  hasDownloadCenterListAccess() {
     return this.state.acl.license.list || this.state.acl.download.list;
   }
 
