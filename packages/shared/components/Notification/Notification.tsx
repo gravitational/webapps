@@ -19,8 +19,6 @@ import styled, { css, useTheme } from 'styled-components';
 import { ButtonIcon, Flex, Text } from 'design';
 import { Close } from 'design/Icon';
 
-import type { propTypes } from 'design/system';
-
 import type { NotificationItem, NotificationItemContent } from './types';
 
 interface NotificationProps {
@@ -30,11 +28,18 @@ interface NotificationProps {
   getColor(theme): string;
   isAutoRemovable: boolean;
   autoRemoveDurationMs?: number;
+  // Workaround until `styled` gets types.
+  // Once the types are available, we can switch the type of Notification props to:
+  //
+  //     NotificationProps & React.ComponentProps<typeof Container>
+  //
+  // and remove the next line.
+  [key: string]: any;
 }
 
 const defaultAutoRemoveDurationMs = 10_000; // 10s
 
-export function Notification(props: NotificationProps & propTypes) {
+export function Notification(props: NotificationProps) {
   const {
     item,
     onRemove,
