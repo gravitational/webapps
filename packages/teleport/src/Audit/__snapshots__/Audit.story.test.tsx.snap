@@ -491,7 +491,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [alice@example.com] request to database [ddb1], target API: [DynamoDB_20120810.Scan], failed
+          User [alice@example.com] failed to make a request to database  [ddb1], target API: [DynamoDB_20120810.Scan]
         </td>
         <td
           style="min-width: 120px;"
