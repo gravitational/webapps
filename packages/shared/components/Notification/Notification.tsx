@@ -78,6 +78,7 @@ export function Notification(props: NotificationProps) {
       size={0}
       ml={1}
       mr={-1}
+      alignSelf="baseline"
       style={{ visibility: isHovered ? 'visible' : 'hidden' }}
       onClick={e => {
         e.stopPropagation();
@@ -123,7 +124,7 @@ function getRenderedContent(
 
   if (typeof content === 'string') {
     return (
-      <Flex justifyContent="space-between" width="100%">
+      <Flex alignItems="center" justifyContent="space-between" width="100%">
         <Text
           typography="body1"
           fontSize={13}
