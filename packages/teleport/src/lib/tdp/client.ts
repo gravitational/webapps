@@ -240,10 +240,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   // Emits an TdpClientEvent.ERROR event. Sets this.errored to true to alert the socket.onclose handler that
   // it needn't emit a generic unknown error event.
-  private handleError(err: Error, closeCode = WebsocketCloseCode.ABNORMAL) {
+  private handleError(err: Error) {
     this.logger.error(err);
     this.emit(TdpClientEvent.TDP_ERROR, err);
-    this.socket?.close(closeCode);
+    this.socket?.close();
   }
 
   // Ensures full cleanup of this object.
