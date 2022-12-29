@@ -143,7 +143,7 @@ export default class StoreUserContext extends Store<UserContext> {
   // Since the page is used to download both of them, having access to one
   // is enough to show access this page.
   hasDownloadCenterListAccess() {
-    return this.state.acl.license.list || this.state.acl.download.list;
+    return this.state.acl.license.read || this.state.acl.download.list;
   }
 
   // hasAccessToAgentQuery checks for at least one valid query permission.
