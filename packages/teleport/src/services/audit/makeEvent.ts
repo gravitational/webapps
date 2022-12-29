@@ -1002,11 +1002,10 @@ export const formatters: Formatters = {
     type: 'db.session.dynamodb.request',
     desc: 'DynamoDB Request Failed',
     format: ({ user, db_service, target }) => {
-      let message = `User [${user}] request to database [${db_service}]`;
+      let message = `User [${user}] failed to make a request to database  [${db_service}]`;
       if (target) {
         message += `, target API: [${target}]`;
       }
-      message += ', failed';
       return message;
     },
   },
