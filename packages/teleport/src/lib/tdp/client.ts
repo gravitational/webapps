@@ -542,11 +542,10 @@ export default class Client extends EventEmitterWebAuthnSender {
     err: Error,
     errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
     isFatal = true,
-    closeCode = WebsocketCloseCode.ABNORMAL
   ) {
     this.logger.error(err);
     this.emit(errType, { err, isFatal });
-    if (isFatal) this.socket?.close(closeCode);
+    if (isFatal) this.socket?.close();
   }
 
   // Ensures full cleanup of this object.
