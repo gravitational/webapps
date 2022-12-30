@@ -11,7 +11,7 @@ import * as types from './types';
 import createAbortController from './createAbortController';
 import { AccessRequest, ResourceID } from './v1/access_request_pb';
 import { mapUsageEvent } from './mapUsageEvent';
-import { ReportEventRequest } from './types';
+import { UsageEventWithDate } from './types';
 
 export default function createClient(
   addr: string,
@@ -658,7 +658,7 @@ export default function createClient(
       });
     },
 
-    reportUsageEvent(event: ReportEventRequest) {
+    reportUsageEvent(event: UsageEventWithDate) {
       const req = mapUsageEvent(event);
       return new Promise<void>((resolve, reject) => {
         tshd.reportEvent(req, err => {

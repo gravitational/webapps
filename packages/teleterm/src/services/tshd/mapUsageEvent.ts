@@ -1,99 +1,89 @@
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 
-import {
-  AccessRequestAssumeRoleEvent,
-  AccessRequestCreateEvent,
-  AccessRequestReviewEvent,
-  ClusterProperties,
-  ProtocolRunEvent,
-  ConnectUsageEventOneOf,
-  LoginEvent,
-  FileTransferRunEvent,
-  ReportEventRequest,
-  UserJobRoleUpdateEvent,
-} from 'teleterm/services/tshd/v1/usage_events_pb';
+import * as api from './v1/usage_events_pb';
+import * as prehogApi from './prehog/v1alpha/connect_pb';
 
 import * as types from './types';
 
-export function mapUsageEvent(event: types.ReportEventRequest) {
-  return new ReportEventRequest()
-    .setDistinctId(event.distinctId)
-    .setTimestamp(Timestamp.fromDate(event.timestamp))
-    .setEvent(mapEventBody(event.event));
+export function mapUsageEvent(event: types.UsageEventWithDate) {
+  return new api.ReportUsageEventRequest()
+    .setAuthClusterId(event.authClusterId)
+    .setPrehogEvent(mapPrehogBody(event.prehogEvent));
 }
 
-function mapEventBody(
-  event: ConnectUsageEventOneOf.AsObject
-): ConnectUsageEventOneOf {
-  if (event.loginEvent) {
-    const { loginEvent } = event;
-    return new ConnectUsageEventOneOf().setLoginEvent(
-      new LoginEvent()
-        .setClusterProperties(mapClusterProperties(loginEvent))
-        .setOs(loginEvent.os)
-        .setArch(loginEvent.arch)
-        .setOsVersion(loginEvent.osVersion)
-        .setConnectVersion(loginEvent.connectVersion)
+function mapPrehogBody(
+  prehogEvent: types.UsageEventWithDate['prehogEvent']
+): prehogApi.SubmitConnectEventRequest {
+  const prehogApiEvent = new prehogApi.SubmitConnectEventRequest()
+    .setTimestamp(Timestamp.fromDate(prehogEvent.timestamp))
+    .setDistinctId(prehogEvent.distinctId);
+
+  // Non-anonymized events.
+  if (prehogEvent.userJobRoleUpdate) {
+    const event = prehogEvent.userJobRoleUpdate;
+    const apiEvent = new prehogApi.ConnectUserJobRoleUpdateEvent().setJobRole(
+      event.jobRole
     );
-  }
-  if (event.protocolRunEvent) {
-    const { protocolRunEvent } = event;
-    return new ConnectUsageEventOneOf().setProtocolRunEvent(
-      new ProtocolRunEvent()
-        .setClusterProperties(mapClusterProperties(protocolRunEvent))
-        .setProtocol(protocolRunEvent.protocol)
-    );
-  }
-  if (event.accessRequestCreateEvent) {
-    const { accessRequestCreateEvent } = event;
-    return new ConnectUsageEventOneOf().setAccessRequestCreateEvent(
-      new AccessRequestCreateEvent()
-        .setClusterProperties(mapClusterProperties(accessRequestCreateEvent))
-        .setKind(accessRequestCreateEvent.kind)
-    );
-  }
-  if (event.accessRequestReviewEvent) {
-    const { accessRequestReviewEvent } = event;
-    return new ConnectUsageEventOneOf().setAccessRequestReviewEvent(
-      new AccessRequestReviewEvent().setClusterProperties(
-        mapClusterProperties(accessRequestReviewEvent)
-      )
-    );
-  }
-  if (event.accessRequestAssumeRoleEvent) {
-    const { accessRequestAssumeRoleEvent } = event;
-    return new ConnectUsageEventOneOf().setAccessRequestAssumeRoleEvent(
-      new AccessRequestAssumeRoleEvent().setClusterProperties(
-        mapClusterProperties(accessRequestAssumeRoleEvent)
-      )
-    );
-  }
-  if (event.fileTransferRunEvent) {
-    const { fileTransferRunEvent } = event;
-    return new ConnectUsageEventOneOf().setFileTransferRunEvent(
-      new FileTransferRunEvent()
-        .setClusterProperties(mapClusterProperties(fileTransferRunEvent))
-        .setDirection(fileTransferRunEvent.direction)
-    );
-  }
-  if (event.userJobRoleUpdateEvent) {
-    const { userJobRoleUpdateEvent } = event;
-    return new ConnectUsageEventOneOf().setUserJobRoleUpdateEvent(
-      new UserJobRoleUpdateEvent().setJobRole(userJobRoleUpdateEvent.jobRole)
-    );
+
+    return prehogApiEvent.setUserJobRoleUpdate(apiEvent);
   }
 
-  throw new Error(`Unrecognized event: ${JSON.stringify(event)}`);
-}
+  // Anonymized events.
+  if (prehogEvent.userLogin) {
+    const event = prehogEvent.userLogin;
+    const apiEvent = new prehogApi.ConnectUserLoginEvent()
+      .setClusterName(event.clusterName)
+      .setUserName(event.userName)
+      .setOs(event.os)
+      .setArch(event.arch)
+      .setOsVersion(event.osVersion)
+      .setConnectVersion(event.connectVersion);
 
-function mapClusterProperties(e: {
-  clusterProperties?: ClusterProperties.AsObject;
-}): ClusterProperties {
-  if (!e.clusterProperties) {
-    throw new Error('Missing cluster metadata');
+    return prehogApiEvent.setUserLogin(apiEvent);
   }
-  return new ClusterProperties()
-    .setAuthClusterId(e.clusterProperties.authClusterId)
-    .setClusterName(e.clusterProperties.clusterName)
-    .setUserName(e.clusterProperties.userName);
+  if (prehogEvent.protocolUse) {
+    const event = prehogEvent.protocolUse;
+    const apiEvent = new prehogApi.ConnectProtocolUseEvent()
+      .setClusterName(event.clusterName)
+      .setUserName(event.userName)
+      .setProtocol(event.protocol);
+
+    return prehogApiEvent.setProtocolUse(apiEvent);
+  }
+  if (prehogEvent.accessRequestCreate) {
+    const event = prehogEvent.accessRequestCreate;
+    const apiEvent = new prehogApi.ConnectAccessRequestCreateEvent()
+      .setClusterName(event.clusterName)
+      .setUserName(event.userName)
+      .setKind(event.kind);
+
+    return prehogApiEvent.setAccessRequestCreate(apiEvent);
+  }
+  if (prehogEvent.accessRequestReview) {
+    const event = prehogEvent.accessRequestReview;
+    const apiEvent = new prehogApi.ConnectAccessRequestReviewEvent()
+      .setClusterName(event.clusterName)
+      .setUserName(event.userName);
+
+    return prehogApiEvent.setAccessRequestReview(apiEvent);
+  }
+  if (prehogEvent.accessRequestAssumeRole) {
+    const event = prehogEvent.accessRequestAssumeRole;
+    const apiEvent = new prehogApi.ConnectAccessRequestAssumeRoleEvent()
+      .setClusterName(event.clusterName)
+      .setUserName(event.userName);
+
+    return prehogApiEvent.setAccessRequestAssumeRole(apiEvent);
+  }
+  if (prehogEvent.fileTransferRun) {
+    const event = prehogEvent.fileTransferRun;
+    const apiEvent = new prehogApi.ConnectFileTransferRunEvent()
+      .setClusterName(event.clusterName)
+      .setUserName(event.userName)
+      .setDirection(event.direction);
+
+    return prehogApiEvent.setFileTransferRun(apiEvent);
+  }
+
+  throw new Error(`Unrecognized event: ${JSON.stringify(prehogEvent)}`);
 }

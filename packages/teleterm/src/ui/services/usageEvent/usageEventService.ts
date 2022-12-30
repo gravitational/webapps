@@ -17,12 +17,17 @@
 import { ClusterOrResourceUri, ClusterUri, routing } from 'teleterm/ui/uri';
 import {
   Cluster,
-  ReportEventRequest,
+  UsageEventWithDate,
   TshClient,
 } from 'teleterm/services/tshd/types';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { ConfigService } from 'teleterm/services/config';
 import Logger from 'teleterm/logger';
+
+type RawPrehogEvent = Omit<
+  UsageEventWithDate['prehogEvent'],
+  'distinctId' | 'timestamp'
+>;
 
 export class UsageEventService {
   private logger = new Logger('UsageEventService');
@@ -35,15 +40,16 @@ export class UsageEventService {
   ) {}
 
   captureLogin(uri: ClusterOrResourceUri): Promise<void> {
-    const clusterParams = this.getClusterProperties(uri);
-    if (!clusterParams) {
+    const clusterProperties = this.getClusterProperties(uri);
+    if (!clusterProperties) {
       return;
     }
     const { arch, platform, osVersion, connectVersion, dev } =
       this.runtimeSettings;
-    return this.reportUsageEvent({
-      loginEvent: {
-        clusterProperties: clusterParams,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      userLogin: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         arch,
         os: platform,
         osVersion,
@@ -60,9 +66,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      protocolRunEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      protocolUse: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         protocol,
       },
     });
@@ -76,9 +83,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      accessRequestCreateEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      accessRequestCreate: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         kind,
       },
     });
@@ -89,9 +97,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      accessRequestReviewEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      accessRequestReview: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
       },
     });
   }
@@ -101,9 +110,10 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      accessRequestAssumeRoleEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      accessRequestAssumeRole: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
       },
     });
   }
@@ -116,23 +126,33 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent({
-      fileTransferRunEvent: {
-        clusterProperties,
+    return this.reportUsageEvent(clusterProperties.authClusterId, {
+      fileTransferRun: {
+        clusterName: clusterProperties.clusterName,
+        userName: clusterProperties.userName,
         direction,
       },
     });
   }
 
   captureUserJobRoleUpdate(jobRole: string): Promise<void> {
-    return this.reportUsageEvent({
-      userJobRoleUpdateEvent: {
+    return this.reportNonAnonymizableUsageEvent({
+      userJobRoleUpdate: {
         jobRole,
       },
     });
   }
 
-  private reportUsageEvent(event: ReportEventRequest['event']): Promise<void> {
+  private reportNonAnonymizableUsageEvent(
+    event: RawPrehogEvent
+  ): Promise<void> {
+    return this.reportUsageEvent('', event);
+  }
+
+  private reportUsageEvent(
+    authClusterId: string,
+    rawPrehogEvent: RawPrehogEvent
+  ): Promise<void> {
     const isCollectingUsageMetricsEnabled = this.configService.get(
       'usageMetrics.enabled'
     ).value;
@@ -142,9 +162,12 @@ export class UsageEventService {
     }
 
     return this.tshClient.reportUsageEvent({
-      distinctId: `connect.${this.runtimeSettings.installationId}`,
-      timestamp: new Date(),
-      event,
+      authClusterId,
+      prehogEvent: {
+        distinctId: `connect.${this.runtimeSettings.installationId}`,
+        timestamp: new Date(),
+        ...rawPrehogEvent,
+      },
     });
   }
 

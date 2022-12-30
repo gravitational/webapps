@@ -52,10 +52,16 @@ export interface GetKubesResponse extends apiService.GetKubesResponse.AsObject {
 export type GetRequestableRolesResponse =
   apiService.GetRequestableRolesResponse.AsObject;
 
-export type ReportEventRequest = Modify<
-  apiUsageEvents.ReportEventRequest.AsObject,
-  { timestamp: Date }
+export type UsageEventWithDate = Modify<
+  apiUsageEvents.ReportUsageEventRequest.AsObject,
+  {
+    prehogEvent: Modify<
+      apiUsageEvents.ReportUsageEventRequest.AsObject['prehogEvent'],
+      { timestamp: Date }
+    >;
+  }
 >;
+
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //
@@ -180,7 +186,7 @@ export type TshClient = {
     options: FileTransferRequest,
     abortSignal?: TshAbortSignal
   ) => FileTransferListeners;
-  reportUsageEvent: (event: ReportEventRequest) => Promise<void>;
+  reportUsageEvent: (event: UsageEventWithDate) => Promise<void>;
 };
 
 export type TshAbortController = {
