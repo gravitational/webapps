@@ -164,7 +164,7 @@ export class UsageEventService {
     return this.tshClient.reportUsageEvent({
       authClusterId,
       prehogEvent: {
-        distinctId: `connect.${this.runtimeSettings.installationId}`,
+        distinctId: this.runtimeSettings.installationId,
         timestamp: new Date(),
         ...rawPrehogEvent,
       },
