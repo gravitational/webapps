@@ -24,9 +24,9 @@ import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { ConfigService } from 'teleterm/services/config';
 import Logger from 'teleterm/logger';
 
-const logger = new Logger('UsageEventService');
-
 export class UsageEventService {
+  private logger = new Logger('UsageEventService');
+
   constructor(
     private tshClient: TshClient,
     private configService: ConfigService,
@@ -154,7 +154,7 @@ export class UsageEventService {
     const cluster = this.findCluster(rootClusterUri);
     if (!(cluster && cluster.loggedInUser)) {
       // TODO: add check for authClusterId
-      logger.warn(`Missing cluster data for ${uri}, skipping event`);
+      this.logger.warn(`Missing cluster data for ${uri}, skipping event`);
       return;
     }
 
