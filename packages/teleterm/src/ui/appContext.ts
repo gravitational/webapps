@@ -37,10 +37,11 @@ import { ReloginService } from 'teleterm/services/relogin';
 import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
 import { UsageEventService } from 'teleterm/ui/services/usageEvent';
 import { ResourcesService } from 'teleterm/ui/services/resources';
+import { IAppContext } from 'teleterm/ui/types';
 
 import { CommandLauncher } from './commandLauncher';
 
-export default class AppContext {
+export default class AppContext implements IAppContext {
   clustersService: ClustersService;
   modalsService: ModalsService;
   notificationsService: NotificationsService;
