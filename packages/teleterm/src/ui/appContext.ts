@@ -137,19 +137,9 @@ export default class AppContext {
     );
   }
 
-  async runBeforeUiIsVisible(): Promise<void> {
+  async init(): Promise<void> {
     this.setUpTshdEventSubscriptions();
     await this.clustersService.syncRootClusters();
-  }
-
-  async runAfterUiIsVisible(): Promise<void> {
-    try {
-      //await this.askAboutCollectingMetrics();
-      this.workspacesService.restorePersistedState();
-      this.notifyAboutStoredConfigErrors();
-    } catch (error) {
-      this.notificationsService.notifyError(error);
-    }
   }
 
   private setUpTshdEventSubscriptions() {
@@ -165,41 +155,6 @@ export default class AppContext {
       this.tshdNotificationsService.sendNotification(
         request as SendNotificationRequest
       );
-    });
-  }
-
-  private notifyAboutStoredConfigErrors(): void {
-    const errors = this.mainProcessClient.configService.getStoredConfigErrors();
-    if (errors) {
-      this.notificationsService.notifyError({
-        title: 'Encountered errors in config file',
-        description: errors
-          .map(error => `${error.path[0]}: ${error.message}`)
-          .join('\n'),
-      });
-    }
-  }
-
-  private async askAboutCollectingMetrics(): Promise<void> {
-    const { configService } = this.mainProcessClient;
-    if (configService.get('usageMetrics.enabled').metadata.isStored) {
-      return;
-    }
-    return new Promise(resolve => {
-      this.modalsService.openRegularDialog({
-        kind: 'usage-data',
-        onAllow() {
-          configService.set('usageMetrics.enabled', true);
-          resolve();
-        },
-        onDecline() {
-          configService.set('usageMetrics.enabled', false);
-          resolve();
-        },
-        onCancel() {
-          resolve();
-        },
-      });
     });
   }
 }

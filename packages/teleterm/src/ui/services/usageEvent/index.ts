@@ -15,3 +15,4 @@
  */
 
 export * from './usageEventService';
+export * from './setUpUsageReporting';

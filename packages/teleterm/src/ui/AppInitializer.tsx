@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { useAppContext } from './appContextProvider';
+import { initUi } from './initUi';
 
 export const AppInitializer: FC = props => {
   const ctx = useAppContext();
@@ -9,9 +10,9 @@ export const AppInitializer: FC = props => {
 
   const initializeApp = useCallback(async () => {
     try {
-      await ctx.runBeforeUiIsVisible();
+      await ctx.init();
       setIsUiVisible(true);
-      await ctx.runAfterUiIsVisible();
+      await initUi(ctx);
     } catch (error) {
       setIsUiVisible(true);
       ctx.notificationsService.notifyError(error?.message);
