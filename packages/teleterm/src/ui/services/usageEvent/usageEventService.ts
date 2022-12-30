@@ -39,13 +39,15 @@ export class UsageEventService {
     if (!clusterParams) {
       return;
     }
+    const { arch, platform, osVersion, connectVersion, dev } =
+      this.runtimeSettings;
     return this.reportUsageEvent({
       loginEvent: {
         clusterProperties: clusterParams,
-        arch: this.runtimeSettings.arch,
-        os: this.runtimeSettings.platform,
-        osVersion: this.runtimeSettings.osVersion,
-        connectVersion: this.runtimeSettings.connectVersion,
+        arch,
+        os: platform,
+        osVersion,
+        connectVersion: dev ? `${connectVersion}-dev` : connectVersion,
       },
     });
   }
@@ -136,9 +138,6 @@ export class UsageEventService {
     ).value;
 
     if (!isCollectingUsageMetricsEnabled) {
-      return;
-    }
-    if (this.runtimeSettings.dev) {
       return;
     }
 
