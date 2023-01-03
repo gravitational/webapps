@@ -91,7 +91,7 @@ function createService(
       removeKubeConfig: jest.fn().mockResolvedValueOnce(undefined),
     } as unknown as MainProcessClient,
     notificationsService,
-    new UsageService(undefined, undefined, undefined, undefined)
+    new UsageService(undefined, undefined, undefined, undefined, undefined)
   );
 }
 

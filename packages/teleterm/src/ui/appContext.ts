@@ -77,9 +77,11 @@ export default class AppContext implements IAppContext {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
     this.subscribeToTshdEvent = config.subscribeToTshdEvent;
     this.mainProcessClient = mainProcessClient;
+    this.notificationsService = new NotificationsService();
     this.usageService = new UsageService(
       tshClient,
       this.mainProcessClient.configService,
+      this.notificationsService,
       clusterUri => this.clustersService.findCluster(clusterUri),
       mainProcessClient.getRuntimeSettings()
     );
@@ -92,7 +94,6 @@ export default class AppContext implements IAppContext {
       this.mainProcessClient.fileStorage
     );
     this.modalsService = new ModalsService();
-    this.notificationsService = new NotificationsService();
     this.clustersService = new ClustersService(
       tshClient,
       this.mainProcessClient,

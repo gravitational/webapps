@@ -23,6 +23,7 @@ import {
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { ConfigService } from 'teleterm/services/config';
 import Logger from 'teleterm/logger';
+import { NotificationsService } from 'teleterm/ui/services/notifications';
 
 type PrehogEventReq = Omit<
   ReportUsageEventRequest['prehogReq'],
@@ -35,6 +36,7 @@ export class UsageService {
   constructor(
     private tshClient: TshClient,
     private configService: ConfigService,
+    private notificationsService: NotificationsService,
     // `findCluster` function - it is a workaround that allows to use `UsageEventService` in `ClustersService`.
     // Otherwise, we would have a circular dependency.
     // TODO: accept `ClustersService` instead of a function.
@@ -43,7 +45,7 @@ export class UsageService {
     private runtimeSettings: RuntimeSettings
   ) {}
 
-  captureUserLogin(uri: ClusterOrResourceUri): Promise<void> {
+  captureUserLogin(uri: ClusterOrResourceUri): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -52,7 +54,7 @@ export class UsageService {
       return;
     }
     const { arch, platform, osVersion, appVersion } = this.runtimeSettings;
-    return this.reportEvent(clusterProperties.authClusterId, {
+    this.reportEvent(clusterProperties.authClusterId, {
       userLogin: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -67,7 +69,7 @@ export class UsageService {
   captureProtocolUse(
     uri: ClusterOrResourceUri,
     protocol: 'ssh' | 'kube' | 'db'
-  ): Promise<void> {
+  ): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -75,7 +77,7 @@ export class UsageService {
       );
       return;
     }
-    return this.reportEvent(clusterProperties.authClusterId, {
+    this.reportEvent(clusterProperties.authClusterId, {
       protocolUse: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -87,7 +89,7 @@ export class UsageService {
   captureAccessRequestCreate(
     uri: ClusterOrResourceUri,
     kind: 'role' | 'resource'
-  ): Promise<void> {
+  ): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -95,7 +97,7 @@ export class UsageService {
       );
       return;
     }
-    return this.reportEvent(clusterProperties.authClusterId, {
+    this.reportEvent(clusterProperties.authClusterId, {
       accessRequestCreate: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -104,7 +106,7 @@ export class UsageService {
     });
   }
 
-  captureAccessRequestReview(uri: ClusterOrResourceUri): Promise<void> {
+  captureAccessRequestReview(uri: ClusterOrResourceUri): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -112,7 +114,7 @@ export class UsageService {
       );
       return;
     }
-    return this.reportEvent(clusterProperties.authClusterId, {
+    this.reportEvent(clusterProperties.authClusterId, {
       accessRequestReview: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -120,7 +122,7 @@ export class UsageService {
     });
   }
 
-  captureAccessRequestAssumeRole(uri: ClusterOrResourceUri): Promise<void> {
+  captureAccessRequestAssumeRole(uri: ClusterOrResourceUri): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -128,7 +130,7 @@ export class UsageService {
       );
       return;
     }
-    return this.reportEvent(clusterProperties.authClusterId, {
+    this.reportEvent(clusterProperties.authClusterId, {
       accessRequestAssumeRole: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -139,7 +141,7 @@ export class UsageService {
   captureFileTransferRun(
     uri: ClusterOrResourceUri,
     direction: 'download' | 'upload'
-  ): Promise<void> {
+  ): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -147,7 +149,7 @@ export class UsageService {
       );
       return;
     }
-    return this.reportEvent(clusterProperties.authClusterId, {
+    this.reportEvent(clusterProperties.authClusterId, {
       fileTransferRun: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -156,21 +158,19 @@ export class UsageService {
     });
   }
 
-  captureUserJobRoleUpdate(jobRole: string): Promise<void> {
-    return this.reportNonAnonymizedEvent({
+  captureUserJobRoleUpdate(jobRole: string): void {
+    this.reportNonAnonymizedEvent({
       userJobRoleUpdate: {
         jobRole,
       },
     });
   }
 
-  private reportNonAnonymizedEvent(
-    prehogEventReq: PrehogEventReq
-  ): Promise<void> {
-    return this.reportEvent('', prehogEventReq);
+  private reportNonAnonymizedEvent(prehogEventReq: PrehogEventReq): void {
+    this.reportEvent('', prehogEventReq);
   }
 
-  private reportEvent(
+  private async reportEvent(
     authClusterId: string,
     prehogEventReq: PrehogEventReq
   ): Promise<void> {
@@ -182,14 +182,22 @@ export class UsageService {
       return;
     }
 
-    return this.tshClient.reportUsageEvent({
-      authClusterId,
-      prehogReq: {
-        distinctId: this.runtimeSettings.installationId,
-        timestamp: new Date(),
-        ...prehogEventReq,
-      },
-    });
+    try {
+      await this.tshClient.reportUsageEvent({
+        authClusterId,
+        prehogReq: {
+          distinctId: this.runtimeSettings.installationId,
+          timestamp: new Date(),
+          ...prehogEventReq,
+        },
+      });
+    } catch (e) {
+      this.notificationsService.notifyWarning({
+        title: 'Failed to report usage event',
+        description: e.message,
+      });
+      this.logger.warn(`Failed to report usage event`, e.message);
+    }
   }
 
   private getClusterProperties(uri: ClusterOrResourceUri) {
