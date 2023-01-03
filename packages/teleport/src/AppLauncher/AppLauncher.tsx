@@ -49,6 +49,7 @@ export function AppLauncher() {
         credentials: 'include',
         headers: {
           'X-Cookie-Value': session.cookieValue,
+          'X-Subject-Cookie-Value': session.subjectCookieValue,
         },
       });
 
