@@ -55,8 +55,8 @@ export type GetRequestableRolesResponse =
 export type ReportUsageEventRequest = Modify<
   apiUsageEvents.ReportUsageEventRequest.AsObject,
   {
-    prehogEvent: Modify<
-      apiUsageEvents.ReportUsageEventRequest.AsObject['prehogEvent'],
+    prehogReq: Modify<
+      apiUsageEvents.ReportUsageEventRequest.AsObject['prehogReq'],
       { timestamp: Date }
     >;
   }
