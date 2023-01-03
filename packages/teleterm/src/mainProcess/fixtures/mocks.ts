@@ -22,9 +22,7 @@ export class MockMainProcessClient implements MainProcessClient {
     Promise.resolve({ tsh: '', shared: '' });
 
   openTerminalContextMenu() {}
-
   openClusterContextMenu() {}
-
   openTabContextMenu() {}
 
   showFileSaveDialog() {
@@ -38,6 +36,13 @@ export class MockMainProcessClient implements MainProcessClient {
   }
 
   forceFocusWindow() {}
+
+  async symlinkTsh() {
+    return true;
+  }
+  async removeTshSymlink() {
+    return true;
+  }
 }
 
 const defaultRuntimeSettings = {

@@ -123,9 +123,11 @@ export default function useQuickInput() {
         break;
       }
       case 'command.tsh-install': {
+        commandLauncher.executeCommand('tsh-install', undefined);
         break;
       }
       case 'command.tsh-uninstall': {
+        commandLauncher.executeCommand('tsh-uninstall', undefined);
         break;
       }
       default: {
