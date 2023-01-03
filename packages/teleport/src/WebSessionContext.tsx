@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2022 Gravitational, Inc.
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,24 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export const EventTypeEnum = {
-  START: 'session.start',
-  JOIN: 'session.join',
-  END: 'session.end',
-  PRINT: 'print',
-  RESIZE: 'resize',
+import React from 'react';
+
+import { WebSession } from './services/websession';
+
+export const SessionContext = React.createContext<WebSession>(null);
+
+export const SessionContextProvider: React.FC<
+  React.PropsWithChildren<Props>
+> = props => {
+  return (
+    <SessionContext.Provider value={props.session} children={props.children} />
+  );
 };
 
-export const TermEventEnum = {
-  RESIZE: 'terminal.resize',
-  CLOSE: 'terminal.close',
-  RESET: 'terminal.reset',
-  SESSION: 'terminal.new_session',
-  DATA: 'terminal.data',
-  CONN_CLOSE: 'connection.close',
-  WEBAUTHN_CHALLENGE: 'terminal.webauthn',
-};
-
-export const StatusCodeEnum = {
-  NORMAL: 1000,
+type Props = {
+  session: WebSession;
 };
