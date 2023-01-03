@@ -661,7 +661,7 @@ export default function createClient(
     reportUsageEvent(event: ReportUsageEventRequest) {
       const req = mapUsageEvent(event);
       return new Promise<void>((resolve, reject) => {
-        tshd.reportEvent(req, err => {
+        tshd.reportUsageEvent(req, err => {
           if (err) {
             reject(err);
           } else {
