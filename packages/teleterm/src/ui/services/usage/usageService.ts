@@ -24,7 +24,7 @@ import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { ConfigService } from 'teleterm/services/config';
 import Logger from 'teleterm/logger';
 
-type RawPrehogReq = Omit<
+type PrehogEventReq = Omit<
   ReportUsageEventRequest['prehogReq'],
   'distinctId' | 'timestamp'
 >;
@@ -139,22 +139,22 @@ export class UsageService {
   }
 
   captureUserJobRoleUpdate(jobRole: string): Promise<void> {
-    return this.reportNonAnonymizableEvent({
+    return this.reportNonAnonymizedEvent({
       userJobRoleUpdate: {
         jobRole,
       },
     });
   }
 
-  private reportNonAnonymizableEvent(
-    rawPrehogReq: RawPrehogReq
+  private reportNonAnonymizedEvent(
+    prehogEventReq: PrehogEventReq
   ): Promise<void> {
-    return this.reportEvent('', rawPrehogReq);
+    return this.reportEvent('', prehogEventReq);
   }
 
   private reportEvent(
     authClusterId: string,
-    rawPrehogReq: RawPrehogReq
+    prehogEventReq: PrehogEventReq
   ): Promise<void> {
     const isCollectingUsageMetricsEnabled = this.configService.get(
       'usageMetrics.enabled'
@@ -169,7 +169,7 @@ export class UsageService {
       prehogReq: {
         distinctId: this.runtimeSettings.installationId,
         timestamp: new Date(),
-        ...rawPrehogReq,
+        ...prehogEventReq,
       },
     });
   }
