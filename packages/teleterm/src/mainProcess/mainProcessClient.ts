@@ -31,5 +31,11 @@ export default function createMainProcessClient(): MainProcessClient {
     forceFocusWindow() {
       return ipcRenderer.invoke('main-process-force-focus-window');
     },
+    symlinkTsh() {
+      return ipcRenderer.invoke('main-process-symlink-tsh');
+    },
+    removeTshSymlink() {
+      return ipcRenderer.invoke('main-process-remove-tsh-symlink');
+    },
   };
 }

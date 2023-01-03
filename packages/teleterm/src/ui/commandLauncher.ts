@@ -92,6 +92,50 @@ const commands = {
     },
   },
 
+  'tsh-install': {
+    displayName: '',
+    description: '',
+    run(ctx: IAppContext) {
+      ctx.mainProcessClient.symlinkTsh().then(
+        isSymlinked => {
+          if (isSymlinked) {
+            ctx.notificationsService.notifyInfo(
+              'tsh successfully installed in PATH'
+            );
+          }
+        },
+        error => {
+          ctx.notificationsService.notifyError({
+            title: 'Could not install tsh in PATH',
+            description: `Ran into an error: ${error}`,
+          });
+        }
+      );
+    },
+  },
+
+  'tsh-uninstall': {
+    displayName: '',
+    description: '',
+    run(ctx: IAppContext) {
+      ctx.mainProcessClient.removeTshSymlink().then(
+        isRemoved => {
+          if (isRemoved) {
+            ctx.notificationsService.notifyInfo(
+              'tsh successfully removed from PATH'
+            );
+          }
+        },
+        error => {
+          ctx.notificationsService.notifyError({
+            title: 'Could not remove tsh from PATH',
+            description: `Ran into an error: ${error}`,
+          });
+        }
+      );
+    },
+  },
+
   'kube-connect': {
     displayName: '',
     description: '',
