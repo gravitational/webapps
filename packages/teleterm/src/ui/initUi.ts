@@ -19,6 +19,11 @@ import { IAppContext } from 'teleterm/ui/types';
 import { ConfigService } from 'teleterm/services/config';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 
+/**
+ * Runs after the UI becomes visible.
+ * If possible, put the initialization code here, instead of `appContext.init()`,
+ * where it blocks the rendering of the app.
+ */
 export async function initUi(ctx: IAppContext): Promise<void> {
   await setUpUsageReporting(
     ctx.mainProcessClient.configService,

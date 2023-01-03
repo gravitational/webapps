@@ -35,6 +35,10 @@ export class UsageService {
   constructor(
     private tshClient: TshClient,
     private configService: ConfigService,
+    // `findCluster` function - it is a workaround that allows to use `UsageEventService` in `ClustersService`.
+    // Otherwise, we would have a circular dependency.
+    // TODO: accept `ClustersService` instead of a function.
+    // discussion: https://github.com/gravitational/webapps/pull/1451#discussion_r1055364676
     private findCluster: (clusterUri: ClusterUri) => Cluster,
     private runtimeSettings: RuntimeSettings
   ) {}
