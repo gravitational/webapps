@@ -79,7 +79,14 @@ function getRuntimeSettings(): RuntimeSettings {
     ),
     arch: os.arch(),
     osVersion: os.release(),
-    connectVersion: app.getVersion(),
+    // To start the app in dev mode we run `electron path_to_main.js`. It means
+    // that app is run without package.json context, so it can not read the version
+    // from it.
+    // The way we run Electron can be changed (`electron .`), but it has one major
+    // drawback - dev app and bundled app will use the same app data directory.
+    //
+    // A workaround is to read the version from `process.env.npm_package_version`.
+    connectVersion: dev ? process.env.npm_package_version : app.getVersion(),
   };
 }
 

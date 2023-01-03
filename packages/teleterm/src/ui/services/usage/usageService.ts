@@ -48,8 +48,7 @@ export class UsageService {
     if (!clusterProperties) {
       return;
     }
-    const { arch, platform, osVersion, connectVersion, dev } =
-      this.runtimeSettings;
+    const { arch, platform, osVersion, connectVersion } = this.runtimeSettings;
     return this.reportEvent(clusterProperties.authClusterId, {
       userLogin: {
         clusterName: clusterProperties.clusterName,
@@ -57,7 +56,7 @@ export class UsageService {
         arch,
         os: platform,
         osVersion,
-        connectVersion: dev ? `${connectVersion}-dev` : connectVersion,
+        connectVersion,
       },
     });
   }
