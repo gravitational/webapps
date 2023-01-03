@@ -6,7 +6,7 @@ import { RootClusterUri } from 'teleterm/ui/uri';
 
 import { ClustersService } from './clustersService';
 
-jest.mock('teleterm/ui/services/usageEvent');
+jest.mock('teleterm/ui/services/usage');
 
 const clusterUri: RootClusterUri = '/clusters/test';
 
