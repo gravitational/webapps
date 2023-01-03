@@ -28,7 +28,7 @@ export type RuntimeSettings = {
   installationId: string;
   arch: string;
   osVersion: string;
-  connectVersion: string;
+  appVersion: string;
 };
 
 export type MainProcessClient = {

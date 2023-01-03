@@ -51,7 +51,7 @@ export class UsageService {
       );
       return;
     }
-    const { arch, platform, osVersion, connectVersion } = this.runtimeSettings;
+    const { arch, platform, osVersion, appVersion } = this.runtimeSettings;
     return this.reportEvent(clusterProperties.authClusterId, {
       userLogin: {
         clusterName: clusterProperties.clusterName,
@@ -59,7 +59,7 @@ export class UsageService {
         arch,
         os: platform,
         osVersion,
-        connectVersion,
+        connectVersion: appVersion,
       },
     });
   }

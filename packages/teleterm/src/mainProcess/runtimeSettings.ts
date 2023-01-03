@@ -86,7 +86,7 @@ function getRuntimeSettings(): RuntimeSettings {
     // drawback - dev app and bundled app will use the same app data directory.
     //
     // A workaround is to read the version from `process.env.npm_package_version`.
-    connectVersion: dev ? process.env.npm_package_version : app.getVersion(),
+    appVersion: dev ? process.env.npm_package_version : app.getVersion(),
   };
 }
 
