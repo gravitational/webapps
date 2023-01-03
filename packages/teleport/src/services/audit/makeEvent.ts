@@ -557,7 +557,7 @@ export const formatters: Formatters = {
   [eventCodes.SESSION_UPLOAD]: {
     type: 'session.upload',
     desc: 'Session Uploaded',
-    format: () => `Recorded session has been uploaded`,
+    format: ({ sid }) => `Recorded session [${sid}] has been uploaded`,
   },
   [eventCodes.APP_SESSION_START]: {
     type: 'app.session.start',
@@ -984,6 +984,28 @@ export const formatters: Formatters = {
         message += `, target: [${target}]`;
       }
 
+      return message;
+    },
+  },
+  [eventCodes.DYNAMODB_REQUEST]: {
+    type: 'db.session.dynamodb.request',
+    desc: 'DynamoDB Request',
+    format: ({ user, db_service, target }) => {
+      let message = `User [${user}] has made a request to database [${db_service}]`;
+      if (target) {
+        message += `, target API: [${target}]`;
+      }
+      return message;
+    },
+  },
+  [eventCodes.DYNAMODB_REQUEST_FAILURE]: {
+    type: 'db.session.dynamodb.request',
+    desc: 'DynamoDB Request Failed',
+    format: ({ user, db_service, target }) => {
+      let message = `User [${user}] failed to make a request to database  [${db_service}]`;
+      if (target) {
+        message += `, target API: [${target}]`;
+      }
       return message;
     },
   },
