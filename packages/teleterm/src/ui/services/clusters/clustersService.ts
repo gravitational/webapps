@@ -88,13 +88,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async loginLocal(params: LoginLocalParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginLocal(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageService.captureLogin(params.clusterUri);
+    this.usageService.captureUserLogin(params.clusterUri);
   }
 
   async loginSso(params: LoginSsoParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginSso(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageService.captureLogin(params.clusterUri);
+    this.usageService.captureUserLogin(params.clusterUri);
   }
 
   async loginPasswordless(
@@ -103,7 +103,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   ) {
     await this.client.loginPasswordless(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageService.captureLogin(params.clusterUri);
+    this.usageService.captureUserLogin(params.clusterUri);
   }
 
   async syncRootClusterAndCatchErrors(clusterUri: uri.RootClusterUri) {
@@ -462,7 +462,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async createGateway(params: CreateGatewayParams) {
     const gateway = await this.client.createGateway(params);
-    this.usageService.captureProtocolRun(params.targetUri, 'db');
+    this.usageService.captureProtocolUse(params.targetUri, 'db');
     this.setState(draft => {
       draft.gateways.set(gateway.uri, gateway);
     });

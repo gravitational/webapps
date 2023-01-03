@@ -43,9 +43,12 @@ export class UsageService {
     private runtimeSettings: RuntimeSettings
   ) {}
 
-  captureLogin(uri: ClusterOrResourceUri): Promise<void> {
+  captureUserLogin(uri: ClusterOrResourceUri): Promise<void> {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
+      this.logger.warn(
+        `Missing cluster data for ${uri}, skipping userLogin event`
+      );
       return;
     }
     const { arch, platform, osVersion, connectVersion } = this.runtimeSettings;
@@ -61,12 +64,15 @@ export class UsageService {
     });
   }
 
-  captureProtocolRun(
+  captureProtocolUse(
     uri: ClusterOrResourceUri,
     protocol: 'ssh' | 'kube' | 'db'
   ): Promise<void> {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
+      this.logger.warn(
+        `Missing cluster data for ${uri}, skipping protocolUse event`
+      );
       return;
     }
     return this.reportEvent(clusterProperties.authClusterId, {
@@ -84,6 +90,9 @@ export class UsageService {
   ): Promise<void> {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
+      this.logger.warn(
+        `Missing cluster data for ${uri}, skipping accessRequestCreate event`
+      );
       return;
     }
     return this.reportEvent(clusterProperties.authClusterId, {
@@ -98,6 +107,9 @@ export class UsageService {
   captureAccessRequestReview(uri: ClusterOrResourceUri): Promise<void> {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
+      this.logger.warn(
+        `Missing cluster data for ${uri}, skipping accessRequestReview event`
+      );
       return;
     }
     return this.reportEvent(clusterProperties.authClusterId, {
@@ -111,6 +123,9 @@ export class UsageService {
   captureAccessRequestAssumeRole(uri: ClusterOrResourceUri): Promise<void> {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
+      this.logger.warn(
+        `Missing cluster data for ${uri}, skipping accessRequestAssumeRole event`
+      );
       return;
     }
     return this.reportEvent(clusterProperties.authClusterId, {
@@ -127,6 +142,9 @@ export class UsageService {
   ): Promise<void> {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
+      this.logger.warn(
+        `Missing cluster data for ${uri}, skipping fileTransferRun event`
+      );
       return;
     }
     return this.reportEvent(clusterProperties.authClusterId, {
@@ -179,7 +197,6 @@ export class UsageService {
     const cluster = this.findCluster(rootClusterUri);
     if (!(cluster && cluster.loggedInUser)) {
       // TODO: add check for authClusterId
-      this.logger.warn(`Missing cluster data for ${uri}, skipping event`);
       return;
     }
 
