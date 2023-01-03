@@ -5,14 +5,14 @@ import * as prehogApi from './prehog/v1alpha/connect_pb';
 
 import * as types from './types';
 
-export function mapUsageEvent(event: types.UsageEventWithDate) {
+export function mapUsageEvent(event: types.ReportUsageEventRequest) {
   return new api.ReportUsageEventRequest()
     .setAuthClusterId(event.authClusterId)
     .setPrehogEvent(mapPrehogBody(event.prehogEvent));
 }
 
 function mapPrehogBody(
-  prehogEvent: types.UsageEventWithDate['prehogEvent']
+  prehogEvent: types.ReportUsageEventRequest['prehogEvent']
 ): prehogApi.SubmitConnectEventRequest {
   const prehogApiEvent = new prehogApi.SubmitConnectEventRequest()
     .setTimestamp(Timestamp.fromDate(prehogEvent.timestamp))

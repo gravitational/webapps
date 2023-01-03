@@ -52,7 +52,7 @@ export interface GetKubesResponse extends apiService.GetKubesResponse.AsObject {
 export type GetRequestableRolesResponse =
   apiService.GetRequestableRolesResponse.AsObject;
 
-export type UsageEventWithDate = Modify<
+export type ReportUsageEventRequest = Modify<
   apiUsageEvents.ReportUsageEventRequest.AsObject,
   {
     prehogEvent: Modify<
@@ -186,7 +186,7 @@ export type TshClient = {
     options: FileTransferRequest,
     abortSignal?: TshAbortSignal
   ) => FileTransferListeners;
-  reportUsageEvent: (event: UsageEventWithDate) => Promise<void>;
+  reportUsageEvent: (event: ReportUsageEventRequest) => Promise<void>;
 };
 
 export type TshAbortController = {

@@ -17,7 +17,7 @@
 import { ClusterOrResourceUri, ClusterUri, routing } from 'teleterm/ui/uri';
 import {
   Cluster,
-  UsageEventWithDate,
+  ReportUsageEventRequest,
   TshClient,
 } from 'teleterm/services/tshd/types';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
@@ -25,7 +25,7 @@ import { ConfigService } from 'teleterm/services/config';
 import Logger from 'teleterm/logger';
 
 type RawPrehogEvent = Omit<
-  UsageEventWithDate['prehogEvent'],
+  ReportUsageEventRequest['prehogEvent'],
   'distinctId' | 'timestamp'
 >;
 
