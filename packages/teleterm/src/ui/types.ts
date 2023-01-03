@@ -29,7 +29,7 @@ import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { ResourcesService } from 'teleterm/ui/services/resources';
 import { ReloginService } from 'teleterm/services/relogin';
 import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
-import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { UsageService } from 'teleterm/ui/services/usage';
 
 export interface IAppContext {
   clustersService: ClustersService;
@@ -48,7 +48,7 @@ export interface IAppContext {
   subscribeToTshdEvent: SubscribeToTshdEvent;
   reloginService: ReloginService;
   tshdNotificationsService: TshdNotificationsService;
-  usageEventService: UsageEventService;
+  usageService: UsageService;
 
   init(): Promise<void>;
 }

@@ -20,7 +20,7 @@ import {
   ServerSideParams,
 } from 'teleterm/services/tshd/types';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
-import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { UsageService } from 'teleterm/ui/services/usage';
 
 import { ImmutableStore } from '../immutableStore';
 
@@ -60,7 +60,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     public client: tsh.TshClient,
     private mainProcessClient: MainProcessClient,
     private notificationsService: NotificationsService,
-    private usageReporterService: UsageEventService
+    private usageService: UsageService
   ) {
     super();
   }
@@ -88,13 +88,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async loginLocal(params: LoginLocalParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginLocal(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageReporterService.captureLogin(params.clusterUri);
+    this.usageService.captureLogin(params.clusterUri);
   }
 
   async loginSso(params: LoginSsoParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginSso(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageReporterService.captureLogin(params.clusterUri);
+    this.usageService.captureLogin(params.clusterUri);
   }
 
   async loginPasswordless(
@@ -103,7 +103,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   ) {
     await this.client.loginPasswordless(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageReporterService.captureLogin(params.clusterUri);
+    this.usageService.captureLogin(params.clusterUri);
   }
 
   async syncRootClusterAndCatchErrors(clusterUri: uri.RootClusterUri) {
@@ -385,7 +385,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       return;
     }
     await this.client.assumeRole(rootClusterUri, requestIds, dropIds);
-    this.usageReporterService.captureAccessRequestAssumeRole(rootClusterUri);
+    this.usageService.captureAccessRequestAssumeRole(rootClusterUri);
     return this.syncCluster(rootClusterUri);
   }
 
@@ -414,7 +414,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       rootClusterUri,
       params
     );
-    this.usageReporterService.captureAccessRequestReview(rootClusterUri);
+    this.usageService.captureAccessRequestReview(rootClusterUri);
     return response;
   }
 
@@ -425,7 +425,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
 
     const response = await this.client.createAccessRequest(params);
-    this.usageReporterService.captureAccessRequestCreate(
+    this.usageService.captureAccessRequestCreate(
       params.rootClusterUri,
       params.roles.length ? 'role' : 'resource'
     );
@@ -462,7 +462,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async createGateway(params: CreateGatewayParams) {
     const gateway = await this.client.createGateway(params);
-    this.usageReporterService.captureProtocolRun(params.targetUri, 'db');
+    this.usageService.captureProtocolRun(params.targetUri, 'db');
     this.setState(draft => {
       draft.gateways.set(gateway.uri, gateway);
     });

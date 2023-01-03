@@ -29,8 +29,8 @@ type RawPrehogEvent = Omit<
   'distinctId' | 'timestamp'
 >;
 
-export class UsageEventService {
-  private logger = new Logger('UsageEventService');
+export class UsageService {
+  private logger = new Logger('UsageService');
 
   constructor(
     private tshClient: TshClient,
@@ -46,7 +46,7 @@ export class UsageEventService {
     }
     const { arch, platform, osVersion, connectVersion, dev } =
       this.runtimeSettings;
-    return this.reportUsageEvent(clusterProperties.authClusterId, {
+    return this.reportEvent(clusterProperties.authClusterId, {
       userLogin: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -66,7 +66,7 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent(clusterProperties.authClusterId, {
+    return this.reportEvent(clusterProperties.authClusterId, {
       protocolUse: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -83,7 +83,7 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent(clusterProperties.authClusterId, {
+    return this.reportEvent(clusterProperties.authClusterId, {
       accessRequestCreate: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -97,7 +97,7 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent(clusterProperties.authClusterId, {
+    return this.reportEvent(clusterProperties.authClusterId, {
       accessRequestReview: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -110,7 +110,7 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent(clusterProperties.authClusterId, {
+    return this.reportEvent(clusterProperties.authClusterId, {
       accessRequestAssumeRole: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -126,7 +126,7 @@ export class UsageEventService {
     if (!clusterProperties) {
       return;
     }
-    return this.reportUsageEvent(clusterProperties.authClusterId, {
+    return this.reportEvent(clusterProperties.authClusterId, {
       fileTransferRun: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
@@ -136,20 +136,18 @@ export class UsageEventService {
   }
 
   captureUserJobRoleUpdate(jobRole: string): Promise<void> {
-    return this.reportNonAnonymizableUsageEvent({
+    return this.reportNonAnonymizableEvent({
       userJobRoleUpdate: {
         jobRole,
       },
     });
   }
 
-  private reportNonAnonymizableUsageEvent(
-    event: RawPrehogEvent
-  ): Promise<void> {
-    return this.reportUsageEvent('', event);
+  private reportNonAnonymizableEvent(event: RawPrehogEvent): Promise<void> {
+    return this.reportEvent('', event);
   }
 
-  private reportUsageEvent(
+  private reportEvent(
     authClusterId: string,
     rawPrehogEvent: RawPrehogEvent
   ): Promise<void> {

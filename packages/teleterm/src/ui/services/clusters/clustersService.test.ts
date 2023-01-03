@@ -1,6 +1,6 @@
 import { tsh, SyncStatus } from 'teleterm/ui/services/clusters/types';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
-import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { UsageService } from 'teleterm/ui/services/usage';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
 import { RootClusterUri } from 'teleterm/ui/uri';
 
@@ -77,8 +77,8 @@ const kubeMock: tsh.Kube = {
 const NotificationsServiceMock = NotificationsService as jest.MockedClass<
   typeof NotificationsService
 >;
-const UsageEventServiceMock = UsageEventService as jest.MockedClass<
-  typeof UsageEventService
+const UsageEventServiceMock = UsageService as jest.MockedClass<
+  typeof UsageService
 >;
 
 function createService(
@@ -91,7 +91,7 @@ function createService(
       removeKubeConfig: jest.fn().mockResolvedValueOnce(undefined),
     } as unknown as MainProcessClient,
     notificationsService,
-    new UsageEventService(undefined, undefined, undefined, undefined)
+    new UsageService(undefined, undefined, undefined, undefined)
   );
 }
 

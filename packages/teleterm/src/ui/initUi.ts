@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { setUpUsageReporting } from 'teleterm/ui/services/usageEvent';
+import { setUpUsageReporting } from 'teleterm/ui/services/usage';
 import { IAppContext } from 'teleterm/ui/types';
 import { ConfigService } from 'teleterm/services/config';
 import { NotificationsService } from 'teleterm/ui/services/notifications';

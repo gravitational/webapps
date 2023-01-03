@@ -97,10 +97,10 @@ async function initState(
     return;
   }
   if (cmd.kind === 'pty.tsh-login') {
-    ctx.usageEventService.captureProtocolRun(clusterUri, 'ssh');
+    ctx.usageService.captureProtocolRun(clusterUri, 'ssh');
   }
   if (cmd.kind === 'pty.tsh-kube-login') {
-    ctx.usageEventService.captureProtocolRun(clusterUri, 'kube');
+    ctx.usageService.captureProtocolRun(clusterUri, 'kube');
   }
 
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();

@@ -35,7 +35,7 @@ import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { FileTransferService } from 'teleterm/ui/services/fileTransferClient';
 import { ReloginService } from 'teleterm/services/relogin';
 import { TshdNotificationsService } from 'teleterm/services/tshdNotifications';
-import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { UsageService } from 'teleterm/ui/services/usage';
 import { ResourcesService } from 'teleterm/ui/services/resources';
 import { IAppContext } from 'teleterm/ui/types';
 
@@ -71,13 +71,13 @@ export default class AppContext implements IAppContext {
   subscribeToTshdEvent: SubscribeToTshdEvent;
   reloginService: ReloginService;
   tshdNotificationsService: TshdNotificationsService;
-  usageEventService: UsageEventService;
+  usageService: UsageService;
 
   constructor(config: ElectronGlobals) {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
     this.subscribeToTshdEvent = config.subscribeToTshdEvent;
     this.mainProcessClient = mainProcessClient;
-    this.usageEventService = new UsageEventService(
+    this.usageService = new UsageService(
       tshClient,
       this.mainProcessClient.configService,
       clusterUri => this.clustersService.findCluster(clusterUri),
@@ -85,7 +85,7 @@ export default class AppContext implements IAppContext {
     );
     this.fileTransferService = new FileTransferService(
       tshClient,
-      this.usageEventService
+      this.usageService
     );
     this.resourcesService = new ResourcesService(tshClient);
     this.statePersistenceService = new StatePersistenceService(
@@ -97,7 +97,7 @@ export default class AppContext implements IAppContext {
       tshClient,
       this.mainProcessClient,
       this.notificationsService,
-      this.usageEventService
+      this.usageService
     );
     this.workspacesService = new WorkspacesService(
       this.modalsService,

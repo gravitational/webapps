@@ -1,13 +1,13 @@
 import { FileTransferListeners } from 'shared/components/FileTransfer';
 
 import { FileTransferRequest, TshClient } from 'teleterm/services/tshd/types';
-import { UsageEventService } from 'teleterm/ui/services/usageEvent';
+import { UsageService } from 'teleterm/ui/services/usage';
 import { FileTransferDirection } from 'teleterm/services/tshd/v1/service_pb';
 
 export class FileTransferService {
   constructor(
     private tshClient: TshClient,
-    private usageEventService: UsageEventService
+    private usageService: UsageService
   ) {}
 
   transferFile(
@@ -27,18 +27,12 @@ export class FileTransferService {
       options.direction ===
       FileTransferDirection.FILE_TRANSFER_DIRECTION_DOWNLOAD
     ) {
-      this.usageEventService.captureFileTransferRun(
-        options.clusterUri,
-        'download'
-      );
+      this.usageService.captureFileTransferRun(options.clusterUri, 'download');
     }
     if (
       options.direction === FileTransferDirection.FILE_TRANSFER_DIRECTION_UPLOAD
     ) {
-      this.usageEventService.captureFileTransferRun(
-        options.clusterUri,
-        'upload'
-      );
+      this.usageService.captureFileTransferRun(options.clusterUri, 'upload');
     }
     return listeners;
   }

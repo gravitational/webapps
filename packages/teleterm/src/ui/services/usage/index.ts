@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './usageEventService';
+export * from './usageService';
 export * from './setUpUsageReporting';
