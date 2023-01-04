@@ -16,47 +16,27 @@
 
 import React from 'react';
 
+import Flex from 'design/Flex';
+
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
-
-import { getEmptyPendingAccessRequest } from '../services/workspacesService/accessRequestsService';
+import { getEmptyPendingAccessRequest } from 'teleterm/ui/services/workspacesService/accessRequestsService';
+import * as types from 'teleterm/services/tshd/types';
+import {
+  SuggestionCmd,
+  SuggestionDatabase,
+  SuggestionServer,
+  SuggestionSshLogin,
+} from 'teleterm/ui/services/quickInput';
 
 import QuickInput from './QuickInput';
+import QuickInputList from './QuickInputList';
 
 export default {
   title: 'Teleterm/QuickInput',
 };
 
 export const Story = () => {
-  return (
-    <>
-      {/* Extra bottom margin to accommodate the suggestions displayed under the input. */}
-      <QuickInputDemo description="Pristine state" mb={350} />
-      <QuickInputDemo description="Command suggestions" inputValue="ts" />
-      <QuickInputDemo
-        description="Login suggestions"
-        inputValue="tsh ssh "
-        mb={160}
-      />
-      <QuickInputDemo
-        description="Server suggestions"
-        inputValue="tsh ssh root@"
-        mb={350}
-      />
-      <QuickInputDemo
-        description="Database suggestions"
-        inputValue="tsh proxy db "
-        mb={350}
-      />
-    </>
-  );
-};
-
-const QuickInputDemo = (props: {
-  description: string;
-  inputValue?: string;
-  mb?: number;
-}) => {
   const appContext = new MockAppContext();
 
   appContext.workspacesService.state = {
@@ -74,26 +54,6 @@ const QuickInputDemo = (props: {
     rootClusterUri: '/clusters/localhost',
   };
 
-  const cluster = {
-    uri: '/clusters/localhost' as const,
-    name: 'Test',
-    leaf: false,
-    connected: true,
-    proxyHost: 'localhost:3080',
-    loggedInUser: {
-      activeRequestsList: [],
-      name: 'admin',
-      acl: {},
-      sshLoginsList: [
-        'root',
-        'ubuntu',
-        'ansible',
-        'lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet',
-      ],
-      rolesList: [],
-    },
-  };
-
   appContext.clustersService.getClusters = () => {
     return [cluster];
   };
@@ -103,125 +63,238 @@ const QuickInputDemo = (props: {
   });
 
   appContext.resourcesService.fetchServers = async () => ({
-    agentsList: [
-      {
-        uri: '/clusters/localhost/servers/foo',
-        tunnel: false,
-        name: '2018454d-ef3b-4b15-84f7-61ca213d37e3',
-        hostname: 'foo',
-        addr: 'foo.localhost',
-        labelsList: [
-          { name: 'env', value: 'prod' },
-          { name: 'kernel', value: '5.15.0-1023-aws' },
-        ],
-      },
-      {
-        uri: '/clusters/localhost/servers/bar',
-        tunnel: false,
-        name: '24c7aebe-4741-4464-ab69-f076fe467ebd',
-        hostname: 'bar',
-        addr: 'bar.localhost',
-        labelsList: [
-          { name: 'env', value: 'staging' },
-          { name: 'kernel', value: '5.14.1-1058-aws' },
-        ],
-      },
-      {
-        uri: '/clusters/localhost/servers/lorem',
-        tunnel: false,
-        name: '24c7aebe-4741-4464-ab69-f076fe467ebd',
-        hostname:
-          'lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet',
-        addr: 'lorem.localhost',
-        labelsList: [
-          { name: 'env', value: 'staging' },
-          { name: 'kernel', value: '5.14.1-1058-aws' },
-          {
-            name: 'lorem',
-            value:
-              'lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet',
-          },
-          { name: 'kernel2', value: '5.14.1-1058-aws' },
-          { name: 'env2', value: 'staging' },
-          { name: 'kernel3', value: '5.14.1-1058-aws' },
-        ],
-      },
-    ],
+    agentsList: servers,
     totalCount: 3,
-    startKey: 'foo',
+    startKey: '',
   });
 
   appContext.resourcesService.fetchDatabases = async () => ({
-    agentsList: [
-      {
-        uri: '/clusters/localhost/dbs/postgres',
-        name: 'postgres',
-        desc: 'A PostgreSQL database',
-        protocol: 'postgres',
-        type: 'self-hosted',
-        hostname: 'postgres.localhost',
-        addr: 'postgres.localhost',
-        labelsList: [
-          { name: 'env', value: 'prod' },
-          { name: 'kernel', value: '5.15.0-1023-aws' },
-        ],
-      },
-      {
-        uri: '/clusters/localhost/dbs/mysql',
-        name: 'mysql',
-        desc: 'A MySQL database',
-        protocol: 'mysql',
-        type: 'self-hosted',
-        hostname: 'mysql.localhost',
-        addr: 'mysql.localhost',
-        labelsList: [
-          { name: 'env', value: 'staging' },
-          { name: 'kernel', value: '5.14.1-1058-aws' },
-        ],
-      },
-      {
-        uri: '/clusters/localhost/dbs/lorem',
-        name: 'lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet',
-        desc: 'Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-        protocol: 'mysql',
-        type: 'self-hosted',
-        hostname: 'lorem.localhost',
-        addr: 'lorem.localhost',
-        labelsList: [
-          { name: 'env', value: 'staging' },
-          { name: 'kernel', value: '5.14.1-1058-aws' },
-          {
-            name: 'lorem',
-            value:
-              'lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet-lorem-ipsum-dolor-sit-amet',
-          },
-          { name: 'kernel2', value: '5.14.1-1058-aws' },
-          { name: 'env2', value: 'staging' },
-          { name: 'kernel3', value: '5.14.1-1058-aws' },
-        ],
-      },
-    ],
-    totalCount: 2,
-    startKey: 'foo',
+    agentsList: databases,
+    totalCount: 3,
+    startKey: '',
   });
-
-  if (props.inputValue !== undefined) {
-    appContext.quickInputService.setInputValue(props.inputValue);
-    appContext.quickInputService.show();
-    appContext.quickInputService.hide = () => {};
-  }
 
   return (
     <AppContextProvider value={appContext}>
-      <p>{props.description}</p>
       <div
         css={`
           height: 40px;
-          margin-bottom: ${props.mb || 150}px;
         `}
       >
         <QuickInput />
       </div>
     </AppContextProvider>
   );
+};
+
+export const Suggestions = () => {
+  const commandSuggestions: SuggestionCmd[] = [
+    {
+      kind: 'suggestion.cmd',
+      token: '',
+      data: {
+        name: 'tsh foo',
+        displayName: 'tsh foo',
+        description: 'Nulla convallis lorem ut ipsum maximus venenatis.',
+      },
+    },
+    {
+      kind: 'suggestion.cmd',
+      token: '',
+      data: {
+        name: 'tsh bar',
+        displayName: 'tsh bar',
+        description: 'Vivamus id nulla sed neque efficitur ornare nec in diam.',
+      },
+    },
+    {
+      kind: 'suggestion.cmd',
+      token: '',
+      data: {
+        name: 'tsh quux foo',
+        displayName: 'tsh quux foo',
+        description:
+          'Sed porta nibh eget lacus suscipit vehicula. Curabitur eget sapien in lacus blandit pretium.',
+      },
+    },
+    {
+      kind: 'suggestion.cmd',
+      token: '',
+      data: {
+        name: 'tsh baz quux',
+        displayName: 'tsh baz quux',
+        description: 'Etiam cursus magna at feugiat ornare.',
+      },
+    },
+  ];
+
+  const loginSuggestions: SuggestionSshLogin[] =
+    cluster.loggedInUser.sshLoginsList.map(login => ({
+      kind: 'suggestion.ssh-login',
+      token: '',
+      appendToToken: '',
+      data: login,
+    }));
+
+  const serverSuggestions: SuggestionServer[] = servers.map(server => ({
+    kind: 'suggestion.server',
+    token: '',
+    data: server,
+  }));
+
+  const dbSuggestions: SuggestionDatabase[] = databases.map(db => ({
+    kind: 'suggestion.database',
+    token: '',
+    data: db,
+  }));
+
+  return (
+    <Flex flexWrap="wrap" p={2} gap={2}>
+      <QuickInputListWrapper
+        items={commandSuggestions}
+        width={defaultWidth * 2}
+      />
+      <QuickInputListWrapper items={loginSuggestions} />
+      <QuickInputListWrapper
+        items={serverSuggestions}
+        width={defaultWidth * 3}
+        height={defaultHeight * 1.5}
+      />
+      <QuickInputListWrapper
+        items={dbSuggestions}
+        width={defaultWidth * 3}
+        height={defaultHeight * 1.5}
+      />
+    </Flex>
+  );
+};
+
+const defaultWidth = 200;
+const defaultHeight = 200;
+
+const QuickInputListWrapper = ({
+  items,
+  width = defaultWidth,
+  height = defaultHeight,
+}) => {
+  return (
+    <div
+      css={`
+        position: relative;
+        width: ${width}px;
+        height: ${height}px;
+      `}
+    >
+      <QuickInputList
+        items={items}
+        activeItem={0}
+        position={0}
+        onPick={() => {}}
+      />
+    </div>
+  );
+};
+
+const longIdentifier =
+  'lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-quisque-elementum-nulla';
+
+const servers: types.Server[] = [
+  {
+    uri: '/clusters/localhost/servers/foo' as const,
+    tunnel: false,
+    name: '2018454d-ef3b-4b15-84f7-61ca213d37e3',
+    hostname: 'foo',
+    addr: 'foo.localhost',
+    labelsList: [
+      { name: 'env', value: 'prod' },
+      { name: 'kernel', value: '5.15.0-1023-aws' },
+    ],
+  },
+  {
+    uri: '/clusters/localhost/servers/bar' as const,
+    tunnel: false,
+    name: '24c7aebe-4741-4464-ab69-f076fe467ebd',
+    hostname: 'bar',
+    addr: 'bar.localhost',
+    labelsList: [
+      { name: 'env', value: 'staging' },
+      { name: 'kernel', value: '5.14.1-1058-aws' },
+    ],
+  },
+  {
+    uri: '/clusters/localhost/servers/lorem' as const,
+    tunnel: false,
+    name: '24c7aebe-4741-4464-ab69-f076fe467ebd',
+    hostname: longIdentifier,
+    addr: 'lorem.localhost',
+    labelsList: [
+      { name: 'env', value: 'staging' },
+      { name: 'kernel', value: '5.14.1-1058-aws' },
+      { name: 'lorem', value: longIdentifier },
+      { name: 'kernel2', value: '5.14.1-1058-aws' },
+      { name: 'env2', value: 'staging' },
+      { name: 'kernel3', value: '5.14.1-1058-aws' },
+    ],
+  },
+];
+
+const databases: types.Database[] = [
+  {
+    uri: '/clusters/localhost/dbs/postgres' as const,
+    name: 'postgres',
+    desc: 'A PostgreSQL database',
+    protocol: 'postgres',
+    type: 'self-hosted',
+    hostname: 'postgres.localhost',
+    addr: 'postgres.localhost',
+    labelsList: [
+      { name: 'env', value: 'prod' },
+      { name: 'kernel', value: '5.15.0-1023-aws' },
+    ],
+  },
+  {
+    uri: '/clusters/localhost/dbs/mysql' as const,
+    name: 'mysql',
+    desc: 'A MySQL database',
+    protocol: 'mysql',
+    type: 'self-hosted',
+    hostname: 'mysql.localhost',
+    addr: 'mysql.localhost',
+    labelsList: [
+      { name: 'env', value: 'staging' },
+      { name: 'kernel', value: '5.14.1-1058-aws' },
+    ],
+  },
+  {
+    uri: '/clusters/localhost/dbs/lorem' as const,
+    name: longIdentifier,
+    desc: 'Vestibulum ut blandit est, sed dapibus sem. Pellentesque egestas mi eu scelerisque ultricies.',
+    protocol: 'mysql',
+    type: 'self-hosted',
+    hostname: 'lorem.localhost',
+    addr: 'lorem.localhost',
+    labelsList: [
+      { name: 'env', value: 'staging' },
+      { name: 'kernel', value: '5.14.1-1058-aws' },
+      { name: 'lorem', value: longIdentifier },
+      { name: 'kernel2', value: '5.14.1-1058-aws' },
+      { name: 'env2', value: 'staging' },
+      { name: 'kernel3', value: '5.14.1-1058-aws' },
+    ],
+  },
+];
+
+const cluster = {
+  uri: '/clusters/localhost' as const,
+  name: 'Test',
+  leaf: false,
+  connected: true,
+  proxyHost: 'localhost:3080',
+  loggedInUser: {
+    activeRequestsList: [],
+    name: 'admin',
+    acl: {},
+    sshLoginsList: ['root', 'ubuntu', 'ansible', longIdentifier],
+    rolesList: [],
+  },
 };
