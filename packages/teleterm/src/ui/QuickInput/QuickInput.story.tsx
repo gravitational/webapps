@@ -286,11 +286,14 @@ const cluster = {
   leaf: false,
   connected: true,
   proxyHost: 'localhost:3080',
+  authClusterId: '73c4746b-d956-4f16-9848-4e3469f70762',
   loggedInUser: {
     activeRequestsList: [],
     name: 'admin',
     acl: {},
     sshLoginsList: ['root', 'ubuntu', 'ansible', longIdentifier],
     rolesList: [],
+    requestableRolesList: [],
+    suggestedReviewersList: [],
   },
 };

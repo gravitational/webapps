@@ -13,6 +13,7 @@ const clusterMock: tsh.Cluster = {
   connected: true,
   leaf: false,
   proxyHost: 'localhost:3080',
+  authClusterId: '73c4746b-d956-4f16-9848-4e3469f70762',
   loggedInUser: {
     activeRequestsList: [],
     assumedRequests: {},
@@ -20,6 +21,8 @@ const clusterMock: tsh.Cluster = {
     acl: {},
     sshLoginsList: [],
     rolesList: [],
+    requestableRolesList: [],
+    suggestedReviewersList: [],
   },
 };
 
