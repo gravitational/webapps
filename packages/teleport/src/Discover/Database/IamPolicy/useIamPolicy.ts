@@ -49,6 +49,8 @@ export function useIamPolicy({ ctx, props }: Props) {
     nextStep: props.nextStep,
     iamPolicy,
     fetchIamPolicy,
+    // Creates a unique policy name since db resource name's are unique.
+    iamPolicyName: `TeleportDatabaseAccess_${props.agentMeta.resourceName}`,
   };
 }
 

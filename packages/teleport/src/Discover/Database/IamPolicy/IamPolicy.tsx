@@ -26,7 +26,6 @@ import {
   ActionButtons,
   Header,
   ButtonBlueText,
-  Mark,
 } from '../../Shared';
 
 import { useIamPolicy, State } from './useIamPolicy';
@@ -45,6 +44,7 @@ export function IamPolicyView({
   nextStep,
   iamPolicy,
   fetchIamPolicy,
+  iamPolicyName,
 }: State) {
   return (
     <Box maxWidth="800px">
@@ -73,7 +73,7 @@ export function IamPolicyView({
           {attempt.status === 'success' && (
             <Box>
               <Text bold>
-                Run this AWS CLI command to create a IAM policy*. <br />
+                Run this AWS CLI command to create a IAM policy. <br />
                 Then attach this policy to appropriate AWS resources (eg.{' '}
                 <Link
                   href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-and-attach-iam-policy.html"
@@ -90,17 +90,13 @@ export function IamPolicyView({
                 </Link>
                 ).
               </Text>
-              <Text mt={2}>
-                * Update <Mark>--policy-name</Mark> flag if the defaulted value{' '}
-                <Mark>TeleportDatabaseAccess</Mark> already exists.
-              </Text>
               <Box mt={2} mb={1}>
                 <TextSelectCopyMulti
                   lines={[
                     {
                       text:
                         `aws iam create-policy \\\n` +
-                        `--policy-name TeleportDatabaseAccess \\\n` +
+                        `--policy-name ${iamPolicyName} \\\n` +
                         `--policy-document \\\n` +
                         `'${JSON.stringify(
                           JSON.parse(iamPolicy.aws.policy_document),

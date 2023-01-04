@@ -61,4 +61,5 @@ const props: State = {
         '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"redshift:GetClusterCredentials","Resource":["arn:aws:redshift:us-east-1:12345:dbuser:redshift-cluster-1/*","arn:aws:redshift:us-east-1:12345:dbname:redshift-cluster-1/*","arn:aws:redshift:us-east-1:12345:dbgroup:redshift-cluster-1/*"]}]}',
     },
   },
+  iamPolicyName: 'TeleportPolicyName',
 };
