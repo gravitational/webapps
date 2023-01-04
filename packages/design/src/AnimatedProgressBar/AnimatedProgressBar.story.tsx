@@ -16,12 +16,10 @@
 
 import React from 'react';
 
-import { UsageData } from './UsageData';
+import { AnimatedProgressBar as Component } from './AnimatedProgressBar';
 
 export default {
-  title: 'Teleterm/ModalsHost/UsageData',
+  title: 'Design',
 };
 
-export const Dialog = () => (
-  <UsageData onCancel={() => {}} onAllow={() => {}} onDecline={() => {}} />
-);
+export const AnimatedProgressBar = () => <Component />;

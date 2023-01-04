@@ -14,14 +14,4 @@
  * limitations under the License.
  */
 
-import React from 'react';
-
-import { UsageData } from './UsageData';
-
-export default {
-  title: 'Teleterm/ModalsHost/UsageData',
-};
-
-export const Dialog = () => (
-  <UsageData onCancel={() => {}} onAllow={() => {}} onDecline={() => {}} />
-);
+export { IamPolicy } from './IamPolicy';
