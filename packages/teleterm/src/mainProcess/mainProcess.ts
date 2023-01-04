@@ -206,7 +206,7 @@ export default class MainProcess {
     // Used in the `tsh install` command on macOS to make the bundled tsh available in PATH.
     // Returns true if tsh got successfully installed, false if the user closed the osascript
     // prompt. Throws an error when osascript fails.
-    ipcMain.handle('main-process-symlink-tsh', async () => {
+    ipcMain.handle('main-process-symlink-tsh-macos', async () => {
       const source = this.settings.tshd.binaryPath;
       const target = '/usr/local/bin/tsh';
       const prompt =
@@ -228,7 +228,7 @@ export default class MainProcess {
       }
     });
 
-    ipcMain.handle('main-process-remove-tsh-symlink', async () => {
+    ipcMain.handle('main-process-remove-tsh-symlink-macos', async () => {
       const target = '/usr/local/bin/tsh';
       const prompt =
         'Teleport Connect wants to remove a symlink for tsh from /usr/local/bin.';
