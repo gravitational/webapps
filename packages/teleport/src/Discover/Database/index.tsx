@@ -54,7 +54,7 @@ export const DatabaseResource: Resource<Database> = {
               component: CreateDatabase,
             },
             {
-              title: 'Deploy Database Agent',
+              title: 'Deploy Database Service',
               component: DownloadScript,
             },
             {
@@ -72,7 +72,7 @@ export const DatabaseResource: Resource<Database> = {
               component: CreateDatabase,
             },
             {
-              title: 'Deploy Database Agent',
+              title: 'Deploy Database Service',
               component: DownloadScript,
             },
             {
