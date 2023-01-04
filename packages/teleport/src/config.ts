@@ -121,7 +121,7 @@ const cfg = {
     checkAccessToRegisteredResource: `/v1/webapi/sites/:clusterId/resources/check`,
 
     scp: '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
-    renewTokenPath: '/v1/webapi/sessions/renew',
+    renewTokenPath: '/v1/webapi/sessions/web/renew',
     resetPasswordTokenPath: '/v1/webapi/users/password/token',
     sessionPath: '/v1/webapi/sessions/web',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
