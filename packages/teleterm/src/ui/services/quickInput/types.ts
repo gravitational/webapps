@@ -9,7 +9,7 @@ type SuggestionBase<T, R> = {
 
 export type SuggestionCmd = SuggestionBase<
   'suggestion.cmd',
-  { name: string; displayName: string; description: string }
+  { displayName: string; description: string }
 >;
 
 export type SuggestionSshLogin = SuggestionBase<

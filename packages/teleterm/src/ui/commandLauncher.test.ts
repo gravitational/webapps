@@ -7,10 +7,10 @@ it('returns tsh install & uninstall autocomplete command on macOS', () => {
   const commandLauncher = new CommandLauncher(appContext);
   const autocompleteCommandNames = commandLauncher
     .getAutocompleteCommands()
-    .map(c => c.name);
+    .map(c => c.displayName);
 
-  expect(autocompleteCommandNames).toContain('autocomplete.tsh-install');
-  expect(autocompleteCommandNames).toContain('autocomplete.tsh-uninstall');
+  expect(autocompleteCommandNames).toContain('tsh install');
+  expect(autocompleteCommandNames).toContain('tsh uninstall');
 });
 
 it('does not return tsh install & uninstall autocomplete command on Linux', () => {
@@ -18,10 +18,10 @@ it('does not return tsh install & uninstall autocomplete command on Linux', () =
   const commandLauncher = new CommandLauncher(appContext);
   const autocompleteCommandNames = commandLauncher
     .getAutocompleteCommands()
-    .map(c => c.name);
+    .map(c => c.displayName);
 
-  expect(autocompleteCommandNames).not.toContain('autocomplete.tsh-install');
-  expect(autocompleteCommandNames).not.toContain('autocomplete.tsh-uninstall');
+  expect(autocompleteCommandNames).not.toContain('tsh install');
+  expect(autocompleteCommandNames).not.toContain('tsh uninstall');
 });
 
 it('does not return tsh install & uninstall autocomplete command on Windows', () => {
@@ -29,8 +29,8 @@ it('does not return tsh install & uninstall autocomplete command on Windows', ()
   const commandLauncher = new CommandLauncher(appContext);
   const autocompleteCommandNames = commandLauncher
     .getAutocompleteCommands()
-    .map(c => c.name);
+    .map(c => c.displayName);
 
-  expect(autocompleteCommandNames).not.toContain('autocomplete.tsh-install');
-  expect(autocompleteCommandNames).not.toContain('autocomplete.tsh-uninstall');
+  expect(autocompleteCommandNames).not.toContain('tsh install');
+  expect(autocompleteCommandNames).not.toContain('tsh uninstall');
 });

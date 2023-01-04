@@ -43,7 +43,6 @@ export class QuickCommandParser implements QuickInputParser {
 
   // TODO(ravicious): Handle env vars.
   parse(rawInput: string): ParseResult {
-    const autocompleteCommands = this.launcher.getAutocompleteCommands();
     // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
     // any removed whitespace.
     const input = rawInput.trimStart();
@@ -54,6 +53,8 @@ export class QuickCommandParser implements QuickInputParser {
 
     // Return all commands if there's no input.
     if (input === '') {
+      const autocompleteCommands = this.launcher.getAutocompleteCommands();
+
       return {
         targetToken,
         command: { kind: 'command.unknown' },
@@ -135,7 +136,7 @@ export class QuickCommandParser implements QuickInputParser {
   }
 
   private mapAutocompleteCommandsToSuggestions(
-    commands: { name: string; displayName: string; description: string }[]
+    commands: { displayName: string; description: string }[]
   ): SuggestionCmd[] {
     return commands.map(cmd => {
       const acceptsNoArguments =
