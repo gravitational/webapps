@@ -31,7 +31,7 @@ import {
 import { routing } from 'teleterm/ui/uri';
 import { KeyboardShortcutType } from 'teleterm/services/config';
 
-import { retryWithRelogin } from '../utils';
+import { assertUnreachable, retryWithRelogin } from '../utils';
 
 export default function useQuickInput() {
   const appContext = useAppContext();
@@ -131,8 +131,7 @@ export default function useQuickInput() {
         break;
       }
       default: {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const exhaustiveCheck: never = command;
+        assertUnreachable(command);
       }
     }
 
