@@ -93,7 +93,6 @@ export const Suggestions = () => {
       kind: 'suggestion.cmd',
       token: '',
       data: {
-        name: 'tsh foo',
         displayName: 'tsh foo',
         description: 'Nulla convallis lorem ut ipsum maximus venenatis.',
       },
@@ -102,7 +101,6 @@ export const Suggestions = () => {
       kind: 'suggestion.cmd',
       token: '',
       data: {
-        name: 'tsh bar',
         displayName: 'tsh bar',
         description: 'Vivamus id nulla sed neque efficitur ornare nec in diam.',
       },
@@ -111,7 +109,6 @@ export const Suggestions = () => {
       kind: 'suggestion.cmd',
       token: '',
       data: {
-        name: 'tsh quux foo',
         displayName: 'tsh quux foo',
         description:
           'Sed porta nibh eget lacus suscipit vehicula. Curabitur eget sapien in lacus blandit pretium.',
@@ -121,7 +118,6 @@ export const Suggestions = () => {
       kind: 'suggestion.cmd',
       token: '',
       data: {
-        name: 'tsh baz quux',
         displayName: 'tsh baz quux',
         description: 'Etiam cursus magna at feugiat ornare.',
       },

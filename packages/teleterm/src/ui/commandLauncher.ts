@@ -24,6 +24,7 @@ import {
 } from 'teleterm/ui/uri';
 import { tsh } from 'teleterm/ui/services/clusters/types';
 import { TrackedKubeConnection } from 'teleterm/ui/services/connectionTracker';
+import { Platform } from 'teleterm/mainProcess/types';
 
 const commands = {
   // For handling "tsh ssh" executed from the command bar.
@@ -208,30 +209,32 @@ const commands = {
       }
     },
   },
+};
 
-  'autocomplete.tsh-ssh': {
+const autocompleteCommands: {
+  displayName: string;
+  description: string;
+  platforms?: Array<Platform>;
+}[] = [
+  {
     displayName: 'tsh ssh',
     description: 'Run shell or execute a command on a remote SSH node',
-    run() {},
   },
-  'autocomplete.tsh-proxy-db': {
+  {
     displayName: 'tsh proxy db',
     description: 'Start a local proxy for a database connection',
-    run() {},
   },
-  'autocomplete.tsh-install': {
+  {
     displayName: 'tsh install',
     description: 'Install tsh in PATH',
     platforms: ['darwin'],
-    run() {},
   },
-  'autocomplete.tsh-uninstall': {
+  {
     displayName: 'tsh uninstall',
     description: 'Uninstall tsh from PATH',
     platforms: ['darwin'],
-    run() {},
   },
-};
+];
 
 export class CommandLauncher {
   appContext: IAppContext;
@@ -247,16 +250,10 @@ export class CommandLauncher {
   getAutocompleteCommands() {
     const { platform } = this.appContext.mainProcessClient.getRuntimeSettings();
 
-    return Object.entries(commands)
-      .filter(([key]) => key.startsWith('autocomplete.'))
-      .filter(([, command]) => {
-        const platforms = command['platforms'];
-        return (
-          !platforms ||
-          (Array.isArray(platforms) && platforms.includes(platform))
-        );
-      })
-      .map(([key, value]) => ({ name: key, ...value }));
+    return autocompleteCommands.filter(command => {
+      const platforms = command.platforms;
+      return !command.platforms || platforms.includes(platform);
+    });
   }
 }
 
