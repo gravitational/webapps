@@ -203,13 +203,12 @@ export class UsageService {
   private getClusterProperties(uri: ClusterOrResourceUri) {
     const rootClusterUri = routing.ensureRootClusterUri(uri);
     const cluster = this.findCluster(rootClusterUri);
-    if (!(cluster && cluster.loggedInUser)) {
-      // TODO: add check for authClusterId
+    if (!(cluster && cluster.loggedInUser && cluster.authClusterId)) {
       return;
     }
 
     return {
-      authClusterId: '', // TODO: add real ID
+      authClusterId: cluster.authClusterId,
       clusterName: cluster.name,
       userName: cluster.loggedInUser.name,
     };
