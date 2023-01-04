@@ -78,6 +78,7 @@ export function OneClusterWithActiveCluster() {
     proxyHost: 'localhost:3080',
     connected: true,
     leaf: false,
+    authClusterId: '73c4746b-d956-4f16-9848-4e3469f70762',
     loggedInUser: {
       activeRequestsList: [],
       name: 'alice',
@@ -173,6 +174,7 @@ export function ManyClustersWithActiveCluster() {
     proxyHost: 'localhost:3080',
     connected: true,
     leaf: false,
+    authClusterId: '73c4746b-d956-4f16-9848-4e3469f70762',
     loggedInUser: {
       activeRequestsList: [],
       name: activeIdentityRootCluster.userName,
@@ -230,6 +232,7 @@ export function LongNamesWithManyRoles() {
     proxyHost: 'localhost:3080',
     connected: true,
     leaf: false,
+    authClusterId: '73c4746b-d956-4f16-9848-4e3469f70762',
     loggedInUser: {
       activeRequestsList: [],
       name: activeIdentityRootCluster.userName,
