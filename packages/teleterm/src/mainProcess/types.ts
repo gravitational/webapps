@@ -47,12 +47,12 @@ export type MainProcessClient = {
    * The promise returns true if tsh got successfully symlinked, false if the user closed the
    * osascript prompt. The promise gets rejected if osascript encountered an error.
    */
-  symlinkTsh(): Promise<boolean>;
+  symlinkTshMacOs(): Promise<boolean>;
   /**
    * The promise returns true if the tsh symlink got removed, false if the user closed the osascript
    * prompt. The promise gets rejected if osascript encountered an error.
    */
-  removeTshSymlink(): Promise<boolean>;
+  removeTshSymlinkMacOs(): Promise<boolean>;
 };
 
 export type ChildProcessAddresses = {
