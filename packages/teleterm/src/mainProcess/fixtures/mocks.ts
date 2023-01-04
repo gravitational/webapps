@@ -37,10 +37,10 @@ export class MockMainProcessClient implements MainProcessClient {
 
   forceFocusWindow() {}
 
-  async symlinkTsh() {
+  async symlinkTshMacOs() {
     return true;
   }
-  async removeTshSymlink() {
+  async removeTshSymlinkMacOs() {
     return true;
   }
 }

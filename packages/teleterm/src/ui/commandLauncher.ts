@@ -97,7 +97,7 @@ const commands = {
     displayName: '',
     description: '',
     run(ctx: IAppContext) {
-      ctx.mainProcessClient.symlinkTsh().then(
+      ctx.mainProcessClient.symlinkTshMacOs().then(
         isSymlinked => {
           if (isSymlinked) {
             ctx.notificationsService.notifyInfo(
@@ -119,7 +119,7 @@ const commands = {
     displayName: '',
     description: '',
     run(ctx: IAppContext) {
-      ctx.mainProcessClient.removeTshSymlink().then(
+      ctx.mainProcessClient.removeTshSymlinkMacOs().then(
         isRemoved => {
           if (isRemoved) {
             ctx.notificationsService.notifyInfo(
