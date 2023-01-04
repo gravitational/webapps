@@ -31,7 +31,7 @@ import type {
 import type { SortType } from 'teleport/services/agents';
 import type { RecordingType } from 'teleport/services/recordings';
 
-import { ParticipantMode } from 'teleport/services/session';
+import type { ParticipantMode } from 'teleport/services/session';
 
 const cfg = {
   isEnterprise: false,
@@ -350,13 +350,14 @@ const cfg = {
   },
 
   getSshSessionRoute({ clusterId, sid }: UrlParams, mode?: ParticipantMode) {
+    const basePath = generatePath(cfg.routes.consoleSession, {
+      clusterId,
+      sid,
+    });
     if (mode) {
-      return (
-        generatePath(cfg.routes.consoleSession, { clusterId, sid }) +
-        `?mode=${mode}`
-      );
+      return `${basePath}?mode=${mode}`;
     }
-    return generatePath(cfg.routes.consoleSession, { clusterId, sid });
+    return basePath;
   },
 
   getPasswordTokenUrl(tokenId?: string) {
