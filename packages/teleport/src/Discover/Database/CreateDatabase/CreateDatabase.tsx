@@ -123,7 +123,7 @@ export function CreateDatabaseView({
           )}
           {canCreateDatabase && (
             <>
-              <Box width="500px" mb={2}>
+              <Box width="500px">
                 <FieldInput
                   label="Database Name"
                   // We need this name to comply with AWS policy name
@@ -137,30 +137,29 @@ export function CreateDatabaseView({
                   toolTipContent="An identifier name for this new database for Teleport."
                 />
               </Box>
-              <Box width="500px" mb={2}>
+              <Flex width="500px">
                 <FieldInput
                   label="Database Connection Endpoint"
-                  rule={requiredField(
-                    'database connection endpoint is required'
-                  )}
+                  rule={requiredField('connection endpoint is required')}
                   value={dbUri}
                   placeholder="db.example.com"
                   onChange={e => setDbUri(e.target.value)}
                   toolTipContent="Database location and connection information."
+                  width="50%"
+                  mr={2}
                 />
-              </Box>
-              <Box width="500px" mb={6}>
                 <FieldInput
                   label="Endpoint Port"
                   rule={requirePort}
                   value={dbPort}
                   placeholder="5432"
                   onChange={e => setDbPort(e.target.value)}
+                  width="50%"
                 />
-              </Box>
+              </Flex>
               {dbLocation === DatabaseLocation.AWS && (
                 <>
-                  <Box width="500px" mb={2}>
+                  <Box width="500px">
                     <FieldInput
                       label="AWS Account ID"
                       rule={requiredAwsAccountId}
@@ -170,10 +169,11 @@ export function CreateDatabaseView({
                       toolTipContent="A 12-digit number that uniquely identifies your AWS account."
                     />
                   </Box>
-                  <Box width="500px" mb={2}>
+                  <Box width="500px" mb={6}>
                     <FieldInput
                       label="Resource ID"
                       value={awsResourceId}
+                      rule={requiredField('database resource ID is required')}
                       placeholder="db-ABCDE1234567..."
                       onChange={e => setAwsResourceId(e.target.value)}
                       toolTipContent={
@@ -187,7 +187,7 @@ export function CreateDatabaseView({
                   </Box>
                 </>
               )}
-              <Box mt={6}>
+              <Box mt={3}>
                 <Text bold>Labels (optional)</Text>
                 <Text mb={2}>
                   Labels make this new database discoverable by the database
