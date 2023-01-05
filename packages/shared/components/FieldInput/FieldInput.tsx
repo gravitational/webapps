@@ -75,14 +75,14 @@ const FieldInput = forwardRef<HTMLInputElement, Props>(
               <>
                 <span
                   css={{
-                    marginRight: toolTipContent ? '4px' : 0,
+                    marginRight: '4px',
                     verticalAlign: 'middle',
                   }}
                 >
                   {labelText}
                   {labelTip && <LabelTip text={labelTip} />}
                 </span>
-                <ToolTipInfo content={toolTipContent} />
+                <ToolTipInfo children={toolTipContent} />
               </>
             ) : (
               <>

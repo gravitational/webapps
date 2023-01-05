@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import { Text, Popover } from 'design';
 import * as Icons from 'design/Icon';
 
-export function ToolTipInfo({ content }: { content: React.ReactNode }) {
+export const ToolTipInfo: React.FC = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
 
@@ -64,12 +64,12 @@ export function ToolTipInfo({ content }: { content: React.ReactNode }) {
         }}
       >
         <StyledOnHover px={3} py={2}>
-          {content}
+          {children}
         </StyledOnHover>
       </Popover>
     </>
   );
-}
+};
 
 const modalCss = () => `
   pointer-events: none;

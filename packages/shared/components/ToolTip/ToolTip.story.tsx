@@ -28,30 +28,25 @@ export const ShortContent = () => (
     <span css={{ marginRight: '4px', verticalAlign: 'middle' }}>
       Hover the icon
     </span>
-    <ToolTipInfo content="some popover content" />
+    <ToolTipInfo>"some popover content"</ToolTipInfo>
   </>
 );
 
 export const LongContent = () => (
   <Flex alignItems="center">
     <Text mr={1}>Hover the icon</Text>
-    <ToolTipInfo
-      content={
-        <>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </Text>
-          <Text mt={1}>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </Text>
-        </>
-      }
-    />
+    <ToolTipInfo>
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </Text>
+      <Text mt={1}>
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Text>
+    </ToolTipInfo>
   </Flex>
 );
