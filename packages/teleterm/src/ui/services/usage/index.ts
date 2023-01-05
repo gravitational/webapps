@@ -16,3 +16,4 @@
 
 export * from './usageService';
 export * from './setUpUsageReporting';
+export * from './askAboutUserJobRoleIfNeeded';
