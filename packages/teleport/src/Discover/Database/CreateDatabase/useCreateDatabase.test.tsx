@@ -233,7 +233,7 @@ describe('registering new databases, mainly error checking', () => {
     expect(result.current.attempt.status).toBe('failed');
     expect(result.current.attempt.statusText).toContain('could not detect');
 
-    // Test retrying with same request, skips creating database and fetching services.
+    // Test retrying with same request, skips creating database.
     jest.clearAllMocks();
     await act(async () => {
       result.current.registerDatabase(newDatabaseReq);
@@ -241,7 +241,7 @@ describe('registering new databases, mainly error checking', () => {
     act(() => jest.advanceTimersByTime(WAITING_TIMEOUT + 1));
 
     expect(ctx.databaseService.createDatabase).not.toHaveBeenCalled();
-    expect(ctx.databaseService.fetchDatabaseServices).not.toHaveBeenCalled();
+    expect(ctx.databaseService.fetchDatabaseServices).toHaveBeenCalledTimes(1);
     expect(ctx.databaseService.fetchDatabases).toHaveBeenCalled();
     expect(result.current.attempt.status).toBe('failed');
 

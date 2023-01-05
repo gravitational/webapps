@@ -51,7 +51,6 @@ export function useCreateDatabase(props: AgentStepProps) {
   //    - timed out due to failure to query (this would most likely be some kind of
   //      backend error or network failure)
   const [newDb, setNewDb] = useState<CreateDatabaseRequest>();
-  const [dbServices, setDbServices] = useState<DatabaseService[]>();
 
   const { timedOut, result } = usePoll<DatabaseResource>(
     signal => fetchDatabaseServer(signal),
@@ -112,8 +111,6 @@ export function useCreateDatabase(props: AgentStepProps) {
     setPollTimeout(Date.now() + WAITING_TIMEOUT);
     setAttempt({ status: 'processing' });
 
-    let skipDbSvcCheck = !!dbServices;
-
     // Attempt creating a new Database resource.
     // Handles a case where if there was a later failure point
     // and user decides to change the database fields, a new database
@@ -123,7 +120,6 @@ export function useCreateDatabase(props: AgentStepProps) {
       try {
         await ctx.databaseService.createDatabase(clusterId, db);
         setNewDb(db);
-        skipDbSvcCheck = false;
       } catch (err) {
         handleRequestError(err);
         return;
@@ -133,26 +129,23 @@ export function useCreateDatabase(props: AgentStepProps) {
     // See if this new database can be picked up by an existing
     // database service. If there is no active database service,
     // user is led to the next step.
-    if (!skipDbSvcCheck) {
-      try {
-        const { services } = await ctx.databaseService.fetchDatabaseServices(
-          clusterId
-        );
-        setDbServices(services);
+    try {
+      const { services } = await ctx.databaseService.fetchDatabaseServices(
+        clusterId
+      );
 
-        if (!findActiveDatabaseSvc(db.labels, services)) {
-          props.updateAgentMeta({
-            ...(props.agentMeta as DbMeta),
-            resourceName: db.name,
-            agentMatcherLabels: db.labels,
-          });
-          props.nextStep();
-          return;
-        }
-      } catch (err) {
-        handleRequestError(err);
+      if (!findActiveDatabaseSvc(db.labels, services)) {
+        props.updateAgentMeta({
+          ...(props.agentMeta as DbMeta),
+          resourceName: db.name,
+          agentMatcherLabels: db.labels,
+        });
+        props.nextStep();
         return;
       }
+    } catch (err) {
+      handleRequestError(err);
+      return;
     }
 
     // Start polling until new database is picked up by an
