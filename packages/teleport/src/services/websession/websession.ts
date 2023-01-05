@@ -34,7 +34,7 @@ let sesstionCheckerTimerId = null;
 
 const session = {
   logout() {
-    api.delete(cfg.api.sessionPath).finally(() => {
+    api.delete(cfg.api.webSessionPath).finally(() => {
       history.goToLogin();
     });
 
