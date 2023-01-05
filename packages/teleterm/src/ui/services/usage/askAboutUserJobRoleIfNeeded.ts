@@ -28,7 +28,7 @@ export async function askAboutUserJobRoleIfNeeded(
   const { askedAboutJobRole } =
     statePersistenceService.getUsageReportingState();
 
-  if (askedAboutJobRole || !configService.get('usageMetrics.enabled').value) {
+  if (askedAboutJobRole || !configService.get('usageReporting.enabled').value) {
     return;
   }
 
