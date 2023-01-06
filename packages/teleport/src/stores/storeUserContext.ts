@@ -122,7 +122,7 @@ export default class StoreUserContext extends Store<UserContext> {
     return this.state.accessRequestId;
   }
 
-  getAccessRequests() {
+  getAccessRequestAccess() {
     return this.state.acl.accessRequests;
   }
 
