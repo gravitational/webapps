@@ -37,6 +37,8 @@ export const ActionButtons = ({
   lastStep?: boolean;
   allowSkip?: boolean;
 }) => {
+  const allowSkip = !!onSkip;
+
   return (
     <Box mt={4}>
       {proceedHref && (
@@ -62,7 +64,7 @@ export const ActionButtons = ({
           {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
       )}
-      {onSkip && (
+      {allowSkip && (
         <ButtonSecondary width="165px" onClick={onSkip} mr={3}>
           Skip
         </ButtonSecondary>
