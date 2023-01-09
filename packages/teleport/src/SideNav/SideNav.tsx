@@ -41,7 +41,7 @@ export function SideNav(props: ReturnType<typeof useSideNav>) {
       return <SideNavItemGroup path={path} item={item} key={index} />;
     }
 
-    return isExternalLink(item.route) ? (
+    return item.isExternalLink ? (
       <SideNavExternalLink key={index} icon={item.Icon} href={item.route}>
         {item.title}
       </SideNavExternalLink>
@@ -99,5 +99,3 @@ export const Content = styled.div`
   flex-direction: column;
   overflow: auto;
 `;
-
-const isExternalLink = (link: string): boolean => link.startsWith('http');
