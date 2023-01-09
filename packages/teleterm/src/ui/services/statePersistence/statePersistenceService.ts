@@ -26,7 +26,7 @@ interface ShareFeedbackState {
 }
 
 interface UsageReportingState {
-  askedAboutJobRole: boolean;
+  askedForUserJobRole: boolean;
 }
 
 export type WorkspacesPersistedState = Omit<WorkspacesState, 'workspaces'> & {
@@ -103,7 +103,7 @@ export class StatePersistenceService {
         hasBeenOpened: false,
       },
       usageReporting: {
-        askedAboutJobRole: false,
+        askedForUserJobRole: false,
       },
     };
     return { ...defaultState, ...this._fileStorage.get('state') };

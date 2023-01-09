@@ -25,16 +25,19 @@ export async function askAboutUserJobRoleIfNeeded(
   modalsService: ModalsService,
   usageService: UsageService
 ): Promise<void> {
-  const { askedAboutJobRole } =
+  const { askedForUserJobRole } =
     statePersistenceService.getUsageReportingState();
 
-  if (askedAboutJobRole || !configService.get('usageReporting.enabled').value) {
+  if (
+    askedForUserJobRole ||
+    !configService.get('usageReporting.enabled').value
+  ) {
     return;
   }
 
   await showUserJobRoleDialog(modalsService, usageService);
   statePersistenceService.saveUsageReportingState({
-    askedAboutJobRole: true,
+    askedForUserJobRole: true,
   });
 }
 
