@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Gravitational, Inc.
+Copyright 2023 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,83 +15,30 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import defaultTheme from 'design/theme';
-import { color } from 'design/system';
 
 import { ArrowForward } from 'design/Icon';
 
+import theme from 'design/theme';
+
 import SideNavItemIcon from './SideNavItemIcon';
-
-const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
-  const css = {
-    position: 'relative',
-    fontSize: '12px',
-    fontWeight: theme.regular,
-    fontFamily: theme.font,
-    paddingLeft: theme.space[9] + 'px',
-    paddingRight: theme.space[2] + 'px',
-    background: theme.colors.primary.light,
-    color: theme.colors.text.secondary,
-    minHeight: '56px',
-
-    '&:active, &.active': {
-      borderLeftColor: $nested ? 'none' : theme.colors.accent,
-      background: theme.colors.primary.lighter,
-      color: theme.colors.primary.contrastText,
-      fontWeight: theme.bold,
-
-      '.marker': {
-        background: theme.colors.secondary.light,
-      },
-    },
-
-    '&:hover': {
-      background: theme.colors.primary.lighter,
-    },
-    '&:focus, &:hover': {
-      color: theme.colors.primary.contrastText,
-    },
-  };
-
-  if ($nested) {
-    css.fontSize = '11px';
-    css.background = 'none';
-    css.fontWeight = theme.regular;
-    css.paddingLeft = '96px';
-    css.minHeight = '40px';
-  }
-
-  return css;
-};
+import SideNavItem from './SideNavItem';
 
 const SideNavExternalLink = ({ children, href, icon }) => {
   return (
-    <StyledSideNavExternalLink href={href} target="_blank">
+    <SideNavItem
+      as="a"
+      href={href}
+      target="_blank"
+      css={{ paddingRight: `${theme.space[2]}px` }}
+    >
       <SideNavItemIcon as={icon} />
       {children}
       <SideNavItemIcon
         css={{ marginLeft: 'auto', transform: 'rotate(-45deg)' }}
         as={ArrowForward}
       />
-    </StyledSideNavExternalLink>
+    </SideNavItem>
   );
 };
-
-const StyledSideNavExternalLink = styled.a`
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  border: none;
-  border-left: 4px solid transparent;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  width: 100%;
-  line-height: 24px;
-  ${fromTheme}
-  ${color}
-`;
 
 export default SideNavExternalLink;
