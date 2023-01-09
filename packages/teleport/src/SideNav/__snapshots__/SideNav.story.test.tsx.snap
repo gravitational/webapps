@@ -223,10 +223,11 @@ exports[`rendering of SideNav 1`] = `
   font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   padding-left: 64px;
-  padding-right: 8px;
+  padding-right: 32px;
   background: #222C59;
   color: rgba(255,255,255,0.56);
   min-height: 56px;
+  padding-right: 8px;
 }
 
 .c15:active,

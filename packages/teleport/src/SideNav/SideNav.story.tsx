@@ -154,6 +154,7 @@ const defaultProps = {
       title: 'Support',
       Icon: Icons.Question,
       route: 'https://example.com',
+      isExternalLink: true,
       items: [],
     },
   ] as Item[],
