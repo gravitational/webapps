@@ -17,7 +17,7 @@ limitations under the License.
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 
-import { makeCluster, makeClusterList } from './makeCluster';
+import { makeClusterList } from './makeCluster';
 
 const service = {
   fetchClusters() {
