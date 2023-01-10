@@ -121,9 +121,9 @@ const cfg = {
     checkAccessToRegisteredResource: `/v1/webapi/sites/:clusterId/resources/check`,
 
     scp: '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
-    renewTokenPath: '/v1/webapi/sessions/renew',
+    webRenewTokenPath: '/v1/webapi/sessions/web/renew',
     resetPasswordTokenPath: '/v1/webapi/users/password/token',
-    sessionPath: '/v1/webapi/sessions',
+    webSessionPath: '/v1/webapi/sessions/web',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
     userStatusPath: '/v1/webapi/user/status',
     passwordTokenPath: '/v1/webapi/users/password/token/:tokenId?',
@@ -131,6 +131,7 @@ const cfg = {
     nodesPath:
       '/v1/webapi/sites/:clusterId/nodes?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
 
+    databaseServicesPath: `/v1/webapi/sites/:clusterId/databaseservices`,
     databaseIamPolicyPath: `/v1/webapi/sites/:clusterId/databases/:database/iam/policy`,
     databasePath: `/v1/webapi/sites/:clusterId/databases/:database`,
     databasesPath: `/v1/webapi/sites/:clusterId/databases?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?`,
@@ -433,6 +434,12 @@ const cfg = {
     });
   },
 
+  getDatabaseServicesUrl(clusterId: string) {
+    return generatePath(cfg.api.databaseServicesPath, {
+      clusterId,
+    });
+  },
+
   getDatabaseIamPolicyUrl(clusterId: string, dbName: string) {
     return generatePath(cfg.api.databaseIamPolicyPath, {
       clusterId,
@@ -494,7 +501,7 @@ const cfg = {
   },
 
   getRenewTokenUrl() {
-    return cfg.api.renewTokenPath;
+    return cfg.api.webRenewTokenPath;
   },
 
   getGithubConnectorsUrl(name?: string) {
