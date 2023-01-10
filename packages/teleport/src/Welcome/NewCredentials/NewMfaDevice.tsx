@@ -132,6 +132,7 @@ export function NewMfaDevice(props: Props) {
           </Text>
           <Box mb={1}>
             <RadioGroup
+              name="mfaType"
               options={mfaOptions}
               value={mfaType.value}
               flexDirection="row"

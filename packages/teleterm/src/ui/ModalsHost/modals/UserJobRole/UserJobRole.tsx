@@ -100,6 +100,7 @@ export function UserJobRole(props: UserJobRoleProps) {
         <DialogContent mb={3}>
           <RadioGroup
             autoFocus={true}
+            name="jobRole"
             options={[...JOB_OPTIONS, OTHER_JOB_ROLE]}
             onChange={handleRadioGroupChange}
           />

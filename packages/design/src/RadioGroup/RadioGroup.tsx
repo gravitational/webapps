@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import { Flex } from 'design';
 
@@ -31,6 +31,8 @@ interface RadioGroupProps {
   value?: string;
   /** Sets focus on the first radio input element */
   autoFocus?: boolean;
+  /** The name property of radio input elements */
+  name: string;
 
   [styles: string]: any;
 }
@@ -40,11 +42,9 @@ export function RadioGroup({
   value,
   onChange,
   autoFocus,
+  name,
   ...styles
 }: RadioGroupProps) {
-  // A radio group is defined by giving each of radio buttons in the group the same name.
-  const [name] = useState(crypto.randomUUID());
-
   return (
     <Flex
       onChange={e => onChange?.(e.target.value)}

@@ -29,6 +29,7 @@ export const Default = () => {
       <Box mr={6}>
         <h4>String options</h4>
         <RadioGroup
+          name="example1"
           options={[
             'First option',
             'Second option',
@@ -40,6 +41,7 @@ export const Default = () => {
       <Box mr={6}>
         <h4>With value set</h4>
         <RadioGroup
+          name="example2"
           options={['First option', 'Second option', 'Third option']}
           value={'Second option'}
         />
@@ -47,6 +49,7 @@ export const Default = () => {
       <Box>
         <h4>Object options with value set</h4>
         <RadioGroup
+          name="example3"
           options={[
             { value: '1', label: <span css={'color: red'}>First option</span> },
             {
