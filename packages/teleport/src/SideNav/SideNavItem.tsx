@@ -16,7 +16,7 @@ limitations under the License.
 
 import styled from 'styled-components';
 import defaultTheme from 'design/theme';
-import { color, space } from 'design/system';
+import { color } from 'design/system';
 
 const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
   const css = {
@@ -74,7 +74,6 @@ const SideNavItem = styled.div`
   line-height: 24px;
   ${fromTheme}
   ${color}
-  ${space}
 `;
 
 export default SideNavItem;
