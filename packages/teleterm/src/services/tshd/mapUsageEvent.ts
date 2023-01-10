@@ -32,17 +32,18 @@ function mapPrehogBody(
   }
 
   // Anonymized events.
-  if (plainReq.userLogin) {
-    const event = plainReq.userLogin;
-    const reqEvent = new prehogApi.ConnectUserLoginEvent()
+  if (plainReq.clusterLogin) {
+    const event = plainReq.clusterLogin;
+    const reqEvent = new prehogApi.ConnectClusterLoginEvent()
       .setClusterName(event.clusterName)
       .setUserName(event.userName)
+      .setConnectorType(event.connectorType)
       .setOs(event.os)
       .setArch(event.arch)
       .setOsVersion(event.osVersion)
-      .setConnectVersion(event.connectVersion);
+      .setAppVersion(event.appVersion);
 
-    return req.setUserLogin(reqEvent);
+    return req.setClusterLogin(reqEvent);
   }
   if (plainReq.protocolUse) {
     const event = plainReq.protocolUse;
@@ -83,7 +84,7 @@ function mapPrehogBody(
     const reqEvent = new prehogApi.ConnectFileTransferRunEvent()
       .setClusterName(event.clusterName)
       .setUserName(event.userName)
-      .setDirection(event.direction);
+      .setIsUpload(event.isUpload);
 
     return req.setFileTransferRun(reqEvent);
   }

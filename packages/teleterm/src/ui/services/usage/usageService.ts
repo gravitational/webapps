@@ -45,7 +45,7 @@ export class UsageService {
     private runtimeSettings: RuntimeSettings
   ) {}
 
-  captureUserLogin(uri: ClusterOrResourceUri): void {
+  captureUserLogin(uri: ClusterOrResourceUri, connectorType: string): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
       this.logger.warn(
@@ -55,13 +55,13 @@ export class UsageService {
     }
     const { arch, platform, osVersion, appVersion } = this.runtimeSettings;
     this.reportEvent(clusterProperties.authClusterId, {
-      userLogin: {
+      clusterLogin: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
         arch,
         os: platform,
         osVersion,
-        connectVersion: appVersion,
+        appVersion,
       },
     });
   }
@@ -140,7 +140,7 @@ export class UsageService {
 
   captureFileTransferRun(
     uri: ClusterOrResourceUri,
-    direction: 'download' | 'upload'
+    { isUpload }: { isUpload: boolean }
   ): void {
     const clusterProperties = this.getClusterProperties(uri);
     if (!clusterProperties) {
@@ -153,7 +153,7 @@ export class UsageService {
       fileTransferRun: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
-        direction,
+        isUpload,
       },
     });
   }
