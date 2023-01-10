@@ -38,14 +38,14 @@ export const Default = () => {
         />
       </Box>
       <Box mr={6}>
-        <h4>With default value</h4>
+        <h4>With value set</h4>
         <RadioGroup
           options={['First option', 'Second option', 'Third option']}
           value={'Second option'}
         />
       </Box>
       <Box>
-        <h4>Object options with default value</h4>
+        <h4>Object options with value set</h4>
         <RadioGroup
           options={[
             { value: '1', label: <span css={'color: red'}>First option</span> },

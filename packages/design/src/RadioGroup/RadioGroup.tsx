@@ -29,6 +29,8 @@ interface RadioGroupProps {
   options: RadioOption[];
   onChange?: (value: string) => void;
   value?: string;
+  /** Sets focus on the first radio input element */
+  autoFocus?: boolean;
 
   [styles: string]: any;
 }
@@ -37,6 +39,7 @@ export function RadioGroup({
   options,
   value,
   onChange,
+  autoFocus,
   ...styles
 }: RadioGroupProps) {
   // A radio group is defined by giving each of radio buttons in the group the same name.
@@ -48,10 +51,11 @@ export function RadioGroup({
       flexDirection="column"
       {...styles}
     >
-      {options.map(option => {
+      {options.map((option, index) => {
         const optionValue = isRadioObjectOption(option) ? option.value : option;
         return (
           <Radio
+            autoFocus={index === 0 && autoFocus}
             key={optionValue}
             option={option}
             name={name}
@@ -67,6 +71,7 @@ interface RadioProps {
   option: RadioOption;
   name: string;
   checked: boolean;
+  autoFocus?: boolean;
 }
 
 function Radio(props: RadioProps) {
@@ -86,6 +91,7 @@ function Radio(props: RadioProps) {
       `}
     >
       <input
+        autoFocus={props.autoFocus}
         css={`
           margin: 0 ${props => props.theme.space[2]}px 0 0;
           accent-color: ${props => props.theme.colors.accent};

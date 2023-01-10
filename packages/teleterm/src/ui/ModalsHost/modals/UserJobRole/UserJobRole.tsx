@@ -99,6 +99,7 @@ export function UserJobRole(props: UserJobRoleProps) {
         </DialogHeader>
         <DialogContent mb={3}>
           <RadioGroup
+            autoFocus={true}
             options={[...JOB_OPTIONS, OTHER_JOB_ROLE]}
             onChange={handleRadioGroupChange}
           />
@@ -112,12 +113,7 @@ export function UserJobRole(props: UserJobRoleProps) {
           />
         </DialogContent>
         <DialogFooter>
-          <ButtonPrimary
-            autoFocus
-            mr={3}
-            type="submit"
-            disabled={!jobRoleToSubmit}
-          >
+          <ButtonPrimary mr={3} type="submit" disabled={!jobRoleToSubmit}>
             Send
           </ButtonPrimary>
           <ButtonSecondary type="button" onClick={props.onCancel}>
