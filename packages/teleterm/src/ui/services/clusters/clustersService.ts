@@ -88,13 +88,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async loginLocal(params: LoginLocalParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginLocal(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageService.captureUserLogin(params.clusterUri);
+    this.usageService.captureUserLogin(params.clusterUri, 'local');
   }
 
   async loginSso(params: LoginSsoParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginSso(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageService.captureUserLogin(params.clusterUri);
+    this.usageService.captureUserLogin(params.clusterUri, params.providerType);
   }
 
   async loginPasswordless(
@@ -103,7 +103,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   ) {
     await this.client.loginPasswordless(params, abortSignal);
     await this.syncRootClusterAndCatchErrors(params.clusterUri);
-    this.usageService.captureUserLogin(params.clusterUri);
+    this.usageService.captureUserLogin(params.clusterUri, 'passwordless');
   }
 
   async syncRootClusterAndCatchErrors(clusterUri: uri.RootClusterUri) {

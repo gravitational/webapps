@@ -58,6 +58,7 @@ export class UsageService {
       clusterLogin: {
         clusterName: clusterProperties.clusterName,
         userName: clusterProperties.userName,
+        connectorType,
         arch,
         os: platform,
         osVersion,
