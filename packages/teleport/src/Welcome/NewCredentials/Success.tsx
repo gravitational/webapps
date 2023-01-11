@@ -34,8 +34,9 @@ export function RegisterSuccess({
 
   const handleRedirect = () => {
     if (username) {
-      userEventService.captureUserEvent({
+      userEventService.capturePreUserEvent({
         event: CaptureEvent.PreUserCompleteGoToDashboardClickEvent,
+        username: username,
       });
     }
 
