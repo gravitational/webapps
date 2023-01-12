@@ -26,7 +26,6 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { UrlLauncherParams } from 'teleport/config';
 import service from 'teleport/services/apps';
-import useUrlQueryParams from 'teleport/useUrlQueryParams';
 
 export function AppLauncher() {
   const { attempt, setAttempt } = useAttempt('processing');
