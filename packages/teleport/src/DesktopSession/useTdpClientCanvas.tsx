@@ -293,7 +293,8 @@ type Props = {
   setWarnings: Dispatch<SetStateAction<NotificationItem[]>>;
 };
 
-// Returns true if neither 'clipboard-read' nor `clipboard-write' are 'denied'.
+// Returns false if either 'clipboard-read' or `clipboard-write' are 'denied',
+// true otherwise.
 //
 // This is used as a check before reading from or writing to the clipboard,
 // because we only want to do so when *both* read and write permissions are
