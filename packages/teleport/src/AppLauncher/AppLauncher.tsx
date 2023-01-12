@@ -67,9 +67,14 @@ export function AppLauncher() {
 
       window.location.replace(`https://${fqdn}${port}${path}`);
     } catch (err) {
+      let statusText = 'Something went wrong';
+      if (err instanceof Error) {
+        statusText = err.message;
+      }
+
       setAttempt({
         status: 'failed',
-        statusText: err.message,
+        statusText,
       });
     }
   }, []);
