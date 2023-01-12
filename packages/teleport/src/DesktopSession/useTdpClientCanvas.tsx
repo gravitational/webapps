@@ -86,7 +86,12 @@ export default function useTdpClientCanvas(props: Props) {
 
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
   const onClipboardData = async (clipboardData: ClipboardData) => {
-    if (clipboardSharingEnabled && document.hasFocus() && clipboardData.data) {
+    if (
+      clipboardSharingEnabled &&
+      clipboardData.data &&
+      document.hasFocus() && // document must have focus or we can't write to clipboard
+      (await shouldTryClipboardRW())
+    ) {
       navigator.clipboard.writeText(clipboardData.data);
       let digest = await Sha256Digest(clipboardData.data, encoder.current);
       latestClipboardDigest.current = digest;
@@ -224,9 +229,12 @@ export default function useTdpClientCanvas(props: Props) {
   // on the remote machine.
   const onContextMenu = () => false;
 
-  const sendLocalClipboardToRemote = (cli: TdpClient) => {
-    // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
-    if (clipboardSharingEnabled && document.hasFocus()) {
+  const sendLocalClipboardToRemote = async (cli: TdpClient) => {
+    if (
+      clipboardSharingEnabled &&
+      document.hasFocus() &&
+      (await shouldTryClipboardRW())
+    ) {
       navigator.clipboard.readText().then(text => {
         Sha256Digest(text, encoder.current).then(digest => {
           if (text && digest !== latestClipboardDigest.current) {
@@ -284,3 +292,28 @@ type Props = {
   clipboardSharingEnabled: boolean;
   setWarnings: Dispatch<SetStateAction<NotificationItem[]>>;
 };
+
+// Returns true if neither 'clipboard-read' nor `clipboard-write' are 'denied'.
+//
+// This is used as a check before reading from or writing to the clipboard,
+// because we only want to do so when *both* read and write permissions are
+// granted (or if either one is 'prompt', which will cause the browser to
+// prompt the user to specify). This is because Chromium browsers default to
+// granting clipboard-write permissions, and only allow the user to toggle
+// clipboard-read. However the prompt makes it seem like the user is granting
+// or denying all clipboard permissions, which can lead to an awkward UX where
+// a user has explicitly denied clipboard permissions at the browser level,
+// but is still getting the remote clipboard contents synced to their local machine.
+//
+// By calling this function before any read or write transaction, we ensure we're
+// complying with the user's explicit intention towards our use of their clipboard.
+async function shouldTryClipboardRW(): Promise<boolean> {
+  const readPromise = navigator.permissions.query({
+    name: 'clipboard-read' as PermissionName,
+  });
+  const writePromise = navigator.permissions.query({
+    name: 'clipboard-write' as PermissionName,
+  });
+  const [readPerm, writePerm] = await Promise.all([readPromise, writePromise]);
+  return readPerm.state !== 'denied' && writePerm.state !== 'denied';
+}
