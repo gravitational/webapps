@@ -293,21 +293,23 @@ type Props = {
   setWarnings: Dispatch<SetStateAction<NotificationItem[]>>;
 };
 
-// Returns false if either 'clipboard-read' or `clipboard-write' are 'denied',
-// true otherwise.
-//
-// This is used as a check before reading from or writing to the clipboard,
-// because we only want to do so when *both* read and write permissions are
-// granted (or if either one is 'prompt', which will cause the browser to
-// prompt the user to specify). This is because Chromium browsers default to
-// granting clipboard-write permissions, and only allow the user to toggle
-// clipboard-read. However the prompt makes it seem like the user is granting
-// or denying all clipboard permissions, which can lead to an awkward UX where
-// a user has explicitly denied clipboard permissions at the browser level,
-// but is still getting the remote clipboard contents synced to their local machine.
-//
-// By calling this function before any read or write transaction, we ensure we're
-// complying with the user's explicit intention towards our use of their clipboard.
+/**
+ * Returns false if either 'clipboard-read' or `clipboard-write' are 'denied',
+ * true otherwise.
+ *
+ * This is used as a check before reading from or writing to the clipboard,
+ * because we only want to do so when *both* read and write permissions are
+ * granted (or if either one is 'prompt', which will cause the browser to
+ * prompt the user to specify). This is because Chromium browsers default to
+ * granting clipboard-write permissions, and only allow the user to toggle
+ * clipboard-read. However the prompt makes it seem like the user is granting
+ * or denying all clipboard permissions, which can lead to an awkward UX where
+ * a user has explicitly denied clipboard permissions at the browser level,
+ * but is still getting the remote clipboard contents synced to their local machine.
+ *
+ * By calling this function before any read or write transaction, we ensure we're
+ * complying with the user's explicit intention towards our use of their clipboard.
+ */
 async function shouldTryClipboardRW(): Promise<boolean> {
   const readPromise = navigator.permissions.query({
     name: 'clipboard-read' as PermissionName,
