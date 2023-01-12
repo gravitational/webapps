@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useCallback, useEffect } from 'react';
 
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
 import { Flex, Indicator } from 'design';
 
@@ -26,11 +26,14 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { UrlLauncherParams } from 'teleport/config';
 import service from 'teleport/services/apps';
+import useUrlQueryParams from 'teleport/useUrlQueryParams';
 
 export function AppLauncher() {
   const { attempt, setAttempt } = useAttempt('processing');
 
   const params = useParams<UrlLauncherParams>();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
 
   const createAppSession = useCallback(async (params: UrlLauncherParams) => {
     try {
@@ -53,7 +56,16 @@ export function AppLauncher() {
         },
       });
 
-      window.location.replace(`https://${fqdn}${port}`);
+      let path = '';
+      if (queryParams.has('path')) {
+        path = decodeURIComponent(queryParams.get('path'));
+
+        if (!path.startsWith('/')) {
+          path = `/${path}`;
+        }
+      }
+
+      window.location.replace(`https://${fqdn}${port}${path}`);
     } catch (err) {
       setAttempt({
         status: 'failed',
