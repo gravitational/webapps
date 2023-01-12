@@ -87,10 +87,8 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
   const onClipboardData = async (clipboardData: ClipboardData) => {
     if (
-      clipboardSharingEnabled &&
       clipboardData.data &&
-      document.hasFocus() && // document must have focus or we can't write to clipboard
-      (await shouldTryClipboardRW())
+      (await shouldTryClipboardRW(clipboardSharingEnabled))
     ) {
       navigator.clipboard.writeText(clipboardData.data);
       let digest = await Sha256Digest(clipboardData.data, encoder.current);
@@ -230,11 +228,7 @@ export default function useTdpClientCanvas(props: Props) {
   const onContextMenu = () => false;
 
   const sendLocalClipboardToRemote = async (cli: TdpClient) => {
-    if (
-      clipboardSharingEnabled &&
-      document.hasFocus() &&
-      (await shouldTryClipboardRW())
-    ) {
+    if (await shouldTryClipboardRW(clipboardSharingEnabled)) {
       navigator.clipboard.readText().then(text => {
         Sha256Digest(text, encoder.current).then(digest => {
           if (text && digest !== latestClipboardDigest.current) {
@@ -294,8 +288,23 @@ type Props = {
 };
 
 /**
- * Returns false if either 'clipboard-read' or `clipboard-write' are 'denied',
- * true otherwise.
+ * To be called before any system clipboard read/write operation.
+ *
+ * @param clipboardSharingEnabled true if clipboard sharing is enabled by RBAC
+ */
+async function shouldTryClipboardRW(
+  clipboardSharingEnabled: boolean
+): Promise<boolean> {
+  return (
+    clipboardSharingEnabled &&
+    document.hasFocus() && // if document doesn't have focus, clipboard r/w will throw an uncatchable error
+    !(await isBrowserClipboardDenied()) // don't try r/w if either permission is denied
+  );
+}
+
+/**
+ * Returns true if either 'clipboard-read' or `clipboard-write' are 'denied',
+ * false otherwise.
  *
  * This is used as a check before reading from or writing to the clipboard,
  * because we only want to do so when *both* read and write permissions are
@@ -310,7 +319,7 @@ type Props = {
  * By calling this function before any read or write transaction, we ensure we're
  * complying with the user's explicit intention towards our use of their clipboard.
  */
-async function shouldTryClipboardRW(): Promise<boolean> {
+async function isBrowserClipboardDenied(): Promise<boolean> {
   const readPromise = navigator.permissions.query({
     name: 'clipboard-read' as PermissionName,
   });
@@ -318,5 +327,5 @@ async function shouldTryClipboardRW(): Promise<boolean> {
     name: 'clipboard-write' as PermissionName,
   });
   const [readPerm, writePerm] = await Promise.all([readPromise, writePromise]);
-  return readPerm.state !== 'denied' && writePerm.state !== 'denied';
+  return readPerm.state === 'denied' || writePerm.state === 'denied';
 }
