@@ -41,7 +41,7 @@ export function AppLauncher() {
         fqdn = app.fqdn;
       }
 
-      const port = location.port ? ':' + location.port : '';
+      const port = location.port ? `:${location.port}` : '';
       const session = await service.createAppSession(params);
 
       await fetch(`https://${fqdn}${port}/x-teleport-auth`, {
