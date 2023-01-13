@@ -16,8 +16,9 @@
 
 import React from 'react';
 
-import { RadioGroup } from './RadioGroup';
 import { Box, Flex } from 'design';
+
+import { RadioGroup } from './RadioGroup';
 
 export default {
   title: 'Design/RadioGroup',
