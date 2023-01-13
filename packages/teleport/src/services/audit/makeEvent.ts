@@ -1189,8 +1189,8 @@ export const formatters: Formatters = {
     desc: 'Device Enroll Token Spent',
     format: ({ user, status }) =>
       status.success
-        ? `User [${user.user}] has used a device enroll token`
-        : `User [${user.user}] has failed to use a device enroll token`,
+        ? `User [${user.user}] has spent a device enroll token`
+        : `User [${user.user}] has failed to spend a device enroll token`,
   },
   [eventCodes.X11_FORWARD]: {
     type: 'x11-forward',

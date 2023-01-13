@@ -1028,16 +1028,16 @@ export type RawEvents = {
       length: number;
     }
   >;
-  [eventCodes.DEVICE_CREATE]: RawDeviceTrust<typeof eventCodes.DEVICE_CREATE>;
-  [eventCodes.DEVICE_DELETE]: RawDeviceTrust<typeof eventCodes.DEVICE_DELETE>;
-  [eventCodes.DEVICE_ENROLL]: RawDeviceTrust<typeof eventCodes.DEVICE_ENROLL>;
-  [eventCodes.DEVICE_ENROLL_TOKEN_CREATE]: RawDeviceTrust<
+  [eventCodes.DEVICE_CREATE]: RawDeviceEvent<typeof eventCodes.DEVICE_CREATE>;
+  [eventCodes.DEVICE_DELETE]: RawDeviceEvent<typeof eventCodes.DEVICE_DELETE>;
+  [eventCodes.DEVICE_ENROLL]: RawDeviceEvent<typeof eventCodes.DEVICE_ENROLL>;
+  [eventCodes.DEVICE_ENROLL_TOKEN_CREATE]: RawDeviceEvent<
     typeof eventCodes.DEVICE_ENROLL_TOKEN_CREATE
   >;
-  [eventCodes.DEVICE_ENROLL_TOKEN_SPENT]: RawDeviceTrust<
+  [eventCodes.DEVICE_ENROLL_TOKEN_SPENT]: RawDeviceEvent<
     typeof eventCodes.DEVICE_ENROLL_TOKEN_SPENT
   >;
-  [eventCodes.DEVICE_AUTHENTICATE]: RawDeviceTrust<
+  [eventCodes.DEVICE_AUTHENTICATE]: RawDeviceEvent<
     typeof eventCodes.DEVICE_AUTHENTICATE
   >;
   [eventCodes.UNKNOWN]: RawEvent<
@@ -1157,7 +1157,7 @@ type RawEventData<T extends EventCode> = RawEvent<
   }
 >;
 
-type RawDeviceTrust<T extends EventCode> = RawEvent<
+type RawDeviceEvent<T extends EventCode> = RawEvent<
   T,
   {
     device: { asset_tag: string; device_id: string; os_type: number };
