@@ -67,6 +67,8 @@ export type AgentIdKind =
   | 'app'
   | 'db'
   | 'kube_cluster'
+  | 'oktaapps'
+  | 'oktagroups'
   | 'windows_desktop';
 
 // ConnectionDiagnostic describes a connection diagnostic.

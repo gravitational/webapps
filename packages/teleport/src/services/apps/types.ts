@@ -29,6 +29,7 @@ export interface App {
   awsRoles: AwsRole[];
   awsConsole: boolean;
   oktaApp: boolean;
+  oktaRoles: OktaRole[];
 }
 
 export type AppsResponse = {

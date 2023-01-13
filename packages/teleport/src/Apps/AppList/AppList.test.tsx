@@ -52,6 +52,7 @@ test('correct launch url is generated for a selected role', () => {
           description: 'This is an AWS Console app',
           awsConsole: true,
           oktaApp: false,
+          oktaRoles: [],
           awsRoles: [
             {
               arn: 'arn:aws:iam::joe123:role/EC2FullAccess',

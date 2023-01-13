@@ -67,6 +67,7 @@ const cfg = {
     discover: '/web/discover',
     apps: '/web/cluster/:clusterId/apps',
     appLauncher: '/web/launch/:fqdn/:clusterId?/:publicAddr?/:arn?',
+    oktaLauncher: '/enterprise/oktaLaunch/:publicAddr?/__default__',
     support: '/web/support',
     settings: '/web/settings',
     account: '/web/account',
@@ -105,6 +106,8 @@ const cfg = {
     oidcHandler: '/v1/webapi/oidc/*',
     samlHandler: '/v1/webapi/saml/*',
     githubHandler: '/v1/webapi/github/*',
+    // allow SAML IDP handlers
+    samlIdpHandler: '/saml/sso',
   },
 
   api: {
@@ -116,6 +119,11 @@ const cfg = {
     clusterAlertsPath: '/v1/webapi/sites/:clusterId/alerts',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?&include=:include?`,
     clusterEventsRecordingsPath: `/v1/webapi/sites/:clusterId/events/search/sessions?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?`,
+
+    oktaAppsPath:
+      '/v1/webapi/sites/:clusterId/oktaapps?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
+    oktaGroupsPath:
+      '/v1/webapi/sites/:clusterId/oktagroups?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
 
     connectionDiagnostic: `/v1/webapi/sites/:clusterId/diagnostics/connections`,
     checkAccessToRegisteredResource: `/v1/webapi/sites/:clusterId/resources/check`,
@@ -362,6 +370,10 @@ const cfg = {
     return generatePath(cfg.routes.appLauncher, { ...params });
   },
 
+  getOktaLauncherRoute(params: OktaLauncherParams) {
+    return generatePath(cfg.routes.oktaLauncher, { ...params });
+  },
+
   getPlayerRoute(params: UrlPlayerParams, search: UrlPlayerSearch) {
     let route = generatePath(cfg.routes.player, { ...params });
     route = `${route}?recordingType=${search.recordingType}`;
@@ -506,6 +518,20 @@ const cfg = {
     });
   },
 
+  getOktaAppsUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.oktaAppsPath, {
+      clusterId,
+      ...params,
+    });
+  },
+
+  getOktaGroupsUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.oktaGroupsPath, {
+      clusterId,
+      ...params,
+    });
+  },
+
   getAuthnChallengeWithTokenUrl(tokenId: string) {
     return generatePath(cfg.api.mfaAuthnChallengeWithTokenPath, {
       tokenId,
@@ -580,6 +606,11 @@ export interface UrlLauncherParams {
   clusterId?: string;
   publicAddr?: string;
   arn?: string;
+  oktaRole?: string;
+}
+
+export interface OktaLauncherParams {
+  publicAddr: string;
   oktaRole?: string;
 }
 

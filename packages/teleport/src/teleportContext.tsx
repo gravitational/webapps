@@ -28,6 +28,7 @@ import userService from './services/user';
 import appService from './services/apps';
 import JoinTokenService from './services/joinToken';
 import KubeService from './services/kube';
+import OktaService from './services/okta';
 import DatabaseService from './services/databases';
 import desktopService from './services/desktops';
 import MfaService from './services/mfa';
@@ -53,6 +54,7 @@ class TeleportContext implements types.Context {
   appService = appService;
   joinTokenService = new JoinTokenService();
   kubeService = new KubeService();
+  oktaService = new OktaService();
   databaseService = new DatabaseService();
   desktopService = desktopService;
   mfaService = new MfaService();

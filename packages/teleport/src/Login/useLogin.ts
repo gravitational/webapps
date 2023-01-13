@@ -98,6 +98,7 @@ function onSuccess() {
 
 function getEntryRoute() {
   let entryUrl = history.getRedirectParam();
+  console.log(entryUrl);
   if (entryUrl) {
     entryUrl = history.ensureKnownRoute(entryUrl);
   } else {

@@ -39,6 +39,14 @@ export default function makeApp(json: any): App {
   const labels = json.labels || [];
   const awsRoles = json.awsRoles || [];
 
+  let oktaRoles = json.oktaRoles || [];
+  if(oktaApp) {
+    oktaRoles.unshift({
+      id: "__default__",
+      display: "Default",
+    })
+  }
+
   return {
     id,
     name,
@@ -52,5 +60,6 @@ export default function makeApp(json: any): App {
     awsRoles,
     awsConsole,
     oktaApp,
+    oktaRoles
   };
 }

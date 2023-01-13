@@ -157,6 +157,7 @@ function renderLaunchButtonCell({
   launchUrl,
   awsConsole,
   oktaApp, 
+  oktaRoles,
   awsRoles,
   fqdn,
   clusterId,
@@ -173,17 +174,8 @@ function renderLaunchButtonCell({
     />
   )
   } else if(oktaApp) {
-    const oktaRoles = [
-      {
-        id: "okta-dev",
-        display: "Okta Developer",
-      }
-    ];
     $btn = (
     <OktaLaunchButton
-      oktaRoles={oktaRoles}
-      fqdn={fqdn}
-      clusterId={clusterId}
       publicAddr={publicAddr}
     />
     )

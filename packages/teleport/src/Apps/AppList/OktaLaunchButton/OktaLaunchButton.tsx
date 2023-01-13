@@ -24,117 +24,27 @@ export default class OktaLaunchButton extends React.Component<Props> {
   };
 
   render() {
-    const { open } = this.state;
-    const { oktaRoles, fqdn, clusterId, publicAddr } = this.props;
+    const { publicAddr } = this.props;
+    const launchUrl = cfg.getOktaLauncherRoute({
+      publicAddr,
+    });
     return (
       <>
         <ButtonBorder
+          as="a"
           width="88px"
           size="small"
-          setRef={e => (this.anchorEl = e)}
-          onClick={this.onOpen}
+          target="_blank"
+          href={launchUrl}
+          rel="noreferrer"
         >
           LAUNCH
-          <CarrotDown ml={1} fontSize={2} color="text.secondary" />
         </ButtonBorder>
-        <Menu
-          menuListCss={() => ({
-            overflow: 'auto',
-            minWidth: '180px',
-          })}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          anchorOrigin={{
-            vertical: 'center',
-            horizontal: 'right',
-          }}
-          getContentAnchorEl={null}
-          anchorEl={this.anchorEl}
-          open={open}
-          onClose={this.onClose}
-        >
-          <RoleItemList
-            oktaRoles={oktaRoles}
-            fqdn={fqdn}
-            clusterId={clusterId}
-            publicAddr={publicAddr}
-            closeMenu={this.onClose}
-          />
-        </Menu>
       </>
     );
   }
 }
 
-function RoleItemList({
-  oktaRoles,
-  fqdn,
-  clusterId,
-  publicAddr,
-  closeMenu,
-}: Props & { closeMenu: () => void }) {
-  const oktaRoleItems = oktaRoles.map((item, key) => {
-    const { id, display } = item;
-    const launchUrl = cfg.getAppLauncherRoute({
-      fqdn,
-      clusterId,
-      publicAddr,
-      oktaRole: id,
-    });
-    return (
-      <StyledMenuItem
-        as="a"
-        key={key}
-        px={2}
-        mx={2}
-        href={launchUrl}
-        target="_blank"
-        title={display}
-        onClick={closeMenu}
-      >
-        <Text style={{ maxWidth: '25ch' }}>{display}</Text>
-      </StyledMenuItem>
-    );
-  });
-
-  return (
-    <>
-      <Text px="2" fontSize="11px" mb="2" color="grey.400" bg="subtle">
-        Select IAM Role
-      </Text>
-      {oktaRoleItems.length ? (
-        oktaRoleItems
-      ) : (
-        <Text px={2} m={2} color="text.disabled">
-          No roles found
-        </Text>
-      )}
-    </>
-  );
-}
-
 type Props = {
-  oktaRoles: OktaRole[];
-  fqdn: string;
-  clusterId: string;
   publicAddr: string;
 };
-
-const StyledMenuItem = styled(MenuItem)(
-  ({ theme }) => `
-  color: ${theme.colors.grey[400]};
-  font-size: 12px;
-  border-bottom: 1px solid ${theme.colors.subtle};
-  min-height: 32px;
-  &:hover {
-    color: ${theme.colors.link};
-  }
-
-  :last-child {
-    border-bottom: none;
-    margin-bottom: 8px;
-  }
-`
-);
