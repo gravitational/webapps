@@ -109,7 +109,7 @@ export function UserJobRole(props: UserJobRoleProps) {
             readOnly={jobRole !== OTHER_JOB_ROLE}
             value={otherJobRole}
             onChange={e => setOtherJobRole(e.target.value)}
-            placeholder="Other role..."
+            placeholder="Other role…"
             mt={1}
           />
         </DialogContent>
