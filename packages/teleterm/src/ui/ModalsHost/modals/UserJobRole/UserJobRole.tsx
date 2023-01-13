@@ -20,7 +20,6 @@ import {
   ButtonIcon,
   ButtonPrimary,
   ButtonSecondary,
-  Flex,
   Input,
   Text,
 } from 'design';
@@ -50,12 +49,12 @@ const OTHER_JOB_ROLE = 'Other';
 
 export function UserJobRole(props: UserJobRoleProps) {
   const inputRef = useRef<HTMLInputElement>();
-  const [jobRole, setJobRole] = useState<string | undefined>();
+  const [jobRole, setJobRole] = useState<string | null>(null);
   const [otherJobRole, setOtherJobRole] = useState('');
 
   const jobRoleToSubmit = jobRole === OTHER_JOB_ROLE ? otherJobRole : jobRole;
 
-  function handleRadioGroupChange(selectedRole): void {
+  function handleRadioGroupChange(selectedRole: string): void {
     setJobRole(selectedRole);
     if (selectedRole === OTHER_JOB_ROLE) {
       inputRef.current.focus();
@@ -102,13 +101,14 @@ export function UserJobRole(props: UserJobRoleProps) {
             autoFocus={true}
             name="jobRole"
             options={[...JOB_OPTIONS, OTHER_JOB_ROLE]}
+            value={jobRole}
             onChange={handleRadioGroupChange}
           />
           <DarkInput
             ref={inputRef}
-            readOnly={jobRole !== OTHER_JOB_ROLE}
             value={otherJobRole}
             onChange={e => setOtherJobRole(e.target.value)}
+            onFocus={() => setJobRole(OTHER_JOB_ROLE)}
             placeholder="Other role…"
             mt={1}
           />

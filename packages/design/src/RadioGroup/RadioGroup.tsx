@@ -59,7 +59,7 @@ export function RadioGroup({
             key={optionValue}
             option={option}
             name={name}
-            checked={value && value === optionValue}
+            checked={value !== undefined ? value === optionValue : undefined}
           />
         );
       })}
