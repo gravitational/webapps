@@ -46,15 +46,12 @@ export function RadioGroup({
   ...styles
 }: RadioGroupProps) {
   return (
-    <Flex
-      onChange={e => onChange?.(e.target.value)}
-      flexDirection="column"
-      {...styles}
-    >
+    <Flex flexDirection="column" {...styles}>
       {options.map((option, index) => {
         const optionValue = isRadioObjectOption(option) ? option.value : option;
         return (
           <Radio
+            onChange={onChange}
             autoFocus={index === 0 && autoFocus}
             key={optionValue}
             option={option}
@@ -72,6 +69,7 @@ interface RadioProps {
   name: string;
   checked: boolean;
   autoFocus?: boolean;
+  onChange?: (value: string) => void;
 }
 
 function Radio(props: RadioProps) {
@@ -100,9 +98,7 @@ function Radio(props: RadioProps) {
         type="radio"
         name={props.name}
         checked={props.checked}
-        // Suppresses React warning about missing `onChange` handler when
-        // `checked` is provided. We catch the event at a parent element.
-        onChange={noop}
+        onChange={() => props.onChange?.(optionValue)}
         value={optionValue}
       />
       <span>{optionLabel}</span>
@@ -113,5 +109,3 @@ function Radio(props: RadioProps) {
 function isRadioObjectOption(option: RadioOption): option is RadioObjectOption {
   return typeof option === 'object';
 }
-
-function noop() {}
