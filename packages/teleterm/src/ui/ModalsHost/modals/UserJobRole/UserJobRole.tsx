@@ -61,6 +61,10 @@ export function UserJobRole(props: UserJobRoleProps) {
     }
   }
 
+  function selectOtherJobRoleOption(): void {
+    setJobRole(OTHER_JOB_ROLE);
+  }
+
   function send(): void {
     props.onSend(jobRoleToSubmit);
   }
@@ -107,8 +111,13 @@ export function UserJobRole(props: UserJobRoleProps) {
           <DarkInput
             ref={inputRef}
             value={otherJobRole}
-            onChange={e => setOtherJobRole(e.target.value)}
-            onFocus={() => setJobRole(OTHER_JOB_ROLE)}
+            onClick={() => {
+              selectOtherJobRoleOption();
+            }}
+            onChange={e => {
+              selectOtherJobRoleOption();
+              setOtherJobRole(e.target.value);
+            }}
             placeholder="Other role…"
             mt={1}
           />
