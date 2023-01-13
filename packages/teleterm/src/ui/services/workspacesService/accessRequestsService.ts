@@ -82,5 +82,6 @@ export function getEmptyPendingAccessRequest() {
     app: {},
     role: {},
     windows_desktop: {},
+    pod:{},
   };
 }

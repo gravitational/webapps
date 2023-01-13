@@ -150,6 +150,9 @@ const cfg = {
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
     kubernetesPath:
       '/v1/webapi/sites/:clusterId/kubernetes?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
+    
+    kubernetesPodsPath:
+      '/v1/webapi/sites/:clusterId/pods?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?&kubeCluster=:kubeCluster?&kubeNamespace=:kubeNamespace?',
 
     usersPath: '/v1/webapi/users',
     userWithUsernamePath: '/v1/webapi/users/:username',
@@ -523,6 +526,14 @@ const cfg = {
     });
   },
 
+  getKubernetesPodsUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.kubernetesPodsPath, {
+      clusterId,
+      ...params,
+    });
+  },
+
+  
   getAuthnChallengeWithTokenUrl(tokenId: string) {
     return generatePath(cfg.api.mfaAuthnChallengeWithTokenPath, {
       tokenId,

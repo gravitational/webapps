@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Kube } from './types';
+import { Kube,KubePod } from './types';
 
-export default function makeKube(json): Kube {
+export function makeKube(json): Kube {
   const { name } = json;
   const labels = json.labels || [];
 
@@ -25,5 +25,17 @@ export default function makeKube(json): Kube {
     labels,
     users: json.kubernetes_users || [],
     groups: json.kubernetes_groups || [],
+  };
+}
+
+export function makeKubePod(json): KubePod {
+  const { name, namespace, cluster } = json;
+  const labels = json.labels || [];
+
+  return {
+    name,
+    labels,
+    namespace: namespace,
+    cluster: cluster,
   };
 }

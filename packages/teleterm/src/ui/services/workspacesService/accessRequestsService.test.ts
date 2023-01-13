@@ -23,6 +23,7 @@ function getMockPendingAccessRequest(): PendingAccessRequest {
       access: 'access',
     },
     kube_cluster: {},
+    pod:{},
   };
 }
 

@@ -44,5 +44,8 @@
       "packages/webapps*/**",
       "packages/teleterm"
     ]
+  },
+  "dependencies": {
+    "lodash-webpack-plugin": "^0.11.6"
   }
 }

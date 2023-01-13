@@ -22,8 +22,21 @@ export interface Kube {
   groups?: string[];
 }
 
+export interface KubePod {
+  name: string;
+  labels: AgentLabel[];
+  namespace: string;
+  cluster: string;
+}
+
 export type KubesResponse = {
   kubes: Kube[];
+  startKey?: string;
+  totalCount?: number;
+};
+
+export type KubePodsResponse = {
+  pods: KubePod[];
   startKey?: string;
   totalCount?: number;
 };
