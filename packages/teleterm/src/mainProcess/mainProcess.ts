@@ -1,4 +1,4 @@
-import { ChildProcess, fork, spawn, exec } from 'child_process';
+import { ChildProcess, fork, spawn, exec, spawnSync } from 'child_process';
 import path from 'path';
 import fs from 'fs/promises';
 
@@ -62,7 +62,26 @@ export default class MainProcess {
 
   dispose() {
     this.sharedProcess.kill('SIGTERM');
-    this.tshdProcess.kill('SIGTERM');
+    // this.tshdProcess.kill('SIGTERM');
+    const tshdPid = this.tshdProcess.pid;
+
+    if (!tshdPid) {
+      this.logger.warn(
+        "Skipping call to `tsh daemon stop` as tshd doesn't have pid"
+      );
+      return;
+    }
+    try {
+      this.logger.info('Executing tsh daemon stop');
+      spawnSync(
+        this.settings.tshd.binaryPath,
+        ['daemon', 'stop', `--pid=${tshdPid}`],
+        { timeout: 10000 }
+      );
+      this.logger.info('Executed command');
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 
   private _init() {
