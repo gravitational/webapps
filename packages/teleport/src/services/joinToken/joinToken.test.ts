@@ -26,7 +26,7 @@ test('fetchJoinToken with an empty request properly sets defaults', () => {
   jest.spyOn(api, 'post').mockResolvedValue(null);
 
   // Test with all empty fields.
-  svc.fetchJoinToken({} as any);
+  svc.createJoinToken({} as any);
   expect(api.post).toHaveBeenCalledWith(
     cfg.getJoinTokenUrl(),
     {
@@ -49,7 +49,7 @@ test('fetchJoinToken request fields are set as requested', () => {
     method: 'iam',
     suggestedAgentMatcherLabels: [{ name: 'env', value: 'dev' }],
   };
-  svc.fetchJoinToken(mock);
+  svc.createJoinToken(mock);
   expect(api.post).toHaveBeenCalledWith(
     cfg.getJoinTokenUrl(),
     {

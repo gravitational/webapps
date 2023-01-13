@@ -78,7 +78,7 @@ export function useJoinTokenValue() {
   return tokenContext.joinToken;
 }
 
-export function useJoinToken(
+export function useCreateJoinToken(
   resourceKind: ResourceKind,
   suggestedAgentMatcherLabels: AgentLabel[] = [],
   joinMethod: JoinMethod = 'token'
@@ -96,7 +96,7 @@ export function useJoinToken(
 
     cachedJoinTokenResult = {
       promise: ctx.joinTokenService
-        .fetchJoinToken(
+        .createJoinToken(
           {
             roles: [resourceKindToJoinRole(resourceKind)],
             method: joinMethod,
@@ -150,6 +150,5 @@ export function useJoinToken(
 
     throw cachedJoinTokenResult.promise;
   }
-
   throw run().promise;
 }

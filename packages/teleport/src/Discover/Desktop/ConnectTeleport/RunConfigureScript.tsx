@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import * as Icons from 'design/Icon';
-
 import { ButtonPrimary } from 'design/Button';
 import { Text, Box } from 'design';
 
@@ -14,24 +12,24 @@ import {
 } from 'teleport/Discover/Desktop/ConnectTeleport/Step';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { generateCommand } from 'teleport/Discover/Shared/generateCommand';
-
 import cfg from 'teleport/config';
 import { Timeout } from 'teleport/Discover/Shared/Timeout';
-import { useJoinToken } from 'teleport/Discover/Shared/JoinTokenContext';
-import { ResourceKind } from 'teleport/Discover/Shared';
+import { JoinToken } from 'teleport/services/joinToken';
 
 import loading from './run-configure-script-loading.svg';
 
 interface RunConfigureScriptProps {
   onNext: () => void;
+  joinToken: JoinToken;
+  reloadJoinToken: () => void;
+  timeout: number;
+  timedOut: boolean;
 }
 
 export function RunConfigureScript(
   props: React.PropsWithChildren<RunConfigureScriptProps>
 ) {
-  const { joinToken, reloadJoinToken, timeout, timedOut } = useJoinToken(
-    ResourceKind.Desktop
-  );
+  const { joinToken, reloadJoinToken, timeout, timedOut } = props;
 
   let content;
   if (timedOut) {

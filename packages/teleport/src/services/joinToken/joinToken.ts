@@ -23,7 +23,7 @@ import makeJoinToken from './makeJoinToken';
 import { JoinToken, JoinRule, JoinTokenRequest } from './types';
 
 class JoinTokenService {
-  fetchJoinToken(
+  createJoinToken(
     req: JoinTokenRequest,
     signal: AbortSignal = null
   ): Promise<JoinToken> {

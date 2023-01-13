@@ -96,10 +96,15 @@ const verticalTransitionStyles = {
 };
 
 import { State } from 'teleport/Discover/useDiscover';
+import { ResourceKind } from 'teleport/Discover/Shared';
+import { useCreateJoinToken } from 'teleport/Discover/Shared/JoinTokenContext';
 
 export function ConnectTeleport(props: State) {
   const [currentStep, setCurrentStep] = useState(StepKind.RunConfigureScript);
   const step = steps.find(s => s.kind === currentStep);
+  const { joinToken, reloadJoinToken, timeout, timedOut } = useCreateJoinToken(
+    ResourceKind.Desktop
+  );
 
   let animation;
   if (step.animation !== null) {
@@ -124,6 +129,7 @@ export function ConnectTeleport(props: State) {
                     <Suspense fallback={<Window title="Terminal" />}>
                       <RunConfigureScriptAnimation
                         isCopying={step.kind === StepKind.CopyOutput}
+                        joinToken={joinToken}
                       />
                     </Suspense>
                   )}
@@ -157,6 +163,10 @@ export function ConnectTeleport(props: State) {
                 <Suspense fallback={<RunConfigureScriptLoading />}>
                   <RunConfigureScript
                     onNext={() => setCurrentStep(StepKind.CopyOutput)}
+                    joinToken={joinToken}
+                    reloadJoinToken={reloadJoinToken}
+                    timeout={timeout}
+                    timedOut={timedOut}
                   />
                 </Suspense>
               )}

@@ -21,7 +21,7 @@ import * as Icons from 'design/Icon';
 import cfg from 'teleport/config';
 import { CatchError } from 'teleport/components/CatchError';
 import {
-  useJoinToken,
+  useCreateJoinToken,
   clearCachedJoinTokenResult,
 } from 'teleport/Discover/Shared/JoinTokenContext';
 import { usePingTeleport } from 'teleport/Discover/Shared/PingTeleportContext';
@@ -81,7 +81,7 @@ export default function Container(props: AgentStepProps) {
 
 export function DownloadScript(props: AgentStepProps) {
   // Fetches join token.
-  const { joinToken, reloadJoinToken, timeout } = useJoinToken(
+  const { joinToken, reloadJoinToken, timeout } = useCreateJoinToken(
     ResourceKind.Server
   );
   // Starts resource querying interval.

@@ -25,7 +25,7 @@ import { requiredField } from 'shared/components/Validation/rules';
 import { TextSelectCopyMulti } from 'teleport/components/TextSelectCopy';
 import { CatchError } from 'teleport/components/CatchError';
 import {
-  useJoinToken,
+  useCreateJoinToken,
   clearCachedJoinTokenResult,
 } from 'teleport/Discover/Shared/JoinTokenContext';
 import useTeleport from 'teleport/useTeleport';
@@ -126,7 +126,7 @@ export function HelmChart(
     setClusterName(c: string): void;
   }
 ) {
-  const { joinToken, reloadJoinToken, timeout } = useJoinToken(
+  const { joinToken, reloadJoinToken, timeout } = useCreateJoinToken(
     ResourceKind.Kubernetes
   );
 
@@ -292,7 +292,7 @@ teleportVersionOverride: ${data.clusterVersion}
 labels:
     teleport.internal/resource-id: ${data.resourceId}
 EOF
- 
+
 helm install teleport-agent teleport/teleport-kube-agent -f prod-cluster-values.yaml --create-namespace --namespace ${data.namespace}`;
 };
 

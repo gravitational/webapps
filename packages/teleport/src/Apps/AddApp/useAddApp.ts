@@ -36,7 +36,7 @@ export default function useAddApp(ctx: TeleportContext) {
 
   function createToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken({ roles: ['App'] }).then(setToken)
+      ctx.joinTokenService.createJoinToken({ roles: ['App'] }).then(setToken)
     );
   }
 

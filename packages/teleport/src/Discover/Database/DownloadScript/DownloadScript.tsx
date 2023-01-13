@@ -21,7 +21,7 @@ import Validation, { Validator, useRule } from 'shared/components/Validation';
 
 import { CatchError } from 'teleport/components/CatchError';
 import {
-  useJoinToken,
+  useCreateJoinToken,
   clearCachedJoinTokenResult,
 } from 'teleport/Discover/Shared/JoinTokenContext';
 import { usePingTeleport } from 'teleport/Discover/Shared/PingTeleportContext';
@@ -162,7 +162,7 @@ export function DownloadScript(
   }
 ) {
   // Fetches join token.
-  const { joinToken, reloadJoinToken, timeout } = useJoinToken(
+  const { joinToken, reloadJoinToken, timeout } = useCreateJoinToken(
     ResourceKind.Database,
     props.labels
   );

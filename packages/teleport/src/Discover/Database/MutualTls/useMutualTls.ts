@@ -47,7 +47,7 @@ export function useMutualTls({ ctx, props }: Props) {
       // This also means it invalidates the existing joinToken.
       run(() =>
         ctx.joinTokenService
-          .fetchJoinToken({
+          .createJoinToken({
             roles: [resourceKindToJoinRole(ResourceKind.Database)],
             method: 'token',
           })
