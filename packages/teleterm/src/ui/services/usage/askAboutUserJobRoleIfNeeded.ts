@@ -27,33 +27,32 @@ export async function askAboutUserJobRoleIfNeeded(
 ): Promise<void> {
   const { askedForUserJobRole } =
     statePersistenceService.getUsageReportingState();
+  const isReportingEnabled = configService.get('usageReporting.enabled').value;
 
-  if (
-    askedForUserJobRole ||
-    !configService.get('usageReporting.enabled').value
-  ) {
+  if (askedForUserJobRole || !isReportingEnabled) {
     return;
   }
 
-  await showUserJobRoleDialog(modalsService, usageService);
+  const jobRole = await showUserJobRoleDialog(modalsService);
+  if (jobRole) {
+    usageService.captureUserJobRoleUpdate(jobRole);
+  }
   statePersistenceService.saveUsageReportingState({
     askedForUserJobRole: true,
   });
 }
 
 function showUserJobRoleDialog(
-  modalsService: ModalsService,
-  usageService: UsageService
-): Promise<void> {
+  modalsService: ModalsService
+): Promise<string | undefined> {
   return new Promise(resolve => {
     modalsService.openRegularDialog({
       kind: 'user-job-role',
       onSend(jobRole) {
-        usageService.captureUserJobRoleUpdate(jobRole);
-        resolve();
+        resolve(jobRole);
       },
       onCancel() {
-        resolve();
+        resolve(undefined);
       },
     });
   });
