@@ -73,7 +73,7 @@ export default function Container(
     <Validation>
       {({ validator }) => (
         <CatchError
-          onRetry={clearCachedJoinTokenResult}
+          onRetry={() => clearCachedJoinTokenResult(ResourceKind.Database)}
           fallbackFn={fbProps => (
             <Box>
               <Heading />

@@ -65,11 +65,16 @@ interface PromiseResult {
   error?: Error;
 }
 
-let abortController: AbortController;
-let cachedJoinTokenResult: PromiseResult;
+interface CachedPromiseResult {
+  promise: PromiseResult;
+  expires: Date;
+}
 
-export function clearCachedJoinTokenResult() {
-  cachedJoinTokenResult = null;
+let abortController: AbortController;
+let joinTokenCache = new Map<ResourceKind, CachedPromiseResult>();
+
+export function clearCachedJoinTokenResult(resourceKind: ResourceKind) {
+  joinTokenCache.delete(resourceKind);
 }
 
 export function useJoinTokenValue() {
@@ -94,7 +99,9 @@ export function useJoinToken(
   function run() {
     abortController = new AbortController();
 
-    cachedJoinTokenResult = {
+    const result = {
+      response: null,
+      error: null,
       promise: ctx.joinTokenService
         .fetchJoinToken(
           {
@@ -112,43 +119,53 @@ export function useJoinToken(
               'internal resource ID is required to discover the newly added resource, but none was provided'
             );
           }
-          cachedJoinTokenResult.response = token;
+          result.response = token;
           tokenContext.setJoinToken(token);
           tokenContext.startTimer();
         })
         .catch(error => {
-          cachedJoinTokenResult.error = error;
+          result.error = error;
         }),
     };
 
-    return cachedJoinTokenResult;
+    joinTokenCache.set(resourceKind, {
+      promise: result,
+      expires: new Date(Date.now() + tokenContext.timeout),
+    });
+
+    return result;
   }
 
   useEffect(() => {
     return () => {
       abortController?.abort();
-
-      // result will be stored in memory which can refer to
-      // previously used or expired join tokens.
-      clearCachedJoinTokenResult();
     };
   }, []);
 
-  if (cachedJoinTokenResult) {
-    if (cachedJoinTokenResult.error) {
-      throw cachedJoinTokenResult.error;
+  const existing = joinTokenCache.get(resourceKind);
+
+  if (existing) {
+    if (existing.expires.getTime() < Date.now()) {
+      if (existing.promise.error) {
+        throw existing.promise.error;
+      }
+
+      if (existing.promise.response) {
+        return {
+          joinToken: existing.promise.response,
+          reloadJoinToken() {
+            joinTokenCache.delete(resourceKind);
+            run();
+          },
+          timedOut: tokenContext.timedOut,
+          timeout: tokenContext.timeout,
+        };
+      }
+
+      throw existing.promise.promise;
     }
 
-    if (cachedJoinTokenResult.response) {
-      return {
-        joinToken: cachedJoinTokenResult.response,
-        reloadJoinToken: run,
-        timedOut: tokenContext.timedOut,
-        timeout: tokenContext.timeout,
-      };
-    }
-
-    throw cachedJoinTokenResult.promise;
+    joinTokenCache.delete(resourceKind);
   }
 
   throw run().promise;

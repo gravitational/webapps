@@ -49,7 +49,7 @@ import type { Poll } from 'teleport/Discover/Shared/CommandWithTimer';
 export default function Container(props: AgentStepProps) {
   return (
     <CatchError
-      onRetry={clearCachedJoinTokenResult}
+      onRetry={() => clearCachedJoinTokenResult(ResourceKind.Server)}
       fallbackFn={props => (
         <Template pollState="error" nextStep={() => null}>
           <TextIcon mt={2} mb={3}>
