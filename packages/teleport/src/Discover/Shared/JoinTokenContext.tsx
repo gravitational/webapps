@@ -11,8 +11,6 @@ import type { AgentLabel } from 'teleport/services/agents';
 import type { JoinToken, JoinMethod } from 'teleport/services/joinToken';
 
 interface JoinTokenContextState {
-  joinToken: JoinToken;
-  setJoinToken: (joinToken: JoinToken) => void;
   timeout: number;
   timedOut: boolean;
   startTimer: () => void;
@@ -25,7 +23,6 @@ export function JoinTokenProvider(props: {
   timeout: number;
   children?: React.ReactNode;
 }) {
-  const [joinToken, setJoinToken] = useState<JoinToken>(null);
   const [timedOut, setTimedOut] = useState(false);
   const [timeout, setTokenTimeout] = useState<number>(null);
 
@@ -51,9 +48,7 @@ export function JoinTokenProvider(props: {
   }, [props.timeout]);
 
   return (
-    <joinTokenContext.Provider
-      value={{ joinToken, setJoinToken, timeout, startTimer, timedOut }}
-    >
+    <joinTokenContext.Provider value={{ timeout, startTimer, timedOut }}>
       {props.children}
     </joinTokenContext.Provider>
   );
@@ -75,12 +70,6 @@ let joinTokenCache = new Map<ResourceKind, CachedPromiseResult>();
 
 export function clearCachedJoinTokenResult(resourceKind: ResourceKind) {
   joinTokenCache.delete(resourceKind);
-}
-
-export function useJoinTokenValue() {
-  const tokenContext = useContext(joinTokenContext);
-
-  return tokenContext.joinToken;
 }
 
 export function useJoinToken(
@@ -120,7 +109,6 @@ export function useJoinToken(
             );
           }
           result.response = token;
-          tokenContext.setJoinToken(token);
           tokenContext.startTimer();
         })
         .catch(error => {

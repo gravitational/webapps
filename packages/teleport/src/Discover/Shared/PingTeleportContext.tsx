@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useTeleport } from 'teleport';
 import { usePoll } from 'teleport/Discover/Shared/usePoll';
 import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
-import { useJoinTokenValue } from 'teleport/Discover/Shared/JoinTokenContext';
+import { useJoinToken } from 'teleport/Discover/Shared/JoinTokenContext';
 import { ResourceKind } from 'teleport/Discover/Shared/ResourceKind';
 
 interface PingTeleportContextState<T> {
@@ -35,7 +35,7 @@ export function PingTeleportProvider<T>(props: {
   // that proxies a database that goes by this alternateSearchTerm (eg. resourceName).
   const [alternateSearchTerm, setAlternateSearchTerm] = useState('');
 
-  const joinToken = useJoinTokenValue();
+  const { joinToken } = useJoinToken(props.resourceKind);
 
   const { timedOut, result } = usePoll<T>(
     signal =>
