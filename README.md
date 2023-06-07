@@ -1,7 +1,7 @@
 # Gravitational Web Applications and Packages
 
 > **Warning**
-> The content in this repository has been mitgrated to https://github.com/gravitational/teleport/tree/master/web
+> The content in this repository has been migrated to https://github.com/gravitational/teleport/tree/master/web
 
 This mono-repository contains the source code for:
 
